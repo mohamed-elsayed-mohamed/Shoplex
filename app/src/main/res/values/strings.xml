@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">Shoplex</string>
+    <string name="product_name">Name</string>
+    <string name="old_price">Old Price</string>
+    <string name="old_price_strike"><strike>Old Price</strike></string>
+    <string name="discount">Discount</string>
+    <string name="newprice">NewPrice</string>
+    <string name="zero">0</string>
+    <string name="todo">TODO</string>
+    <string name="add_product">Add Product</string>
+    <string name="description">Description</string>
+    <string name="fashion">Fashion</string>
+    <string name="item">Item</string>
+    <string name="category">Category</string>
+    <string name="men">Men</string>
+    <string name="_90_off_sale">90% Off Sale</string>
+    <string name="sub_category">Sub Category</string>
+    <string name="store_name">Store Name</string>
+    <string name="offers">Offers</string>
+    <string name="premium_card">Premium Card</string>
+    <string name="basic">Basic</string>
+    <string name="price">Price</string>
+    <string name="_2_weeks_of_ads">2 Weeks of Ads</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="standard">Standard</string>
+    <string name="_1_month_of_ads">1 Month of Ads</string>
+    <string name="_3_month_of_ads">3 Month of Ads</string>
+    <string name="premium">Premium</string>
+    <string name="confirm">Confirm</string>
+
+    <string-array name="arr_category">
+        <item>Fashion</item>
+        <item>Health&amp;Care</item>
+        <item>Phones</item>
+        <item>Electronics</item>
+        <item>Accessories</item>
+        <item>Books</item>
+    </string-array>
+
+    <string-array name="arr_subcategory">
+        <item>Men</item>
+        <item>Women</item>
+        <item>Kids</item>
+    </string-array>
+
 </resources>
