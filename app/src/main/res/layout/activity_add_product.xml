@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context=".AddProductActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.92">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edOldPricee"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:autofillHints=""
+                android:background="@drawable/ed_style"
+                android:ems="10"
+                android:hint="@string/newprice"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNewPrice" />
+
+            <ImageView
+                android:id="@+id/imgAddProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="230dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/todo"
+                app:layout_constraintBottom_toTopOf="@+id/edProductName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/addproduct" />
+
+            <EditText
+                android:id="@+id/edProductName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:autofillHints=""
+                android:background="@drawable/ed_style"
+                android:ems="10"
+                android:hint="@string/product_name"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/tvDiscount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvOldPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/old_price"
+                app:layout_constraintBottom_toTopOf="@+id/edOldPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edProductName" />
+
+            <TextView
+                android:id="@+id/tvDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/discount"
+                app:layout_constraintBottom_toBottomOf="@+id/tvOldPrice"
+                app:layout_constraintEnd_toStartOf="@+id/tvNewPrice"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvOldPrice"
+                app:layout_constraintTop_toTopOf="@+id/tvOldPrice" />
+
+            <TextView
+                android:id="@+id/tvNewPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="@string/newprice"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDiscount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvDiscount" />
+
+            <EditText
+                android:id="@+id/edOldPrice"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:autofillHints=""
+                android:background="@drawable/ed_style"
+                android:ems="10"
+                android:hint="@string/old_price"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@+id/edmultiDescription"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvDiscountNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/zero"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/edOldPricee"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/edOldPrice"
+                app:layout_constraintTop_toBottomOf="@+id/tvDiscount" />
+
+            <ImageView
+                android:id="@+id/imgMunis"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/todo"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDiscountNum"
+                app:layout_constraintEnd_toStartOf="@+id/tvDiscountNum"
+                app:layout_constraintStart_toEndOf="@+id/edOldPrice"
+                app:srcCompat="@drawable/minus" />
+
+            <ImageView
+                android:id="@+id/imgPlus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/todo"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDiscountNum"
+                app:layout_constraintEnd_toStartOf="@+id/edOldPricee"
+                app:layout_constraintStart_toEndOf="@+id/tvDiscountNum"
+                app:srcCompat="@drawable/add" />
+
+            <EditText
+                android:id="@+id/edmultiDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:autofillHints=""
+                android:background="@drawable/ed_style"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/description"
+                android:inputType="textMultiLine"
+                android:maxLines="15"
+                android:minLines="5"
+                android:padding="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edOldPricee" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edmultiDescription">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actDropdownItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="@string/fashion" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/sub_category"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textInputLayout2">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actDropdownSubItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="@string/men" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:layout_weight="0.08"
+        android:background="@drawable/roundedbutton"
+        android:text="@string/add_product"
+        android:textSize="18sp" />
+
+</LinearLayout>
