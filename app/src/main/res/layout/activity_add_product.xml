@@ -11,12 +11,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.92">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <EditText
                 android:id="@+id/edOldPricee"
@@ -164,7 +164,6 @@
                 android:maxLines="15"
                 android:minLines="5"
                 android:padding="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -175,10 +174,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:hint="@string/category"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/edmultiDescription"
                 app:layout_constraintTop_toBottomOf="@+id/edmultiDescription">
 
                 <AutoCompleteTextView
@@ -195,12 +193,10 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:hint="@string/sub_category"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textInputLayout2">
+                app:layout_constraintEnd_toEndOf="@+id/edmultiDescription"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout2">
 
                 <AutoCompleteTextView
                     android:id="@+id/actDropdownSubItem"
@@ -210,16 +206,15 @@
                     android:inputType="none"
                     android:text="@string/men" />
             </com.google.android.material.textfield.TextInputLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:layout_weight="0.08"
-        android:background="@drawable/roundedbutton"
+        android:layout_height="50dp"
+        android:background="@drawable/solidbutton"
         android:text="@string/add_product"
         android:textSize="18sp" />
 

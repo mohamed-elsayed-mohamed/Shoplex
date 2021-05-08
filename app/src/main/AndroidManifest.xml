@@ -10,14 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shoplex">
         <activity android:name=".ConfirmProductActivity">
+
+        </activity>
+        <activity android:name=".AddProductActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".AddProductActivity">
-
         </activity>
         <activity android:name=".activities.MainActivity"></activity>
     </application>
