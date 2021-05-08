@@ -1,9 +1,9 @@
-package com.trueandtrust.shoplex
+package com.trueandtrust.shoplex.activities
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 
 class AddProductActivity : AppCompatActivity() {
@@ -15,11 +15,11 @@ class AddProductActivity : AppCompatActivity() {
 
         //Category Dropdown
         val arrCategory = resources.getStringArray(R.array.arr_category)
-        val arrayCategoryAdapter = ArrayAdapter(this,R.layout.dropdown_item,arrCategory)
+        val arrayCategoryAdapter = ArrayAdapter(this, R.layout.dropdown_item,arrCategory)
         binding.actDropdownItem.setAdapter(arrayCategoryAdapter)
         //SubCategory Dropdown
         val arrSubcategory = resources.getStringArray(R.array.arr_subcategory)
-        val arraySubcategoryAdapter = ArrayAdapter(this,R.layout.dropdown_item,arrSubcategory)
+        val arraySubcategoryAdapter = ArrayAdapter(this, R.layout.dropdown_item,arrSubcategory)
         binding.actDropdownSubItem.setAdapter(arraySubcategoryAdapter)
     }
 }
