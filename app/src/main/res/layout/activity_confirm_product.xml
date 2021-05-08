@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/imgSlideConfirm"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="@dimen/img_height"
             android:contentDescription="@string/todo"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"

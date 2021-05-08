@@ -30,11 +30,14 @@ class ProductFragment : Fragment() {
     ): View? {
         binding = FragmentProductBinding.inflate(inflater, container, false)
 
+        //imgSlider
         imageList.add(SlideModel("https://bit.ly/2YoJ77H"))
         imageList.add(SlideModel("https://bit.ly/2BteuF2"))
         imageList.add(SlideModel("https://bit.ly/3fLJf72"))
 
-        binding.imgSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+        binding.imgSliderDetails.setImageList(imageList, ScaleTypes.CENTER_CROP)
+
+        //RecyclerView
         linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.HORIZONTAL
         binding.recyclerViewColor.layoutManager = linearLayoutManager

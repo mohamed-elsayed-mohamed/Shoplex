@@ -6,10 +6,11 @@
 
     <ImageView
         android:id="@+id/imgImage"
-        android:layout_width="@dimen/width_100"
-        android:layout_height="@dimen/width_100"
+        android:layout_width="@dimen/width_75"
+        android:layout_height="@dimen/width_75"
+        android:layout_margin="@dimen/drawable_padding"
         android:contentDescription="@string/todo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/green" />
+        app:srcCompat="@drawable/product_two" />
 </androidx.constraintlayout.widget.ConstraintLayout>
