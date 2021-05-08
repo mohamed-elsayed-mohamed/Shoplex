@@ -1,4 +1,4 @@
-package com.trueandtrust.shoplex.activities
+package com.trueandtrust.shoplex.view.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

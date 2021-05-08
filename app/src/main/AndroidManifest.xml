@@ -9,13 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Shoplex">
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".view.activities.StoreLocationActivity"></activity>
+        <activity android:name=".view.activities.LastOrderActivity" />
+        <activity
+            android:name=".view.activities.HomeActivity"
+            android:theme="@style/AppTheme.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activities.MainActivity" />
     </application>
 
 </manifest>
