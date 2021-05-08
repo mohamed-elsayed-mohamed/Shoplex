@@ -1,7 +1,8 @@
-package com.trueandtrust.shoplex
+package com.trueandtrust.shoplex.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.trueandtrust.shoplex.R
 
 class ConfirmProductActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
