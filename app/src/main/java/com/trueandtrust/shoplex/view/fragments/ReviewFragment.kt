@@ -1,4 +1,4 @@
-package com.trueandtrust.shoplex.fragments
+package com.trueandtrust.shoplex.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

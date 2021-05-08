@@ -1,10 +1,10 @@
-package com.trueandtrust.shoplex.adapters
+package com.trueandtrust.shoplex.model.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.trueandtrust.shoplex.fragments.ProductFragment
-import com.trueandtrust.shoplex.fragments.ReviewFragment
+import com.trueandtrust.shoplex.view.fragments.ProductFragment
+import com.trueandtrust.shoplex.view.fragments.ReviewFragment
 
 
 class PagerAdapter(fm:FragmentManager) : FragmentPagerAdapter(fm) {

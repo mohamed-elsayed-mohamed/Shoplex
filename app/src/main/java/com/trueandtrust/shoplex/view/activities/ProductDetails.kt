@@ -1,11 +1,11 @@
-package com.trueandtrust.shoplex.activities
+package com.trueandtrust.shoplex.view.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayout
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.adapters.PagerAdapter
+import com.trueandtrust.shoplex.model.adapter.PagerAdapter
 import com.trueandtrust.shoplex.databinding.ActivityProductDetailsBinding
 
 class ProductDetails : AppCompatActivity() {

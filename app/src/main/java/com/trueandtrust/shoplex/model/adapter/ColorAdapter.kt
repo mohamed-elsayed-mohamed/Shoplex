@@ -1,4 +1,4 @@
-package com.trueandtrust.shoplex.adapters
+package com.trueandtrust.shoplex.model.adapter
 
 import android.view.LayoutInflater
 import android.view.View

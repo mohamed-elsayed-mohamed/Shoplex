@@ -1,4 +1,4 @@
-package com.trueandtrust.shoplex.fragments
+package com.trueandtrust.shoplex.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.adapters.ColorAdapter
+import com.trueandtrust.shoplex.model.adapter.ColorAdapter
 import com.trueandtrust.shoplex.databinding.FragmentProductBinding
 
 class ProductFragment : Fragment() {
