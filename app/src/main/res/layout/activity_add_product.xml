@@ -71,6 +71,7 @@
                 android:autofillHints=""
                 android:background="@drawable/ed_style"
                 android:ems="10"
+                android:enabled="false"
                 android:hint="@string/newprice"
                 android:inputType="number"
                 android:maxLength="7"
