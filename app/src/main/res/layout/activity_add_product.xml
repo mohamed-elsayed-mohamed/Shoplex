@@ -32,31 +32,36 @@
             </com.denzcoskun.imageslider.ImageSlider>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewImage"
-                android:layout_width="match_parent"
+                android:id="@+id/rvUploadImages"
+                android:layout_width="@dimen/ZERO"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginTop="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_64"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/ed_style"
+                android:orientation="horizontal"
                 android:padding="@dimen/drawable_padding"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddProductImages"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgSliderAddProduct">
+                app:layout_constraintTop_toBottomOf="@+id/imgSliderAddProduct"
+                tools:listitem="@layout/item_upload_image">
 
             </androidx.recyclerview.widget.RecyclerView>
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="@dimen/height_30"
-                android:layout_height="@dimen/height_30"
-                android:layout_marginTop="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_16"
+            <Button
+                android:id="@+id/btnAddProductImages"
+                android:layout_width="@dimen/width_45"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginEnd="10dp"
                 android:contentDescription="@string/todo"
-                app:layout_constraintBottom_toBottomOf="@+id/recyclerViewImage"
+                android:insetTop="@dimen/ZERO"
+                android:insetBottom="@dimen/ZERO"
+                android:text="@string/Plus_Sign"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/rvUploadImages"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/recyclerViewImage"
-                app:srcCompat="@drawable/add" />
+                app:layout_constraintTop_toTopOf="@+id/rvUploadImages" />
 
             <EditText
                 android:id="@+id/edOldPricee"
@@ -93,7 +98,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerViewImage" />
+                app:layout_constraintTop_toBottomOf="@+id/rvUploadImages" />
 
             <TextView
                 android:id="@+id/tvOldPrice"

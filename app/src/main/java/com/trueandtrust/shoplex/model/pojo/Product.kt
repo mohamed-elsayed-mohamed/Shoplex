@@ -1,6 +1,7 @@
 package com.trueandtrust.shoplex.model.pojo
 
 
+import android.net.Uri
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Permium
 import com.trueandtrust.shoplex.model.enumurations.SubCategory
@@ -15,7 +16,7 @@ open class Product {
     var discount : Int = 0
     var category : Category = Category.FASHION
     var subCategory : SubCategory = SubCategory.MEN
-    lateinit var image : String //array
+    var images : ArrayList<Uri> = ArrayList()
     var rate : Double = 0.0
     var permium : Permium = Permium.BASIC
 
