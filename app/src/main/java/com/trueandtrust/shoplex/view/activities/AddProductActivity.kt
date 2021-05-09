@@ -15,11 +15,19 @@ import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 
 class AddProductActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityAddProductBinding
+    private lateinit var binding: ActivityAddProductBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var imageAdapter: ImageAdapter
+    private var count = 0
 
-    val images = arrayOf(R.drawable.two,R.drawable.product_two,R.drawable.one,R.drawable.two,R.drawable.product_two,R.drawable.one)
+    val images = arrayOf(
+        R.drawable.two,
+        R.drawable.product_two,
+        R.drawable.one,
+        R.drawable.two,
+        R.drawable.product_two,
+        R.drawable.one
+    )
     val imageList = ArrayList<SlideModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,18 +52,53 @@ class AddProductActivity : AppCompatActivity() {
 
         //Category Dropdown
         val arrCategory = resources.getStringArray(R.array.arr_category)
-        val arrayCategoryAdapter = ArrayAdapter(this, R.layout.dropdown_item,arrCategory)
+        val arrayCategoryAdapter = ArrayAdapter(this, R.layout.dropdown_item, arrCategory)
         binding.actDropdownItem.setAdapter(arrayCategoryAdapter)
         //SubCategory Dropdown
         val arrSubcategory = resources.getStringArray(R.array.arr_subcategory)
-        val arraySubcategoryAdapter = ArrayAdapter(this, R.layout.dropdown_item,arrSubcategory)
+        val arraySubcategoryAdapter = ArrayAdapter(this, R.layout.dropdown_item, arrSubcategory)
         binding.actDropdownSubItem.setAdapter(arraySubcategoryAdapter)
 
 
         //AddProduct Button
-        binding.btnAddProduct.setOnClickListener{
+        binding.btnAddProduct.setOnClickListener {
 
+            if (binding.edProductName.length() <= 10) {
+                binding.edProductName.error = "Minimum Input is 10 Characters"
+            }
+            if (binding.edProductName.length() == 0) {
+                binding.edProductName.error = "Please Enter Product Name"
+            }
+            if (binding.edmultiDescription.length() <= 30) {
+                binding.edmultiDescription.error = "Minimum Input is 30 Characters"
+            }
+            if (binding.edmultiDescription.length() == 0) {
+                binding.edmultiDescription.error = "Please Enter Product Description"
+            }
 
+        }
+        //plusbutton
+        binding.imgPlus.setOnClickListener {
+            if (binding.tvDiscountNum.text.toString()
+                    .toInt() >= 0 && binding.tvDiscountNum.text.toString().toInt() < 80
+            ) {
+
+                count += 5
+                binding.tvDiscountNum.text = count.toString() + "%"
+            } else {
+                binding.tvDiscountNum.error = "The Maximum Is 80%"
+            }
+        }
+
+        //minsbutton
+        binding.imgMunis.setOnClickListener {
+            if (binding.tvDiscountNum.text.toString().toInt() > 0) {
+
+                count -= 5
+                binding.tvDiscountNum.text = "$count"
+            } else {
+                binding.tvDiscountNum.error = "The Maximum Is 0%"
+            }
         }
     }
 }
