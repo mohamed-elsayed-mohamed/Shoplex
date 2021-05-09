@@ -11,6 +11,17 @@
     <string name="Logout">Logout</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
+    <string name="productName">Product Name</string>
+    <string name="brand">Brand Name</string>
+    <string name="price">Price</string>
+    <string name="stauts">Status</string>
+    <string name="location">Location</string>
+    <string name="currentProduct">Current Product</string>
+    <string name="old_price"><strike>Old Price</strike></string>
+    <string name="rating_value">4.5/5</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_price">New Price</string>
+    <string name="sold">12 Sold</string>
 </resources>
