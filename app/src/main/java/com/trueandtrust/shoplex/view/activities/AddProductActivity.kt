@@ -54,7 +54,8 @@ class AddProductActivity : AppCompatActivity() {
 
         //AddProduct Button
         binding.btnAddProduct.setOnClickListener{
-            Toast.makeText(this,"clicked",Toast.LENGTH_SHORT).show()
+
+
         }
     }
 }

@@ -10,7 +10,7 @@ class Reviews {
         return arrayListOf(Review())
     }
 
- /*   fun getStatistics() : ArrayList<Int>{
-        return arrayListOf()
-    }*/
+   fun getStatistics() : ArrayList<Int>? {
+        return null
+    }
 }
