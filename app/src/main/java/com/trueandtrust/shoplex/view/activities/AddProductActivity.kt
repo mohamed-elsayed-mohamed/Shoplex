@@ -3,16 +3,14 @@ package com.trueandtrust.shoplex.view.activities
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.R
-
 import com.trueandtrust.shoplex.adapters.ImageAdapter
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
@@ -22,25 +20,13 @@ import com.trueandtrust.shoplex.viewmodel.AddProductVM
 
 class AddProductActivity : AppCompatActivity(), ImagesChanges {
     private val REQUEST_CODE = 200
-    private lateinit var binding : ActivityAddProductBinding
-class AddProductActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var imageAdapter: ImageAdapter
     private var count = 0
 
     private lateinit var viewModel: AddProductVM
-
-    val images = arrayOf(
-        R.drawable.two,
-        R.drawable.product_two,
-        R.drawable.one,
-        R.drawable.two,
-        R.drawable.product_two,
-        R.drawable.one
-    )
-    val imageList = ArrayList<SlideModel>()
+    private lateinit var product: Product
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,20 +35,15 @@ class AddProductActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(AddProductVM::class.java)
 
-        //ImageSlider
-        imageList.add(SlideModel("https://bit.ly/2YoJ77H"))
-        imageList.add(SlideModel("https://bit.ly/2BteuF2"))
-        imageList.add(SlideModel("https://bit.ly/3fLJf72"))
-
-        binding.imgSliderAddProduct.setImageList(imageList, ScaleTypes.CENTER_CROP)
-
         val myAdapter = MyImagesAdapter(viewModel.product.value!!.images, this)
         binding.rvUploadImages.adapter = myAdapter
 
         viewModel.product.observe(this, {
-            binding.imgSliderAddProduct.setImageList(imageList, ScaleTypes.CENTER_CROP)
+            binding.imgSliderAddProduct.setImageList(viewModel.product.value!!.imageSlideList, ScaleTypes.CENTER_INSIDE)
             binding.rvUploadImages.adapter?.notifyDataSetChanged()
         })
+
+        product = viewModel.product.value!!
 
 
         /*
@@ -110,9 +91,7 @@ class AddProductActivity : AppCompatActivity() {
         }
         //plusbutton
         binding.imgPlus.setOnClickListener {
-            if (binding.tvDiscountNum.text.toString()
-                    .toInt() >= 0 && binding.tvDiscountNum.text.toString().toInt() < 80
-            ) {
+            if (count >= 0 && count < 80) {
 
                 count += 5
                 binding.tvDiscountNum.text = count.toString() + "%"
@@ -123,7 +102,7 @@ class AddProductActivity : AppCompatActivity() {
 
         //minsbutton
         binding.imgMunis.setOnClickListener {
-            if (binding.tvDiscountNum.text.toString().toInt() > 0) {
+            if (count > 0) {
 
                 count -= 5
                 binding.tvDiscountNum.text = "$count"
@@ -144,9 +123,9 @@ class AddProductActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             // if multiple images are selected
-            var product: Product = viewModel.product.value!!
+
 
             if (data?.clipData != null) {
                 var count = data.clipData?.itemCount
@@ -154,30 +133,30 @@ class AddProductActivity : AppCompatActivity() {
                 for (i in 0 until count!!) {
                     var imageUri: Uri = data.clipData?.getItemAt(i)!!.uri
 
-                    if(!product.images.contains(imageUri)) {
+                    if (!product.images.contains(imageUri)) {
                         product.images.add(imageUri)
-                        imageList.add(SlideModel(imageUri.toString()))
+                        product.imageSlideList.add(SlideModel(imageUri.toString()))
                     }
                 }
             } else if (data?.data != null) {
                 // if single image is selected
 
                 var imageUri: Uri = data.data!!
-                if(!product.images.contains(imageUri)) {
+                if (!product.images.contains(imageUri)) {
                     product.images.add(imageUri)
-                    imageList.add(SlideModel(imageUri.toString()))
+                    product.imageSlideList.add(SlideModel(imageUri.toString()))
                 }
             }
-           binding.imgSliderAddProduct.setImageList(imageList, ScaleTypes.CENTER_INSIDE)
+            binding.imgSliderAddProduct.setImageList(product.imageSlideList, ScaleTypes.CENTER_INSIDE)
             binding.rvUploadImages.adapter?.notifyDataSetChanged()
         }
     }
 
     override fun onRemoveItem(position: Int) {
-        imageList.removeAt(position)
-        binding.imgSliderAddProduct.setImageList(imageList, ScaleTypes.CENTER_INSIDE)
+        viewModel.product.value!!.imageSlideList.removeAt(position)
         viewModel.product.value!!.images.removeAt(position)
+
+        binding.imgSliderAddProduct.setImageList(product.imageSlideList, ScaleTypes.CENTER_INSIDE)
         binding.rvUploadImages.adapter?.notifyDataSetChanged()
     }
-
 }

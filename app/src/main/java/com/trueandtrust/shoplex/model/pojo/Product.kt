@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.model.pojo
 
 
 import android.net.Uri
+import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Permium
 import com.trueandtrust.shoplex.model.enumurations.SubCategory
@@ -17,6 +18,7 @@ open class Product {
     var category : Category = Category.FASHION
     var subCategory : SubCategory = SubCategory.MEN
     var images : ArrayList<Uri> = ArrayList()
+    val imageSlideList = ArrayList<SlideModel>()
     var rate : Double = 0.0
     var permium : Permium = Permium.BASIC
 
