@@ -3,12 +3,13 @@ package com.trueandtrust.shoplex.view.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.adapters.ColorAdapter
+
 import com.trueandtrust.shoplex.adapters.ImageAdapter
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 
@@ -49,5 +50,11 @@ class AddProductActivity : AppCompatActivity() {
         val arrSubcategory = resources.getStringArray(R.array.arr_subcategory)
         val arraySubcategoryAdapter = ArrayAdapter(this, R.layout.dropdown_item,arrSubcategory)
         binding.actDropdownSubItem.setAdapter(arraySubcategoryAdapter)
+
+
+        //AddProduct Button
+        binding.btnAddProduct.setOnClickListener{
+            Toast.makeText(this,"clicked",Toast.LENGTH_SHORT).show()
+        }
     }
 }
