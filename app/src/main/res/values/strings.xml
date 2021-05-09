@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Shoplex</string>
     <string name="product_name">Name</string>
-    <string name="old_price">Old Price</string>
     <string name="old_price_strike"><strike>Old Price</strike></string>
     <string name="discount">Discount</string>
     <string name="newprice">NewPrice</string>
@@ -54,4 +53,26 @@
     <string name="all_colors">All Colors</string>
     <string name="Plus_Sign">+</string>
 
+    <string name="home">Home</string>
+    <string name="products">Products</string>
+    <string name="chat">Chat</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="LastOrder">Last Order</string>
+    <string name="StoreLocation">Store Location</string>
+    <string name="Language">Arabic</string>
+    <string name="Notification">Notification</string>
+    <string name="Logout">Logout</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="productName">Product Name</string>
+    <string name="brand">Brand Name</string>
+    <string name="stauts">Status</string>
+    <string name="location">Location</string>
+    <string name="currentProduct">Current Product</string>
+    <string name="old_price"><strike>Old Price</strike></string>
+    <string name="rating_value">4.5/5</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="new_price">New Price</string>
+    <string name="sold">12 Sold</string>
 </resources>
