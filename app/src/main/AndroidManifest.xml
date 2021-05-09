@@ -11,17 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Shoplex">
-        <activity android:name="com.trueandtrust.shoplex.view.activities.ProductDetails">
+        <activity android:name=".view.activities.ProductDetails"/>
+        <activity android:name=".view.activities.ConfirmProductActivity"/>
+        <activity android:name=".view.activities.AddProductActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.trueandtrust.shoplex.view.activities.ConfirmProductActivity">
-        </activity>
-        <activity android:name="com.trueandtrust.shoplex.view.activities.AddProductActivity" />
-        <activity android:name="com.trueandtrust.shoplex.view.activities.MainActivity" />
+        <activity android:name=".view.activities.MainActivity" />
     </application>
 
 </manifest>

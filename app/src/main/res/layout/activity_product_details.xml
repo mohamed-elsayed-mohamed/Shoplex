@@ -17,7 +17,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="fill"
-            app:tabMaxWidth="0dp">
+            app:tabMaxWidth="@dimen/width_0">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabProduct"
@@ -35,8 +35,8 @@
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/width_0"
+            android:layout_height="@dimen/height_0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

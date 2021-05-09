@@ -1,4 +1,4 @@
-package com.trueandtrust.shoplex.model.adapter
+package com.trueandtrust.shoplex.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.trueandtrust.shoplex.R
 
 
-class ColorAdapter(private val dataSet: Array<Int>) : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
+class ImageAdapter(private val dataSet: Array<Int>) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -27,7 +27,7 @@ class ColorAdapter(private val dataSet: Array<Int>) : RecyclerView.Adapter<Color
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.color_item_row, viewGroup, false)
+            .inflate(R.layout.img_item_row, viewGroup, false)
 
         return ViewHolder(view)
     }
