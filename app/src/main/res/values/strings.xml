@@ -87,5 +87,6 @@
     <string name="maxDiscount">90</string>
     <string name="discountRange">0-90 %</string>
     <string name="search">Search</string>
+    <string name="user_name">User Name</string>
 
 </resources>

@@ -15,12 +15,14 @@
         <activity android:name=".view.activities.ProductDetails"/>
         <activity android:name=".view.activities.ConfirmProductActivity"/>
         <activity android:name=".view.activities.AddProductActivity" android:windowSoftInputMode="adjustResize">
+        <activity android:name=".view.activities.MessageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activities.ProductDetails" />
 
         <activity android:name=".view.activities.StoreLocationActivity"
             android:theme="@style/AppTheme.Home">
