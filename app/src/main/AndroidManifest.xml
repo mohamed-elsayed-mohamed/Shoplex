@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.trueandtrust.shoplex">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,12 @@
         <activity android:name=".view.activities.ConfirmProductActivity" />
         <activity android:name=".view.activities.AddProductActivity">
 
+        </activity>
+        <activity android:name=".view.activities.StoreLocationActivity"></activity>
+        <activity android:name=".view.activities.LastOrderActivity" />
+        <activity
+            android:name=".view.activities.HomeActivity"
+            android:theme="@style/AppTheme.Home">
         </activity>
         <activity android:name=".view.activities.MainActivity" />
     </application>
