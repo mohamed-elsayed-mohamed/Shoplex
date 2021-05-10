@@ -3,7 +3,7 @@
     <string name="product_name">Name</string>
     <string name="old_price_strike"><strike>Old Price</strike></string>
     <string name="discount">Discount</string>
-    <string name="newprice">NewPrice</string>
+    <string name="newPrice">New Price</string>
     <string name="zero">0</string>
     <string name="todo">TODO</string>
     <string name="add_product">Add Product</string>
@@ -75,4 +75,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_price">New Price</string>
     <string name="sold">12 Sold</string>
+    <string name="Required">Required</string>
+    <string name="min_description_err">Minimum Product Description is 30 Characters</string>
+    <string name="min_product_name_err">Minimum Name is 5 characters</string>
+    <string name="percentage">%</string>
+    <string name="sale">Sale</string>
+    <string name="originalPrice">Original Price</string>
+    <string name="priceRange">10-100000 L.E</string>
+    <string name="minPrice">10</string>
+    <string name="afterDiscount">After Discount</string>
+    <string name="maxDiscount">90</string>
+    <string name="discountRange">0-90 %</string>
 </resources>
