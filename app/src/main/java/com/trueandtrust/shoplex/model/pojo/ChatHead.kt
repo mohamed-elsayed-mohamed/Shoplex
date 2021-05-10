@@ -9,6 +9,8 @@ class ChatHead {
     var discountInfo : String = ""
     var price : Double  = 0.0
     var productImageUrl : String = ""
+    var userName : String = ""
+    var numOfMessage : Int = 0
 
     fun getChatHeadsInfo() : ArrayList<ChatHead>{
         return arrayListOf(ChatHead())

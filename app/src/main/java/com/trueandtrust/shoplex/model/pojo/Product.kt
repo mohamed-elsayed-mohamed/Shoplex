@@ -6,6 +6,8 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.enumurations.SubCategory
+import com.trueandtrust.shoplex.model.enumurations.Permium
+import com.trueandtrust.shoplex.model.enumurations.SubFashion
 
 open class Product {
     var productID : Int = 0
@@ -17,9 +19,9 @@ open class Product {
     var newPrice : Float = 0.0F
     var discount : Int = 0
     var category : Category = Category.FASHION
-    var subCategory : SubCategory = SubCategory.MEN
     var images : ArrayList<Uri> = ArrayList()
     val imageSlideList = ArrayList<SlideModel>()
+    var subCategory : SubFashion = SubFashion.MEN
     var rate : Double = 0.0
     var premium : Premium = Premium.BASIC
 

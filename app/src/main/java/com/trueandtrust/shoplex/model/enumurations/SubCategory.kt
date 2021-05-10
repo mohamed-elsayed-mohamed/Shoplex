@@ -1,21 +1,29 @@
 package com.trueandtrust.shoplex.model.enumurations
 
-enum class SubCategory {
+enum class SubFashion{
 
     MEN,
     WOMEN,
-    KIDS,
+    KIDS
+}
+enum class SubHealth {
     HAIRCARE,
     PERFUME,
-    MAKE_UP,
+    MAKE_UP
+}
+enum class SubPhone {
     PHONES,
     TABLETS,
-    IPAD,
+    IPAD
+}
+enum class SubElectronic{
     TVS,
     AUDIO,
     SMART_WATCHES,
     CAMERAS,
-    OTHERS,
+    OTHERS
+}
+enum class SubAccessors{
     JEWELLERY,
     WATCHES,
     BELTS,
@@ -23,5 +31,12 @@ enum class SubCategory {
     CABLES,
     CHARGES,
     SELFY_STICK
+}
 
+enum class SubBoos{
+    ARTANDHUMANTIES,
+    FICTION,
+    ENTERTAINMENT,
+    SIENCEANDTECHNOLOGY,
+    EDUCATION
 }

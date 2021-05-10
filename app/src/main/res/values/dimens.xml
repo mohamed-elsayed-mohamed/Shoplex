@@ -32,4 +32,6 @@
     <dimen name="width_64">64dp</dimen>
     <dimen name="padding_16">16dp</dimen>
     <dimen name="width_72">72dp</dimen>
+    <dimen name="margin_84">84dp</dimen>
+    <dimen name="padding_6">6dp</dimen>
 </resources>
