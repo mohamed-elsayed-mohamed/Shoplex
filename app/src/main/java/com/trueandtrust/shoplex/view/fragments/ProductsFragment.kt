@@ -1,6 +1,6 @@
 package com.trueandtrust.shoplex.view.fragments
 
-import android.content.res.Configuration
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentProductsBinding
 import com.trueandtrust.shoplex.model.adapter.ProductAdapter
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,9 +42,17 @@ class ProductsFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        binding.gridView.setNumColumns(if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4)
-
+        //gridView.setNumColumns(if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4)
+        gridView.numColumns = context?.let { getGridColumnsCount(it) }!!
         return binding.root
+    }
+    fun getGridColumnsCount(context: Context): Int {
+        val displayMetrics = context.resources.displayMetrics
+        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+        val scalingFactor = 200 // You can vary the value held by the scalingFactor
+        val columnCount = (dpWidth / scalingFactor).toInt()
+        return if (columnCount >= 2) columnCount else 2 // if column no. is less than 2, we still display 2 columns
+
     }
 
 }

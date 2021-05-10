@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shoplex">
 
-        <activity android:name=".view.activities.StoreLocationActivity">
+        <activity android:name=".view.activities.StoreLocationActivity"
+            android:theme="@style/AppTheme.Home">
+
 
         </activity>
 
