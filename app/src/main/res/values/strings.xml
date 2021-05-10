@@ -57,7 +57,7 @@
     <string name="products">Products</string>
     <string name="chat">Chat</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="LastOrder">Last Order</string>
+    <string name="LastOrder">Last Orders</string>
     <string name="StoreLocation">Store Location</string>
     <string name="Language">Arabic</string>
     <string name="Notification">Notification</string>
@@ -86,4 +86,6 @@
     <string name="afterDiscount">After Discount</string>
     <string name="maxDiscount">90</string>
     <string name="discountRange">0-90 %</string>
+    <string name="search">Search</string>
+
 </resources>

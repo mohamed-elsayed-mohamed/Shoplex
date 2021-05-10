@@ -21,8 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.StoreLocationActivity"></activity>
-        <activity android:name=".view.activities.LastOrderActivity" />
+
+        <activity android:name=".view.activities.StoreLocationActivity"
+            android:theme="@style/AppTheme.Home">
+        </activity>
+
+        <activity android:name=".view.activities.LastOrderActivity"
+            android:theme="@style/AppTheme.Home">
+        </activity>
+
         <activity
             android:name=".view.activities.HomeActivity"
             android:theme="@style/AppTheme.Home">
