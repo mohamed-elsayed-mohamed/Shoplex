@@ -14,17 +14,18 @@
         android:theme="@style/Theme.Shoplex">
         <activity android:name=".view.activities.ProductDetails"/>
         <activity android:name=".view.activities.ConfirmProductActivity"/>
-        <activity android:name=".view.activities.AddProductActivity"/>
-        <activity android:name=".view.activities.StoreLocationActivity"></activity>
-        <activity android:name=".view.activities.LastOrderActivity" />
-        <activity
-            android:name=".view.activities.HomeActivity"
-            android:theme="@style/AppTheme.Home">
+        <activity android:name=".view.activities.AddProductActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".view.activities.StoreLocationActivity"></activity>
+        <activity android:name=".view.activities.LastOrderActivity" />
+        <activity
+            android:name=".view.activities.HomeActivity"
+            android:theme="@style/AppTheme.Home">
         </activity>
         <activity android:name=".view.activities.MainActivity" />
     </application>
