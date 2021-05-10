@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context=".view.activities.AddProductActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/padding_16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/imgSliderAddProduct"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/img_height"
+                app:iss_auto_cycle="true"
+                app:iss_delay="0"
+                app:iss_period="1500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.denzcoskun.imageslider.ImageSlider>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvUploadImages"
+                android:layout_width="@dimen/ZERO"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:background="@drawable/ed_style"
+                android:orientation="horizontal"
+                android:padding="@dimen/drawable_padding"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddProductImages"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgSliderAddProduct"
+                tools:listitem="@layout/item_upload_image">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/btnAddProductImages"
+                android:layout_width="@dimen/width_45"
+                android:layout_height="@dimen/height_45"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/todo"
+                android:insetTop="@dimen/ZERO"
+                android:insetBottom="@dimen/ZERO"
+                android:text="@string/Plus_Sign"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/rvUploadImages"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rvUploadImages" />
+
+            <TextView
+                android:id="@+id/edNewPrice"
+                android:layout_width="@dimen/width_120"
+                android:layout_height="@dimen/height_50"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:autofillHints=""
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="text"
+                android:maxLength="7"
+                android:padding="@dimen/padding_4"
+                android:text="@string/minPrice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tiDiscountNum" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiProductName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/margin_16"
+                app:counterEnabled="true"
+                app:counterMaxLength="40"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddProductImages">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/product_name"
+                    android:inputType="textPersonName"
+                    android:maxLength="40" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvOldPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="@string/originalPrice"
+                app:layout_constraintEnd_toEndOf="@+id/tiOldPrice"
+                app:layout_constraintStart_toStartOf="@+id/tiOldPrice"
+                app:layout_constraintTop_toBottomOf="@+id/tiProductName" />
+
+            <TextView
+                android:id="@+id/tvDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/discount"
+                app:layout_constraintBottom_toBottomOf="@+id/tvOldPrice"
+                app:layout_constraintEnd_toEndOf="@+id/tiDiscountNum"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tiDiscountNum"
+                app:layout_constraintTop_toTopOf="@+id/tvOldPrice" />
+
+            <TextView
+                android:id="@+id/tvNewPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/afterDiscount"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDiscount"
+                app:layout_constraintEnd_toEndOf="@+id/edNewPrice"
+                app:layout_constraintStart_toStartOf="@+id/edNewPrice"
+                app:layout_constraintTop_toTopOf="@+id/tvDiscount" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiOldPrice"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="@dimen/width_120"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_8"
+                app:errorEnabled="true"
+                app:helperText="@string/priceRange"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvOldPrice">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edOldPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:hint="@string/price"
+                    android:inputType="none|number|numberDecimal"
+                    android:maxLength="8"
+                    android:text="@string/minPrice" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiDiscountNum"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="@dimen/width_72"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:helperText="@string/discountRange"
+                app:layout_constraintBottom_toBottomOf="@+id/tiOldPrice"
+                app:layout_constraintEnd_toStartOf="@+id/edNewPrice"
+                app:layout_constraintStart_toEndOf="@+id/tiOldPrice"
+                app:layout_constraintTop_toTopOf="@+id/tiOldPrice">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edDiscountNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:gravity="center"
+                    android:hint="@string/percentage"
+                    android:inputType="number"
+                    android:maxLength="2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--
+            <EditText
+                android:id="@+id/edmultiDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:autofillHints=""
+                android:background="@drawable/ed_style"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/description"
+                android:inputType="textMultiLine"
+                android:maxLength="250"
+                android:maxLines="8"
+                android:minLines="5"
+                android:padding="@dimen/margin_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tiOldPrice" />
+            -->
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiDescription"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:gravity="top"
+                app:counterEnabled="true"
+                app:counterMaxLength="200"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tiOldPrice">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:ems="10"
+                    android:gravity="start"
+                    android:hint="@string/description"
+                    android:inputType="textMultiLine"
+                    android:maxLength="200"
+                    android:minLines="5" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tiDescription">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout2"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_8"
+                    android:layout_weight="0.65"
+                    android:hint="@string/category"
+                    app:errorEnabled="true">
+
+                    <com.trueandtrust.shoplex.model.extra.TextInputDropDownMenu
+                        android:id="@+id/actTVCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_8"
+                    android:layout_weight="0.35"
+                    android:hint="@string/sub_category"
+                    app:errorEnabled="true">
+
+                    <com.trueandtrust.shoplex.model.extra.TextInputDropDownMenu
+                        android:id="@+id/actTVSubCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnAddProduct"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/button_effect"
+        android:text="@string/add_product"
+        android:textSize="18sp" />
+
+</LinearLayout>
