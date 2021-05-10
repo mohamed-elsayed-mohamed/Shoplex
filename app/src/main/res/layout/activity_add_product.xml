@@ -147,8 +147,8 @@
             <TextView
                 android:id="@+id/tvDiscountNum"
                 style="@android:style/Widget.EditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="3dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="@dimen/margin_8"
                 android:background="@android:color/transparent"
                 android:text="@string/zero"
