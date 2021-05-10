@@ -3,7 +3,7 @@ package com.trueandtrust.shoplex.model.pojo
 
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Permium
-import com.trueandtrust.shoplex.model.enumurations.SubCategory
+import com.trueandtrust.shoplex.model.enumurations.SubFashion
 
 open class Product {
     var productID : Int = 0
@@ -14,7 +14,7 @@ open class Product {
     var newPrice : Double = 0.0
     var discount : Int = 0
     var category : Category = Category.FASHION
-    var subCategory : SubCategory = SubCategory.MEN
+    var subCategory : SubFashion = SubFashion.MEN
     lateinit var image : String //array
     var rate : Double = 0.0
     var permium : Permium = Permium.BASIC
