@@ -87,25 +87,30 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
             if (binding.edmultiDescription.length() == 0) {
                 binding.edmultiDescription.error = "Please Enter Product Description"
             }
-
+            if (binding.edOldPrice.length() == 0) {
+                binding.edOldPrice.error = "Please Enter The Price"
+            }
         }
-        //plusbutton
+        //plus button
         binding.imgPlus.setOnClickListener {
             if (count >= 0 && count < 80) {
-
                 count += 5
-                binding.tvDiscountNum.text = count.toString() + "%"
+                binding.tvDiscountNum.text = "${count}%"
+                binding.tvDiscountNum.error = null
             } else {
                 binding.tvDiscountNum.error = "The Maximum Is 80%"
             }
         }
-
-        //minsbutton
+        //mins button
         binding.imgMunis.setOnClickListener {
             if (count > 0) {
 
+            if (count > 0) {
                 count -= 5
-                binding.tvDiscountNum.text = "$count"
+                binding.tvDiscountNum.text = "$count%"
+                binding.tvDiscountNum.error = null
+            } else if(count < 0 ){
+                binding.tvDiscountNum.error = null
             } else {
                 binding.tvDiscountNum.error = "The Maximum Is 0%"
             }
