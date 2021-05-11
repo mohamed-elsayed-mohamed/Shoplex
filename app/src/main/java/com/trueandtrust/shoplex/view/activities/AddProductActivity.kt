@@ -6,7 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -18,7 +21,7 @@ import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Premium
-import com.trueandtrust.shoplex.model.enumurations.SubCategory
+import com.trueandtrust.shoplex.model.enumurations.SubFashion
 import com.trueandtrust.shoplex.model.interfaces.ImagesChanges
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
@@ -55,14 +58,22 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         val arrCategory = Category.values().map {
             it.toString().split("_").joinToString(" ") { wrd -> wrd.toLowerCase().capitalize() }
         }
-        val arrayCategoryAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, arrCategory)
+        val arrayCategoryAdapter = ArrayAdapter(
+            applicationContext,
+            R.layout.dropdown_item,
+            arrCategory
+        )
         binding.actTVCategory.setAdapter(arrayCategoryAdapter)
 
         // SubCategory Dropdown
-        val arrSubcategory = SubCategory.values().map {
+        val arrSubcategory = SubFashion.values().map {
             it.toString().split("_").joinToString(" ") { wrd -> wrd.toLowerCase().capitalize() }
         }
-        val arraySubcategoryAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, arrSubcategory)
+        val arraySubcategoryAdapter = ArrayAdapter(
+            applicationContext,
+            R.layout.dropdown_item,
+            arrSubcategory
+        )
         binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
 
         settingUpButtons()
@@ -100,6 +111,14 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                     binding.tiOldPrice.error = getString(R.string.Required)
                     return@setOnClickListener
                 }
+                binding.actTVCategory.text.isNullOrEmpty() ->{
+                    binding.tiCategory.error = getString(R.string.Required)
+                    return@setOnClickListener
+                }
+                binding.actTVSubCategory.text.isNullOrEmpty() ->{
+                    binding.tiSubCategory.error = getString(R.string.Required)
+                    return@setOnClickListener
+                }
             }
 
             product.name = binding.edProductName.text.toString()
@@ -110,8 +129,18 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 product.discount = binding.edDiscountNum.text.toString().toInt()
             }
 
-            product.category = Category.valueOf(binding.actTVCategory.text.toString().replace(" ", "_").toUpperCase())
-            product.subCategory = SubCategory.valueOf(binding.actTVSubCategory.text.toString().replace(" ", "_").toUpperCase())
+            product.category = Category.valueOf(
+                binding.actTVCategory.text.toString().replace(
+                    " ",
+                    "_"
+                ).toUpperCase()
+            )
+            product.subCategory = SubFashion.valueOf(
+                binding.actTVSubCategory.text.toString().replace(
+                    " ",
+                    "_"
+                ).toUpperCase()
+            )
             product.premium = Premium.BASIC
 
         }
@@ -121,13 +150,11 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         // Product Name
         binding.edProductName.addTextChangedListener {
             binding.tiProductName.error = null
-            //product.name = binding.edProductName.text.toString()
         }
 
         // Description
         binding.edDescription.addTextChangedListener{
             binding.tiDescription.error = null
-            //product.description = binding.edDescription.text.toString()
         }
 
         // Discount
@@ -139,21 +166,15 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(count > 0 && !binding.edDiscountNum.text.isNullOrEmpty() && !binding.edOldPrice.text.isNullOrEmpty()){
-                    binding.edNewPrice.text = (binding.edOldPrice.text.toString().toFloat() - (binding.edOldPrice.text.toString().toFloat() * (binding.edDiscountNum.text.toString().toInt()/100.0F))).toString()
-                }else{
-                    binding.edNewPrice.text = binding.edOldPrice.text.toString().toFloat().toString()
+                if (count > 0 && !binding.edDiscountNum.text.isNullOrEmpty() && !binding.edOldPrice.text.isNullOrEmpty()) {
+                    binding.edNewPrice.text = (binding.edOldPrice.text.toString()
+                        .toFloat() - (binding.edOldPrice.text.toString()
+                        .toFloat() * (binding.edDiscountNum.text.toString()
+                        .toInt() / 100.0F))).toString()
+                } else {
+                    binding.edNewPrice.text =
+                        binding.edOldPrice.text.toString().toFloat().toString()
                 }
-
-                    /*
-                if(binding.edOldPrice.text!!.isNotEmpty()) {
-                    product.price = binding.edOldPrice.text.toString().toFloat()
-                }
-                product.newPrice = binding.edNewPrice.text.toString().toFloat()
-                if(binding.edDiscountNum.text!!.isNotEmpty()) {
-                    product.discount = binding.edDiscountNum.text.toString().toInt()
-                }
-                */
             }
         })
 
@@ -182,25 +203,16 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                         .toFloat() - (binding.edOldPrice.text.toString()
                         .toFloat() * (binding.edDiscountNum.text.toString()
                         .toInt() / 100.0F))).toString()
-                } else if(count > 0 && binding.edDiscountNum.text.isNullOrEmpty()){
+                } else if (count > 0 && binding.edDiscountNum.text.isNullOrEmpty()) {
                     if (binding.edOldPrice.text.toString().toFloat() >= 10) {
-                        binding.edNewPrice.text = binding.edOldPrice.text.toString().toFloat().toString()
+                        binding.edNewPrice.text =
+                            binding.edOldPrice.text.toString().toFloat().toString()
                     } else {
                         binding.edNewPrice.text = getString(R.string.minPrice).toFloat().toString()
                     }
-                }else{
+                } else {
                     binding.edNewPrice.text = getString(R.string.minPrice).toFloat().toString()
                 }
-
-                /*
-                if(binding.edOldPrice.text!!.isNotEmpty()) {
-                    product.price = binding.edOldPrice.text.toString().toFloat()
-                }
-                product.newPrice = binding.edNewPrice.text.toString().toFloat()
-                if(binding.edDiscountNum.text!!.isNotEmpty()) {
-                    product.discount = binding.edDiscountNum.text.toString().toInt()
-                }
-                */
             }
         })
 
@@ -211,6 +223,16 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 }
             }
         }
+
+
+
+        binding.actTVCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+            binding.tiCategory.error = null
+        }
+
+        binding.actTVSubCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+            binding.tiSubCategory.error = null
+        }
     }
 
 
@@ -219,7 +241,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = "image/*"
-        startActivityForResult(intent, OPEN_GALLERY_CODE);
+        startActivityForResult(intent, OPEN_GALLERY_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -271,12 +293,12 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         if(product.imageSlideList.count() == 0){
             binding.imgSliderAddProduct.setBackgroundResource(R.drawable.choose_product)
             binding.rvUploadImages.background = null
-            param.setMargins(0, 0, 0 , 0)
+            param.setMargins(0, 0, 0, 0)
         }else{
             binding.imgSliderAddProduct.background = null
             binding.rvUploadImages.setBackgroundResource(R.drawable.ed_style)
             val margin_16 = resources.getDimension(R.dimen.margin_16).toInt()
-            param.setMargins(margin_16, margin_16, margin_16 , 0)
+            param.setMargins(margin_16, margin_16, margin_16, 0)
         }
 
         binding.rvUploadImages.layoutParams = param
