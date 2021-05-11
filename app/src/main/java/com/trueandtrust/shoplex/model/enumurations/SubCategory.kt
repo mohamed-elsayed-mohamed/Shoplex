@@ -33,9 +33,6 @@ enum class SubAccessors{
     SELFY_STICK
 }
 
-<<<<<<<<< Temporary merge branch 1
-}
-=========
 enum class SubBoos{
     ARTANDHUMANTIES,
     FICTION,
@@ -43,4 +40,4 @@ enum class SubBoos{
     SIENCEANDTECHNOLOGY,
     EDUCATION
 }
->>>>>>>>> Temporary merge branch 2
+

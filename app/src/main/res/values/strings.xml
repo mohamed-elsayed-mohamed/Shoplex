@@ -51,11 +51,10 @@
     <string name="_4_5_5">4.5/5</string>
     <string name="longtext">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,as opposed to using Content here, content here, making it look like readable English.</string>
     <string name="all_colors">All Colors</string>
-<<<<<<<<< Temporary merge branch 1
     <string name="Plus_Sign">+</string>
-=========
+
     <string name="user_name">User Name</string>
->>>>>>>>> Temporary merge branch 2
+
 
     <string name="home">Home</string>
     <string name="products">Products</string>
@@ -92,4 +91,7 @@
     <string name="afterDiscount">After Discount</string>
     <string name="maxDiscount">90</string>
     <string name="discountRange">0-90 %</string>
+    <string name="type_a_message">Type a Message</string>
+    <string name="Hello">Hello</string>
+    <string name="monday_12_00">Monday 12:00</string>
 </resources>

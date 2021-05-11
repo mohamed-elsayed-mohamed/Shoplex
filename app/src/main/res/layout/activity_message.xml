@@ -37,6 +37,7 @@
                     android:layout_width="@dimen/height_45"
                     android:layout_height="@dimen/height_45"
                     android:contentDescription="@string/todo"
+                    android:scaleType="centerCrop"
                     tools:src="@tools:sample/avatars" />
 
             </androidx.cardview.widget.CardView>
@@ -53,39 +54,48 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rc_message"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_margin="@dimen/margin_8"
+        android:layout_marginEnd="273dp"
+        android:background="@drawable/chat_text_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSendMessage"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
             android:id="@+id/edSendMesssage"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8"
             android:background="@android:color/transparent"
             android:hint="@string/type_a_message"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:padding="@dimen/padding_16" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/purple_500"
-            android:padding="@dimen/margin_16"
-            android:src="@drawable/ic_send"
-            app:layout_constraintBottom_toBottomOf="@+id/edSendMesssage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/edSendMesssage"
-            app:layout_constraintTop_toTopOf="@+id/edSendMesssage" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/btnSendMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:background="@drawable/send_button_style"
+        android:contentDescription="@string/todo"
+        android:padding="@dimen/margin_16"
+        android:src="@drawable/ic_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
