@@ -51,15 +51,17 @@
     <string name="_4_5_5">4.5/5</string>
     <string name="longtext">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,as opposed to using Content here, content here, making it look like readable English.</string>
     <string name="all_colors">All Colors</string>
-    <string name="user_name">User Name</string>
-    <string name="type_a_message">Type a Message...</string>
+<<<<<<<<< Temporary merge branch 1
     <string name="Plus_Sign">+</string>
+=========
+    <string name="user_name">User Name</string>
+>>>>>>>>> Temporary merge branch 2
 
     <string name="home">Home</string>
     <string name="products">Products</string>
     <string name="chat">Chat</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="LastOrder">Last Order</string>
+    <string name="LastOrder">Last Orders</string>
     <string name="StoreLocation">Store Location</string>
     <string name="Language">Arabic</string>
     <string name="Notification">Notification</string>
@@ -77,6 +79,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_price">New Price</string>
     <string name="sold">12 Sold</string>
+    <string name="search">Search</string>
+
     <string name="Required">Required</string>
     <string name="min_description_err">Minimum Product Description is 30 Characters</string>
     <string name="min_product_name_err">Minimum Name is 5 characters</string>

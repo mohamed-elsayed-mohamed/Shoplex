@@ -4,8 +4,13 @@ package com.trueandtrust.shoplex.model.pojo
 import android.net.Uri
 import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.model.enumurations.Category
+<<<<<<<<< Temporary merge branch 1
 import com.trueandtrust.shoplex.model.enumurations.Premium
+import com.trueandtrust.shoplex.model.enumurations.SubCategory
+=========
+import com.trueandtrust.shoplex.model.enumurations.Permium
 import com.trueandtrust.shoplex.model.enumurations.SubFashion
+>>>>>>>>> Temporary merge branch 2
 
 open class Product {
     var productID : Int = 0
@@ -17,10 +22,14 @@ open class Product {
     var newPrice : Float = 0.0F
     var discount : Int = 0
     var category : Category = Category.FASHION
-    var subCategory : SubFashion = SubFashion.MEN
-    lateinit var image : String //array
+<<<<<<<<< Temporary merge branch 1
+    var subCategory : SubCategory = SubCategory.MEN
     var images : ArrayList<Uri> = ArrayList()
     val imageSlideList = ArrayList<SlideModel>()
+=========
+    var subCategory : SubFashion = SubFashion.MEN
+    lateinit var image : String //array
+>>>>>>>>> Temporary merge branch 2
     var rate : Double = 0.0
     var permium : Premium = Premium.BASIC
 

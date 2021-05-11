@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.R
@@ -18,7 +19,6 @@ import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Premium
-
 import com.trueandtrust.shoplex.model.enumurations.SubFashion
 import com.trueandtrust.shoplex.model.interfaces.ImagesChanges
 import com.trueandtrust.shoplex.model.pojo.Product
