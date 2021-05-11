@@ -18,7 +18,8 @@ import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Premium
-import com.trueandtrust.shoplex.model.enumurations.SubCategory
+
+import com.trueandtrust.shoplex.model.enumurations.SubFashion
 import com.trueandtrust.shoplex.model.interfaces.ImagesChanges
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
@@ -59,7 +60,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         binding.actTVCategory.setAdapter(arrayCategoryAdapter)
 
         // SubCategory Dropdown
-        val arrSubcategory = SubCategory.values().map {
+        val arrSubcategory = SubFashion.values().map {
             it.toString().split("_").joinToString(" ") { wrd -> wrd.toLowerCase().capitalize() }
         }
         val arraySubcategoryAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, arrSubcategory)
@@ -111,8 +112,8 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
             }
 
             product.category = Category.valueOf(binding.actTVCategory.text.toString().replace(" ", "_").toUpperCase())
-            product.subCategory = SubCategory.valueOf(binding.actTVSubCategory.text.toString().replace(" ", "_").toUpperCase())
-            product.premium = Premium.BASIC
+            product.subCategory = SubFashion.valueOf(binding.actTVSubCategory.text.toString().replace(" ", "_").toUpperCase())
+            product.permium = Premium.BASIC
 
         }
     }

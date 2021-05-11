@@ -5,7 +5,7 @@ import android.net.Uri
 import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Premium
-import com.trueandtrust.shoplex.model.enumurations.SubCategory
+import com.trueandtrust.shoplex.model.enumurations.SubFashion
 
 open class Product {
     var productID : Int = 0
@@ -22,7 +22,7 @@ open class Product {
     var images : ArrayList<Uri> = ArrayList()
     val imageSlideList = ArrayList<SlideModel>()
     var rate : Double = 0.0
-    var permium : Permium = Permium.BASIC
+    var permium : Premium = Premium.BASIC
 
     fun getAllProducts(category: Category) : ArrayList<Product> {
         return arrayListOf(Product())

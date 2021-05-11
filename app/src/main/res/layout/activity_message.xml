@@ -80,8 +80,11 @@
             android:background="@color/purple_500"
             android:padding="@dimen/margin_16"
             android:src="@drawable/ic_send"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/edSendMesssage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/edSendMesssage"
+            app:layout_constraintTop_toTopOf="@+id/edSendMesssage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
