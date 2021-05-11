@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Shoplex">
         <activity android:name=".view.activities.ProductDetails"/>
         <activity android:name=".view.activities.ConfirmProductActivity"/>
-        <activity android:name=".view.activities.AddProductActivity" android:windowSoftInputMode="adjustResize">
+        <activity android:name=".view.activities.AddProductActivity" android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

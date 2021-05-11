@@ -6,11 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
@@ -19,16 +18,14 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
-import com.trueandtrust.shoplex.model.enumurations.Category
-import com.trueandtrust.shoplex.model.enumurations.Premium
-import com.trueandtrust.shoplex.model.enumurations.SubFashion
+import com.trueandtrust.shoplex.model.enumurations.*
 import com.trueandtrust.shoplex.model.interfaces.ImagesChanges
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 
-
 class AddProductActivity : AppCompatActivity(), ImagesChanges {
     private val OPEN_GALLERY_CODE = 200
+    private val MAX_IMAGES_SIZE = 6
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var viewModel: AddProductVM
     private lateinit var product: Product
@@ -47,6 +44,27 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
             )
         })
 
+        viewModel.arrCategory.observe(this, {
+            val arrayCategoryAdapter = ArrayAdapter(
+                applicationContext,
+                R.layout.dropdown_item,
+                it
+            )
+            binding.actTVCategory.setAdapter(arrayCategoryAdapter)
+        })
+
+        viewModel.arrSubCategory.observe(this, {
+            // SubCategory Dropdown
+
+            val arraySubcategoryAdapter = ArrayAdapter(
+                applicationContext,
+                R.layout.dropdown_item,
+                it
+            )
+            binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
+
+        })
+
         // Define product from view model
         product = viewModel.product.value!!
 
@@ -55,27 +73,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         binding.rvUploadImages.adapter = myAdapter
 
         // Category Dropdown
-        val arrCategory = Category.values().map {
-            it.toString().split("_").joinToString(" ") { wrd -> wrd.toLowerCase().capitalize() }
-        }
-        val arrayCategoryAdapter = ArrayAdapter(
-            applicationContext,
-            R.layout.dropdown_item,
-            arrCategory
-        )
-        binding.actTVCategory.setAdapter(arrayCategoryAdapter)
-
-        // SubCategory Dropdown
-        val arrSubcategory = SubFashion.values().map {
-            it.toString().split("_").joinToString(" ") { wrd -> wrd.toLowerCase().capitalize() }
-        }
-        val arraySubcategoryAdapter = ArrayAdapter(
-            applicationContext,
-            R.layout.dropdown_item,
-            arrSubcategory
-        )
-        binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
-
+        viewModel.getCategory()
         settingUpButtons()
 
         settingUpEditTexts()
@@ -84,7 +82,10 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
     private fun settingUpButtons(){
         // AddImage Button
         binding.btnAddProductImages.setOnClickListener {
-            openGalleryForImages()
+            if(product.images.count() < MAX_IMAGES_SIZE) {
+                openGalleryForImages()
+            }else
+                Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
         }
 
         // AddProduct Button
@@ -121,6 +122,11 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 }
             }
 
+            if(product.images.isNullOrEmpty()){
+                Toast.makeText(this, "Please Select Your Product Images", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             product.name = binding.edProductName.text.toString()
             product.description = binding.edDescription.text.toString()
             product.price = binding.edOldPrice.text.toString().toFloat()
@@ -129,20 +135,19 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 product.discount = binding.edDiscountNum.text.toString().toInt()
             }
 
-            product.category = Category.valueOf(
+            product.category =
                 binding.actTVCategory.text.toString().replace(
                     " ",
                     "_"
                 ).toUpperCase()
-            )
-            product.subCategory = SubFashion.valueOf(
+
+            product.subCategory =
                 binding.actTVSubCategory.text.toString().replace(
                     " ",
                     "_"
                 ).toUpperCase()
-            )
-            product.premium = Premium.BASIC
 
+            product.premium = Premium.BASIC
         }
     }
 
@@ -167,10 +172,12 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (count > 0 && !binding.edDiscountNum.text.isNullOrEmpty() && !binding.edOldPrice.text.isNullOrEmpty()) {
-                    binding.edNewPrice.text = (binding.edOldPrice.text.toString()
+                    val newPrice = (binding.edOldPrice.text.toString()
                         .toFloat() - (binding.edOldPrice.text.toString()
                         .toFloat() * (binding.edDiscountNum.text.toString()
-                        .toInt() / 100.0F))).toString()
+                        .toInt() / 100.0F)))
+
+                    binding.edNewPrice.text = "%.2f".format(newPrice)
                 } else {
                     binding.edNewPrice.text =
                         binding.edOldPrice.text.toString().toFloat().toString()
@@ -199,10 +206,11 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 if (count > 0 && !binding.edDiscountNum.text.isNullOrEmpty() && binding.edOldPrice.text.toString()
                         .toFloat() >= 10
                 ) {
-                    binding.edNewPrice.text = (binding.edOldPrice.text.toString()
+                    val newPrice = (binding.edOldPrice.text.toString()
                         .toFloat() - (binding.edOldPrice.text.toString()
                         .toFloat() * (binding.edDiscountNum.text.toString()
-                        .toInt() / 100.0F))).toString()
+                        .toInt() / 100.0F)))
+                    binding.edNewPrice.text = "%.2f".format(newPrice)
                 } else if (count > 0 && binding.edDiscountNum.text.isNullOrEmpty()) {
                     if (binding.edOldPrice.text.toString().toFloat() >= 10) {
                         binding.edNewPrice.text =
@@ -224,10 +232,12 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
             }
         }
 
-
-
         binding.actTVCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             binding.tiCategory.error = null
+            binding.actTVSubCategory.text = null
+            val selectedItem = parent.getItemAtPosition(position).toString()
+
+            viewModel.getSubCategory(selectedItem)
         }
 
         binding.actTVSubCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
@@ -255,9 +265,11 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 for (i in 0 until count!!) {
                     var imageUri: Uri = data.clipData?.getItemAt(i)!!.uri
 
-                    if (!product.images.contains(imageUri)) {
+                    if (!product.images.contains(imageUri) && product.images.count() < MAX_IMAGES_SIZE) {
                         product.images.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
+                    } else if (product.images.count() >= MAX_IMAGES_SIZE) {
+                        Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else if (data?.data != null) {

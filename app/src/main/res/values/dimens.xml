@@ -34,4 +34,5 @@
     <dimen name="width_72">72dp</dimen>
     <dimen name="margin_84">84dp</dimen>
     <dimen name="padding_6">6dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
 </resources>

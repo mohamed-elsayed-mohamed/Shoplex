@@ -248,6 +248,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
                 android:orientation="horizontal"
                 android:weightSum="1"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -257,10 +259,10 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tiCategory"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8"
-                    android:layout_weight="0.65"
+                    android:layout_marginEnd="@dimen/margin_4"
+                    android:layout_weight="0.5"
                     android:hint="@string/category"
                     app:errorEnabled="true">
 
@@ -276,10 +278,10 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tiSubCategory"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_8"
-                    android:layout_weight="0.35"
+                    android:layout_marginStart="@dimen/margin_4"
+                    android:layout_weight="0.5"
                     android:hint="@string/sub_category"
                     app:errorEnabled="true">
 

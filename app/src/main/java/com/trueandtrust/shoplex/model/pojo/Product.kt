@@ -16,11 +16,10 @@ open class Product {
     var price : Float = 0.0F
     var newPrice : Float = 0.0F
     var discount : Int = 0
-    var category : Category = Category.FASHION
+    var category : String = ""
     var images : ArrayList<Uri> = ArrayList()
     val imageSlideList = ArrayList<SlideModel>()
-    var subCategory : SubFashion = SubFashion.MEN
-    lateinit var image : String //array
+    var subCategory : String = ""
     var rate : Double = 0.0
     var premium : Premium = Premium.BASIC
 
