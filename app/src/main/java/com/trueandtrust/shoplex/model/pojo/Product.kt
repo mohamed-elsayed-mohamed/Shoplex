@@ -5,8 +5,7 @@ import android.net.Uri
 import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Premium
-import com.trueandtrust.shoplex.model.enumurations.SubCategory
-import com.trueandtrust.shoplex.model.enumurations.Permium
+
 import com.trueandtrust.shoplex.model.enumurations.SubFashion
 
 open class Product {
