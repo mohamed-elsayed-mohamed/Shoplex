@@ -2,10 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.trueandtrust.shoplex">
 
-
+<<<<<<<<< Temporary merge branch 1
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+=========
+    <uses-permission android:name="android.permission.INTERNET" />
+>>>>>>>>> Temporary merge branch 2
 
     <application
         android:allowBackup="true"
@@ -14,26 +16,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Shoplex">
-
+<<<<<<<<< Temporary merge branch 1
+<<<<<<<<< Temporary merge branch 1
         <activity android:name=".view.activities.ProductDetails"/>
         <activity android:name=".view.activities.ConfirmProductActivity"/>
         <activity android:name=".view.activities.AddProductActivity" android:windowSoftInputMode="adjustResize">
+=========
+        <activity android:name=".view.activities.MessageActivity">
+>>>>>>>>> Temporary merge branch 2
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<<<< Temporary merge branch 1
+        <activity android:name=".view.activities.StoreLocationActivity"></activity>
+        <activity android:name=".view.activities.LastOrderActivity" />
+=========
 
-        <activity android:name=".view.activities.MessageActivity">
+        <activity android:name=".view.activities.StoreLocationActivity"
+            android:theme="@style/AppTheme.Home">
+
 
         </activity>
 
-        <activity android:name=".view.activities.StoreLocationActivity"></activity>
-        <activity android:name=".view.activities.LastOrderActivity" />
+        <activity android:name=".view.activities.LastOrderActivity"
+            android:theme="@style/AppTheme.Home">
+        </activity>
+
+>>>>>>>>> Temporary merge branch 2
         <activity
             android:name=".view.activities.HomeActivity"
             android:theme="@style/AppTheme.Home">
+=========
+        <activity android:name=".view.activities.ProductDetails" />
+        <activity android:name=".view.activities.ConfirmProductActivity" />
+        <activity android:name=".view.activities.AddProductActivity">
+
+>>>>>>>>> Temporary merge branch 2
         </activity>
         <activity android:name=".view.activities.MainActivity" />
     </application>

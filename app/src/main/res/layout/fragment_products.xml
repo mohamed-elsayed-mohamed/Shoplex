@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/product_gv" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/fabAddProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

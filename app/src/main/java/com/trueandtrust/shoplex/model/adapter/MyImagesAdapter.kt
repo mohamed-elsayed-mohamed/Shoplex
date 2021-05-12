@@ -8,14 +8,14 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.model.interfaces.ImagesChanges
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 
 class MyImagesAdapter : RecyclerView.Adapter<MyImagesAdapter.ImagesViewHolder> {
 
     private var myImages: ArrayList<Uri>
-    private var notifyBy: ImagesChanges
+    private var notifyBy: INotifyMVP
 
-    constructor(myImages: ArrayList<Uri>, notifyBy: ImagesChanges) {
+    constructor(myImages: ArrayList<Uri>, notifyBy: INotifyMVP) {
         this.myImages = myImages
         this.notifyBy = notifyBy
     }
@@ -36,7 +36,7 @@ class MyImagesAdapter : RecyclerView.Adapter<MyImagesAdapter.ImagesViewHolder> {
             val btnCancel = itemView.findViewById<ImageButton>(R.id.imgButtonCancel)
 
             btnCancel.setOnClickListener {
-                notifyBy.onRemoveItem(position = adapterPosition)
+                notifyBy.onImageRemoved(position = adapterPosition)
             }
 
             Glide.with(itemView.context).load(imageURI).into(itemView.findViewById(R.id.uploadedImage))
