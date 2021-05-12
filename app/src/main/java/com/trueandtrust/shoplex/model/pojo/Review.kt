@@ -1,4 +1,4 @@
-package com.trueandtrust.shoplex.model.enumurations
+package com.trueandtrust.shoplex.model.pojo
 
 import java.util.*
 

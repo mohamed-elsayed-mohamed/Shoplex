@@ -1,4 +1,6 @@
-package com.trueandtrust.shoplex.model.enumurations
+package com.trueandtrust.shoplex.model.pojo
+
+import com.trueandtrust.shoplex.model.pojo.Review
 
 class Reviews {
     var totalRate : Double = 0.0
