@@ -29,21 +29,21 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         binding.btnBuyBasic.setOnClickListener {
             product.premium = Premium.BASIC
             product.premiumDays = 14
-            binding.cardStandard.isEnabled = false
-            binding.cardPremium.isEnabled = false
+            binding.cardStandard.visibility = View.INVISIBLE
+            binding.cardPremium.visibility = View.INVISIBLE
         }
         binding.btnBuyStandard.setOnClickListener {
             product.premium = Premium.STANDARD
             product.premiumDays = 30
-            binding.cardBasic.isEnabled = false
-            binding.cardPremium.isEnabled = false
+            binding.cardBasic.visibility = View.INVISIBLE
+            binding.cardPremium.visibility = View.INVISIBLE
         }
 
         binding.btnBuyPremium.setOnClickListener {
             product.premium = Premium.PREMIUM
-            product.premiumDays = 60
-            binding.cardBasic.isEnabled = false
-            binding.cardStandard.isEnabled = false
+            product.premiumDays = 90
+            binding.cardBasic.visibility = View.INVISIBLE
+            binding.cardStandard.visibility = View.INVISIBLE
         }
 
         val property1 = Properties("Size", arrayListOf("20", "30", "40", "50"))
@@ -69,7 +69,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         binding.imgSlideConfirm.setImageList(product.getImageSlides())
         binding.imgProductConfirm.setImageURI(product.imagesListURI[0])
         if(product.price == product.newPrice) {
-            binding.tvNewPriceConfirm.visibility = View.GONE
+            binding.tvOldPriceConfirm.visibility = View.GONE
             binding.tvDiscountConfirm.visibility = View.GONE
         }
 

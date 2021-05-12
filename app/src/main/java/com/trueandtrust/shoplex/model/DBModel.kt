@@ -23,6 +23,7 @@ class DBModel {
     }
 
     fun addProduct(product: Product, context: Context){
+        product.imageSlideList = arrayListOf()
         pendingProductsRef.add(product).addOnSuccessListener {
             Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
         }.addOnFailureListener{

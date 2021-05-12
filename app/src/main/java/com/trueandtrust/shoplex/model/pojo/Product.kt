@@ -10,7 +10,6 @@ import com.google.firebase.firestore.Exclude
 import com.trueandtrust.shoplex.model.enumurations.Premium
 
 open class Product() : Parcelable {
-    // @set:Exclude @get:Exclude
     var productID : Int? = null
     var storeID : Int = 0
     var storeName : String = ""
@@ -22,18 +21,18 @@ open class Product() : Parcelable {
     var discount : Int = 0
     var category : String = ""
     var subCategory : String = ""
-    var images : ArrayList<String> = arrayListOf()
-
-    @set:Exclude @get:Exclude
-    var imageSlideList : ArrayList<SlideModel> = arrayListOf()
-
-    @set:Exclude @get:Exclude
-    var imagesListURI : ArrayList<Uri> = arrayListOf()
-
     var rate : Double? = null
     var premium : Premium? = null
     var premiumDays: Int = 0
     var properties: ArrayList<Properties> = arrayListOf()
+
+    var images : ArrayList<String> = arrayListOf()
+
+    @Exclude @set:Exclude @get:Exclude
+    var imagesListURI : ArrayList<Uri> = arrayListOf()
+
+    @Exclude @set:Exclude @get:Exclude
+    var imageSlideList : ArrayList<SlideModel> = arrayListOf()
 
     constructor(parcel: Parcel) : this() {
         name = parcel.readString().toString()
@@ -46,6 +45,7 @@ open class Product() : Parcelable {
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
     }
 
+    @Exclude
     fun getImageSlides(): ArrayList<SlideModel>{
         this.imageSlideList.clear()
         for(image in imagesListURI){
