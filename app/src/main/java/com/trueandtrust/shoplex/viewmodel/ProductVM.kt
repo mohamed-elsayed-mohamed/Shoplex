@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.trueandtrust.shoplex.model.enumurations.*
 import com.trueandtrust.shoplex.model.pojo.Product
 
-class AddProductVM: ViewModel {
+class ProductVM: ViewModel {
     var product: MutableLiveData<Product> = MutableLiveData()
     var arrCategory: MutableLiveData<List<String>> = MutableLiveData()
     var arrSubCategory: MutableLiveData<List<String>> = MutableLiveData()
@@ -22,7 +22,7 @@ class AddProductVM: ViewModel {
 
     fun getSubCategory(selectedItem: String){
          val listSubCat =
-            when(Category.valueOf(selectedItem.toString().replace(" ", "_").toUpperCase())) {
+            when(Category.valueOf(selectedItem.replace(" ", "_").toUpperCase())) {
                 Category.FASHION -> SubFashion.values().toList()
                 Category.HEALTH_CARE -> SubHealth.values().toList()
                 Category.PHONE_AND_TABLETS -> SubPhone.values().toList()

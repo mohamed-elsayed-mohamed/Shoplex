@@ -8,7 +8,6 @@
         android:id="@+id/imgImage"
         android:layout_width="@dimen/width_100"
         android:layout_height="@dimen/width_100"
-        android:contentDescription="@string/todo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/green" />

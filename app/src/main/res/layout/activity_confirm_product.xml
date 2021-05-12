@@ -9,13 +9,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageView
+        <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/imgSlideConfirm"
             android:layout_width="match_parent"
             android:layout_height="@dimen/img_height"
-            android:contentDescription="@string/todo"
-            android:scaleType="fitXY"
+            app:iss_auto_cycle="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,7 +42,6 @@
             android:layout_height="@dimen/width_120"
             android:layout_marginStart="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_16"
-            android:contentDescription="@string/todo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgSlideConfirm"
             app:srcCompat="@drawable/product_two" />
@@ -53,10 +50,10 @@
             android:id="@+id/tvProductName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_8"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:text="Mifniinbfdn sl,lmmk lf,l, l,f fll "
+            android:text="@string/productName"
             android:textColor="@color/purple_700"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -68,7 +65,7 @@
             android:id="@+id/tvNewPriceConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/newPrice"
             android:textColor="@color/purple_700"
             android:textStyle="bold"
@@ -79,10 +76,10 @@
             android:id="@+id/tvOldPriceConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/old_price_strike"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/tvNewPriceConfirm"
+            app:layout_constraintStart_toStartOf="@+id/tvProductName"
             app:layout_constraintTop_toBottomOf="@+id/tvNewPriceConfirm" />
 
         <TextView
@@ -110,36 +107,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgProductConfirm" />
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/premium_card"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
-
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/offers"
             android:textColor="@color/purple_700"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+            android:id="@+id/cardPremium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginStart="@dimen/margin_4"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_4"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -199,7 +186,7 @@
                     android:layout_height="@dimen/height_40"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/roundedbutton"
+                    android:background="@drawable/button_effect"
                     android:text="@string/buy_now"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -215,13 +202,13 @@
             android:id="@+id/cardStandard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="@dimen/margin_4"
+            android:layout_marginTop="@dimen/margin_8"
             app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-            app:layout_constraintEnd_toStartOf="@+id/cardView2"
+            app:layout_constraintBottom_toBottomOf="@+id/cardPremium"
+            app:layout_constraintEnd_toStartOf="@+id/cardPremium"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toEndOf="@+id/cardBasic"
             app:layout_constraintTop_toBottomOf="@+id/textView9">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -277,7 +264,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/roundedbutton"
+                    android:background="@drawable/button_effect"
                     android:text="@string/buy_now"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -290,12 +277,12 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/cardBasic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="@dimen/margin_4"
+            android:layout_marginTop="@dimen/margin_8"
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/cardStandard"
             app:layout_constraintEnd_toStartOf="@+id/cardStandard"
@@ -357,7 +344,7 @@
                     android:layout_height="@dimen/height_40"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/roundedbutton"
+                    android:background="@drawable/button_effect"
                     android:text="@string/buy_now"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -371,16 +358,16 @@
 
         <Button
             android:id="@+id/btnConfirm"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="@dimen/ZERO"
+            android:layout_height="@dimen/height_45"
+            android:layout_margin="@dimen/margin_16"
             android:background="@drawable/solidbutton"
             android:text="@string/confirm"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cardPremium"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/cardBasic"
             app:layout_constraintTop_toBottomOf="@+id/cardStandard" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

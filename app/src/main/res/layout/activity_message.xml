@@ -34,7 +34,6 @@
                     android:id="@+id/imgToolbarChat"
                     android:layout_width="@dimen/height_45"
                     android:layout_height="@dimen/height_45"
-                    android:contentDescription="@string/todo"
                     tools:src="@tools:sample/avatars" />
 
             </androidx.cardview.widget.CardView>

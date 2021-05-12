@@ -19,15 +19,15 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.enumurations.*
-import com.trueandtrust.shoplex.model.interfaces.ImagesChanges
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
-import com.trueandtrust.shoplex.viewmodel.AddProductVM
+import com.trueandtrust.shoplex.viewmodel.ProductVM
 
-class AddProductActivity : AppCompatActivity(), ImagesChanges {
+class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private val OPEN_GALLERY_CODE = 200
     private val MAX_IMAGES_SIZE = 6
     private lateinit var binding: ActivityAddProductBinding
-    private lateinit var viewModel: AddProductVM
+    private lateinit var viewModel: ProductVM
     private lateinit var product: Product
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         setContentView(binding.root)
 
         // Define View Model
-        viewModel = ViewModelProvider(this).get(AddProductVM::class.java)
+        viewModel = ViewModelProvider(this).get(ProductVM::class.java)
         viewModel.product.observe(this, {
             updateSliderUI()
             binding.imgSliderAddProduct.setImageList(
@@ -69,7 +69,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         product = viewModel.product.value!!
 
         // Images Adapter
-        val myAdapter = MyImagesAdapter(viewModel.product.value!!.images, this)
+        val myAdapter = MyImagesAdapter(viewModel.product.value!!.imagesListURI, this)
         binding.rvUploadImages.adapter = myAdapter
 
         // Category Dropdown
@@ -82,7 +82,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
     private fun settingUpButtons(){
         // AddImage Button
         binding.btnAddProductImages.setOnClickListener {
-            if(product.images.count() < MAX_IMAGES_SIZE) {
+            if(product.imagesListURI.count() < MAX_IMAGES_SIZE) {
                 openGalleryForImages()
             }else
                 Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
@@ -122,7 +122,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 }
             }
 
-            if(product.images.isNullOrEmpty()){
+            if(product.imagesListURI.isNullOrEmpty()){
                 Toast.makeText(this, "Please Select Your Product Images", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -148,6 +148,10 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 ).toUpperCase()
 
             product.premium = Premium.BASIC
+
+            startActivity(Intent(this, ConfirmProductActivity::class.java).apply {
+                this.putExtra(getString(R.string.PRODUCT_KEY), product)
+            })
         }
     }
 
@@ -265,10 +269,10 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 for (i in 0 until count!!) {
                     var imageUri: Uri = data.clipData?.getItemAt(i)!!.uri
 
-                    if (!product.images.contains(imageUri) && product.images.count() < MAX_IMAGES_SIZE) {
-                        product.images.add(imageUri)
+                    if (!product.imagesListURI.contains(imageUri) && product.imagesListURI.count() < MAX_IMAGES_SIZE) {
+                        product.imagesListURI.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
-                    } else if (product.images.count() >= MAX_IMAGES_SIZE) {
+                    } else if (product.imagesListURI.count() >= MAX_IMAGES_SIZE) {
                         Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -276,8 +280,8 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 // if single image is selected
 
                 var imageUri: Uri = data.data!!
-                if (!product.images.contains(imageUri)) {
-                    product.images.add(imageUri)
+                if (!product.imagesListURI.contains(imageUri)) {
+                    product.imagesListURI.add(imageUri)
                     product.imageSlideList.add(SlideModel(imageUri.toString()))
                 }
             }
@@ -290,9 +294,9 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         }
     }
 
-    override fun onRemoveItem(position: Int) {
+    override fun onImageRemoved(position: Int) {
         viewModel.product.value!!.imageSlideList.removeAt(position)
-        viewModel.product.value!!.images.removeAt(position)
+        viewModel.product.value!!.imagesListURI.removeAt(position)
 
         binding.imgSliderAddProduct.setImageList(product.imageSlideList, ScaleTypes.CENTER_INSIDE)
         binding.rvUploadImages.adapter?.notifyDataSetChanged()
