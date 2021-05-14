@@ -1,21 +1,61 @@
 package com.trueandtrust.shoplex.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.trueandtrust.shoplex.R
+import android.widget.RatingBar
+import androidx.fragment.app.Fragment
+import com.trueandtrust.shoplex.databinding.FragmentReviewBinding
+import com.trueandtrust.shoplex.model.adapter.ReviewAdapter
+import com.trueandtrust.shoplex.model.pojo.Review
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ReviewFragment : Fragment() {
+    lateinit var binding : FragmentReviewBinding
+    private lateinit var reviewAdapter: ReviewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_review, container, false)
+        binding= FragmentReviewBinding.inflate(inflater,container,false)
+        val review = ArrayList<Review>()
+        val attrs: AttributeSet? = null
+
+        review.add(Review("azhar",
+             "https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg",
+             "Which review is likely to influence someone with an intense pizza craving? A five-star rating and “good pizza” is not bad, but it doesn’t have the same impact. A review doesn’t have to be the length of War and Peace, but an honest, detailed, and specific recollection goes a long way to building credibility.",
+
+                Date(15), RatingBar(context,attrs,5)
+        ))
+        review.add(Review("azhar",
+            "https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg",
+            "Which review is likely to influence someone with an intense pizza craving? A five-star rating and “good pizza” is not bad, but it doesn’t have the same impact. A review doesn’t have to be the length of War and Peace, but an honest, detailed, and specific recollection goes a long way to building credibility.",
+
+            Date(15), RatingBar(context,attrs,5)
+        ))
+        review.add(Review("azhar",
+            "https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg",
+            "Which review is likely to influence someone with an intense pizza craving? A five-star rating and “good pizza” is not bad, but it doesn’t have the same impact. A review doesn’t have to be the length of War and Peace, but an honest, detailed, and specific recollection goes a long way to building credibility.",
+
+            Date(15), RatingBar(context,attrs,5)
+        ))
+        review.add(Review("azhar",
+            "https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg",
+            "Which review is likely to influence someone with an intense pizza craving? A five-star rating and “good pizza” is not bad, but it doesn’t have the same impact. A review doesn’t have to be the length of War and Peace, but an honest, detailed, and specific recollection goes a long way to building credibility.",
+
+            Date(15), RatingBar(context,attrs,5)
+        ))
+
+        reviewAdapter = ReviewAdapter(review)
+        binding.rvReview.adapter = reviewAdapter
+        return binding.root
+
     }
 
 }

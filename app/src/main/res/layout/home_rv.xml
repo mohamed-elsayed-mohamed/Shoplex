@@ -53,7 +53,7 @@
                 android:layout_marginLeft="8dp" />
 
             <TextView
-                android:id="@+id/tv_brand"
+                android:id="@+id/tv_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/brand"
@@ -79,7 +79,7 @@
                 android:layout_marginLeft="8dp"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/img_product"
-                app:layout_constraintTop_toBottomOf="@+id/tv_brand" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_category" />
 
             <TextView
                 android:id="@+id/tv_location"
@@ -92,6 +92,18 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 app:layout_constraintStart_toEndOf="@id/img_product"
+                app:layout_constraintTop_toBottomOf="@+id/tv_price" />
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stauts"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
 

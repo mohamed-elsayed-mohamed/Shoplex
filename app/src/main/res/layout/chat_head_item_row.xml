@@ -18,6 +18,7 @@
             android:id="@+id/imgChatHead"
             android:layout_width="@dimen/width_75"
             android:layout_height="@dimen/width_75"
+            android:scaleType="fitXY"
             android:contentDescription="@string/todo"
             tools:srcCompat="@tools:sample/avatars" />
     </androidx.cardview.widget.CardView>
@@ -68,17 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvProductNameChatHead" />
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/margin_84"
-        android:layout_marginTop="@dimen/padding_4"
-        android:layout_marginBottom="@dimen/padding_4"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvProductNameChatHead"
-        app:layout_constraintTop_toBottomOf="@+id/cardImgChatHead" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

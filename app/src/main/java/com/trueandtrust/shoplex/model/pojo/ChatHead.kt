@@ -12,6 +12,22 @@ class ChatHead {
     var userName : String = ""
     var numOfMessage : Int = 0
 
+    constructor(
+        productName: String,
+        price: Double,
+        productImageUrl: String,
+        userName: String,
+        numOfMessage: Int
+    ) {
+        this.productName = productName
+        this.price = price
+        this.productImageUrl = productImageUrl
+        this.userName = userName
+        this.numOfMessage = numOfMessage
+    }
+
+    constructor()
+
     fun getChatHeadsInfo() : ArrayList<ChatHead>{
         return arrayListOf(ChatHead())
     }

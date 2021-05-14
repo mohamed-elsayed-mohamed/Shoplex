@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentProductsBinding
 import com.trueandtrust.shoplex.model.adapter.ProductAdapter
+import com.trueandtrust.shoplex.model.pojo.Product
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,11 +22,7 @@ import com.trueandtrust.shoplex.model.adapter.ProductAdapter
 class ProductsFragment : Fragment() {
     lateinit var binding : FragmentProductsBinding
     lateinit var gridView: GridView
-    private var productInfo = arrayOf("Fashion", "shirt", "Silva", "Andre", "Bruno",
-        "Fern")
-    private var productImages = intArrayOf(R.drawable.product, R.drawable.product, R.drawable.product,
-        R.drawable.product,
-        R.drawable.product, R.drawable.product)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -33,12 +30,23 @@ class ProductsFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.products)
         gridView=binding.gridView
+        val product = ArrayList<Product>()
 
-            val productAdapter = context?.let { ProductAdapter(it, productInfo, productImages) }
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        product.add(Product("bag",12.0F,6.0f,"14Sold",5.0,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+
+        val productAdapter = context?.let { ProductAdapter(it, product) }
             gridView.adapter = productAdapter
             gridView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 Toast.makeText(
-                    context, "You CLicked " + productInfo[+position],
+                    context, "You CLicked " + product[+position],
                     Toast.LENGTH_SHORT
                 ).show()
             }

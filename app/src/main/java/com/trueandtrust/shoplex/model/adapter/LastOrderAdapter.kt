@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.model.pojo.Orders
 
-class HomeAdapter (private val product: ArrayList<Product>) :
-        RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class LastOrderAdapter (private val product: ArrayList<Orders>) :
+        RecyclerView.Adapter<LastOrderAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -19,19 +19,19 @@ class HomeAdapter (private val product: ArrayList<Product>) :
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgProduct: ImageView
-        val tvproductName: TextView
+        val tvproductName:TextView
         val tvCategory: TextView
         val tvPrice: TextView
-        val tvLocation: TextView
+        val tvStatus: TextView
 
 
         init {
             // Define click listener for the ViewHolder's View.
             imgProduct = view.findViewById(R.id.img_product)
             tvproductName = view.findViewById(R.id.tv_product_name)
-            tvCategory = view.findViewById(R.id.tv_category)
+            tvCategory=view.findViewById(R.id.tv_category)
             tvPrice = view.findViewById(R.id.tv_price)
-            tvLocation = view.findViewById(R.id.tv_location)
+            tvStatus = view.findViewById(R.id.tv_status)
 
         }
     }
@@ -54,7 +54,7 @@ class HomeAdapter (private val product: ArrayList<Product>) :
         viewHolder.tvproductName.text = item.name
         viewHolder.tvCategory.text = item.category.toString()
         viewHolder.tvPrice.text = item.price.toString()
-        viewHolder.tvLocation.text = item.deliveryLoc.toString()
+        viewHolder.tvStatus.text = item.orderStatus.toString()
 
     }
 

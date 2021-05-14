@@ -70,7 +70,6 @@
     <string name="stauts">Status</string>
     <string name="location">Location</string>
     <string name="currentProduct">Current Product</string>
-    <string name="old_price"><strike>Old Price</strike></string>
     <string name="rating_value">4.5/5</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -89,4 +88,9 @@
     <string name="afterDiscount">After Discount</string>
     <string name="maxDiscount">90</string>
     <string name="discountRange">0-90 %</string>
+    <string name="all_review">Over All</string>
+    <string name="rating">All Rating</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="date">Date</string>
+    <string name="comment">Comment</string>
 </resources>

@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.trueandtrust.shoplex.R
+import com.trueandtrust.shoplex.model.pojo.Product
 
 
 internal class ProductAdapter(
         private val context: Context,
-        private val productInfo: Array<String>,
-        private val productImage: IntArray
+        private val product: ArrayList<Product>
     ) :
     BaseAdapter() {
         private var layoutInflater: LayoutInflater? = null
@@ -25,7 +26,7 @@ internal class ProductAdapter(
         private lateinit var tvSold: TextView
 
     override fun getCount(): Int {
-            return productInfo.size
+            return product.size
         }
         override fun getItem(position: Int): Any? {
             return null
@@ -53,13 +54,14 @@ internal class ProductAdapter(
             tvProductName = convertView.findViewById(R.id.tv_product_name)
             tvReview = convertView.findViewById(R.id.tv_review)
             tvSold = convertView.findViewById(R.id.tv_sold)
+            val item = product[position]
+            Glide.with(context).load(item.productImageUrl).into(imgProduct)
 
-            imgProduct.setImageResource(productImage[position])
-            tvOldPrice.text = productInfo[position]
-            tvNewPrice.text = productInfo[position]
-            tvProductName.text = productInfo[position]
-            tvReview.text = productInfo[position]
-            tvSold.text = productInfo[position]
+            tvOldPrice.text = item.oldPrice.toString()
+            tvNewPrice.text = item.newPrice.toString()
+            tvProductName.text = item.name
+            tvReview.text = item.rate.toString()
+            tvSold.text = item.sold
 
             return convertView
         }
