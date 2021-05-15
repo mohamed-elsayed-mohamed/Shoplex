@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.trueandtrust.shoplex">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +15,23 @@
 
         <activity
             android:name=".view.activities.HomeActivity"
-            android:theme="@style/AppTheme.Home">
+            android:theme="@style/AppTheme.Home"></activity>
+        <activity
+            android:name=".view.activities.AddProductActivity"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity android:name=".view.activities.ConfirmProductActivity"></activity>
+        <activity android:name=".view.activities.ProductDetails" />
+        <activity android:name=".view.activities.MessageActivity"></activity>
+        <activity
+            android:name=".view.activities.StoreLocationActivity"
+            android:theme="@style/AppTheme.Home"></activity>
+        <activity
+            android:name=".view.activities.LastOrderActivity"
+            android:theme="@style/AppTheme.Home"></activity>
+        <activity android:name=".view.activities.MainActivity">
+        </activity>
+
+        <activity android:name=".view.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,27 +39,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activities.AddProductActivity" android:windowSoftInputMode="adjustNothing">
-        </activity>
-
-        <activity android:name=".view.activities.ConfirmProductActivity">
-
-        </activity>
-
-        <activity android:name=".view.activities.ProductDetails"/>
-        <activity android:name=".view.activities.MessageActivity">
-
-        </activity>
-
-        <activity android:name=".view.activities.StoreLocationActivity"
-            android:theme="@style/AppTheme.Home">
-        </activity>
-
-        <activity android:name=".view.activities.LastOrderActivity"
-            android:theme="@style/AppTheme.Home">
-        </activity>
-
-        <activity android:name=".view.activities.MainActivity" />
     </application>
 
 </manifest>
