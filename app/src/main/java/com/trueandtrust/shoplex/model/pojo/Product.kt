@@ -4,13 +4,13 @@ package com.trueandtrust.shoplex.model.pojo
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.Exclude
 import com.trueandtrust.shoplex.model.enumurations.Premium
 
 open class Product() : Parcelable {
-
     var productID : Int? = null
     var storeID : Int = 0
     var storeName : String = ""
@@ -22,18 +22,18 @@ open class Product() : Parcelable {
     var discount : Int = 0
     var category : String = ""
     var subCategory : String = ""
-    var images : ArrayList<String> = arrayListOf()
-
-    @set:Exclude @get:Exclude
-    var imageSlideList : ArrayList<SlideModel> = arrayListOf()
-
-    @set:Exclude @get:Exclude
-    var imagesListURI : ArrayList<Uri> = arrayListOf()
-
     var rate : Double? = null
     var premium : Premium? = null
     var premiumDays: Int = 0
-    var properties: ArrayList<Properties> = arrayListOf()
+    var properties: ArrayList<Property> = arrayListOf()
+
+    var images : ArrayList<String> = arrayListOf()
+
+    @Exclude @set:Exclude @get:Exclude
+    var imagesListURI : ArrayList<Uri> = arrayListOf()
+
+    @Exclude @set:Exclude @get:Exclude
+    var imageSlideList : ArrayList<SlideModel> = arrayListOf()
 
     constructor(parcel: Parcel) : this() {
         name = parcel.readString().toString()
@@ -44,8 +44,10 @@ open class Product() : Parcelable {
         category = parcel.readString().toString()
         subCategory = parcel.readString().toString()
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
+        properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
     }
 
+    @Exclude
     fun getImageSlides(): ArrayList<SlideModel>{
         this.imageSlideList.clear()
         for(image in imagesListURI){
@@ -63,6 +65,7 @@ open class Product() : Parcelable {
         parcel.writeString(category)
         parcel.writeString(subCategory)
         parcel.writeArray(imagesListURI.toArray())
+        parcel.writeArray(properties.toArray())
     }
 
     override fun describeContents(): Int {

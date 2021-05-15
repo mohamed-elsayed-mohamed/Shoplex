@@ -6,8 +6,5 @@ class Properties {
 
     constructor(){}
 
-    constructor(title: String, property: ArrayList<String>) {
-        this.title = title
-        this.property = property
-    }
+
 }

@@ -3,6 +3,7 @@ package com.trueandtrust.shoplex.view.activities
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.trueandtrust.shoplex.R
@@ -12,6 +13,8 @@ import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.Properties
+import com.trueandtrust.shoplex.model.pojo.Property
+import kotlin.math.log
 
 class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var binding: ActivityConfirmProductBinding
@@ -29,27 +32,22 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         binding.btnBuyBasic.setOnClickListener {
             product.premium = Premium.BASIC
             product.premiumDays = 14
-            binding.cardStandard.isEnabled = false
-            binding.cardPremium.isEnabled = false
+            binding.cardStandard.visibility = View.INVISIBLE
+            binding.cardPremium.visibility = View.INVISIBLE
         }
         binding.btnBuyStandard.setOnClickListener {
             product.premium = Premium.STANDARD
             product.premiumDays = 30
-            binding.cardBasic.isEnabled = false
-            binding.cardPremium.isEnabled = false
+            binding.cardBasic.visibility = View.INVISIBLE
+            binding.cardPremium.visibility = View.INVISIBLE
         }
 
         binding.btnBuyPremium.setOnClickListener {
             product.premium = Premium.PREMIUM
-            product.premiumDays = 60
-            binding.cardBasic.isEnabled = false
-            binding.cardStandard.isEnabled = false
+            product.premiumDays = 90
+            binding.cardBasic.visibility = View.INVISIBLE
+            binding.cardStandard.visibility = View.INVISIBLE
         }
-
-        val property1 = Properties("Size", arrayListOf("20", "30", "40", "50"))
-        val property2 = Properties("Color", arrayListOf("Red", "Green", "Blue"))
-
-        product.properties = arrayListOf(property1, property2)
 
         binding.btnConfirm.setOnClickListener {
             val dbModel = DBModel(this)
@@ -69,7 +67,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         binding.imgSlideConfirm.setImageList(product.getImageSlides())
         binding.imgProductConfirm.setImageURI(product.imagesListURI[0])
         if(product.price == product.newPrice) {
-            binding.tvNewPriceConfirm.visibility = View.GONE
+            binding.tvOldPriceConfirm.visibility = View.GONE
             binding.tvDiscountConfirm.visibility = View.GONE
         }
 

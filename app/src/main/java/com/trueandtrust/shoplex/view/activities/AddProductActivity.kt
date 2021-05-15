@@ -25,19 +25,22 @@ import com.trueandtrust.shoplex.model.enumurations.SubFashion
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.interfaces.PropertyDialogListener
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
+import com.trueandtrust.shoplex.model.enumurations.*
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.viewmodel.ProductVM
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
 import com.trueandtrust.shoplex.viewmodel.ProductVM
 
 
-class AddProductActivity : AppCompatActivity(), INotifyMVP, PropertyDialogListener {
+class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private val OPEN_GALLERY_CODE = 200
     private val MAX_IMAGES_SIZE = 6
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var viewModel: ProductVM
     private lateinit var product: Product
-    private var propertyData: Property = Property()
-    private var propertyList: ArrayList<Property>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +83,10 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP, PropertyDialogListen
         // Images Adapter
         val myAdapter = MyImagesAdapter(viewModel.product.value!!.imagesListURI, this)
         binding.rvUploadImages.adapter = myAdapter
+
+        // Property Adapter
+        val propAdapter = PropertyAdapter(product.properties,this)
+        binding.rcProperty.adapter = propAdapter
 
         // Category Dropdown
         viewModel.getCategory()
@@ -168,16 +175,17 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP, PropertyDialogListen
         }
     }
 
-
     private fun settingUpEditTexts() {
         // Product Name
         binding.edProductName.addTextChangedListener {
             binding.tiProductName.error = null
+            //product.name = binding.edProductName.text.toString()
         }
 
         // Description
         binding.edDescription.addTextChangedListener {
             binding.tiDescription.error = null
+            //product.description = binding.edDescription.text.toString()
         }
 
         // Discount
@@ -259,6 +267,10 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP, PropertyDialogListen
                 binding.tiCategory.error = null
                 binding.actTVSubCategory.text = null
                 val selectedItem = parent.getItemAtPosition(position).toString()
+        binding.actTVCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+            binding.tiCategory.error = null
+            binding.actTVSubCategory.text = null
+            val selectedItem = parent.getItemAtPosition(position).toString()
 
                 viewModel.getSubCategory(selectedItem)
             }
@@ -267,6 +279,9 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP, PropertyDialogListen
             OnItemClickListener { parent, view, position, id ->
                 binding.tiSubCategory.error = null
             }
+        binding.actTVSubCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+            binding.tiSubCategory.error = null
+        }
     }
 
 
@@ -341,18 +356,16 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP, PropertyDialogListen
     }
 
     private fun openPropertyDialog() {
-
         val propertyDialog = PropertyDialog(this)
-        propertyDialog.show(supportFragmentManager, "Property Dialog")
-
+        propertyDialog.show(supportFragmentManager,"Property Dialog")
     }
 
     override fun applyData(property: Property) {
-        propertyData = property
-        propertyList!!.add(propertyData)
+        product.properties.add(property)
+        binding.rcProperty.adapter!!.notifyDataSetChanged()
+    }
 
-
-        val propAdapter = PropertyAdapter(propertyList!!, this)
-        binding.rcProperty.adapter = propAdapter
+    override fun onPropertyRemoved(position: Int) {
+        super.onPropertyRemoved(position)
     }
 }
