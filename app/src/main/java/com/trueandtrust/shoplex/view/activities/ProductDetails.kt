@@ -16,14 +16,17 @@ class ProductDetails : AppCompatActivity() {
 
 
         var pagerAdapter: PagerAdapter = PagerAdapter(supportFragmentManager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
         binding.viewPager.adapter = pagerAdapter
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 binding.viewPager.currentItem = tab.position
+                title = tab.text
+
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
-
+        title = binding.viewPager.adapter!!.getPageTitle(0)
     }
 }

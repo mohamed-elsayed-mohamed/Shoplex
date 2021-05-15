@@ -24,5 +24,16 @@ class PagerAdapter(fm:FragmentManager) : FragmentPagerAdapter(fm) {
         }
     }
 
+    override fun getPageTitle(position: Int): CharSequence? {
+        when(position) {
+            0 -> {
+                return "Products"
+            }
+            else -> {
+                return "Reviews"
+            }
+        }
+    }
+
 
 }
