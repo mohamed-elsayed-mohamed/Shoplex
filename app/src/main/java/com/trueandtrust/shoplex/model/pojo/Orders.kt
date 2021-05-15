@@ -2,9 +2,11 @@ package com.trueandtrust.shoplex.model.pojo
 
 import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 
-class Orders : Product() {
+class Orders : Product {
     var orderID : Int = 0
     var orderStatus : OrderStatus = OrderStatus.CURRENT
+
+    constructor()
 
     fun getOrders(storeId : Int) : ArrayList<Orders>{
 

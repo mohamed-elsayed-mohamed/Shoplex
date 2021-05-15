@@ -79,7 +79,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_price">New Price</string>
     <string name="sold">12 Sold</string>
-
     <string name="Required">Required</string>
     <string name="min_description_err">Minimum Product Description is 30 Characters</string>
     <string name="min_product_name_err">Minimum Name is 5 characters</string>
@@ -109,6 +108,10 @@
     <string name="forgotPassword">Forgot your password</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="signup">Signup</string>
+    <string name="name">Name</string>
+    <string name="choose_location">Choose Your Location</string>
+    <string name="phone">Phone</string>
     <string name="or">________________________ OR ________________________</string>
     <string name="new_user">New User ? </string>
     <string name="create_an_account"><u>Create an Account</u></string>
