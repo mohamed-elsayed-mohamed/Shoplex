@@ -15,30 +15,30 @@
 
         <activity
             android:name=".view.activities.HomeActivity"
-            android:theme="@style/AppTheme.Home"></activity>
+            android:theme="@style/AppTheme.Home" />
         <activity
             android:name=".view.activities.AddProductActivity"
-            android:windowSoftInputMode="adjustNothing"></activity>
-        <activity android:name=".view.activities.ConfirmProductActivity"></activity>
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".view.activities.ConfirmProductActivity" />
         <activity android:name=".view.activities.ProductDetails" />
-        <activity android:name=".view.activities.MessageActivity"></activity>
+        <activity android:name=".view.activities.MessageActivity" />
         <activity
             android:name=".view.activities.StoreLocationActivity"
-            android:theme="@style/AppTheme.Home"></activity>
+            android:theme="@style/AppTheme.Home" />
         <activity
             android:name=".view.activities.LastOrderActivity"
-            android:theme="@style/AppTheme.Home"></activity>
-        <activity android:name=".view.activities.MainActivity">
-        </activity>
-
+            android:theme="@style/AppTheme.Home" />
+        <activity android:name=".view.activities.MainActivity"></activity>
         <activity android:name=".view.activities.LoginActivity">
+
+        </activity>
+        <activity android:name=".view.activities.SignupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

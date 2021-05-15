@@ -104,4 +104,8 @@
     <string name="forgotPassword">Forgot your password</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="signup">Signup</string>
+    <string name="name">Name</string>
+    <string name="choose_location">Choose Your Location</string>
+    <string name="phone">Phone</string>
 </resources>
