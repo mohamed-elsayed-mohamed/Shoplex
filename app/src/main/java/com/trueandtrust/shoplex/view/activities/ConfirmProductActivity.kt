@@ -3,6 +3,7 @@ package com.trueandtrust.shoplex.view.activities
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.trueandtrust.shoplex.R
@@ -12,6 +13,8 @@ import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.Properties
+import com.trueandtrust.shoplex.model.pojo.Property
+import kotlin.math.log
 
 class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var binding: ActivityConfirmProductBinding
@@ -45,11 +48,6 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
             binding.cardBasic.visibility = View.INVISIBLE
             binding.cardStandard.visibility = View.INVISIBLE
         }
-
-        val property1 = Properties("Size", arrayListOf("20", "30", "40", "50"))
-        val property2 = Properties("Color", arrayListOf("Red", "Green", "Blue"))
-
-        product.properties = arrayListOf(property1, property2)
 
         binding.btnConfirm.setOnClickListener {
             val dbModel = DBModel(this)

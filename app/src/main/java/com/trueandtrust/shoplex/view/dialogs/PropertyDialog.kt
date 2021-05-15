@@ -9,27 +9,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.view.get
 import androidx.core.view.size
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.model.interfaces.PropertyDialogListener
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Property
 
 
 class PropertyDialog : AppCompatDialogFragment {
-
-
     private lateinit var btnAddValue : ImageButton
     private lateinit var edValue : EditText
     private lateinit var edProperty : EditText
     private lateinit var chipValues : ChipGroup
     private lateinit var btnConfirm : Button
     private lateinit var btnCancel : Button
-    private var listener: PropertyDialogListener
+    private var listener: INotifyMVP
 
-    constructor(listener: PropertyDialogListener){
+    constructor(listener: INotifyMVP){
 
         this.listener = listener
     }
@@ -47,18 +44,23 @@ class PropertyDialog : AppCompatDialogFragment {
         edValue = view.findViewById(R.id.edPropertyValue)
         chipValues = view.findViewById(R.id.cg_values)
         // Add Values in Chips
-        btnAddValue.setOnClickListener{
-            val value : String = edValue.text.toString()
+        btnAddValue.setOnClickListener {
             val inflater = LayoutInflater.from(context)
             val chipItem = inflater.inflate(R.layout.chip_item, null, false) as Chip
-            chipItem.text = value
+            chipItem.text = edValue.text.toString()
+
             chipItem.setOnCloseIconClickListener {
                 chipValues.removeView(it)
             }
-            when{
-                edValue.length() == 0 -> {edValue.error = getString(R.string.Required)
-                    return@setOnClickListener}
-                else ->  chipValues.addView(chipItem)
+            when {
+                edValue.length() == 0 -> {
+                    edValue.error = getString(R.string.Required)
+                    return@setOnClickListener
+                }
+                else -> {
+                    chipValues.addView(chipItem)
+                    edValue.text.clear()
+                }
             }
         }
         //cancel
@@ -92,11 +94,10 @@ class PropertyDialog : AppCompatDialogFragment {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = try {
-            context as PropertyDialogListener
+            context as INotifyMVP
         } catch (e: ClassCastException) {
             throw ClassCastException(
-                context.toString().toString() +
-                        "PropertyDialogListener"
+                context.toString() + "PropertyDialogListener"
             )
         }
     }

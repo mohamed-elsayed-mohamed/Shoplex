@@ -1,6 +1,7 @@
 package com.trueandtrust.shoplex.model.adapter
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.trueandtrust.shoplex.R
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Property
 
 
-class PropertyAdapter(private val properties: ArrayList<Property>, private val context: Context) :
-    RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
+class PropertyAdapter : RecyclerView.Adapter<PropertyAdapter.ViewHolder> {
+    private var properties: ArrayList<Property>
+    private var context: Context
+
+    constructor(properties: ArrayList<Property>, context: Context){
+        this.properties = properties
+        this.context = context
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameProp: TextView = view.findViewById(R.id.tvPropName)
@@ -42,11 +50,13 @@ class PropertyAdapter(private val properties: ArrayList<Property>, private val c
             chipItem.text = i
             chipItem.setOnCloseIconClickListener {
                 viewHolder.chipValues.removeView(it)
+                this.properties.removeAt(position)
+                this.notifyDataSetChanged()
             }
             viewHolder.chipValues.addView(chipItem)
         }
         viewHolder.btnDelete.setOnClickListener {
-            properties.removeAt(position)
+            properties.remove(item)
             notifyItemRemoved(position)
         }
     }

@@ -4,6 +4,7 @@ package com.trueandtrust.shoplex.model.pojo
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.Exclude
@@ -24,7 +25,7 @@ open class Product() : Parcelable {
     var rate : Double? = null
     var premium : Premium? = null
     var premiumDays: Int = 0
-    var properties: ArrayList<Properties> = arrayListOf()
+    var properties: ArrayList<Property> = arrayListOf()
 
     var images : ArrayList<String> = arrayListOf()
 
@@ -43,6 +44,7 @@ open class Product() : Parcelable {
         category = parcel.readString().toString()
         subCategory = parcel.readString().toString()
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
+        properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
     }
 
     @Exclude
@@ -63,6 +65,7 @@ open class Product() : Parcelable {
         parcel.writeString(category)
         parcel.writeString(subCategory)
         parcel.writeArray(imagesListURI.toArray())
+        parcel.writeArray(properties.toArray())
     }
 
     override fun describeContents(): Int {

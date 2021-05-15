@@ -1,66 +1,44 @@
 package com.trueandtrust.shoplex.model.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import com.trueandtrust.shoplex.R
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.trueandtrust.shoplex.databinding.ProductGvBinding
+import com.trueandtrust.shoplex.model.pojo.Product
 
 
-internal class ProductAdapter(
-        private val context: Context,
-        private val productInfo: Array<String>,
-        private val productImage: IntArray
-    ) :
-    BaseAdapter() {
-        private var layoutInflater: LayoutInflater? = null
-        private lateinit var imgProduct: ImageView
-        private lateinit var tvOldPrice: TextView
-        private lateinit var tvNewPrice: TextView
-        private lateinit var tvProductName: TextView
-        private lateinit var tvReview: TextView
-        private lateinit var tvSold: TextView
+class ProductAdapter(var productsInfo: ArrayList<Product>) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        return ProductViewHolder(
+            ProductGvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            //LayoutInflater.from(parent.context).inflate(R.layout.product_gv, parent, false)
+        )
+    }
 
-    override fun getCount(): Int {
-            return productInfo.size
-        }
-        override fun getItem(position: Int): Any? {
-            return null
-        }
-        override fun getItemId(position: Int): Long {
-            return 0
-        }
-        override fun getView(
-            position: Int,
-            convertView: View?,
-            parent: ViewGroup
-        ): View? {
-            var convertView = convertView
-            if (layoutInflater == null) {
-                layoutInflater =
-                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
+        holder.bind(productsInfo[position])
+
+    override fun getItemCount() = productsInfo.size
+
+    inner class ProductViewHolder(val binding: ProductGvBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: Product) {
+            if(product.images.count() > 0) {
+                Glide.with(itemView.context).load(product.images[0]).into(binding.imgProduct)
             }
-            if (convertView == null) {
-                convertView = layoutInflater!!.inflate(R.layout.product_gv, null)
-
+            binding.tvOldPrice.text = product.price.toString()
+            binding.tvNewPrice.text = product.newPrice.toString()
+            binding.tvProductName.text = product.name
+            binding.tvReview.text = product.rate.toString()
+            binding.tvSold.text = "15"
+            binding.fabAddProduct.setOnClickListener {
+                productsInfo.remove(product)
+                notifyItemRemoved(adapterPosition)
             }
-            imgProduct = convertView!!.findViewById(R.id.img_product)
-            tvOldPrice = convertView.findViewById(R.id.tv_old_price)
-            tvNewPrice = convertView.findViewById(R.id.tv_new_price)
-            tvProductName = convertView.findViewById(R.id.tv_product_name)
-            tvReview = convertView.findViewById(R.id.tv_review)
-            tvSold = convertView.findViewById(R.id.tv_sold)
-
-            imgProduct.setImageResource(productImage[position])
-            tvOldPrice.text = productInfo[position]
-            tvNewPrice.text = productInfo[position]
-            tvProductName.text = productInfo[position]
-            tvReview.text = productInfo[position]
-            tvSold.text = productInfo[position]
-
-            return convertView
+            itemView.setOnClickListener {
+                Toast.makeText(itemView.context, "Hello", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
 }
