@@ -10,7 +10,7 @@ import com.google.firebase.firestore.Exclude
 import com.trueandtrust.shoplex.model.enumurations.Premium
 
 open class Product() : Parcelable {
-    // @set:Exclude @get:Exclude
+
     var productID : Int? = null
     var storeID : Int = 0
     var storeName : String = ""

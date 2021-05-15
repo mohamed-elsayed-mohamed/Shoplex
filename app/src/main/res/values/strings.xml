@@ -54,7 +54,6 @@
     <string name="all_colors">All Colors</string>
     <string name="Plus_Sign">+</string>
 
-    <string name="user_name">User Name</string>
 
 
     <string name="home">Home</string>
@@ -101,8 +100,8 @@
     <string name="property">Properties</string>
     <string name="textview">TextView</string>
     <string name="Like_color_Size_options_etc">Like color-Size-options-etc</string>
-    <string name="search">Search</string>
     <string name="user_name">User Name</string>
     <string name="sales_Off">Sales Off</string>
+    <string name="todo">todo</string>
 
 </resources>
