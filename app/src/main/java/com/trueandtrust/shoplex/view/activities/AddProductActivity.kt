@@ -17,19 +17,25 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
+import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.enumurations.SubFashion
 import com.trueandtrust.shoplex.model.interfaces.ImagesChanges
+import com.trueandtrust.shoplex.model.interfaces.PropertyDialogListener
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.model.pojo.Property
+import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 
 
-class AddProductActivity : AppCompatActivity(), ImagesChanges {
+class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogListener {
     private val OPEN_GALLERY_CODE = 200
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var viewModel: AddProductVM
     private lateinit var product: Product
+    private var propertyData : Property = Property()
+    private var propertyList: ArrayList<Property>? = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +75,8 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         settingUpButtons()
 
         settingUpEditTexts()
+
+        //property recycle View
     }
 
     private fun settingUpButtons(){
@@ -113,10 +121,16 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
 
             product.category = Category.valueOf(binding.actTVCategory.text.toString().replace(" ", "_").toUpperCase())
             product.subCategory = SubFashion.valueOf(binding.actTVSubCategory.text.toString().replace(" ", "_").toUpperCase())
-            product.premium = Premium.BASIC
+            product.permium = Premium.BASIC
 
         }
+
+        //Open Dialog Button
+        binding.btnAddProperty.setOnClickListener{
+            openPropertyDialog()
+        }
     }
+
 
     private fun settingUpEditTexts() {
         // Product Name
@@ -212,6 +226,8 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
                 }
             }
         }
+
+
     }
 
 
@@ -281,5 +297,21 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges {
         }
 
         binding.rvUploadImages.layoutParams = param
+    }
+
+    private fun openPropertyDialog() {
+
+        val propertyDialog = PropertyDialog(this)
+        propertyDialog.show(supportFragmentManager,"Property Dialog")
+
+    }
+
+    override fun applyData(property: Property) {
+        propertyData = property
+        propertyList!!.add(propertyData)
+
+
+        val propAdapter = PropertyAdapter(propertyList!!,this)
+        binding.rcProperty.adapter = propAdapter
     }
 }

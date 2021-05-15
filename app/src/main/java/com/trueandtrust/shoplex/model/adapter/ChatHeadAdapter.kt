@@ -38,6 +38,8 @@ class ChatHeadAdapter (private val chatHead: ArrayList<ChatHead>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val item = chatHead[position]
         Glide.with(viewHolder.itemView.context).load(item.productImageUrl).into(viewHolder.image)
+
+        //viewHolder.image.setImageResource(item.productImageUrl.toInt())
         viewHolder.userName.text = item.userName
         viewHolder.productName.text = item.productName
         viewHolder.numOfMessage.text = item.numOfMessage.toString()

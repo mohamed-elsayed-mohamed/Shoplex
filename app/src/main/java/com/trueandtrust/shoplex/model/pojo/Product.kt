@@ -9,6 +9,7 @@ import com.trueandtrust.shoplex.model.enumurations.Premium
 
 import com.trueandtrust.shoplex.model.enumurations.SubFashion
 
+
 open class Product {
     var productID : Int = 0
     var storeID : Int = 0
@@ -25,7 +26,7 @@ open class Product {
     val imageSlideList = ArrayList<SlideModel>()
     var subCategory : SubFashion = SubFashion.MEN
     var rate : Double = 0.0
-    var premium : Premium = Premium.BASIC
+    var permium : Premium = Premium.BASIC
     var deliveryLoc: LatLng = LatLng(0.0, 0.0)
     open var productImageUrl : String = ""
 
