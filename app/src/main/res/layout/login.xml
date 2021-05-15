@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark">
+
+    <EditText
+        android:id="@+id/editTextTextPersonName2"
+        android:layout_width="617dp"
+        android:layout_height="94dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="202dp"
+        android:layout_marginBottom="764dp"
+        android:background="#11000000"
+        android:drawableLeft="@drawable/ic_action_mail"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="E-mail"
+        android:textSize="36sp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="507dp"
+        android:layout_height="267dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="229dp"
+        app:srcCompat="@drawable/login" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="499dp"
+        android:layout_height="106dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="264dp"
+        android:fontFamily="sans-serif-black"
+        android:text=" Login"
+        android:textAlignment="center"
+
+        android:textSize="36sp" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="621dp"
+        android:layout_height="86dp"
+        android:layout_alignStart="@+id/editTextTextPersonName2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginEnd="183dp"
+        android:layout_marginBottom="555dp"
+        android:background="#11000000"
+        android:drawableLeft="@drawable/ic_action_pass"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPersonName"
+        android:text="Password"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editTextTextPersonName"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="501dp"
+        android:text="Forgot your password"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="480dp"
+        android:layout_height="83dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="274dp"
+        android:layout_marginBottom="102dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Login"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:shapeAppearanceOverlay="@style/Widget.Support.CoordinatorLayout" />
+
+</RelativeLayout>
