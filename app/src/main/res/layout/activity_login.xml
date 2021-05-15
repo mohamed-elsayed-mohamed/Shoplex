@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activities.LoginActivity">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,13 +43,13 @@
             android:layout_marginStart="@dimen/margin_16"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/margin_16"
-            app:startIconDrawable="@drawable/ic_email"
+            android:inputType="textWebEmailAddress"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
-            android:inputType="textWebEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edEmail"
@@ -68,20 +69,20 @@
             android:layout_marginStart="@dimen/margin_16"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/margin_16"
-            app:startIconDrawable="@drawable/ic_password"
+            android:inputType="textPassword"
             app:endIconMode="password_toggle"
             app:errorEnabled="true"
-            android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tiEmail">
+            app:layout_constraintTop_toBottomOf="@+id/tiEmail"
+            app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
                 android:hint="@string/password"
+                android:inputType="textPassword"
                 android:maxLength="100" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -100,7 +101,6 @@
             android:layout_width="@dimen/width_320"
             android:layout_height="@dimen/height_50"
             android:layout_marginTop="@dimen/margin_32"
-            android:layout_marginBottom="@dimen/margin_bottom_32"
             android:fontFamily="sans-serif-black"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -108,10 +108,46 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/tvOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:text="@string/or"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+        <TextView
+            android:id="@+id/tvNewUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/new_user"
+            android:textColor="@color/purple_700"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.343"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvOr" />
+
+        <TextView
+            android:id="@+id/tvCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/create_an_account"
+            android:textColor="@color/purple_700"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNewUser"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/tvNewUser"
+            app:layout_constraintTop_toTopOf="@+id/tvNewUser"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

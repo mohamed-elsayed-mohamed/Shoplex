@@ -109,4 +109,7 @@
     <string name="forgotPassword">Forgot your password</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="or">________________________ OR ________________________</string>
+    <string name="new_user">New User ? </string>
+    <string name="create_an_account"><u>Create an Account</u></string>
 </resources>
