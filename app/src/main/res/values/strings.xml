@@ -104,9 +104,6 @@
     <string name="property">Properties</string>
     <string name="textview">TextView</string>
     <string name="Like_color_Size_options_etc">Like color-Size-options-etc</string>
-    <string name="user_name">User Name</string>
-    <string name="sales_Off">Sales Off</string>
-    <string name="todo">todo</string>
 
     <string name="email">E-Mail</string>
     <string name="forgotPassword">Forgot your password</string>

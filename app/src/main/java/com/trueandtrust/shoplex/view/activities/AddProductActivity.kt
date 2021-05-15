@@ -19,20 +19,12 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
-import com.trueandtrust.shoplex.model.enumurations.Category
-import com.trueandtrust.shoplex.model.enumurations.Premium
-import com.trueandtrust.shoplex.model.enumurations.SubFashion
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
-import com.trueandtrust.shoplex.model.interfaces.PropertyDialogListener
 import com.trueandtrust.shoplex.model.pojo.Product
-import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.enumurations.*
-import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
-import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.viewmodel.ProductVM
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
-import com.trueandtrust.shoplex.viewmodel.ProductVM
 
 
 class AddProductActivity : AppCompatActivity(), INotifyMVP {
@@ -85,7 +77,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         binding.rvUploadImages.adapter = myAdapter
 
         // Property Adapter
-        val propAdapter = PropertyAdapter(product.properties,this)
+        val propAdapter = PropertyAdapter(product.properties, this)
         binding.rcProperty.adapter = propAdapter
 
         // Category Dropdown
@@ -267,23 +259,25 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                 binding.tiCategory.error = null
                 binding.actTVSubCategory.text = null
                 val selectedItem = parent.getItemAtPosition(position).toString()
-        binding.actTVCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-            binding.tiCategory.error = null
-            binding.actTVSubCategory.text = null
-            val selectedItem = parent.getItemAtPosition(position).toString()
+                binding.actTVCategory.onItemClickListener =
+                    OnItemClickListener { parent, view, position, id ->
+                        binding.tiCategory.error = null
+                        binding.actTVSubCategory.text = null
+                        val selectedItem = parent.getItemAtPosition(position).toString()
 
-                viewModel.getSubCategory(selectedItem)
-            }
+                        viewModel.getSubCategory(selectedItem)
+                    }
 
-        binding.actTVSubCategory.onItemClickListener =
-            OnItemClickListener { parent, view, position, id ->
-                binding.tiSubCategory.error = null
+                binding.actTVSubCategory.onItemClickListener =
+                    OnItemClickListener { parent, view, position, id ->
+                        binding.tiSubCategory.error = null
+                    }
+                binding.actTVSubCategory.onItemClickListener =
+                    OnItemClickListener { parent, view, position, id ->
+                        binding.tiSubCategory.error = null
+                    }
             }
-        binding.actTVSubCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-            binding.tiSubCategory.error = null
-        }
     }
-
 
     private fun openGalleryForImages() {
         var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -333,7 +327,10 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         viewModel.product.value!!.imageSlideList.removeAt(position)
         viewModel.product.value!!.imagesListURI.removeAt(position)
 
-        binding.imgSliderAddProduct.setImageList(product.imageSlideList, ScaleTypes.CENTER_INSIDE)
+        binding.imgSliderAddProduct.setImageList(
+            product.imageSlideList,
+            ScaleTypes.CENTER_INSIDE
+        )
         binding.rvUploadImages.adapter?.notifyDataSetChanged()
         updateSliderUI()
     }
@@ -357,7 +354,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
 
     private fun openPropertyDialog() {
         val propertyDialog = PropertyDialog(this)
-        propertyDialog.show(supportFragmentManager,"Property Dialog")
+        propertyDialog.show(supportFragmentManager, "Property Dialog")
     }
 
     override fun applyData(property: Property) {
@@ -368,4 +365,5 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     override fun onPropertyRemoved(position: Int) {
         super.onPropertyRemoved(position)
     }
+
 }
