@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +19,8 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
+import com.trueandtrust.shoplex.model.enumurations.*
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.enumurations.Category
 import com.trueandtrust.shoplex.model.enumurations.Premium
@@ -24,15 +28,16 @@ import com.trueandtrust.shoplex.model.enumurations.SubFashion
 import com.trueandtrust.shoplex.model.interfaces.ImagesChanges
 import com.trueandtrust.shoplex.model.interfaces.PropertyDialogListener
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.viewmodel.ProductVM
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 
-
-class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogListener {
+class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private val OPEN_GALLERY_CODE = 200
+    private val MAX_IMAGES_SIZE = 6
     private lateinit var binding: ActivityAddProductBinding
-    private lateinit var viewModel: AddProductVM
+    private lateinit var viewModel: ProductVM
     private lateinit var product: Product
     private var propertyData : Property = Property()
     private var propertyList: ArrayList<Property>? = ArrayList()
@@ -43,7 +48,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
         setContentView(binding.root)
 
         // Define View Model
-        viewModel = ViewModelProvider(this).get(AddProductVM::class.java)
+        viewModel = ViewModelProvider(this).get(ProductVM::class.java)
         viewModel.product.observe(this, {
             updateSliderUI()
             binding.imgSliderAddProduct.setImageList(
@@ -51,11 +56,32 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
             )
         })
 
+        viewModel.arrCategory.observe(this, {
+            val arrayCategoryAdapter = ArrayAdapter(
+                applicationContext,
+                R.layout.dropdown_item,
+                it
+            )
+            binding.actTVCategory.setAdapter(arrayCategoryAdapter)
+        })
+
+        viewModel.arrSubCategory.observe(this, {
+            // SubCategory Dropdown
+
+            val arraySubcategoryAdapter = ArrayAdapter(
+                applicationContext,
+                R.layout.dropdown_item,
+                it
+            )
+            binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
+
+        })
+
         // Define product from view model
         product = viewModel.product.value!!
 
         // Images Adapter
-        val myAdapter = MyImagesAdapter(viewModel.product.value!!.images, this)
+        val myAdapter = MyImagesAdapter(viewModel.product.value!!.imagesListURI, this)
         binding.rvUploadImages.adapter = myAdapter
 
         // Category Dropdown
@@ -72,17 +98,19 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
         val arraySubcategoryAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, arrSubcategory)
         binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
 
+        viewModel.getCategory()
         settingUpButtons()
 
         settingUpEditTexts()
-
-        //property recycle View
     }
 
     private fun settingUpButtons(){
         // AddImage Button
         binding.btnAddProductImages.setOnClickListener {
-            openGalleryForImages()
+            if(product.imagesListURI.count() < MAX_IMAGES_SIZE) {
+                openGalleryForImages()
+            }else
+                Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
         }
 
         // AddProduct Button
@@ -109,6 +137,19 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
                     binding.tiOldPrice.error = getString(R.string.Required)
                     return@setOnClickListener
                 }
+                binding.actTVCategory.text.isNullOrEmpty() ->{
+                    binding.tiCategory.error = getString(R.string.Required)
+                    return@setOnClickListener
+                }
+                binding.actTVSubCategory.text.isNullOrEmpty() ->{
+                    binding.tiSubCategory.error = getString(R.string.Required)
+                    return@setOnClickListener
+                }
+            }
+
+            if(product.imagesListURI.isNullOrEmpty()){
+                Toast.makeText(this, "Please Select Your Product Images", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             product.name = binding.edProductName.text.toString()
@@ -119,30 +160,35 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
                 product.discount = binding.edDiscountNum.text.toString().toInt()
             }
 
-            product.category = Category.valueOf(binding.actTVCategory.text.toString().replace(" ", "_").toUpperCase())
-            product.subCategory = SubFashion.valueOf(binding.actTVSubCategory.text.toString().replace(" ", "_").toUpperCase())
-            product.permium = Premium.BASIC
+            product.category =
+                binding.actTVCategory.text.toString().replace(
+                    " ",
+                    "_"
+                ).toUpperCase()
 
-        }
+            product.subCategory =
+                binding.actTVSubCategory.text.toString().replace(
+                    " ",
+                    "_"
+                ).toUpperCase()
 
-        //Open Dialog Button
-        binding.btnAddProperty.setOnClickListener{
-            openPropertyDialog()
+            product.premium = Premium.BASIC
+
+            startActivity(Intent(this, ConfirmProductActivity::class.java).apply {
+                this.putExtra(getString(R.string.PRODUCT_KEY), product)
+            })
         }
     }
-
 
     private fun settingUpEditTexts() {
         // Product Name
         binding.edProductName.addTextChangedListener {
             binding.tiProductName.error = null
-            //product.name = binding.edProductName.text.toString()
         }
 
         // Description
         binding.edDescription.addTextChangedListener{
             binding.tiDescription.error = null
-            //product.description = binding.edDescription.text.toString()
         }
 
         // Discount
@@ -154,21 +200,17 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(count > 0 && !binding.edDiscountNum.text.isNullOrEmpty() && !binding.edOldPrice.text.isNullOrEmpty()){
-                    binding.edNewPrice.text = (binding.edOldPrice.text.toString().toFloat() - (binding.edOldPrice.text.toString().toFloat() * (binding.edDiscountNum.text.toString().toInt()/100.0F))).toString()
-                }else{
-                    binding.edNewPrice.text = binding.edOldPrice.text.toString().toFloat().toString()
-                }
+                if (count > 0 && !binding.edDiscountNum.text.isNullOrEmpty() && !binding.edOldPrice.text.isNullOrEmpty()) {
+                    val newPrice = (binding.edOldPrice.text.toString()
+                        .toFloat() - (binding.edOldPrice.text.toString()
+                        .toFloat() * (binding.edDiscountNum.text.toString()
+                        .toInt() / 100.0F)))
 
-                    /*
-                if(binding.edOldPrice.text!!.isNotEmpty()) {
-                    product.price = binding.edOldPrice.text.toString().toFloat()
+                    binding.edNewPrice.text = "%.2f".format(newPrice)
+                } else {
+                    binding.edNewPrice.text =
+                        binding.edOldPrice.text.toString().toFloat().toString()
                 }
-                product.newPrice = binding.edNewPrice.text.toString().toFloat()
-                if(binding.edDiscountNum.text!!.isNotEmpty()) {
-                    product.discount = binding.edDiscountNum.text.toString().toInt()
-                }
-                */
             }
         })
 
@@ -193,29 +235,21 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
                 if (count > 0 && !binding.edDiscountNum.text.isNullOrEmpty() && binding.edOldPrice.text.toString()
                         .toFloat() >= 10
                 ) {
-                    binding.edNewPrice.text = (binding.edOldPrice.text.toString()
+                    val newPrice = (binding.edOldPrice.text.toString()
                         .toFloat() - (binding.edOldPrice.text.toString()
                         .toFloat() * (binding.edDiscountNum.text.toString()
-                        .toInt() / 100.0F))).toString()
-                } else if(count > 0 && binding.edDiscountNum.text.isNullOrEmpty()){
+                        .toInt() / 100.0F)))
+                    binding.edNewPrice.text = "%.2f".format(newPrice)
+                } else if (count > 0 && binding.edDiscountNum.text.isNullOrEmpty()) {
                     if (binding.edOldPrice.text.toString().toFloat() >= 10) {
-                        binding.edNewPrice.text = binding.edOldPrice.text.toString().toFloat().toString()
+                        binding.edNewPrice.text =
+                            binding.edOldPrice.text.toString().toFloat().toString()
                     } else {
                         binding.edNewPrice.text = getString(R.string.minPrice).toFloat().toString()
                     }
-                }else{
+                } else {
                     binding.edNewPrice.text = getString(R.string.minPrice).toFloat().toString()
                 }
-
-                /*
-                if(binding.edOldPrice.text!!.isNotEmpty()) {
-                    product.price = binding.edOldPrice.text.toString().toFloat()
-                }
-                product.newPrice = binding.edNewPrice.text.toString().toFloat()
-                if(binding.edDiscountNum.text!!.isNotEmpty()) {
-                    product.discount = binding.edDiscountNum.text.toString().toInt()
-                }
-                */
             }
         })
 
@@ -227,7 +261,17 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
             }
         }
 
+        binding.actTVCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+            binding.tiCategory.error = null
+            binding.actTVSubCategory.text = null
+            val selectedItem = parent.getItemAtPosition(position).toString()
 
+            viewModel.getSubCategory(selectedItem)
+        }
+
+        binding.actTVSubCategory.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+            binding.tiSubCategory.error = null
+        }
     }
 
 
@@ -236,7 +280,7 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = "image/*"
-        startActivityForResult(intent, OPEN_GALLERY_CODE);
+        startActivityForResult(intent, OPEN_GALLERY_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -250,17 +294,19 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
                 for (i in 0 until count!!) {
                     var imageUri: Uri = data.clipData?.getItemAt(i)!!.uri
 
-                    if (!product.images.contains(imageUri)) {
-                        product.images.add(imageUri)
+                    if (!product.imagesListURI.contains(imageUri) && product.imagesListURI.count() < MAX_IMAGES_SIZE) {
+                        product.imagesListURI.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
+                    } else if (product.imagesListURI.count() >= MAX_IMAGES_SIZE) {
+                        Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else if (data?.data != null) {
                 // if single image is selected
 
                 var imageUri: Uri = data.data!!
-                if (!product.images.contains(imageUri)) {
-                    product.images.add(imageUri)
+                if (!product.imagesListURI.contains(imageUri)) {
+                    product.imagesListURI.add(imageUri)
                     product.imageSlideList.add(SlideModel(imageUri.toString()))
                 }
             }
@@ -273,9 +319,9 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
         }
     }
 
-    override fun onRemoveItem(position: Int) {
+    override fun onImageRemoved(position: Int) {
         viewModel.product.value!!.imageSlideList.removeAt(position)
-        viewModel.product.value!!.images.removeAt(position)
+        viewModel.product.value!!.imagesListURI.removeAt(position)
 
         binding.imgSliderAddProduct.setImageList(product.imageSlideList, ScaleTypes.CENTER_INSIDE)
         binding.rvUploadImages.adapter?.notifyDataSetChanged()
@@ -288,12 +334,12 @@ class AddProductActivity : AppCompatActivity(), ImagesChanges, PropertyDialogLis
         if(product.imageSlideList.count() == 0){
             binding.imgSliderAddProduct.setBackgroundResource(R.drawable.choose_product)
             binding.rvUploadImages.background = null
-            param.setMargins(0, 0, 0 , 0)
+            param.setMargins(0, 0, 0, 0)
         }else{
             binding.imgSliderAddProduct.background = null
             binding.rvUploadImages.setBackgroundResource(R.drawable.ed_style)
             val margin_16 = resources.getDimension(R.dimen.margin_16).toInt()
-            param.setMargins(margin_16, margin_16, margin_16 , 0)
+            param.setMargins(margin_16, margin_16, margin_16, 0)
         }
 
         binding.rvUploadImages.layoutParams = param

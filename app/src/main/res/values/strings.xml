@@ -1,11 +1,12 @@
 <resources>
+    <string name="PRODUCT_KEY">PRODUCT</string>
+
     <string name="app_name">Shoplex</string>
     <string name="product_name">Name</string>
     <string name="old_price_strike"><strike>Old Price</strike></string>
     <string name="discount">Discount</string>
     <string name="newPrice">New Price</string>
     <string name="zero">0</string>
-    <string name="todo">TODO</string>
     <string name="add_product">Add Product</string>
     <string name="description">Description</string>
     <string name="fashion">Fashion</string>
@@ -76,7 +77,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_price">New Price</string>
     <string name="sold">12 Sold</string>
-    <string name="search">Search</string>
 
     <string name="Required">Required</string>
     <string name="min_description_err">Minimum Product Description is 30 Characters</string>
@@ -89,6 +89,9 @@
     <string name="afterDiscount">After Discount</string>
     <string name="maxDiscount">90</string>
     <string name="discountRange">0-90 %</string>
+    <string name="search">Search</string>
+    <string name="sales_Off">Sales Off</string>
+
     <string name="all_review">Over All</string>
     <string name="rating">All Rating</string>
     <string name="customer_name">Customer Name</string>

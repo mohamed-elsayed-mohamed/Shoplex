@@ -88,7 +88,6 @@ public class TextInputDropDownMenu extends AppCompatAutoCompleteTextView {
                 return new CustomSavedState[size];
             }
         };
-
     }
 
 }

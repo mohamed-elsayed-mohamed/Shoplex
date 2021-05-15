@@ -3,7 +3,6 @@ package com.trueandtrust.shoplex.model.pojo
 import java.util.*
 
 class Review {
-
     var productID : Int = 0
     var customerName : String = ""
     var customerImageUrl : String = ""

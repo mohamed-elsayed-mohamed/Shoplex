@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Shoplex">
 
+        <activity
+            android:name=".view.activities.HomeActivity"
+            android:theme="@style/AppTheme.Home">
+
         <activity android:name=".view.activities.StoreLocationActivity"
             android:theme="@style/AppTheme.Home">
 
@@ -43,16 +47,20 @@
             </intent-filter>
         </activity>
 
+
+
+
+
         <activity android:name=".view.activities.MessageActivity">
 
         </activity>
 
-        <activity
-            android:name=".view.activities.HomeActivity"
-            android:theme="@style/AppTheme.Home">
+
+
 
         </activity>
-        <activity android:name=".view.activities.MessageActivity"></activity>
+
+
         <activity android:name=".view.activities.MainActivity" />
     </application>
 

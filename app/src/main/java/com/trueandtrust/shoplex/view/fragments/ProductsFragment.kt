@@ -1,6 +1,7 @@
 package com.trueandtrust.shoplex.view.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentProductsBinding
 import com.trueandtrust.shoplex.model.adapter.ProductAdapter
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.view.activities.AddProductActivity
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,6 +54,10 @@ class ProductsFragment : Fragment() {
             }
         //gridView.setNumColumns(if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4)
         gridView.numColumns = context?.let { getGridColumnsCount(it) }!!
+
+        binding.fabAddProduct.setOnClickListener {
+            startActivity(Intent(this.context, AddProductActivity::class.java))
+        }
         return binding.root
     }
     fun getGridColumnsCount(context: Context): Int {
