@@ -86,8 +86,19 @@ class HomeActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
+        val seletedItemId = bottomNavigationView.selectedItemId
+
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
+        }
+        else {
+            if (seletedItemId==R.id.homeFragment) {
+                finishAffinity()
+            } else {
+                //supportActionBar?.setTitle("Home")
+                findNavController(R.id.nav_host_fragment).popBackStack()
+            }
+
         }
     }
 }

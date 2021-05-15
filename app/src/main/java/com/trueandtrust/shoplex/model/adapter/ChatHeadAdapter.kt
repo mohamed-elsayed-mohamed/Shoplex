@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 
@@ -34,7 +35,9 @@ class ChatHeadAdapter: RecyclerView.Adapter<ChatHeadAdapter.ViewHolder>() {
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val item = chatHead[position]
-        viewHolder.image.setImageResource(item.productImageUrl.toInt())
+
+        Glide.with(viewHolder.itemView.context).load(item.productImageUrl).into(viewHolder.image)
+        //viewHolder.image.setImageResource(item.productImageUrl.toInt())
         viewHolder.userName.text = item.userName
         viewHolder.productName.text = item.productName
         viewHolder.numOfMessage.text = item.numOfMessage.toString()

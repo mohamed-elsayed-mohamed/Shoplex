@@ -7,6 +7,7 @@
     <string name="discount">Discount</string>
     <string name="newPrice">New Price</string>
     <string name="zero">0</string>
+    <string name="todo">TODO</string>
     <string name="add_product">Add Product</string>
     <string name="description">Description</string>
     <string name="fashion">Fashion</string>
@@ -53,7 +54,6 @@
     <string name="longtext">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,as opposed to using Content here, content here, making it look like readable English.</string>
     <string name="all_colors">All Colors</string>
     <string name="Plus_Sign">+</string>
-
     <string name="home">Home</string>
     <string name="products">Products</string>
     <string name="chat">Chat</string>
@@ -91,4 +91,13 @@
     <string name="user_name">User Name</string>
     <string name="sales_Off">Sales Off</string>
 
+    <string name="type_a_message">Type a Message</string>
+    <string name="Hello">Hello</string>
+    <string name="monday_12_00">Monday 12:00</string>
+    <string name="enter_your_product_properties">Enter Your Product Properties</string>
+    <string name="prop">Property</string>
+    <string name="value">Value</string>
+    <string name="property">Properties</string>
+    <string name="textview">TextView</string>
+    <string name="Like_color_Size_options_etc">Like color-Size-options-etc</string>
 </resources>
