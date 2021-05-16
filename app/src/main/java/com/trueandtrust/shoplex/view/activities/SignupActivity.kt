@@ -18,8 +18,8 @@ import java.util.regex.Pattern
 
 class SignupActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivitySignupBinding
-    private var store : Store = Store()
+    private lateinit var binding: ActivitySignupBinding
+    private var store: Store = Store()
     private val database = Firebase.firestore
     private lateinit var pendingSellerRef: CollectionReference
 
@@ -32,19 +32,20 @@ class SignupActivity : AppCompatActivity() {
             store.name = binding.edName.text.toString()
             store.email = binding.edEmail.text.toString()
             store.phone = binding.edPhone.text.toString()
-            store.password = computeMD5Hash(binding.edPassword.text.toString())
-            checkEditText(store)
-            startActivity(Intent(this,LoginActivity::class.java))
-            finish()
+            if (checkEditText() == true) {
+                addSeller(store)
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
         }
     }
 
     //Add Seller
-    fun addSeller(store: Store){
+    fun addSeller(store: Store) {
         pendingSellerRef = database.collection("Pending Sellers")
         pendingSellerRef.add(store).addOnSuccessListener {
             Toast.makeText(baseContext, "Success", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener{
+        }.addOnFailureListener {
             Toast.makeText(baseContext, "Failed: ${it.localizedMessage}", Toast.LENGTH_LONG).show()
             Log.d("FIRE", it.localizedMessage)
         }.addOnCanceledListener {
@@ -53,53 +54,39 @@ class SignupActivity : AppCompatActivity() {
     }
 
     //check EditText
-    fun checkEditText(store: Store){
-        when{
+    fun checkEditText(): Boolean {
+        when {
             binding.edName.length() == 0 -> binding.edName.error = getString(R.string.Required)
-            binding.edName.length() < 5 -> binding.edName.error = getString(R.string.min_store_name_err)
+            binding.edName.length() < 5 -> binding.edName.error =
+                getString(R.string.min_store_name_err)
             binding.edEmail.length() == 0 -> binding.edEmail.error = getString(R.string.Required)
-            isEmailValid(binding.edEmail.text.toString()) != true -> binding.edEmail.error = getString(
-                R.string.require_email
-            )
+            isEmailValid(binding.edEmail.text.toString()) != true -> binding.edEmail.error =
+                getString(
+                    R.string.require_email
+                )
 
-            binding.edPassword.length() == 0 -> binding.edPassword.error = getString(R.string.Required)
-            binding.edPassword.length() < 8 -> binding.edPassword.error = getString(R.string.min_password_err)
-            binding.edConfirmPassword.length() == 0 -> binding.edConfirmPassword.error = getString(R.string.Required)
-            binding.edConfirmPassword.text.toString().equals(binding.edPassword.text.toString()) != true -> binding.edConfirmPassword.error = getString(
-                R.string.not_match
-            )
+            binding.edPassword.length() == 0 -> binding.edPassword.error =
+                getString(R.string.Required)
+            binding.edPassword.length() < 8 -> binding.edPassword.error =
+                getString(R.string.min_password_err)
+            binding.edConfirmPassword.length() == 0 -> binding.edConfirmPassword.error =
+                getString(R.string.Required)
+            binding.edConfirmPassword.text.toString()
+                .equals(binding.edPassword.text.toString()) != true -> binding.edConfirmPassword.error =
+                getString(
+                    R.string.not_match
+                )
 
             binding.edPhone.length() == 0 -> binding.edPhone.error = getString(R.string.Required)
-            else -> addSeller(store)
-
+            else -> return true
         }
+        return false
     }
-
     //Email Validation
     fun isEmailValid(email: String?): Boolean {
         val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
         val pattern: Pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
         val matcher: Matcher = pattern.matcher(email)
         return matcher.matches()
-    }
-
-    //hash password
-    fun computeMD5Hash(password: String) : String {
-        val MD5Hash = StringBuffer()
-        try {
-            // Create MD5 Hash
-            val digest: MessageDigest = MessageDigest.getInstance("MD5")
-            digest.update(password.toByteArray())
-            val messageDigest: ByteArray = digest.digest()
-
-            for (i in messageDigest.indices) {
-                var h = Integer.toHexString(0xFF and messageDigest[i].toInt())
-                while (h.length < 2) h = "0$h"
-                MD5Hash.append(h)
-            }
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        }
-        return MD5Hash.toString()
     }
 }
