@@ -9,7 +9,6 @@ class Store {
     var email : String = ""
     var location : LatLng? = null
     var phone : String = ""
-    var password : String = ""
 
     fun getStoreInfo(storeID : Int) : Store{
 
