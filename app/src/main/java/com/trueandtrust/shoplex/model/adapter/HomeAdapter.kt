@@ -7,40 +7,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.trueandtrust.shoplex.R
+import com.trueandtrust.shoplex.databinding.HomeRvBinding
+import com.trueandtrust.shoplex.model.pojo.Orders
+import com.trueandtrust.shoplex.model.pojo.Product
 
-class HomeAdapter (private val dataSet: Array<String>) :
+class HomeAdapter (private val products: ArrayList<Orders>) :
         RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imgProduct: ImageView
-        val tvProductName: TextView
-        val tvBrandName: TextView
-        val tvPrice: TextView
-        val tvLocation: TextView
-
-
-        init {
-            // Define click listener for the ViewHolder's View.
-            imgProduct = view.findViewById(R.id.img_product)
-            tvProductName = view.findViewById(R.id.tv_product_name)
-            tvBrandName = view.findViewById(R.id.tv_brand)
-            tvPrice = view.findViewById(R.id.tv_price)
-            tvLocation = view.findViewById(R.id.tv_location)
-
-        }
-    }
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.home_rv, viewGroup, false)
+        val binding: HomeRvBinding = HomeRvBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
 
-        return ViewHolder(view)
+        return ViewHolder(binding)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -49,14 +33,30 @@ class HomeAdapter (private val dataSet: Array<String>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
        // viewHolder.imgProduct.setImageResource(dataSet[position])
-        viewHolder.tvProductName.text = dataSet[position]
-        viewHolder.tvBrandName.text = dataSet[position]
-        viewHolder.tvPrice.text = dataSet[position]
-        viewHolder.tvLocation.text = dataSet[position]
+        viewHolder.tvProductName.text = products[position].name
+        viewHolder.tvCategory.text = products[position].category
+        viewHolder.tvPrice.text = products[position].price.toString()
+        viewHolder.tvLocation.text = products[position].deliveryLoc.toString()
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = products.size
 
+    class ViewHolder(val binding: HomeRvBinding) : RecyclerView.ViewHolder(binding.root) {
+        val imgProduct: ImageView
+        val tvProductName: TextView
+        val tvCategory: TextView
+        val tvPrice: TextView
+        val tvLocation: TextView
+
+        init {
+            // Define click listener for the ViewHolder's View.
+            imgProduct = binding.imgProduct
+            tvProductName = binding.tvProductName
+            tvCategory = binding.tvCategory
+            tvPrice = binding.tvPrice
+            tvLocation = binding.tvLocation
+        }
+    }
 }

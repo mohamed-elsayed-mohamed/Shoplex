@@ -10,6 +10,7 @@ import com.example.graddemo.model.adapter.HomeAdapter
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentChatBinding
 import com.trueandtrust.shoplex.databinding.FragmentHomeBinding
+import com.trueandtrust.shoplex.model.pojo.Orders
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,9 +25,17 @@ class HomeFragment : Fragment() {
         binding  = FragmentHomeBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.home)
-        val data = arrayOf("fashion", "yyyyy", "gggggg")
+        val currentOrders: ArrayList<Orders> = arrayListOf()
 
-        homeAdapter = HomeAdapter(data)
+        currentOrders.add(Orders())
+        currentOrders.add(Orders())
+        currentOrders.add(Orders())
+        currentOrders.add(Orders())
+        currentOrders.add(Orders())
+        currentOrders.add(Orders())
+
+
+        homeAdapter = HomeAdapter(currentOrders)
         binding.rvHome.adapter = homeAdapter
         return binding.root
     }

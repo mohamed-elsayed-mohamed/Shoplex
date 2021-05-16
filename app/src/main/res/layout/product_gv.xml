@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeConstraint"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
+        android:layout_margin="@dimen/margin_8"
+        app:cardCornerRadius="@dimen/cardBorderRadius"
+        app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="15dp"
-        android:layout_margin="8dp"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
 
 
             <ImageView
@@ -31,9 +31,9 @@
                 android:layout_height="120dp"
                 android:layout_gravity="end"
                 android:scaleType="fitXY"
+                android:src="@drawable/product"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/product" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -86,6 +86,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_old_price"
                 app:layout_constraintTop_toBottomOf="@+id/tv_old_price" />
+
             <TextView
                 android:id="@+id/tv_review"
                 android:layout_width="wrap_content"
@@ -109,14 +110,13 @@
                 android:id="@+id/tvSold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="4dp"
                 android:text="@string/sold"
                 android:textColor="@color/gray"
                 android:textSize="14sp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

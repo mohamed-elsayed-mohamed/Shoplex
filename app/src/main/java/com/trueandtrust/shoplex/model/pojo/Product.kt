@@ -9,9 +9,11 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.Exclude
 import com.trueandtrust.shoplex.model.enumurations.Premium
+import java.util.*
+import kotlin.collections.ArrayList
 
 open class Product() : Parcelable {
-    var productID : Int? = null
+    var productID : String = UUID.randomUUID().toString()
     var storeID : Int = 0
     var storeName : String = ""
     var deliveryLoc: LatLng? = null
@@ -26,8 +28,9 @@ open class Product() : Parcelable {
     var premium : Premium? = null
     var premiumDays: Int = 0
     var properties: ArrayList<Property> = arrayListOf()
+    var date: Date? = null
 
-    var images : ArrayList<String> = arrayListOf()
+    var images : ArrayList<String?> = arrayListOf()
 
     @Exclude @set:Exclude @get:Exclude
     var imagesListURI : ArrayList<Uri> = arrayListOf()
@@ -36,6 +39,7 @@ open class Product() : Parcelable {
     var imageSlideList : ArrayList<SlideModel> = arrayListOf()
 
     constructor(parcel: Parcel) : this() {
+        productID = parcel.readString().toString()
         name = parcel.readString().toString()
         description = parcel.readString().toString()
         price = parcel.readFloat()
@@ -43,6 +47,7 @@ open class Product() : Parcelable {
         discount = parcel.readInt()
         category = parcel.readString().toString()
         subCategory = parcel.readString().toString()
+        parcel.readStringList(images)
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
         properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
     }
@@ -57,6 +62,7 @@ open class Product() : Parcelable {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(productID)
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeFloat(price)
@@ -64,6 +70,7 @@ open class Product() : Parcelable {
         parcel.writeInt(discount)
         parcel.writeString(category)
         parcel.writeString(subCategory)
+        parcel.writeStringList(images)
         parcel.writeArray(imagesListURI.toArray())
         parcel.writeArray(properties.toArray())
     }
