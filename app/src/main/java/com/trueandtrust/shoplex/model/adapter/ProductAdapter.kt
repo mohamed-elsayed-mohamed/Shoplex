@@ -13,7 +13,6 @@ class ProductAdapter(var productsInfo: ArrayList<Product>) : RecyclerView.Adapte
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(
             ProductGvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            //LayoutInflater.from(parent.context).inflate(R.layout.product_gv, parent, false)
         )
     }
 

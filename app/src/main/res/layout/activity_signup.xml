@@ -181,10 +181,10 @@ tools:context=".view.activities.SignupActivity">
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_16"
@@ -193,13 +193,13 @@ tools:context=".view.activities.SignupActivity">
         app:layout_constraintTop_toBottomOf="@+id/tiPhone" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_location"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLocation"
         app:layout_constraintEnd_toEndOf="@+id/tiPhone"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="@+id/tvLocation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

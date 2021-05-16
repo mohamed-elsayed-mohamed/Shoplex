@@ -21,7 +21,7 @@ import com.trueandtrust.shoplex.view.activities.AddProductActivity
 
 class ProductsFragment : Fragment() {
     lateinit var binding : FragmentProductsBinding
-    lateinit var gridView: RecyclerView
+    lateinit var rvProducts: RecyclerView
     private var productInfo = arrayListOf<Product>()
     private var productImages = intArrayOf(R.drawable.product, R.drawable.product, R.drawable.product,
         R.drawable.product,
@@ -32,8 +32,8 @@ class ProductsFragment : Fragment() {
         binding = FragmentProductsBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.products)
-        gridView=binding.rvProducts
-        gridView.layoutManager = GridLayoutManager(this.context, getGridColumnsCount())
+        rvProducts=binding.rvProducts
+        rvProducts.layoutManager = GridLayoutManager(this.context, getGridColumnsCount())
 
         productInfo.add(Product())
         productInfo.add(Product())
@@ -41,30 +41,10 @@ class ProductsFragment : Fragment() {
         productInfo.add(Product())
         productInfo.add(Product())
         productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
+
 
             val productAdapter = context?.let { ProductAdapter(productInfo) }
-            gridView.adapter = productAdapter
+            rvProducts.adapter = productAdapter
         /*
         gridView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 Toast.makeText(

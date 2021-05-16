@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ class SignupActivity : AppCompatActivity() {
     private var store : Store = Store()
     private val database = Firebase.firestore
     private lateinit var pendingSellerRef: CollectionReference
+    private val MAPS_CODE = 202
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,10 @@ class SignupActivity : AppCompatActivity() {
             checkEditText(store)
             startActivity(Intent(this,LoginActivity::class.java))
             finish()
+        }
+
+        binding.btnLocation.setOnClickListener {
+            startActivityForResult(Intent(this, MapsActivity::class.java), MAPS_CODE)
         }
     }
 
@@ -101,5 +107,17 @@ class SignupActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         return MD5Hash.toString()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == MAPS_CODE){
+            if(resultCode == RESULT_OK){
+                val location: Parcelable? = data?.getParcelableExtra("Loc")
+                if(location != null) {
+                    binding.tvLocation.text = location.toString()
+                }
+            }
+        }
     }
 }
