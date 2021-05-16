@@ -16,6 +16,8 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityHomeBinding
 
@@ -70,6 +72,10 @@ class HomeActivity : AppCompatActivity() {
                     val intent = Intent(this, StoreLocationActivity::class.java).apply {
                     }
                     startActivity(intent)
+                }
+                R.id.Logout ->{
+                    Firebase.auth.signOut()
+                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
