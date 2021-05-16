@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Timestamp
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
 import com.trueandtrust.shoplex.model.DBModel
@@ -51,6 +52,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
 
         binding.btnConfirm.setOnClickListener {
             val dbModel = DBModel(this)
+            product.date = Timestamp.now().toDate()
             dbModel.addProduct(product, applicationContext)
             startActivity(
                 Intent(

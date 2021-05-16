@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.type.LatLng
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySignupBinding
 import com.trueandtrust.shoplex.model.pojo.Store
@@ -115,9 +116,16 @@ class SignupActivity : AppCompatActivity() {
             if(resultCode == RESULT_OK){
                 val location: Parcelable? = data?.getParcelableExtra("Loc")
                 if(location != null) {
-                    binding.tvLocation.text = location.toString()
+                    binding.tvLocation.text = getAddress(location as LatLng)
                 }
             }
         }
     }
+
+
+    fun getAddress(loc: LatLng): String{
+        return "Address"
+    }
+
+
 }

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
@@ -15,8 +16,11 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
+import com.trueandtrust.shoplex.model.DBModel
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
@@ -33,6 +37,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var viewModel: ProductVM
     private lateinit var product: Product
+    private val database: DBModel = DBModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -253,25 +258,14 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         }
 
 
-
         binding.actTVCategory.onItemClickListener =
             OnItemClickListener { parent, view, position, id ->
                 binding.tiCategory.error = null
                 binding.actTVSubCategory.text = null
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                binding.actTVCategory.onItemClickListener =
-                    OnItemClickListener { parent, view, position, id ->
-                        binding.tiCategory.error = null
-                        binding.actTVSubCategory.text = null
-                        val selectedItem = parent.getItemAtPosition(position).toString()
 
-                        viewModel.getSubCategory(selectedItem)
-                    }
+                viewModel.getSubCategory(selectedItem)
 
-                binding.actTVSubCategory.onItemClickListener =
-                    OnItemClickListener { parent, view, position, id ->
-                        binding.tiSubCategory.error = null
-                    }
                 binding.actTVSubCategory.onItemClickListener =
                     OnItemClickListener { parent, view, position, id ->
                         binding.tiSubCategory.error = null
@@ -282,7 +276,6 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private fun openGalleryForImages() {
         var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = "image/*"
         startActivityForResult(intent, OPEN_GALLERY_CODE)
     }
@@ -292,6 +285,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
 
         if (resultCode == Activity.RESULT_OK && requestCode == OPEN_GALLERY_CODE) {
             // if multiple images are selected
+
             if (data?.clipData != null) {
                 var count = data.clipData?.itemCount
 
@@ -301,6 +295,8 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                     if (!product.imagesListURI.contains(imageUri) && product.imagesListURI.count() < MAX_IMAGES_SIZE) {
                         product.imagesListURI.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
+                        product.images.add(null)
+                        database.addImage(imageUri, product.productID, product.images.count() - 1)
                     } else if (product.imagesListURI.count() >= MAX_IMAGES_SIZE) {
                         Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
                     }
@@ -312,6 +308,8 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                 if (!product.imagesListURI.contains(imageUri)) {
                     product.imagesListURI.add(imageUri)
                     product.imageSlideList.add(SlideModel(imageUri.toString()))
+                    product.images.add(null)
+                    database.addImage(imageUri, product.productID, product.images.count() - 1)
                 }
             }
             binding.imgSliderAddProduct.setImageList(
@@ -324,15 +322,20 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     }
 
     override fun onImageRemoved(position: Int) {
-        viewModel.product.value!!.imageSlideList.removeAt(position)
-        viewModel.product.value!!.imagesListURI.removeAt(position)
+        if(product.images[position] != null) {
+            product.imageSlideList.removeAt(position)
+            product.imagesListURI.removeAt(position)
+            database.removeImage(product.images.removeAt(position)!!, this)
 
-        binding.imgSliderAddProduct.setImageList(
-            product.imageSlideList,
-            ScaleTypes.CENTER_INSIDE
-        )
-        binding.rvUploadImages.adapter?.notifyDataSetChanged()
-        updateSliderUI()
+            binding.imgSliderAddProduct.setImageList(
+                product.imageSlideList,
+                ScaleTypes.CENTER_INSIDE
+            )
+            binding.rvUploadImages.adapter?.notifyDataSetChanged()
+            updateSliderUI()
+        }else{
+            Toast.makeText(this, "Please wait until image uploaded, then remove!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun updateSliderUI() {
@@ -366,4 +369,12 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         super.onPropertyRemoved(position)
     }
 
+    override fun onImageUploadedSuccess(path: String, position: Int) {
+        product.images[position] = path
+    }
+
+    override fun onImageUploadedFailed(position: Int) {
+        Toast.makeText(this, "Failed to upload Num: " + (position + 1), Toast.LENGTH_SHORT).show()
+        product.images.removeAt(position)
+    }
 }
