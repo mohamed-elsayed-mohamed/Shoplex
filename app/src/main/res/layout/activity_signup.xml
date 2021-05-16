@@ -81,7 +81,8 @@ tools:context=".view.activities.SignupActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:maxLength="100" />
+            android:maxLength="100"
+            android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

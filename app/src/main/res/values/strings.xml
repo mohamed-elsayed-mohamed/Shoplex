@@ -115,4 +115,14 @@
     <string name="or">________________________ OR ________________________</string>
     <string name="new_user">New User ? </string>
     <string name="create_an_account"><u>Create an Account</u></string>
+    <string name="min_store_name_err">Minimum Name is 5 characters</string>
+    <string name="min_password_err">Minimum Password is 8 characters</string>
+    <string name="not_match">Not Match</string>
+    <string name="require_email">Email Required</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="reset">Reset</string>
+    <string name="close_dialog">Close</string>
+    <string name="email_send">Emaill Send</string>
+    <string name="login_success">Login Successfully</string>
+    <string name="authentication_fail">Authentication failed.</string>
 </resources>
