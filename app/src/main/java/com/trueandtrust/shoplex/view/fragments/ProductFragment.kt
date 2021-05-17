@@ -6,44 +6,49 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.model.adapter.ColorAdapter
 import com.trueandtrust.shoplex.databinding.FragmentProductBinding
+import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
+import com.trueandtrust.shoplex.model.pojo.Product
 
-class ProductFragment : Fragment() {
+class ProductFragment(val product: Product) : Fragment() {
 
     private lateinit var binding : FragmentProductBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var colorAdapter: ColorAdapter
-
-
-    val imageList = ArrayList<SlideModel>() // Create image list
-    val colors = arrayOf(R.drawable.teal, R.drawable.green, R.drawable.teal)
-
+    private lateinit var propertiesAdapter: PropertyAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val imageList = ArrayList<SlideModel>()
         binding = FragmentProductBinding.inflate(inflater, container, false)
 
-        //imgSlider
-        imageList.add(SlideModel("https://bit.ly/2YoJ77H"))
-        imageList.add(SlideModel("https://bit.ly/2BteuF2"))
-        imageList.add(SlideModel("https://bit.ly/3fLJf72"))
+        for (imgURL in product.images)
+            imageList.add(SlideModel(imgURL))
 
-        binding.imgSliderDetails.setImageList(imageList, ScaleTypes.CENTER_CROP)
+        binding.imgSliderDetails.setImageList(imageList, ScaleTypes.CENTER_INSIDE)
+
+        binding.tvDetailsName.text = product.name
+        binding.tvDetailsReview.text = product.rate.toString()
+        binding.tvDetailsDiscount.text = product.discount.toString()
+        binding.tvDetailsOldPrice.text = product.price.toString()
+        binding.tvDetailsNewPrice.text = product.newPrice.toString()
+        binding.tvDetailsDescription.text = product.description
+        binding.tvCatSubCat.text =  "${product.category.toLowerCase().capitalize()}, ${product.subCategory.toLowerCase().capitalize()}"
+        if(product.premiumDays != 0) {
+            binding.tvPremiumDays.visibility = View.VISIBLE
+            binding.tvPremiumDays.text = product.premiumDays.toString() + " Days"
+        }
 
         //RecyclerView
         linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.orientation = RecyclerView.HORIZONTAL
-        binding.recyclerViewColor.layoutManager = linearLayoutManager
+        binding.rcProperties.layoutManager = linearLayoutManager
 
-        colorAdapter = ColorAdapter(colors)
-        binding.recyclerViewColor.adapter = colorAdapter
+        propertiesAdapter = PropertyAdapter(product.properties, true)
+        binding.rcProperties.adapter = propertiesAdapter
 
 
         return binding.root

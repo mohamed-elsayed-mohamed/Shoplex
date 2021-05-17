@@ -24,7 +24,7 @@ open class Product() : Parcelable {
     var discount : Int = 0
     var category : String = ""
     var subCategory : String = ""
-    var rate : Double? = null
+    var rate : Float? = null
     var premium : Premium? = null
     var premiumDays: Int = 0
     var properties: ArrayList<Property> = arrayListOf()
@@ -47,6 +47,8 @@ open class Product() : Parcelable {
         discount = parcel.readInt()
         category = parcel.readString().toString()
         subCategory = parcel.readString().toString()
+        //rate = parcel.readFloat()
+        premiumDays = parcel.readInt()
         parcel.readStringList(images)
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
         properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
@@ -70,6 +72,8 @@ open class Product() : Parcelable {
         parcel.writeInt(discount)
         parcel.writeString(category)
         parcel.writeString(subCategory)
+        //rate?.let { parcel.writeFloat(it) }
+        parcel.writeInt(premiumDays)
         parcel.writeStringList(images)
         parcel.writeArray(imagesListURI.toArray())
         parcel.writeArray(properties.toArray())

@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
@@ -16,8 +15,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.DBModel
@@ -82,7 +79,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         binding.rvUploadImages.adapter = myAdapter
 
         // Property Adapter
-        val propAdapter = PropertyAdapter(product.properties, this)
+        val propAdapter = PropertyAdapter(product.properties)
         binding.rcProperty.adapter = propAdapter
 
         // Category Dropdown
@@ -208,7 +205,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             }
         })
 
-        binding.tvDiscount.setOnFocusChangeListener { v, hasFocus ->
+        binding.tvDiscount.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 if (binding.edDiscountNum.text.toString().toFloat() > 90) {
                     binding.edDiscountNum.setText(getString(R.string.maxDiscount))
@@ -218,12 +215,9 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
 
         // Old Price
         binding.edOldPrice.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
+            override fun afterTextChanged(s: Editable?) { }
 
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (count > 0 && !binding.edDiscountNum.text.isNullOrEmpty() && binding.edOldPrice.text.toString()
@@ -247,7 +241,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             }
         })
 
-        binding.edOldPrice.setOnFocusChangeListener { v, hasFocus ->
+        binding.edOldPrice.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 if (binding.edOldPrice.text.isNullOrEmpty() || binding.edOldPrice.text.toString()
                         .toFloat() < 10
@@ -256,7 +250,6 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                 }
             }
         }
-
 
         binding.actTVCategory.onItemClickListener =
             OnItemClickListener { parent, view, position, id ->

@@ -17,8 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -27,20 +26,31 @@
 
             <ImageView
                 android:id="@+id/img_product"
-                android:layout_width="165dp"
-                android:layout_height="120dp"
-                android:layout_gravity="end"
-                android:scaleType="fitXY"
+                android:layout_width="@dimen/width_165"
+                android:layout_height="@dimen/height_120"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
                 android:src="@drawable/product"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="@+id/img_product"
+                app:layout_constraintStart_toStartOf="@+id/img_product"
+                app:layout_constraintTop_toBottomOf="@+id/img_product" />
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabAddProduct"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="@dimen/margin_4"
+                android:layout_marginEnd="@dimen/margin_8"
                 android:background="@color/white"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
@@ -55,12 +65,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_8"
-                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_4"
                 android:text="@string/old_price"
                 android:textColor="@color/gray"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fabAddProduct" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
             <TextView
                 android:id="@+id/tv_new_price"
@@ -78,21 +88,27 @@
 
             <TextView
                 android:id="@+id/tv_product_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginStart="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_marginEnd="@dimen/margin_8"
+                android:gravity="center_vertical"
+                android:lines="2"
                 android:text="@string/productName"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/tv_old_price"
-                app:layout_constraintTop_toBottomOf="@+id/tv_old_price" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fabAddProduct" />
 
             <TextView
                 android:id="@+id/tv_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginStart="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginBottom="@dimen/margin_8"
                 android:background="@drawable/roundrate"
                 android:drawablePadding="2dp"
                 android:paddingLeft="6dp"
@@ -103,20 +119,19 @@
                 android:textStyle="bold"
                 app:drawableStartCompat="@drawable/star_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_product_name"
-                app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_old_price" />
 
             <TextView
                 android:id="@+id/tvSold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="4dp"
                 android:text="@string/sold"
                 android:textColor="@color/gray"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_review"
+                app:layout_constraintEnd_toEndOf="@+id/tv_product_name"
+                app:layout_constraintTop_toTopOf="@+id/tv_review" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

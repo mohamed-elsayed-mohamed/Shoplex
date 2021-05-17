@@ -16,7 +16,6 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Property
 
-
 class PropertyDialog : AppCompatDialogFragment {
     private lateinit var btnAddValue : ImageButton
     private lateinit var edValue : EditText
@@ -27,7 +26,6 @@ class PropertyDialog : AppCompatDialogFragment {
     private var listener: INotifyMVP
 
     constructor(listener: INotifyMVP){
-
         this.listener = listener
     }
 
@@ -46,7 +44,7 @@ class PropertyDialog : AppCompatDialogFragment {
         // Add Values in Chips
         btnAddValue.setOnClickListener {
             val inflater = LayoutInflater.from(context)
-            val chipItem = inflater.inflate(R.layout.chip_item, null, false) as Chip
+            val chipItem = inflater.inflate(R.layout.chip_entry_item, null, false) as Chip
             chipItem.text = edValue.text.toString()
 
             chipItem.setOnCloseIconClickListener {

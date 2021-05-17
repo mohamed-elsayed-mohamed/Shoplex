@@ -52,7 +52,7 @@
     <string name="reviews">Reviews</string>
     <string name="_4_5_5">4.5/5</string>
     <string name="longtext">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,as opposed to using Content here, content here, making it look like readable English.</string>
-    <string name="all_colors">All Colors</string>
+    <string name="all_properties">All Properties</string>
     <string name="Plus_Sign">+</string>
 
 
@@ -121,7 +121,7 @@
     <string name="forget_password">Forget Password</string>
     <string name="reset">Reset</string>
     <string name="close_dialog">Close</string>
-    <string name="email_send">Emaill Send</string>
+    <string name="email_send">Email Send</string>
     <string name="login_success">Login Successfully</string>
     <string name="authentication_fail">Authentication failed.</string>
     <string name="title_activity_maps">Map</string>
