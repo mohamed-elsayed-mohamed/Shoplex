@@ -27,7 +27,6 @@ import com.trueandtrust.shoplex.viewmodel.ProductVM
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
 
-
 class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private val OPEN_GALLERY_CODE = 200
     private val MAX_IMAGES_SIZE = 6
@@ -356,10 +355,6 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     override fun applyData(property: Property) {
         product.properties.add(property)
         binding.rcProperty.adapter!!.notifyDataSetChanged()
-    }
-
-    override fun onPropertyRemoved(position: Int) {
-        super.onPropertyRemoved(position)
     }
 
     override fun onImageUploadedSuccess(path: String, position: Int) {

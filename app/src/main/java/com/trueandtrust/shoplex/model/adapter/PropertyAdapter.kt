@@ -36,7 +36,6 @@ class PropertyAdapter(val properties: ArrayList<Property>, val isViewOnly: Boole
             for (value in property.values) {
                 val chipItem: Chip
 
-
                 if(isViewOnly) {
                     chipItem = LayoutInflater.from(binding.root.context).inflate(R.layout.chip_choice_item, null, false) as Chip
                     binding.btnDelteProperty.visibility = View.GONE
@@ -60,8 +59,6 @@ class PropertyAdapter(val properties: ArrayList<Property>, val isViewOnly: Boole
                 }
 
                 binding.cgPropValue.addView(chipItem)
-
-
             }
         }
     }
