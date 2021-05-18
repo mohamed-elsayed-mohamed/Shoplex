@@ -20,6 +20,7 @@ import kotlin.math.log
 class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var binding: ActivityConfirmProductBinding
     private lateinit var product: Product
+    private var isUpdate: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,8 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         setContentView(binding.root)
 
         product = this.intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))!!
+        if(intent.hasExtra(getString(R.string.update_product)))
+            isUpdate = true
 
         showAll()
 
@@ -51,9 +54,9 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         }
 
         binding.btnConfirm.setOnClickListener {
-            val dbModel = DBModel(this)
+            val dbModel = DBModel(product, this, isUpdate)
             product.date = Timestamp.now().toDate()
-            dbModel.addProduct(product, applicationContext)
+            dbModel.addProduct()
             startActivity(
                 Intent(
                     this,

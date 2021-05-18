@@ -26,6 +26,7 @@ import com.trueandtrust.shoplex.model.enumurations.*
 import com.trueandtrust.shoplex.viewmodel.ProductVM
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
+import java.net.URI
 
 class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private val OPEN_GALLERY_CODE = 200
@@ -33,7 +34,8 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var viewModel: ProductVM
     private lateinit var product: Product
-    private val database: DBModel = DBModel(this)
+  //  private lateinit var database: DBModel
+    private var isUpdate: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,18 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                 viewModel.product.value!!.imageSlideList, ScaleTypes.CENTER_INSIDE
             )
         })
+
+        // User need to update data
+        if(intent.hasExtra(getString(R.string.PRODUCT_KEY))){
+            this.viewModel.product.value = intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))
+            this.product = this.viewModel.product.value!!
+            onUpdate(product)
+        }else{
+            // Define product from view model
+            product = viewModel.product.value!!
+        }
+
+      //  database = DBModel(product, this)
 
         viewModel.arrCategory.observe(this, {
             val arrayCategoryAdapter = ArrayAdapter(
@@ -69,9 +83,6 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
 
         })
-
-        // Define product from view model
-        product = viewModel.product.value!!
 
         // Images Adapter
         val myAdapter = MyImagesAdapter(viewModel.product.value!!.imagesListURI, this)
@@ -158,6 +169,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
 
             startActivity(Intent(this, ConfirmProductActivity::class.java).apply {
                 this.putExtra(getString(R.string.PRODUCT_KEY), product)
+                this.putExtra(getString(R.string.update_product), isUpdate)
             })
 
         }
@@ -259,10 +271,28 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                 viewModel.getSubCategory(selectedItem)
 
                 binding.actTVSubCategory.onItemClickListener =
-                    OnItemClickListener { parent, view, position, id ->
+                    OnItemClickListener { _, _, _, _ ->
                         binding.tiSubCategory.error = null
                     }
             }
+    }
+
+    private fun onUpdate(product: Product) {
+        this.isUpdate = true
+        for(imgURL in product.images){
+            product.imageSlideList.add(SlideModel(imgURL))
+            product.imagesListURI.add(Uri.parse(imgURL))
+        }
+
+        binding.edProductName.setText(product.name)
+        binding.edOldPrice.setText(product.price.toString())
+        binding.edDiscountNum.setText(product.discount.toString())
+        binding.edNewPrice.text = product.newPrice.toString()
+        binding.edDescription.setText(product.description)
+        binding.actTVCategory.setText(product.category)
+        viewModel.getSubCategory(product.category)
+        binding.actTVSubCategory.setText(product.subCategory)
+        binding.btnAddProduct.text = getString(R.string.update_product)
     }
 
     private fun openGalleryForImages() {
@@ -287,8 +317,6 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                     if (!product.imagesListURI.contains(imageUri) && product.imagesListURI.count() < MAX_IMAGES_SIZE) {
                         product.imagesListURI.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
-                        product.images.add(null)
-                        database.addImage(imageUri, product.productID, product.images.count() - 1)
                     } else if (product.imagesListURI.count() >= MAX_IMAGES_SIZE) {
                         Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
                     }
@@ -300,8 +328,6 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                 if (!product.imagesListURI.contains(imageUri)) {
                     product.imagesListURI.add(imageUri)
                     product.imageSlideList.add(SlideModel(imageUri.toString()))
-                    product.images.add(null)
-                    database.addImage(imageUri, product.productID, product.images.count() - 1)
                 }
             }
             binding.imgSliderAddProduct.setImageList(
@@ -314,19 +340,26 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     }
 
     override fun onImageRemoved(position: Int) {
-        if(product.images[position] != null) {
+        if (product.imageSlideList[position] != null) {
             product.imageSlideList.removeAt(position)
             product.imagesListURI.removeAt(position)
-            database.removeImage(product.images.removeAt(position)!!, this)
+            //database.removeImage(product.images.removeAt(position)!!, isUpdate)
+            if (product.images.count() > 0)
+                product.removedImages.add(product.images.removeAt(position)!!)
 
             binding.imgSliderAddProduct.setImageList(
                 product.imageSlideList,
                 ScaleTypes.CENTER_INSIDE
             )
+
             binding.rvUploadImages.adapter?.notifyDataSetChanged()
             updateSliderUI()
-        }else{
-            Toast.makeText(this, "Please wait until image uploaded, then remove!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(
+                this,
+                "Please wait until image uploaded, then remove!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

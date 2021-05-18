@@ -33,6 +33,9 @@ open class Product() : Parcelable {
     var images : ArrayList<String?> = arrayListOf()
 
     @Exclude @set:Exclude @get:Exclude
+    var removedImages : ArrayList<String> = arrayListOf()
+
+    @Exclude @set:Exclude @get:Exclude
     var imagesListURI : ArrayList<Uri> = arrayListOf()
 
     @Exclude @set:Exclude @get:Exclude
@@ -49,6 +52,7 @@ open class Product() : Parcelable {
         subCategory = parcel.readString().toString()
         //rate = parcel.readFloat()
         premiumDays = parcel.readInt()
+        parcel.readStringList(removedImages)
         parcel.readStringList(images)
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
         properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
@@ -74,6 +78,7 @@ open class Product() : Parcelable {
         parcel.writeString(subCategory)
         //rate?.let { parcel.writeFloat(it) }
         parcel.writeInt(premiumDays)
+        parcel.writeStringList(removedImages)
         parcel.writeStringList(images)
         parcel.writeArray(imagesListURI.toArray())
         parcel.writeArray(properties.toArray())
