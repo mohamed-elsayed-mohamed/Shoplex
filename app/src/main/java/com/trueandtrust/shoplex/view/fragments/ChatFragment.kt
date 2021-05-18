@@ -7,22 +7,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentChatBinding
+import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
+import com.trueandtrust.shoplex.model.adapter.ColorAdapter
+import com.trueandtrust.shoplex.model.pojo.ChatHead
+import com.trueandtrust.shoplex.model.pojo.Product
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 class ChatFragment : Fragment() {
+    private lateinit var chatHeadAdapter: ChatHeadAdapter
     // TODO: Rename and change types of parameters
-
+    private var chatHeadList = arrayListOf<ChatHead>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val binding : FragmentChatBinding = FragmentChatBinding.inflate(inflater,container,false)
-        // Inflate the layout for this fragment
+
+
+        chatHeadAdapter = ChatHeadAdapter(getChatHeadsInfo())
+        binding.rvChat.adapter = chatHeadAdapter
+
         (activity as AppCompatActivity?)!!.supportActionBar!!.title =getString(R.string.chat)
         setHasOptionsMenu(true);
-
         return binding.root
     }
 
@@ -39,8 +47,14 @@ class ChatFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-
-
-
+    fun getChatHeadsInfo() : ArrayList<ChatHead>{
+        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Abeer",1))
+        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Azhar",1))
+        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Heba",1))
+        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Abeer",1))
+        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Abeer",1))
+        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Abeer",1))
+        return chatHeadList
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.trueandtrust.shoplex.model.pojo
 
 import com.google.android.gms.maps.model.LatLng
+import java.util.*
 
 class Store {
 
@@ -9,6 +10,7 @@ class Store {
     var email : String = ""
     var location : LatLng? = null
     var phone : String = ""
+    var date: Date? = null
 
     fun getStoreInfo(storeID : Int) : Store{
 
