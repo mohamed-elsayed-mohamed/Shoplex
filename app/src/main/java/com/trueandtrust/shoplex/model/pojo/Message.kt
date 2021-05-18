@@ -1,10 +1,9 @@
 package com.trueandtrust.shoplex.model.pojo
 
+import com.google.firebase.Timestamp
 import java.util.*
 
-class Message {
-    var messageID : Int = 0
-    lateinit var messageDate : Date
-    var toID : Int = 0
-    var message : String = ""
+data class Message(var messageID : String = UUID.randomUUID().toString(), val messageDate: Date = Timestamp.now().toDate(), val toId : String = "0", val message: String = "") {
+
+
 }

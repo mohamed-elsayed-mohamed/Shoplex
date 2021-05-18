@@ -6,6 +6,7 @@ import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -15,6 +16,7 @@ import com.trueandtrust.shoplex.databinding.ActivitySignupBinding
 import com.trueandtrust.shoplex.model.pojo.Store
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -35,6 +37,8 @@ class SignupActivity : AppCompatActivity() {
             store.name = binding.edName.text.toString()
             store.email = binding.edEmail.text.toString()
             store.phone = binding.edPhone.text.toString()
+            store.date = Timestamp.now().toDate()
+            //store.location = binding.tvLocation.
             if (checkEditText() == true) {
                 addSeller(store)
                 startActivity(Intent(this, LoginActivity::class.java))
@@ -99,7 +103,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
     //hash password
-    fun computeMD5Hash(password: String) : String {
+    /*fun computeMD5Hash(password: String) : String {
         val MD5Hash = StringBuffer()
         try {
             // Create MD5 Hash
@@ -116,7 +120,7 @@ class SignupActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         return MD5Hash.toString()
-    }
+    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -129,7 +133,6 @@ class SignupActivity : AppCompatActivity() {
             }
         }
     }
-
 
     fun getAddress(loc: LatLng): String{
         return "Address"

@@ -4,11 +4,11 @@ class Chat {
 
     var chatID : Int = 0
     lateinit var chatHead : ChatHead
-    lateinit var  message : Message
+    lateinit var  message : ArrayList<Message>
 
     fun getAllMessages(chatID : Int) : ArrayList<Message>{
 
-        return  arrayListOf(Message())
+        return  arrayListOf()
     }
 
     fun getMessages(message: Message,chatID : Int) : Boolean{

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margin_8">
+    android:paddingLeft="@dimen/margin_8"
+    android:paddingRight="@dimen/margin_8">
 
     <TextView
         android:id="@+id/tvReplyMessage"
@@ -15,6 +16,7 @@
         android:padding="@dimen/margin_8"
         android:text="@string/Hello"
         android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +28,7 @@
         android:layout_marginTop="@dimen/drawable_padding"
         android:text="@string/monday_12_00"
         android:textSize="12sp"
+        android:textColor="@color/grey_font"
         app:layout_constraintStart_toStartOf="@+id/tvReplyMessage"
         app:layout_constraintTop_toBottomOf="@+id/tvReplyMessage" />
 
