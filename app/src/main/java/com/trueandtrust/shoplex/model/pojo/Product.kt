@@ -4,77 +4,46 @@ package com.trueandtrust.shoplex.model.pojo
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
+import androidx.databinding.Bindable
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
-import com.trueandtrust.shoplex.model.enumurations.Category
 import com.google.firebase.firestore.Exclude
 import com.trueandtrust.shoplex.model.enumurations.Premium
+import java.util.*
+import kotlin.collections.ArrayList
 
-import com.trueandtrust.shoplex.model.enumurations.SubFashion
-
-
-open class Product: Parcelable {
-    var productID : Int? = null
-    var storeID : Int = 0
+open class Product() : Parcelable {
+    var productID : String = UUID.randomUUID().toString()
+    var storeID : String = ""
     var storeName : String = ""
-    open var name : String = ""
+    var deliveryLoc: LatLng? = null
+    var name : String = ""
     var description: String = ""
-    open var price : Float = 0.0F
-    var newPrice : Float = 0.0F
-    var oldPrice : Float = 0.0F
-    var sold:String=""
+    var price : Float = 10F
+    var newPrice : Float = 10F
     var discount : Int = 0
+    var category : String = ""
+    var subCategory : String = ""
+    var rate : Float? = null
     var premium : Premium? = null
     var premiumDays: Int = 0
-    var properties: ArrayList<Properties> = arrayListOf()
+    var properties: ArrayList<Property> = arrayListOf()
+    var date: Date? = null
 
+    var images : ArrayList<String?> = arrayListOf()
+
+    @Exclude @set:Exclude @get:Exclude
+    var removedImages : ArrayList<String> = arrayListOf()
 
     @Exclude @set:Exclude @get:Exclude
     var imagesListURI : ArrayList<Uri> = arrayListOf()
 
     @Exclude @set:Exclude @get:Exclude
     var imageSlideList : ArrayList<SlideModel> = arrayListOf()
-    open var category : String = ""
-    var images : ArrayList<Uri> = ArrayList()
-    var subCategory : String =""
-    var rate : Double = 0.0
-    var permium : Premium = Premium.BASIC
-    var deliveryLoc: LatLng = LatLng(0.0, 0.0)
-    open var productImageUrl : String = ""
-
- constructor()
-
-    constructor(
-        name: String,
-        price: Float,
-        category: String,
-        deliveryLoc: LatLng,
-        productImageUrl: String
-    ) {
-        this.name = name
-        this.price = price
-        this.category = category
-        this.deliveryLoc = deliveryLoc
-        this.productImageUrl = productImageUrl
-    }
-
-    constructor(
-        name: String,
-        newPrice: Float,
-        oldPrice: Float,
-        sold: String,
-        rate: Double,
-        productImageUrl: String
-    ) {
-        this.name = name
-        this.newPrice = newPrice
-        this.oldPrice = oldPrice
-        this.sold = sold
-        this.rate = rate
-        this.productImageUrl = productImageUrl
-    }
 
     constructor(parcel: Parcel) : this() {
+        productID = parcel.readString().toString()
         name = parcel.readString().toString()
         description = parcel.readString().toString()
         price = parcel.readFloat()
@@ -82,7 +51,12 @@ open class Product: Parcelable {
         discount = parcel.readInt()
         category = parcel.readString().toString()
         subCategory = parcel.readString().toString()
+        //rate = parcel.readFloat()
+        premiumDays = parcel.readInt()
+        parcel.readStringList(removedImages)
+        parcel.readStringList(images)
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
+        properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
     }
 
     @Exclude
@@ -94,7 +68,14 @@ open class Product: Parcelable {
         return imageSlideList
     }
 
+    fun calculateNewPrice(): String{
+        val value = (this.price - (this.price * (this.discount / 100.0F)))
+        this.newPrice = "%.2f".format(value).toFloat()
+        return this.newPrice.toString()
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(productID)
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeFloat(price)
@@ -102,7 +83,12 @@ open class Product: Parcelable {
         parcel.writeInt(discount)
         parcel.writeString(category)
         parcel.writeString(subCategory)
+        //rate?.let { parcel.writeFloat(it) }
+        parcel.writeInt(premiumDays)
+        parcel.writeStringList(removedImages)
+        parcel.writeStringList(images)
         parcel.writeArray(imagesListURI.toArray())
+        parcel.writeArray(properties.toArray())
     }
 
     override fun describeContents(): Int {

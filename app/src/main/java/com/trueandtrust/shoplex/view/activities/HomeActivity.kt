@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,10 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityHomeBinding
 
@@ -40,6 +45,8 @@ class HomeActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
         navView = binding.navView
         drawerLayout = binding.drawerLayout
+
+        // Toast.makeText(this, Timestamp.now().toDate().time.toString(), Toast.LENGTH_SHORT).show()
 
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
                 this,
@@ -70,6 +77,10 @@ class HomeActivity : AppCompatActivity() {
                     val intent = Intent(this, StoreLocationActivity::class.java).apply {
                     }
                     startActivity(intent)
+                }
+                R.id.Logout ->{
+                    Firebase.auth.signOut()
+                    finish()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)

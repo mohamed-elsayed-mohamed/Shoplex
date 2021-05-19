@@ -9,96 +9,65 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.view.get
 import androidx.core.view.size
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.model.interfaces.PropertyDialogListener
+import com.trueandtrust.shoplex.databinding.PropDialogBinding
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Property
 
-
-class PropertyDialog : AppCompatDialogFragment {
-
-
-    private lateinit var btnAddValue : ImageButton
-    private lateinit var edValue : EditText
-    private lateinit var edProperty : EditText
-    private lateinit var chipValues : ChipGroup
-    private lateinit var btnConfirm : Button
-    private lateinit var btnCancel : Button
-    private var listener: PropertyDialogListener
-
-    constructor(listener: PropertyDialogListener){
-
-        this.listener = listener
-    }
+class PropertyDialog(val listener: INotifyMVP): AppCompatDialogFragment() {
+    private lateinit var binding: PropDialogBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        this.binding = PropDialogBinding.inflate(LayoutInflater.from(this.context))
+        val builder = AlertDialog.Builder(activity, R.style.ThemeOverlay_AppCompat_Dialog_Alert)
+        builder.setView(binding.root).setTitle(getString(R.string.property))
 
-        val builder = AlertDialog.Builder(activity,R.style.ThemeOverlay_AppCompat_Dialog_Alert)
-        val inflater = activity?.layoutInflater
-        val view: View = inflater!!.inflate(R.layout.prop_dialog, null)
-
-        builder.setView(view).setTitle(getString(R.string.property))
-
-        btnAddValue = view.findViewById(R.id.btnAddValue)
-        edProperty = view.findViewById(R.id.edPropertyName)
-        edValue = view.findViewById(R.id.edPropertyValue)
-        chipValues = view.findViewById(R.id.cg_values)
         // Add Values in Chips
-        btnAddValue.setOnClickListener{
-            val value : String = edValue.text.toString()
+        binding.btnAddValue.setOnClickListener {
             val inflater = LayoutInflater.from(context)
-            val chipItem = inflater.inflate(R.layout.chip_item, null, false) as Chip
-            chipItem.text = value
+            val chipItem = inflater.inflate(R.layout.chip_entry_item, null, false) as Chip
+            chipItem.text = binding.edPropertyValue.text.toString()
+
             chipItem.setOnCloseIconClickListener {
-                chipValues.removeView(it)
+                binding.cgValues.removeView(it)
             }
-            when{
-                edValue.length() == 0 -> {edValue.error = getString(R.string.Required)
-                    return@setOnClickListener}
-                else ->  chipValues.addView(chipItem)
+            when {
+                binding.edPropertyValue.length() == 0 -> {
+                    binding.edPropertyValue.error = getString(R.string.Required)
+                    return@setOnClickListener
+                }
+                else -> {
+                    binding.cgValues.addView(chipItem)
+                    binding.edPropertyValue.text?.clear()
+                }
             }
         }
         //cancel
-        btnCancel = view.findViewById(R.id.btnCancelProp)
-        btnCancel.setOnClickListener {
+        binding.btnCancelProp.setOnClickListener {
             dismiss()
         }
         //Confirm Property
-        btnConfirm = view.findViewById(R.id.btnPropertyConfirm)
-        btnConfirm.setOnClickListener{
+        binding.btnPropertyConfirm.setOnClickListener{
             when{
-                edProperty.length() == 0 -> {edProperty.error = getString(R.string.Required)
+                binding.edPropertyName.length() == 0 -> {binding.edPropertyName.error = getString(R.string.Required)
                     return@setOnClickListener}
-                chipValues.size == 0 -> {edValue.error = getString(R.string.Required)
+                binding.cgValues.size == 0 -> {binding.edPropertyValue.error = getString(R.string.Required)
                     return@setOnClickListener}
                 else -> dismiss()
             }
-            var property : Property = Property()
-            property.name = edProperty.text.toString()
-            for(item in 0 until chipValues.childCount){
-                val chip = chipValues.getChildAt(item) as Chip
+            var property = Property()
+            property.name = binding.edPropertyName.text.toString()
+            for(item in 0 until binding.cgValues.childCount){
+                val chip = binding.cgValues.getChildAt(item) as Chip
 
                 property.values.add(chip.text.toString())
             }
 
-            listener.applyData(property)
+            listener.onNewPropertyAdded(property)
         }
         return builder.create()
     }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = try {
-            context as PropertyDialogListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(
-                context.toString().toString() +
-                        "PropertyDialogListener"
-            )
-        }
-    }
-
 }

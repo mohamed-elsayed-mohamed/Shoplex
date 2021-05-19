@@ -4,58 +4,62 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.core.view.get
-import androidx.core.view.size
+import com.trueandtrust.shoplex.R
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import com.trueandtrust.shoplex.R
+import com.trueandtrust.shoplex.databinding.PropertyItemRowBinding
 import com.trueandtrust.shoplex.model.pojo.Property
 
+class PropertyAdapter(val properties: ArrayList<Property>, val isViewOnly: Boolean = false) :
+    RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder>() {
 
-class PropertyAdapter(private val properties: ArrayList<Property>, private val context: Context) :
-    RecyclerView.Adapter<PropertyAdapter.ViewHolder>() {
+    private lateinit var context: Context
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nameProp: TextView = view.findViewById(R.id.tvPropName)
-        val chipValues: ChipGroup = view.findViewById(R.id.cgPropValue)
-        val btnDelete : ImageButton = view.findViewById(R.id.btnDelteProperty)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
+        this.context = parent.context
+
+        return PropertyViewHolder(
+            PropertyItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.property_item_row, viewGroup, false)
+    override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) =
+        holder.bind(properties[position])
 
-        return ViewHolder(view)
-    }
+    override fun getItemCount() = properties.size
 
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val item = properties[position]
+    inner class PropertyViewHolder(val binding: PropertyItemRowBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(property: Property) {
+            binding.tvPropName.text = property.name
 
-        viewHolder.nameProp.text = item.name
-        val inflater = LayoutInflater.from(context)
-        for (i in item.values) {
-            val chipItem = inflater.inflate(R.layout.chip_item, null, false) as Chip
-            chipItem.text = i
-            chipItem.setOnCloseIconClickListener {
-                viewHolder.chipValues.removeView(it)
+            for (value in property.values) {
+                val chipItem: Chip
+
+                if(isViewOnly) {
+                    chipItem = LayoutInflater.from(binding.root.context).inflate(R.layout.chip_choice_item, null, false) as Chip
+                    binding.btnDelteProperty.visibility = View.GONE
+                }
+                else {
+                    chipItem = LayoutInflater.from(binding.root.context).inflate(R.layout.chip_entry_item, null, false) as Chip
+                    binding.btnDelteProperty.setOnClickListener {
+                        properties.remove(property)
+                        notifyItemRemoved(adapterPosition)
+                    }
+                }
+
+                chipItem.text = value
+                chipItem.setOnCloseIconClickListener {
+                    binding.cgPropValue.removeView(it)
+                    properties[adapterPosition].values.remove(value)
+                    if (property.values.count() == 0) {
+                        properties.remove(property)
+                        notifyItemRemoved(adapterPosition)
+                    }
+                }
+
+                binding.cgPropValue.addView(chipItem)
             }
-            viewHolder.chipValues.addView(chipItem)
         }
-        viewHolder.btnDelete.setOnClickListener {
-            properties.removeAt(position)
-            notifyItemRemoved(position)
-        }
-    }
-
-    override fun getItemCount(): Int {
-
-        return properties.size
     }
 }
-
-
-

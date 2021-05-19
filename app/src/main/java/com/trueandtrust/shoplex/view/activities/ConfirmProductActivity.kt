@@ -5,17 +5,18 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Timestamp
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
-import com.trueandtrust.shoplex.model.DBModel
+import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
 import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
-import com.trueandtrust.shoplex.model.pojo.Properties
 
 class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var binding: ActivityConfirmProductBinding
     private lateinit var product: Product
+    private var isUpdate: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +24,8 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         setContentView(binding.root)
 
         product = this.intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))!!
+        if(intent.hasExtra(getString(R.string.update_product)))
+            isUpdate = true
 
         showAll()
 
@@ -46,14 +49,10 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
             binding.cardStandard.visibility = View.INVISIBLE
         }
 
-        val property1 = Properties("Size", arrayListOf("20", "30", "40", "50"))
-        val property2 = Properties("Color", arrayListOf("Red", "Green", "Blue"))
-
-        product.properties = arrayListOf(property1, property2)
-
         binding.btnConfirm.setOnClickListener {
-            val dbModel = DBModel(this)
-            dbModel.addProduct(product, applicationContext)
+            val dbModel = ProductsDBModel(product, this, isUpdate)
+            product.date = Timestamp.now().toDate()
+            dbModel.addProduct()
             startActivity(
                 Intent(
                     this,

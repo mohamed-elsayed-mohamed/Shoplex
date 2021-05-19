@@ -1,68 +1,64 @@
 package com.trueandtrust.shoplex.model.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.trueandtrust.shoplex.R
+import com.trueandtrust.shoplex.databinding.ProductGvBinding
+import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.view.activities.AddProductActivity
 
+class ProductAdapter(var productsInfo: ArrayList<Product>) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+    private lateinit var productsDBModel: ProductsDBModel
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
+        return ProductViewHolder(
+            ProductGvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+    }
 
-internal class ProductAdapter(
-        private val context: Context,
-        private val product: ArrayList<Product>
-    ) :
-    BaseAdapter() {
-        private var layoutInflater: LayoutInflater? = null
-        private lateinit var imgProduct: ImageView
-        private lateinit var tvOldPrice: TextView
-        private lateinit var tvNewPrice: TextView
-        private lateinit var tvProductName: TextView
-        private lateinit var tvReview: TextView
-        private lateinit var tvSold: TextView
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
+        holder.bind(productsInfo[position])
 
-    override fun getCount(): Int {
-            return product.size
-        }
-        override fun getItem(position: Int): Any? {
-            return null
-        }
-        override fun getItemId(position: Int): Long {
-            return 0
-        }
-        override fun getView(
-            position: Int,
-            convertView: View?,
-            parent: ViewGroup
-        ): View? {
-            var convertView = convertView
-            if (layoutInflater == null) {
-                layoutInflater =
-                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    override fun getItemCount() = productsInfo.size
+
+    inner class ProductViewHolder(val binding: ProductGvBinding) : RecyclerView.ViewHolder(binding.root), INotifyMVP {
+        fun bind(product: Product) {
+            if(product.images.count() > 0) {
+                Glide.with(itemView.context).load(product.images[0]).into(binding.imgProduct)
             }
-            if (convertView == null) {
-                convertView = layoutInflater!!.inflate(R.layout.product_gv, null)
-
+            binding.tvOldPrice.text = product.price.toString()
+            binding.tvNewPrice.text = product.newPrice.toString()
+            binding.tvProductName.text = product.name
+            binding.tvReview.text = product.rate.toString()
+            binding.tvSold.text = "15"
+            binding.fabDeleteProduct.setOnClickListener {
+                productsDBModel = ProductsDBModel(this)
+                productsDBModel.deleteProduct(product.productID, product.images)
+                //productsInfo.remove(product)
+                //notifyItemRemoved(adapterPosition)
             }
-            imgProduct = convertView!!.findViewById(R.id.img_product)
-            tvOldPrice = convertView.findViewById(R.id.tv_old_price)
-            tvNewPrice = convertView.findViewById(R.id.tv_new_price)
-            tvProductName = convertView.findViewById(R.id.tv_product_name)
-            tvReview = convertView.findViewById(R.id.tv_review)
-            tvSold = convertView.findViewById(R.id.tv_sold)
-            val item = product[position]
-            Glide.with(context).load(item.productImageUrl).into(imgProduct)
+            itemView.setOnClickListener {
+                val context: Context = binding.root.context
 
-            tvOldPrice.text = item.oldPrice.toString()
-            tvNewPrice.text = item.newPrice.toString()
-            tvProductName.text = item.name
-            tvReview.text = item.rate.toString()
-            tvSold.text = item.sold
+                context.startActivity(Intent(context, AddProductActivity::class.java).apply {
+                    this.putExtra(context.getString(R.string.PRODUCT_KEY), product)
+                })
 
-            return convertView
+                /*
+                context.startActivity(Intent(context, ProductDetails::class.java).apply {
+                    this.putExtra(context.getString(R.string.PRODUCT_KEY), product)
+                })
+                */
+            }
         }
+        override fun onProductRemoved() {
+            Toast.makeText(this.binding.root.context, "Product Removed", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
