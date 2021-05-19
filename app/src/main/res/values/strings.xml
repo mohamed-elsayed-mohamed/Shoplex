@@ -27,7 +27,7 @@
     <string name="_3_month_of_ads">3 Month of Ads</string>
     <string name="premium">Premium</string>
     <string name="confirm">Confirm</string>
-
+    <string name="todo">TODO</string>
     <string-array name="arr_category">
         <item>Fashion</item>
         <item>Health&amp;Care</item>

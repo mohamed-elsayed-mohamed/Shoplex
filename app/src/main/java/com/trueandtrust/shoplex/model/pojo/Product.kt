@@ -2,17 +2,18 @@ package com.trueandtrust.shoplex.model.pojo
 
 
 import android.net.Uri
+import android.os.Parcel
+import android.os.Parcelable
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.trueandtrust.shoplex.model.enumurations.Category
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.Exclude
 import com.trueandtrust.shoplex.model.enumurations.Premium
 
 import com.trueandtrust.shoplex.model.enumurations.SubFashion
 
 
-open class Product() : Parcelable {
+open class Product: Parcelable {
     var productID : Int? = null
     var storeID : Int = 0
     var storeName : String = ""
@@ -33,21 +34,20 @@ open class Product() : Parcelable {
 
     @Exclude @set:Exclude @get:Exclude
     var imageSlideList : ArrayList<SlideModel> = arrayListOf()
-    open var category : Category = Category.FASHION
+    open var category : String = ""
     var images : ArrayList<Uri> = ArrayList()
-    var subCategory : SubFashion = SubFashion.MEN
+    var subCategory : String =""
     var rate : Double = 0.0
     var permium : Premium = Premium.BASIC
     var deliveryLoc: LatLng = LatLng(0.0, 0.0)
     open var productImageUrl : String = ""
 
+ constructor()
 
-
-    constructor()
     constructor(
         name: String,
         price: Float,
-        category: Category,
+        category: String,
         deliveryLoc: LatLng,
         productImageUrl: String
     ) {

@@ -36,11 +36,9 @@ class LastOrderActivity : AppCompatActivity() {
             getSupportActionBar()?.setDisplayShowHomeEnabled(true);
         }
         val order = ArrayList<Orders>()
-        order.add(Orders("Head Phone", 12.0F, Category.ACCESSORIES, OrderStatus.DELIVERD,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
-        order.add(Orders("Head Phone", 12.0F, Category.FASHION, OrderStatus.CURRENT,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
-        order.add(Orders("Head Phone", 12.0F, Category.FASHION, OrderStatus.CURRENT,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
-        order.add(Orders("Head Phone", 12.0F, Category.FASHION, OrderStatus.CURRENT,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
-        order.add(Orders("Head Phone", 12.0F, Category.FASHION, OrderStatus.CURRENT,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        order.add(Orders("Head Phone", 12.0F, "ACCESSORIES", OrderStatus.DELIVERD,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        order.add(Orders("Head Phone", 12.0F, "FASHION", OrderStatus.CURRENT,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
+        order.add(Orders("Head Phone", 12.0F, "FASHION", OrderStatus.CURRENT,"https://i.pinimg.com/236x/35/11/21/351121d0c57db7df186885dc077f7323.jpg"))
 
 
         lastOrderAdapter = LastOrderAdapter(order)
