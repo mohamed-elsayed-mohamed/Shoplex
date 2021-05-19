@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
+import androidx.databinding.Bindable
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.Exclude
@@ -19,18 +20,21 @@ open class Product() : Parcelable {
     var deliveryLoc: LatLng? = null
     var name : String = ""
     var description: String = ""
-    var price : Float = 0.0F
-    var newPrice : Float = 0.0F
+    var price : Float = 10F
+    var newPrice : Float = 10F
     var discount : Int = 0
     var category : String = ""
     var subCategory : String = ""
-    var rate : Double? = null
+    var rate : Float? = null
     var premium : Premium? = null
     var premiumDays: Int = 0
     var properties: ArrayList<Property> = arrayListOf()
     var date: Date? = null
 
     var images : ArrayList<String?> = arrayListOf()
+
+    @Exclude @set:Exclude @get:Exclude
+    var removedImages : ArrayList<String> = arrayListOf()
 
     @Exclude @set:Exclude @get:Exclude
     var imagesListURI : ArrayList<Uri> = arrayListOf()
@@ -47,6 +51,9 @@ open class Product() : Parcelable {
         discount = parcel.readInt()
         category = parcel.readString().toString()
         subCategory = parcel.readString().toString()
+        //rate = parcel.readFloat()
+        premiumDays = parcel.readInt()
+        parcel.readStringList(removedImages)
         parcel.readStringList(images)
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
         properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
@@ -61,6 +68,12 @@ open class Product() : Parcelable {
         return imageSlideList
     }
 
+    fun calculateNewPrice(): String{
+        val value = (this.price - (this.price * (this.discount / 100.0F)))
+        this.newPrice = "%.2f".format(value).toFloat()
+        return this.newPrice.toString()
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(productID)
         parcel.writeString(name)
@@ -70,6 +83,9 @@ open class Product() : Parcelable {
         parcel.writeInt(discount)
         parcel.writeString(category)
         parcel.writeString(subCategory)
+        //rate?.let { parcel.writeFloat(it) }
+        parcel.writeInt(premiumDays)
+        parcel.writeStringList(removedImages)
         parcel.writeStringList(images)
         parcel.writeArray(imagesListURI.toArray())
         parcel.writeArray(properties.toArray())

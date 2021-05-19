@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.model.pojo
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.firestore.PropertyName
 
 class Property() : Parcelable {
     var name : String = ""

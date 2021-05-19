@@ -22,8 +22,8 @@ import java.util.regex.Pattern
 
 class SignupActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySignupBinding
-    private var store: Store = Store()
+    private lateinit var binding : ActivitySignupBinding
+    private var store : Store = Store()
     private val database = Firebase.firestore
     private lateinit var pendingSellerRef: CollectionReference
     private val MAPS_CODE = 202
@@ -52,11 +52,11 @@ class SignupActivity : AppCompatActivity() {
     }
 
     //Add Seller
-    fun addSeller(store: Store) {
+    fun addSeller(store: Store){
         pendingSellerRef = database.collection("Pending Sellers")
         pendingSellerRef.add(store).addOnSuccessListener {
             Toast.makeText(baseContext, "Success", Toast.LENGTH_LONG).show()
-        }.addOnFailureListener {
+        }.addOnFailureListener{
             Toast.makeText(baseContext, "Failed: ${it.localizedMessage}", Toast.LENGTH_LONG).show()
             Log.d("FIRE", it.localizedMessage)
         }.addOnCanceledListener {
@@ -93,6 +93,7 @@ class SignupActivity : AppCompatActivity() {
         }
         return false
     }
+
     //Email Validation
     fun isEmailValid(email: String?): Boolean {
         val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"

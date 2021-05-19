@@ -15,7 +15,7 @@
             android:id="@+id/imgSliderDetails"
             android:layout_width="match_parent"
             android:layout_height="@dimen/img_height"
-            app:iss_auto_cycle="false"
+            app:iss_auto_cycle="true"
             app:iss_delay="0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,12 +23,23 @@
 
         </com.denzcoskun.imageslider.ImageSlider>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/imgSliderDetails"
+            app:layout_constraintEnd_toEndOf="@+id/img_product"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgSliderDetails" />
+
         <TextView
             android:id="@+id/tvDetailsName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/product_name"
             android:textColor="@color/purple_700"
             android:textSize="24sp"
@@ -39,10 +50,11 @@
         <TextView
             android:id="@+id/tvDetailsReview"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_height="@dimen/height_28"
+            android:layout_marginTop="@dimen/margin_8"
             android:background="@drawable/roundedrate"
             android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_8"
             android:paddingTop="@dimen/drawable_padding"
             android:paddingRight="@dimen/margin_8"
@@ -55,10 +67,31 @@
             app:layout_constraintTop_toBottomOf="@+id/tvDetailsName" />
 
         <TextView
+            android:id="@+id/tvPremiumDays"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_28"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:background="@drawable/roundedrate"
+            android:drawablePadding="@dimen/drawable_padding"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_8"
+            android:paddingTop="@dimen/drawable_padding"
+            android:paddingRight="@dimen/margin_8"
+            android:paddingBottom="@dimen/drawable_padding"
+            android:text="@string/_4_5_5"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:drawableStartCompat="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDetailsReview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailsName" />
+
+        <TextView
             android:id="@+id/tvDetailsNewPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/newPrice"
             android:textColor="@color/purple_700"
             android:textStyle="bold"
@@ -88,42 +121,34 @@
             app:layout_constraintStart_toEndOf="@+id/tvDetailsNewPrice"
             app:layout_constraintTop_toTopOf="@+id/tvDetailsNewPrice" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvDetailsDescription"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
             android:layout_marginEnd="@dimen/margin_8"
-            android:orientation="vertical"
+            android:padding="@dimen/padding_4"
+            android:text="@string/longtext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailsOldPrice">
-
-            <TextView
-                android:id="@+id/tvDetailsDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_4"
-                android:text="@string/longtext" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailsNewPrice" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_16"
-            android:text="@string/all_colors"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/all_properties"
             android:textColor="@color/purple_700"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailsDescription" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewColor"
+            android:id="@+id/rc_properties"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/margin_8"
@@ -132,6 +157,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/tvCatSubCat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_8"
+            android:text="@string/category"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDetailsReview"
+            app:layout_constraintStart_toEndOf="@+id/tvDetailsReview"
+            app:layout_constraintTop_toTopOf="@+id/tvDetailsReview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
