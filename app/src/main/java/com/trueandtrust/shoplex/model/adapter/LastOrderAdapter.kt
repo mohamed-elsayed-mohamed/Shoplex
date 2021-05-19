@@ -37,7 +37,7 @@ class LastOrderAdapter (private val product: ArrayList<Orders>) :
         viewHolder.tvproductName.text = item.name
         viewHolder.tvCategory.text = item.category.toString()
         viewHolder.tvPrice.text = item.price.toString()
-        viewHolder.tvStatus.text = item.orderStatus.toString()
+//        viewHolder.tvStatus.text = item.orderStatus.toString()
 
     }
 
@@ -49,16 +49,16 @@ class LastOrderAdapter (private val product: ArrayList<Orders>) :
         val tvproductName:TextView
         val tvCategory: TextView
         val tvPrice: TextView
-        val tvStatus: TextView
+//        val tvStatus: TextView
 
 
         init {
             // Define click listener for the ViewHolder's View.
             imgProduct = view.findViewById(R.id.img_product)
             tvproductName = view.findViewById(R.id.tv_product_name)
-            tvCategory=view.findViewById(R.id.tv_category)
+            tvCategory=view.findViewById(R.id.tvCategory)
             tvPrice = view.findViewById(R.id.tv_price)
-            tvStatus = view.findViewById(R.id.tv_status)
+//            tvStatus = view.findViewById(R.id.tv_status)
 
         }
     }

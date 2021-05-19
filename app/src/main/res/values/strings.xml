@@ -127,4 +127,9 @@
     <string name="title_activity_maps">Map</string>
     <string name="currentOrders">Current Orders</string>
     <string name="update_product">Update Product</string>
+    <string name="all_review">All Review</string>
+    <string name="rating">Rating</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="date">Date</string>
+    <string name="comment">Comment</string>
 </resources>

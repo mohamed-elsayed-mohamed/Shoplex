@@ -18,12 +18,12 @@ open class Product() : Parcelable {
     var storeID : String = ""
     var storeName : String = ""
     var deliveryLoc: LatLng? = null
-    var name : String = ""
+    open var name : String = ""
     var description: String = ""
-    var price : Float = 10F
+    open var price : Float = 10F
     var newPrice : Float = 10F
     var discount : Int = 0
-    var category : String = ""
+    open var category : String = ""
     var subCategory : String = ""
     var rate : Float? = null
     var premium : Premium? = null
