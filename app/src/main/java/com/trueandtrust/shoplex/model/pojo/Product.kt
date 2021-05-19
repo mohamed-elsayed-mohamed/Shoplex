@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
+import androidx.databinding.Bindable
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.Exclude
@@ -14,13 +15,13 @@ import kotlin.collections.ArrayList
 
 open class Product() : Parcelable {
     var productID : String = UUID.randomUUID().toString()
-    var storeID : Int = 0
+    var storeID : String = ""
     var storeName : String = ""
     var deliveryLoc: LatLng? = null
     var name : String = ""
     var description: String = ""
-    var price : Float = 0.0F
-    var newPrice : Float = 0.0F
+    var price : Float = 10F
+    var newPrice : Float = 10F
     var discount : Int = 0
     var category : String = ""
     var subCategory : String = ""
@@ -65,6 +66,12 @@ open class Product() : Parcelable {
             imageSlideList.add(SlideModel(image.toString()))
         }
         return imageSlideList
+    }
+
+    fun calculateNewPrice(): String{
+        val value = (this.price - (this.price * (this.discount / 100.0F)))
+        this.newPrice = "%.2f".format(value).toFloat()
+        return this.newPrice.toString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

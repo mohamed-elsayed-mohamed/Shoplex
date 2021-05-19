@@ -18,19 +18,19 @@ import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentProductsBinding
 import com.trueandtrust.shoplex.model.adapter.ProductAdapter
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.view.activities.AddProductActivity
+import com.trueandtrust.shoplex.viewmodel.ProductsVM
 
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 class ProductsFragment : Fragment() {
-    lateinit var binding : FragmentProductsBinding
-    lateinit var rvProducts: RecyclerView
-    private var productInfo = arrayListOf<Product>()
-    private val database = Firebase.firestore
-    private val productsRef: CollectionReference = database.collection("Products")
+    private lateinit var binding : FragmentProductsBinding
+    private lateinit var rvProducts: RecyclerView
+    private lateinit var productsVM: ProductsVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,42 +38,15 @@ class ProductsFragment : Fragment() {
         binding = FragmentProductsBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.products)
-        rvProducts=binding.rvProducts
+        rvProducts = binding.rvProducts
         rvProducts.layoutManager = GridLayoutManager(this.context, getGridColumnsCount())
+        this.productsVM = ProductsVM()
+        productsVM.getAllProducts("6uPG5EpBF8njiVM13oTx")
 
-        productsRef.get().addOnSuccessListener {
-            for (item: DocumentSnapshot in it){
-                var product: Product? = item.toObject<Product>()
-                if(product != null) {
-                    productInfo.add(product)
-                }
-            }
-
-            val productAdapter = context?.let { ProductAdapter(productInfo) }
+        productsVM.products.observe(this.viewLifecycleOwner){ result ->
+            val productAdapter = context?.let { ProductAdapter(result) }
             rvProducts.adapter = productAdapter
         }
-
-        /*
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-        productInfo.add(Product())
-
-        val productAdapter = context?.let { ProductAdapter(productInfo) }
-        rvProducts.adapter = productAdapter
-        */
-
-        /*
-        gridView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                Toast.makeText(
-                    context, "You CLicked " + productInfo[+position],
-                    Toast.LENGTH_SHORT
-                ).show()
-            }*/
-        //gridView.setNumColumns(if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4)
-        //gridView.numColumns = context?.let { getGridColumnsCount(it) }!!
 
         binding.fabAddProduct.setOnClickListener {
             startActivity(Intent(this.context, AddProductActivity::class.java))

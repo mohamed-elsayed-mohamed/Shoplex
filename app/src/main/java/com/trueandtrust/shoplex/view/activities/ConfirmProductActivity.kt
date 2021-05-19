@@ -3,19 +3,15 @@ package com.trueandtrust.shoplex.view.activities
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Timestamp
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
-import com.trueandtrust.shoplex.model.DBModel
+import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
 import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
-import com.trueandtrust.shoplex.model.pojo.Properties
-import com.trueandtrust.shoplex.model.pojo.Property
-import kotlin.math.log
 
 class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var binding: ActivityConfirmProductBinding
@@ -54,7 +50,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         }
 
         binding.btnConfirm.setOnClickListener {
-            val dbModel = DBModel(product, this, isUpdate)
+            val dbModel = ProductsDBModel(product, this, isUpdate)
             product.date = Timestamp.now().toDate()
             dbModel.addProduct()
             startActivity(
