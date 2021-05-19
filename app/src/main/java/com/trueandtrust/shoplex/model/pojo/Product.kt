@@ -14,7 +14,7 @@ import kotlin.collections.ArrayList
 
 open class Product() : Parcelable {
     var productID : String = UUID.randomUUID().toString()
-    var storeID : Int = 0
+    var storeID : String = ""
     var storeName : String = ""
     var deliveryLoc: LatLng? = null
     var name : String = ""

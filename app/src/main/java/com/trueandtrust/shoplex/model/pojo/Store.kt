@@ -5,7 +5,7 @@ import java.util.*
 
 class Store {
 
-    var storeID : Int? = null
+    var storeID : String = ""
     var name : String = ""
     var email : String = ""
     var location : LatLng? = null
