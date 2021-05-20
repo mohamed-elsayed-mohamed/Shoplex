@@ -34,10 +34,15 @@ class MessageActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbarMessage)
-        supportActionBar?.setTitle("")
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.apply {
+            title = ""
+            setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+        }
 
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        }
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
         chatID = intent.getStringExtra(ChatHeadAdapter.CHAT_ID_KEY).toString()
@@ -115,8 +120,9 @@ class MessageActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sale -> Toast.makeText(this, "sale", Toast.LENGTH_SHORT).show()
+            android.R.id.home -> finish()
         }
-        return false
+        return super.onOptionsItemSelected(item)
     }
 
 }

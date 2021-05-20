@@ -21,6 +21,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityMapsBinding
+import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import java.io.IOException
 import java.util.*
 
@@ -32,7 +34,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: ActivityMapsBinding
     private val REQUEST_CODE = 101
-
+   // val activityName = intent.getStringExtra("LOCATION STORE")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +46,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         fetchLastLocation()
 
         binding.btnOK.setOnClickListener {
-            setResult(RESULT_OK, Intent().putExtra("Loc",selectedLocation))
+            setResult(RESULT_OK, Intent().putExtra("Loc", selectedLocation))
+            setResult(RESULT_OK, Intent().putExtra("AddLoc", selectedLocation))
             finish()
         }
     }
@@ -69,11 +72,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         task.addOnSuccessListener { location ->
             if (location != null) {
                 currentLocation = location
-                Toast.makeText(
+                /*Toast.makeText(
                     this,
                     currentLocation.latitude.toString() + " " + currentLocation.longitude.toString(),
                     Toast.LENGTH_LONG
-                ).show()
+                ).show()*/
                 val mapFragment = supportFragmentManager
                     .findFragmentById(R.id.map) as SupportMapFragment
                 mapFragment.getMapAsync(this)
@@ -84,15 +87,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(currentLocation.latitude, currentLocation.longitude)
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney))
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16F))
-        mMap.addMarker(MarkerOptions().position(sydney).title("Your Location Now"))
-        mMap.setOnMapClickListener {
-            mMap.clear()
-            mMap.addMarker(MarkerOptions().position(it).title(getAddress(it)))
-            selectedLocation = it
-        }
+             val sydney = LatLng(currentLocation.latitude, currentLocation.longitude)
+             mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney))
+             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16F))
+             mMap.addMarker(MarkerOptions().position(sydney).title("Your Location Now"))
+             mMap.setOnMapClickListener {
+                 mMap.clear()
+                 mMap.addMarker(MarkerOptions().position(it).title(getAddress(it)))
+                 selectedLocation = it
+             }
+
     }
 
     fun getAddress(latLng: LatLng): String {
@@ -126,3 +130,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 }
+
