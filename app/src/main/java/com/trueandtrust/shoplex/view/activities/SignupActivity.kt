@@ -1,21 +1,24 @@
 package com.trueandtrust.shoplex.view.activities
 
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.type.LatLng
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySignupBinding
 import com.trueandtrust.shoplex.model.pojo.Store
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
+import java.io.IOException
+import java.util.*
+
 
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -34,11 +37,12 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSignup.setOnClickListener {
+            store.image =  "https://img.etimg.com/thumb/width-1200,height-900,imgsize-122620,resizemode-1,msid-75214721/industry/services/retail/future-group-negotiates-rents-for-its-1700-stores.jpg"
             store.name = binding.edName.text.toString()
             store.email = binding.edEmail.text.toString()
             store.phone = binding.edPhone.text.toString()
             store.date = Timestamp.now().toDate()
-            //store.location = binding.tvLocation.
+           // store.location = binding.tvLocation.text
             if (checkEditText() == true) {
                 addSeller(store)
                 startActivity(Intent(this, LoginActivity::class.java))
@@ -54,7 +58,7 @@ class SignupActivity : AppCompatActivity() {
     //Add Seller
     fun addSeller(store: Store){
         pendingSellerRef = database.collection("Pending Sellers")
-        pendingSellerRef.add(store).addOnSuccessListener {
+        pendingSellerRef.document(store.storeID).set(store).addOnSuccessListener {
             Toast.makeText(baseContext, "Success", Toast.LENGTH_LONG).show()
         }.addOnFailureListener{
             Toast.makeText(baseContext, "Failed: ${it.localizedMessage}", Toast.LENGTH_LONG).show()
@@ -89,6 +93,7 @@ class SignupActivity : AppCompatActivity() {
                 )
 
             binding.edPhone.length() == 0 -> binding.edPhone.error = getString(R.string.Required)
+            store.address == null || store.locations?.size == 0 -> Toast.makeText(this,"Choose Your Location",Toast.LENGTH_LONG).show()
             else -> return true
         }
         return false
@@ -127,16 +132,31 @@ class SignupActivity : AppCompatActivity() {
         if(requestCode == MAPS_CODE){
             if(resultCode == RESULT_OK){
                 val location: Parcelable? = data?.getParcelableExtra("Loc")
+
                 if(location != null) {
-                    binding.tvLocation.text = getAddress(location as LatLng)
+                    val address = getAddress(location as LatLng)
+                    store.locations.add(location)
+                    binding.tvLocation.text = address
+                    store.address = address
                 }
             }
         }
     }
 
     fun getAddress(loc: LatLng): String{
-        return "Address"
+        val geocoder = Geocoder(this, Locale.getDefault())
+        var addresses: List<Address>? = null
+        var address: String = " "
+        try {
+            addresses = geocoder.getFromLocation(loc.latitude, loc.longitude, 1)
+            if (addresses.size > 0) {
+                address = addresses[0].getAddressLine(0)
+                //Toast.makeText(this, address, Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return address
     }
-
 
 }

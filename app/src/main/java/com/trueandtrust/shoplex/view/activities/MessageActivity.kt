@@ -35,6 +35,8 @@ class MessageActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbarMessage)
         supportActionBar?.setTitle("")
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
@@ -47,25 +49,18 @@ class MessageActivity : AppCompatActivity() {
 
         getAllMessage()
 
-/*
-        messageAdapter.add(LeftMessageItem(Message(toId = "1", message = "hello")))
-        messageAdapter.add(LeftMessageItem(Message(toId = "1", message = "hello")))
-        messageAdapter.add(RightMessageItem(Message(toId = "0", message = "send hello")))
-        messageAdapter.add(LeftMessageItem(Message(toId = "1", message = "hello")))*/
-
-
         binding.btnSendMessage.setOnClickListener {
-            messageAdapter.add(RightMessageItem(Message(toId = "0", message = "send hello")))
+
             performSendMessage()
         }
 
     }
 
     private fun performSendMessage() {
-
         //send Message to Firebase
         val messageID = Timestamp.now().toDate().time.toString()
         val messageText = binding.edSendMesssage.text
+        messageAdapter.add(RightMessageItem(Message(message = messageText.toString())))
         var message = Message(messageID, Timestamp.now().toDate(), userID, messageText.toString())
         db.collection("Chats").document(chatID).collection("messages").document(messageID)
             .set(message)
@@ -92,8 +87,6 @@ class MessageActivity : AppCompatActivity() {
                 }
                 binding.rcMessage.adapter = messageAdapter
             }
-
-        
         db.collection("Chats").document(chatID).collection("messages").whereEqualTo("toId", userID)
             .get().addOnSuccessListener { result ->
                 for (rightMessage in result) {

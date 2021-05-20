@@ -2,14 +2,17 @@ package com.trueandtrust.shoplex.model.pojo
 
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Store {
 
-    var storeID : String = ""
+    var storeID : String = UUID.randomUUID().toString()
     var name : String = ""
     var email : String = ""
-    var location : LatLng? = null
-    var phone : String = ""
+    var image : String = ""
+    var locations : ArrayList<LatLng> = arrayListOf()
+    var address : String? = null
+    var phone : String? = null
     var date: Date? = null
 
     fun getStoreInfo(storeID : Int) : Store{
