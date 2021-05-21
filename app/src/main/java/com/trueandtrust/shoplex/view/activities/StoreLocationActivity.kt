@@ -1,16 +1,25 @@
 package com.trueandtrust.shoplex.view.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import com.google.android.gms.maps.model.LatLng
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLastOrderBinding
 import com.trueandtrust.shoplex.databinding.ActivityStoreLocationBinding
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.pojo.Location
+import com.trueandtrust.shoplex.model.pojo.Store
 
 class StoreLocationActivity : AppCompatActivity() {
     lateinit var binding : ActivityStoreLocationBinding
     lateinit var toolbar: Toolbar
+    private var store : Store = Store()
+    private val LOCATION_CODE = 203
+    val LOCATION_STORE = "LOCATION STORE"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +37,12 @@ class StoreLocationActivity : AppCompatActivity() {
             getSupportActionBar()?.setDisplayShowHomeEnabled(true);
         }
 
+        binding.fabAddLocation.setOnClickListener{
+            val intent = Intent(this, MapsActivity::class.java)
+            intent.putExtra(LOCATION_STORE,"Location Store")
+            startActivityForResult(intent, LOCATION_CODE)
+        }
+
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // handle arrow click here
@@ -35,5 +50,19 @@ class StoreLocationActivity : AppCompatActivity() {
             finish() // close this activity and return to preview activity (if there is any)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == LOCATION_CODE){
+            if(resultCode == RESULT_OK){
+                val location: Parcelable? = data?.getParcelableExtra("AddLoc")
+                if(location != null) {
+                    val loc = location as LatLng
+                    val location : Location = Location("b31eafa4-8167-4ee0-92de-6fb5d3b1c0ef","abeerStore",Location.getAddress(loc,this), loc)
+                    FirebaseReferences.locationRef.add(location)
+                }
+            }
+        }
     }
 }

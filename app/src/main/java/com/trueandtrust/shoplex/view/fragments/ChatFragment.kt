@@ -5,56 +5,93 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentChatBinding
 import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
-import com.trueandtrust.shoplex.model.adapter.ColorAdapter
+import com.trueandtrust.shoplex.model.pojo.Chat
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 import com.trueandtrust.shoplex.model.pojo.Product
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 class ChatFragment : Fragment() {
+    private lateinit var binding: FragmentChatBinding
     private lateinit var chatHeadAdapter: ChatHeadAdapter
-    // TODO: Rename and change types of parameters
     private var chatHeadList = arrayListOf<ChatHead>()
+    val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        val binding : FragmentChatBinding = FragmentChatBinding.inflate(inflater,container,false)
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentChatBinding.inflate(inflater, container, false)
 
-
-        chatHeadAdapter = ChatHeadAdapter(getChatHeadsInfo())
-        binding.rvChat.adapter = chatHeadAdapter
-
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title =getString(R.string.chat)
+        getChatHeadsInfo()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.chat)
         setHasOptionsMenu(true);
         return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.chat_menu,menu)
+        inflater.inflate(R.menu.chat_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
 
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item!!.itemId){
+        when (item!!.itemId) {
             R.id.search ->
                 Toast.makeText(context, "You CLicked ", Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun getChatHeadsInfo() : ArrayList<ChatHead>{
-        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Abeer",1))
-        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Azhar",1))
-        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Heba",1))
-        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Abeer",1))
-        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Abeer",1))
-        chatHeadList.add(ChatHead("","","","T-Shirt","",100.0,"https://static.zajo.net/content/mediagallery/zajo_dcat/image/product/types/X/9086.png","Abeer",1))
-        return chatHeadList
+    fun getChatHeadsInfo() {
+        db.collection("Chats").whereEqualTo("storeID", "abeer").get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (document.exists()) {
+                        var chat: Chat = document.toObject<Chat>()
+                        var product = Product()
+                        db.collection("Products")
+                            .document(chat.productIDs[chat.productIDs.size - 1]).get()
+                            .addOnSuccessListener { productDocument ->
+                                if (productDocument != null) {
+                                    product = productDocument.toObject<Product>()!!
+                                    //Toast.makeText(context, product.category, Toast.LENGTH_LONG).show()
+                                }
+                                chatHeadList.add(
+                                    ChatHead(
+                                        product.productID,
+                                        product.storeID,
+                                        chat.chatID,
+                                        product.name,
+                                        "",
+                                        product.price,
+                                        product.images[0],
+                                        chat.userID,
+                                        "Abeer",
+                                        1
+                                    )
+                                )
+                                if (document.equals(result.last())) {
+                                    chatHeadAdapter = ChatHeadAdapter(chatHeadList)
+                                    binding.rvChat.adapter = chatHeadAdapter
+                                }
+                            }
+
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+            }
     }
+
 
 }

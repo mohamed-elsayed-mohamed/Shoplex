@@ -185,10 +185,12 @@ tools:context=".view.activities.SignupActivity">
 
     <TextView
         android:id="@+id/tvLocation"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_8"
         android:text="@string/choose_location"
+        app:layout_constraintEnd_toStartOf="@+id/btnLocation"
         app:layout_constraintStart_toStartOf="@+id/tiPhone"
         app:layout_constraintTop_toBottomOf="@+id/tiPhone" />
 
