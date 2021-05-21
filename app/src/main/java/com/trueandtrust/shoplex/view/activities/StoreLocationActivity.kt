@@ -11,6 +11,7 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLastOrderBinding
 import com.trueandtrust.shoplex.databinding.ActivityStoreLocationBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.Store
 
 class StoreLocationActivity : AppCompatActivity() {
@@ -56,10 +57,10 @@ class StoreLocationActivity : AppCompatActivity() {
         if(requestCode == LOCATION_CODE){
             if(resultCode == RESULT_OK){
                 val location: Parcelable? = data?.getParcelableExtra("AddLoc")
-
                 if(location != null) {
-                    val address = location as LatLng
-                    FirebaseReferences.locationRef.add(address)
+                    val loc = location as LatLng
+                    val location : Location = Location("b31eafa4-8167-4ee0-92de-6fb5d3b1c0ef","abeerStore",Location.getAddress(loc,this), loc)
+                    FirebaseReferences.locationRef.add(location)
                 }
             }
         }

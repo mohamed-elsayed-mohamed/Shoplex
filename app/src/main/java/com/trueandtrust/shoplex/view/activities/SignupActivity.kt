@@ -15,6 +15,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySignupBinding
+import com.trueandtrust.shoplex.model.pojo.Location.Companion.getAddress
 import com.trueandtrust.shoplex.model.pojo.Store
 import java.io.IOException
 import java.util.*
@@ -93,7 +94,7 @@ class SignupActivity : AppCompatActivity() {
                 )
 
             binding.edPhone.length() == 0 -> binding.edPhone.error = getString(R.string.Required)
-            store.address == null || store.locations?.size == 0 -> Toast.makeText(this,"Choose Your Location",Toast.LENGTH_LONG).show()
+            store.addresses.size == 0 || store.locations?.size == 0 -> Toast.makeText(this,"Choose Your Location",Toast.LENGTH_LONG).show()
             else -> return true
         }
         return false
@@ -132,31 +133,14 @@ class SignupActivity : AppCompatActivity() {
         if(requestCode == MAPS_CODE){
             if(resultCode == RESULT_OK){
                 val location: Parcelable? = data?.getParcelableExtra("Loc")
-
                 if(location != null) {
-                    val address = getAddress(location as LatLng)
+                    val address = getAddress(location as LatLng,this)
                     store.locations.add(location)
                     binding.tvLocation.text = address
-                    store.address = address
+                    store.addresses.add(address)
                 }
             }
         }
-    }
-
-    fun getAddress(loc: LatLng): String{
-        val geocoder = Geocoder(this, Locale.getDefault())
-        var addresses: List<Address>? = null
-        var address: String = " "
-        try {
-            addresses = geocoder.getFromLocation(loc.latitude, loc.longitude, 1)
-            if (addresses.size > 0) {
-                address = addresses[0].getAddressLine(0)
-                //Toast.makeText(this, address, Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return address
     }
 
 }

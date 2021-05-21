@@ -23,6 +23,7 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityMapsBinding
 import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.pojo.Location.Companion.getAddress
 import java.io.IOException
 import java.util.*
 
@@ -93,28 +94,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
              mMap.addMarker(MarkerOptions().position(sydney).title("Your Location Now"))
              mMap.setOnMapClickListener {
                  mMap.clear()
-                 mMap.addMarker(MarkerOptions().position(it).title(getAddress(it)))
+                 mMap.addMarker(MarkerOptions().position(it).title(getAddress(it,this)))
                  selectedLocation = it
              }
 
     }
-
-    fun getAddress(latLng: LatLng): String {
-        val geocoder = Geocoder(this, Locale.getDefault())
-        var addresses: List<Address>? = null
-        var address: String = " "
-        try {
-            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-            if (addresses.size > 0) {
-                address = addresses[0].getAddressLine(0)
-                //Toast.makeText(this, address, Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return address
-    }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
