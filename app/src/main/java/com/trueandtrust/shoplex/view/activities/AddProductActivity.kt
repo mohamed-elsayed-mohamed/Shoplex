@@ -115,7 +115,9 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
 
             startActivity(Intent(this, ConfirmProductActivity::class.java).apply {
                 this.putExtra(getString(R.string.PRODUCT_KEY), product)
-                this.putExtra(getString(R.string.update_product), isUpdate)
+                if(isUpdate) {
+                    this.putExtra(getString(R.string.update_product), isUpdate)
+                }
             })
         }
     }
