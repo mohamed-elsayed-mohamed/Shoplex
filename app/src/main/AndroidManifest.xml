@@ -7,7 +7,7 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -31,14 +31,22 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notifications" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/black" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
 
         <activity
             android:name=".view.activities.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".view.activities.HomeActivity"
-            android:theme="@style/AppTheme.Home">
-        </activity>
+            android:theme="@style/AppTheme.Home" />
         <activity
             android:name=".view.activities.AddProductActivity"
             android:windowSoftInputMode="adjustNothing" />
@@ -50,8 +58,7 @@
             android:theme="@style/AppTheme.Home" />
         <activity
             android:name=".view.activities.LastOrderActivity"
-            android:theme="@style/AppTheme.Home" >
-        </activity>
+            android:theme="@style/AppTheme.Home" />
         <activity android:name=".view.activities.MainActivity" />
         <activity android:name=".view.activities.LoginActivity">
             <intent-filter>
@@ -60,9 +67,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.SignupActivity">
+        <activity android:name=".view.activities.SignupActivity"></activity>
 
-        </activity>
+        <service
+            android:name=".Services.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

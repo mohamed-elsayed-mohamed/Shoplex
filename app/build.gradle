@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
 
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'

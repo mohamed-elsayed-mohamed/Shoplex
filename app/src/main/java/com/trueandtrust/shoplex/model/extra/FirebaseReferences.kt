@@ -1,11 +1,11 @@
 package com.trueandtrust.shoplex.model.extra
 
 import android.annotation.SuppressLint
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+
+
 
 object FirebaseReferences {
     // -----------------------> Databases <----------------------- //
@@ -23,4 +23,9 @@ object FirebaseReferences {
     // -----------------------> Storage <----------------------- //
     // Products
     val imagesProductsRef = imagesDatabase.child("Products")
+
+    //-------------------------> Token <------------------------------//
+
+    //eJGMYZKAS1Sqc9cdm_aEh3:APA91bHFwRfKM9dwPrk0h-tC_sqYDjI9RssbOGCNQTQIuDGo68h3An-xX_KHR12a_6IEKuwQnFdx9rGjJV2P2jbk2gnTWLLyTwZmsG68jfRWOpxlkNKilvQOstv_3xOK9qA_y3qUofYi
+
 }
