@@ -24,8 +24,7 @@ object FirebaseReferences {
     // Products
     val imagesProductsRef = imagesDatabase.child("Products")
 
-    //-------------------------> Token <------------------------------//
-
-    //eJGMYZKAS1Sqc9cdm_aEh3:APA91bHFwRfKM9dwPrk0h-tC_sqYDjI9RssbOGCNQTQIuDGo68h3An-xX_KHR12a_6IEKuwQnFdx9rGjJV2P2jbk2gnTWLLyTwZmsG68jfRWOpxlkNKilvQOstv_3xOK9qA_y3qUofYi
+    //----------------------> Notifications <---------------------------//
+    val notificationTokensRef = database.collection("Notification Tokens")
 
 }

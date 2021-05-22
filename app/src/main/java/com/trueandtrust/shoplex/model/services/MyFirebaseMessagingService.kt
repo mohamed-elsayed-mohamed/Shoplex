@@ -1,4 +1,4 @@
-package com.trueandtrust.shoplex.Services
+package com.trueandtrust.shoplex.model.services
 
 
 import android.app.Notification
