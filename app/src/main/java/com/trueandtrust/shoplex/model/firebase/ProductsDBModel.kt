@@ -94,4 +94,5 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
             }
         }
     }
+
 }

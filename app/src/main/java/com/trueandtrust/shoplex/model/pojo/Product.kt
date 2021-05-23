@@ -4,8 +4,6 @@ package com.trueandtrust.shoplex.model.pojo
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
-import androidx.databinding.Bindable
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
