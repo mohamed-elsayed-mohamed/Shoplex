@@ -24,8 +24,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         setContentView(binding.root)
 
         product = this.intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))!!
-        if(intent.hasExtra(getString(R.string.update_product)))
-            isUpdate = true
+        isUpdate = intent.getBooleanExtra(getString(R.string.update_product), false)
 
         showAll()
 

@@ -48,7 +48,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.btnOK.setOnClickListener {
             setResult(RESULT_OK, Intent().putExtra("Loc", selectedLocation))
-            setResult(RESULT_OK, Intent().putExtra("AddLoc", selectedLocation))
             finish()
         }
     }

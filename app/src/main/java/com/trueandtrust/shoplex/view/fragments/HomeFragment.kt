@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
         currentOrders.add(Orders())
         currentOrders.add(Orders())
 
-
         homeAdapter = HomeAdapter(currentOrders)
         binding.rvHome.adapter = homeAdapter
         return binding.root

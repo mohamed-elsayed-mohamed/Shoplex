@@ -15,6 +15,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySignupBinding
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.extra.StoreInfo
+import com.trueandtrust.shoplex.model.pojo.Loc
 import com.trueandtrust.shoplex.model.pojo.Location.Companion.getAddress
 import com.trueandtrust.shoplex.model.pojo.Store
 import java.io.IOException
@@ -28,8 +31,6 @@ class SignupActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivitySignupBinding
     private var store : Store = Store()
-    private val database = Firebase.firestore
-    private lateinit var pendingSellerRef: CollectionReference
     private val MAPS_CODE = 202
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +45,8 @@ class SignupActivity : AppCompatActivity() {
             store.phone = binding.edPhone.text.toString()
             store.date = Timestamp.now().toDate()
            // store.location = binding.tvLocation.text
-            if (checkEditText() == true) {
+            if (checkEditText()) {
+                // Register New Account
                 addSeller(store)
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
@@ -58,9 +60,10 @@ class SignupActivity : AppCompatActivity() {
 
     //Add Seller
     fun addSeller(store: Store){
-        pendingSellerRef = database.collection("Pending Sellers")
-        pendingSellerRef.document(store.storeID).set(store).addOnSuccessListener {
+        FirebaseReferences.pendingProductsRef.document(store.storeID).set(store).addOnSuccessListener {
             Toast.makeText(baseContext, "Success", Toast.LENGTH_LONG).show()
+            StoreInfo.updateStoreInfo(store)
+            StoreInfo.updateTokenID()
         }.addOnFailureListener{
             Toast.makeText(baseContext, "Failed: ${it.localizedMessage}", Toast.LENGTH_LONG).show()
             Log.d("FIRE", it.localizedMessage)
@@ -76,19 +79,17 @@ class SignupActivity : AppCompatActivity() {
             binding.edName.length() < 5 -> binding.edName.error =
                 getString(R.string.min_store_name_err)
             binding.edEmail.length() == 0 -> binding.edEmail.error = getString(R.string.Required)
-            isEmailValid(binding.edEmail.text.toString()) != true -> binding.edEmail.error =
+            !(isEmailValid(binding.edEmail.text.toString())) -> binding.edEmail.error =
                 getString(
                     R.string.require_email
                 )
-
             binding.edPassword.length() == 0 -> binding.edPassword.error =
                 getString(R.string.Required)
             binding.edPassword.length() < 8 -> binding.edPassword.error =
                 getString(R.string.min_password_err)
             binding.edConfirmPassword.length() == 0 -> binding.edConfirmPassword.error =
                 getString(R.string.Required)
-            binding.edConfirmPassword.text.toString()
-                .equals(binding.edPassword.text.toString()) != true -> binding.edConfirmPassword.error =
+            binding.edConfirmPassword.text.toString() != binding.edPassword.text.toString() -> binding.edConfirmPassword.error =
                 getString(
                     R.string.not_match
                 )
@@ -135,12 +136,11 @@ class SignupActivity : AppCompatActivity() {
                 val location: Parcelable? = data?.getParcelableExtra("Loc")
                 if(location != null) {
                     val address = getAddress(location as LatLng,this)
-                    store.locations.add(location)
+                    store.locations.add(Loc(location.latitude, location.longitude))
                     binding.tvLocation.text = address
                     store.addresses.add(address)
                 }
             }
         }
     }
-
 }

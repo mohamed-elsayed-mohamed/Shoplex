@@ -33,7 +33,7 @@ class LastOrderAdapter (private val product: ArrayList<Orders>) :
         val item = product[position]
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Glide.with(viewHolder.itemView.context).load(item.productImageUrl).into(viewHolder.imgProduct)
+        Glide.with(viewHolder.itemView.context).load(item.images[0]).into(viewHolder.imgProduct)
         viewHolder.tvproductName.text = item.name
         viewHolder.tvCategory.text = item.category.toString()
         viewHolder.tvPrice.text = item.price.toString()

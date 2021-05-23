@@ -4,26 +4,27 @@ package com.trueandtrust.shoplex.model.pojo
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
-import androidx.databinding.Bindable
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.Exclude
+import com.google.firebase.messaging.FirebaseMessaging
 import com.trueandtrust.shoplex.model.enumurations.Premium
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import java.util.*
 import kotlin.collections.ArrayList
 
 open class Product() : Parcelable {
     var productID : String = UUID.randomUUID().toString()
-    var storeID : String = ""
-    var storeName : String = ""
+    var storeID : String = StoreInfo.storeID!!
+    var storeName : String = StoreInfo.name
     var deliveryLoc: LatLng? = null
-    open var name : String = ""
+    var name : String = ""
     var description: String = ""
-    open var price : Float = 10F
+    var price : Float = 10F
     var newPrice : Float = 10F
     var discount : Int = 0
-    open var category : String = ""
+    var category : String = ""
     var subCategory : String = ""
     var rate : Float? = null
     var premium : Premium? = null
@@ -104,5 +105,6 @@ open class Product() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 
 }
