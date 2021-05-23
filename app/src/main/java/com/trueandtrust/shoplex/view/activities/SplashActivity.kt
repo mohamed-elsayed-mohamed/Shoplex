@@ -14,6 +14,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySplashBinding
 
@@ -28,6 +30,9 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Firebase.auth.currentUser.reload()
+
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -40,6 +45,7 @@ class SplashActivity : AppCompatActivity() {
         titleText=binding.tvShoplexSplash
         imageView.animation =topAnimation
         titleText.animation=bottomAnimation
+
         Handler().postDelayed({
             val intent = Intent(this,HomeActivity::class.java)
             startActivity(intent)
