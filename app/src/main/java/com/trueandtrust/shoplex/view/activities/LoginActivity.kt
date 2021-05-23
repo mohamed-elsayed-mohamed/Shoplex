@@ -15,57 +15,42 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLoginBinding
+import com.trueandtrust.shoplex.model.extra.StoreInfo
+import com.trueandtrust.shoplex.model.firebase.StoreDBModel
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.model.pojo.Store
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), INotifyMVP {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //firebase Auth
-        auth = Firebase.auth
+
         //Not Have Account
         binding.tvCreateAccount.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
+
         //Forget Password
         binding.tvForgetPass.setOnClickListener {
             openDialog()
         }
+
         //Login button
         binding.btnLogin.setOnClickListener {
             signIn(binding.edEmail.text.toString(), binding.edPassword.text.toString())
         }
     }
 
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-
-        if (currentUser != null) {
-            currentUser.reload()
-            reload();
-        }
-    }
-
     //Sign In
     private fun signIn(email: String, password: String) {
-
-        auth.signInWithEmailAndPassword(email, password)
+        Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(
-                        baseContext,
-                        getString(R.string.login_success),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val user = auth.currentUser
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    StoreDBModel(this).getStoreByMail(email)
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(
@@ -75,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
+
     //openDialog
     private fun openDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -95,13 +81,11 @@ class LoginActivity : AppCompatActivity() {
             getString(R.string.close_dialog),
             DialogInterface.OnClickListener { _, _ -> })
         builder.show()
-
     }
 
     //Forget Password
     private fun forgetPassword(email: String) {
-
-        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+        Firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Toast.makeText(baseContext, getString(R.string.email_send), Toast.LENGTH_SHORT)
                     .show()
@@ -112,7 +96,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun reload() {
-        startActivity(Intent(this, HomeActivity::class.java))
+    override fun onStoreInfoReady(isAccountActive: Boolean) {
+        if(isAccountActive) {
+            StoreInfo.updateTokenID()
+            // Sign in success, update UI with the signed-in user's information
+            Toast.makeText(baseContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+            startActivity(Intent(applicationContext, HomeActivity::class.java))
+            finish()
+        }else{
+            Toast.makeText(applicationContext, "Please wait until your account accepted!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onStoreInfoFailed() {
+        super.onStoreInfoFailed()
     }
 }

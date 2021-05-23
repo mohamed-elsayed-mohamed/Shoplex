@@ -19,6 +19,7 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentProductsBinding
 import com.trueandtrust.shoplex.model.adapter.ProductAdapter
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.view.activities.AddProductActivity
 import com.trueandtrust.shoplex.viewmodel.ProductsVM
@@ -41,7 +42,7 @@ class ProductsFragment : Fragment() {
         rvProducts = binding.rvProducts
         rvProducts.layoutManager = GridLayoutManager(this.context, getGridColumnsCount())
         this.productsVM = ProductsVM()
-        productsVM.getAllProducts("6uPG5EpBF8njiVM13oTx")
+        productsVM.getAllProducts(StoreInfo.storeID!!)
 
         productsVM.products.observe(this.viewLifecycleOwner){ result ->
             val productAdapter = context?.let { ProductAdapter(result) }

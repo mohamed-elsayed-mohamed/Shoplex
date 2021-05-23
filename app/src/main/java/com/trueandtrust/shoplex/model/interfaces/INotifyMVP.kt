@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.model.interfaces
 
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.Property
+import com.trueandtrust.shoplex.model.pojo.Store
 import kotlin.collections.ArrayList
 
 interface INotifyMVP {
@@ -14,4 +15,7 @@ interface INotifyMVP {
     fun onPropertyRemoved(position: Int){}
     fun onAllProductsReady(products: ArrayList<Product>){}
     fun onProductRemoved(){}
+
+    fun onStoreInfoReady(isAccountActive: Boolean){}
+    fun onStoreInfoFailed(){}
 }

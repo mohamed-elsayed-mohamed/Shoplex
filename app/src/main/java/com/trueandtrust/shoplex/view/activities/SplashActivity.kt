@@ -6,32 +6,33 @@ import android.os.Handler
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySplashBinding
-
+import com.trueandtrust.shoplex.model.extra.StoreInfo
+import com.trueandtrust.shoplex.model.firebase.StoreDBModel
+import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.model.pojo.Store
 
 class SplashActivity : AppCompatActivity() {
-    val Splash_Screen = 5000
+    val Splash_Screen = 4000
     private lateinit var binding: ActivitySplashBinding
     private lateinit var topAnimation: Animation
     private lateinit var bottomAnimation: Animation
-    private lateinit var imageView : ImageView
-    private lateinit var titleText : TextView
+    private var currentUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Firebase.auth.currentUser.reload()
+        currentUser = Firebase.auth.currentUser
+        if (currentUser != null) {
+            currentUser?.reload()
+            StoreDBModel(null).getStoreByMail(currentUser!!.email)
+        }
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -41,15 +42,29 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.top_animation)
         bottomAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_animation)
-        imageView=binding.imgSplash
-        titleText=binding.tvShoplexSplash
-        imageView.animation =topAnimation
-        titleText.animation=bottomAnimation
+        binding.imgSplash.animation = topAnimation
+        binding.tvShoplexSplash.animation = bottomAnimation
 
         Handler().postDelayed({
-            val intent = Intent(this,HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        },Splash_Screen.toLong())
+            currentUser = Firebase.auth.currentUser
+
+            if (currentUser != null) {
+                if (StoreInfo.storeID != null) {
+                    startActivity(Intent(applicationContext, HomeActivity::class.java))
+                } else {
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    Toast.makeText(
+                        applicationContext,
+                        "Please wait until your account accepted!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                StoreDBModel(null).getStoreByMail(currentUser!!.email)
+            } else {
+                startActivity(Intent(applicationContext, LoginActivity::class.java))
+                finish()
+            }
+
+        }, Splash_Screen.toLong())
     }
 }

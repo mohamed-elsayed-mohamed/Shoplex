@@ -10,13 +10,14 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.Exclude
 import com.google.firebase.messaging.FirebaseMessaging
 import com.trueandtrust.shoplex.model.enumurations.Premium
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import java.util.*
 import kotlin.collections.ArrayList
 
 open class Product() : Parcelable {
     var productID : String = UUID.randomUUID().toString()
-    var storeID : String = ""
-    var storeName : String = ""
+    var storeID : String = StoreInfo.storeID!!
+    var storeName : String = StoreInfo.name
     var deliveryLoc: LatLng? = null
     var name : String = ""
     var description: String = ""
@@ -30,7 +31,6 @@ open class Product() : Parcelable {
     var premiumDays: Int = 0
     var properties: ArrayList<Property> = arrayListOf()
     var date: Date? = null
-    var tokenID: String = ""
 
     var images : ArrayList<String?> = arrayListOf()
 
@@ -55,11 +55,9 @@ open class Product() : Parcelable {
         //rate = parcel.readFloat()
         premiumDays = parcel.readInt()
         parcel.readStringList(removedImages)
-        tokenID = parcel.readString().toString()
         parcel.readStringList(images)
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
         properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
-        addTokenID()
     }
 
     @Exclude
@@ -89,7 +87,6 @@ open class Product() : Parcelable {
         //rate?.let { parcel.writeFloat(it) }
         parcel.writeInt(premiumDays)
         parcel.writeStringList(removedImages)
-        parcel.writeString(tokenID)
         parcel.writeStringList(images)
         parcel.writeArray(imagesListURI.toArray())
         parcel.writeArray(properties.toArray())
@@ -109,16 +106,5 @@ open class Product() : Parcelable {
         }
     }
 
-    fun addTokenID(){
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@OnCompleteListener
-            }
 
-            val token = task.result
-            this.tokenID = token.toString()
-
-            //FirebaseReferences.pendingProductsRef.document(product.productID).update("tokenID", token)
-        })
-    }
 }
