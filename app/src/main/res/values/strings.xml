@@ -92,7 +92,11 @@
     <string name="search">Search</string>
     <string name="user_name">User Name</string>
     <string name="sales_Off">Sales Off</string>
-
+    <string name="all_review">Over All</string>
+    <string name="rating">All Rating</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="date">Date</string>
+    <string name="comment">Comment</string>
     <string name="type_a_message">Type a Message</string>
     <string name="Hello">Hello</string>
     <string name="monday_12_00">Monday 12:00</string>
