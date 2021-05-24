@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.maps.model.LatLng
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLastOrderBinding
 import com.trueandtrust.shoplex.databinding.ActivityStoreLocationBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.Store
 
@@ -56,11 +58,13 @@ class StoreLocationActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == LOCATION_CODE){
             if(resultCode == RESULT_OK){
-                val location: Parcelable? = data?.getParcelableExtra("AddLoc")
+                val location: Parcelable? = data?.getParcelableExtra("Loc")
                 if(location != null) {
                     val loc = location as LatLng
-                    val location : Location = Location("b31eafa4-8167-4ee0-92de-6fb5d3b1c0ef","abeerStore",Location.getAddress(loc,this), loc)
-                    FirebaseReferences.locationRef.add(location)
+                    val location = Location(StoreInfo.storeID.toString(),StoreInfo.name,Location.getAddress(loc,this), loc)
+                    FirebaseReferences.locationRef.add(location).addOnSuccessListener {
+                        Toast.makeText(this,"susses",Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
