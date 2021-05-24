@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -46,6 +47,7 @@ class SignupActivity : AppCompatActivity() {
             store.date = Timestamp.now().toDate()
            // store.location = binding.tvLocation.text
             if (checkEditText()) {
+                createSellerAccount(binding.edEmail.text.toString(),binding.edPassword.text.toString())
                 // Register New Account
                 addSeller(store)
                 startActivity(Intent(this, LoginActivity::class.java))
@@ -60,7 +62,7 @@ class SignupActivity : AppCompatActivity() {
 
     //Add Seller
     fun addSeller(store: Store){
-        FirebaseReferences.pendingProductsRef.document(store.storeID).set(store).addOnSuccessListener {
+        FirebaseReferences.pendingSellerRef.document(store.storeID).set(store).addOnSuccessListener {
             Toast.makeText(baseContext, "Success", Toast.LENGTH_LONG).show()
             StoreInfo.updateStoreInfo(store)
             StoreInfo.updateTokenID()
@@ -71,6 +73,27 @@ class SignupActivity : AppCompatActivity() {
             Toast.makeText(baseContext, "Canceled", Toast.LENGTH_LONG).show()
         }
     }
+
+
+    private fun createSellerAccount(email: String, password: String) {
+        Firebase.auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("TAG", "createUserWithEmail:success")
+
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("TAG", "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+            }
+    }
+
 
     //check EditText
     fun checkEditText(): Boolean {
