@@ -113,6 +113,7 @@ class HomeActivity : AppCompatActivity() {
             Glide.with(this).load(StoreInfo.image).into(header.navHeaderImage)
         header.tvStoreName.text = StoreInfo.name
         header.tvStoreEmail.text = StoreInfo.email
+
     }
 
 
