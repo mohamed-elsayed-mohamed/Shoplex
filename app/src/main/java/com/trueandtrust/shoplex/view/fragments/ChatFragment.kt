@@ -13,6 +13,8 @@ import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentChatBinding
 import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Chat
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 import com.trueandtrust.shoplex.model.pojo.Product
@@ -23,7 +25,6 @@ class ChatFragment : Fragment() {
     private lateinit var binding: FragmentChatBinding
     private lateinit var chatHeadAdapter: ChatHeadAdapter
     private var chatHeadList = arrayListOf<ChatHead>()
-    val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,13 +53,13 @@ class ChatFragment : Fragment() {
     }
 
     fun getChatHeadsInfo() {
-        db.collection("Chats").whereEqualTo("storeID", "abeer").get()
+        FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     if (document.exists()) {
                         var chat: Chat = document.toObject<Chat>()
                         var product = Product()
-                        db.collection("Products")
+                        FirebaseReferences.productsRef
                             .document(chat.productIDs[chat.productIDs.size - 1]).get()
                             .addOnSuccessListener { productDocument ->
                                 if (productDocument != null) {
@@ -75,7 +76,7 @@ class ChatFragment : Fragment() {
                                         product.price,
                                         product.images[0],
                                         chat.userID,
-                                        "Abeer",
+                                        chat.userName,
                                         1
                                     )
                                 )
@@ -84,7 +85,6 @@ class ChatFragment : Fragment() {
                                     binding.rvChat.adapter = chatHeadAdapter
                                 }
                             }
-
                     }
                 }
             }
@@ -92,6 +92,4 @@ class ChatFragment : Fragment() {
                 Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
             }
     }
-
-
 }
