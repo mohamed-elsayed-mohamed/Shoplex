@@ -18,8 +18,8 @@ import com.trueandtrust.shoplex.model.firebase.StoreDBModel
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Store
 
-class SplashActivity : AppCompatActivity() {
-    val Splash_Screen = 4000
+class SplashActivity : AppCompatActivity(), INotifyMVP {
+    val Splash_Screen = 5000
     private lateinit var binding: ActivitySplashBinding
     private lateinit var topAnimation: Animation
     private lateinit var bottomAnimation: Animation
@@ -28,10 +28,12 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        StoreInfo.getStoreInfo(applicationContext)
         currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
             currentUser?.reload()
-            StoreDBModel(null).getStoreByMail(currentUser!!.email)
+            if (StoreInfo.storeID == null)
+                StoreDBModel(this).getStoreByMail(currentUser!!.email)
         }
 
         window.setFlags(
@@ -59,7 +61,8 @@ class SplashActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                StoreDBModel(null).getStoreByMail(currentUser!!.email)
+                if (StoreInfo.storeID == null)
+                    StoreDBModel(this).getStoreByMail(currentUser!!.email)
             } else {
                 startActivity(Intent(applicationContext, LoginActivity::class.java))
                 finish()

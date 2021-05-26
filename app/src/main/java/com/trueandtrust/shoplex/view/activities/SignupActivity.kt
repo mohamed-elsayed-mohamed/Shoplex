@@ -64,7 +64,7 @@ class SignupActivity : AppCompatActivity() {
     fun addSeller(store: Store){
         FirebaseReferences.pendingSellersRef.document(store.storeID).set(store).addOnSuccessListener {
             Toast.makeText(baseContext, "Success", Toast.LENGTH_LONG).show()
-            StoreInfo.updateStoreInfo(store)
+            StoreInfo.updateStoreInfo(store, this)
             StoreInfo.updateTokenID()
         }.addOnFailureListener{
             Toast.makeText(baseContext, "Failed: ${it.localizedMessage}", Toast.LENGTH_LONG).show()
