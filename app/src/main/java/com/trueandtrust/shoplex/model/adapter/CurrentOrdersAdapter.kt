@@ -37,9 +37,10 @@ class CurrentOrdersAdapter(val orders: ArrayList<Order>) :
             binding.tvPrice.text = order.product?.price.toString()
             binding.tvStatus.text = order.orderStatus.toString()
             binding.btnDeliveryOrder.setOnClickListener {
-                FirebaseReferences.ordersRef.document(order.orderID.toString()).update("orderStatus",OrderStatus.Delivered).addOnSuccessListener {
-                    Toast.makeText(binding.root.context,"success",Toast.LENGTH_SHORT).show()
-                }
+                FirebaseReferences.ordersRef.document(order.orderID.toString())
+                    .update("orderStatus", OrderStatus.Delivered).addOnSuccessListener {
+                        Toast.makeText(binding.root.context, "success", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
     }
