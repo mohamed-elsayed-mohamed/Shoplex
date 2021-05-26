@@ -1,15 +1,27 @@
 package com.trueandtrust.shoplex.model.pojo
 
+
+import android.os.Parcel
 import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 
-data class Orders(var orderID :String="", var orderStatus : OrderStatus = OrderStatus.CURRENT,override var name: String="",
-                  override var price: Float = 0.0F, override var category: String="", var productImageUrl: String="") : Product() {
+class Orders : Product {
+    constructor(
+        name: String,
+        price: Float,
+        category: String,
+        orderStatus: OrderStatus,
+        productImageUrl: String,
 
+        ) : super() {
 
+    }
 
-    fun getOrders(storeId : Int) : ArrayList<Orders>{
+    constructor()
+
+    var orderID: Int = 0
+    var orderStatus: OrderStatus = OrderStatus.CURRENT
+    fun getOrders(storeId: Int): ArrayList<Orders> {
 
         return arrayListOf(Orders())
     }
-
 }

@@ -1,7 +1,7 @@
 <resources>
     <string name="PRODUCT_KEY">PRODUCT</string>
 
-    <string name="app_name">Shoplex</string>
+    <string name="app_name">Shoplex Store</string>
     <string name="product_name">Name</string>
     <string name="old_price_strike"><strike>Old Price</strike></string>
     <string name="discount">Discount</string>
@@ -97,7 +97,6 @@
     <string name="customer_name">Customer Name</string>
     <string name="date">Date</string>
     <string name="comment">Comment</string>
-
     <string name="type_a_message">Type a Message</string>
     <string name="Hello">Hello</string>
     <string name="monday_12_00">Monday 12:00</string>
@@ -132,5 +131,15 @@
     <string name="title_activity_maps">Map</string>
     <string name="currentOrders">Current Orders</string>
     <string name="update_product">Update Product</string>
+    <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
+    <string name="fcm_message">FCM Message</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
+    <string name="shoplex">shoplex Store</string>
 </resources>

@@ -56,7 +56,7 @@ class LastOrderAdapter (private val product: ArrayList<Orders>) :
             // Define click listener for the ViewHolder's View.
             imgProduct = view.findViewById(R.id.img_product)
             tvproductName = view.findViewById(R.id.tv_product_name)
-            tvCategory=view.findViewById(R.id.tvCategory)
+            tvCategory=view.findViewById(R.id.tv_category)
             tvPrice = view.findViewById(R.id.tv_price)
 //            tvStatus = view.findViewById(R.id.tv_status)
 
