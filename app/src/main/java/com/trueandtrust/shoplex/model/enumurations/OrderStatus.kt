@@ -1,7 +1,7 @@
-package com.trueandtrust.shoplex.model.enumurations
+package com.shoplex.shoplex.model.enumurations
 
 enum class OrderStatus {
-    CURRENT,
-    DELIVERD,
-    CANCEL
+    Current,
+    Delivered,
+    Canceled
 }

@@ -35,7 +35,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: ActivityMapsBinding
     private val REQUEST_CODE = 101
-   // val activityName = intent.getStringExtra("LOCATION STORE")
+    // val activityName = intent.getStringExtra("LOCATION STORE")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,15 +87,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         // Add a marker in Sydney and move the camera
-             val sydney = LatLng(currentLocation.latitude, currentLocation.longitude)
-             mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney))
-             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16F))
-             mMap.addMarker(MarkerOptions().position(sydney).title("Your Location Now"))
-             mMap.setOnMapClickListener {
-                 mMap.clear()
-                 mMap.addMarker(MarkerOptions().position(it).title(getAddress(it,this)))
-                 selectedLocation = it
-             }
+        val sydney = LatLng(currentLocation.latitude, currentLocation.longitude)
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16F))
+        mMap.addMarker(MarkerOptions().position(sydney).title("Your Location Now"))
+        mMap.setOnMapClickListener {
+            mMap.clear()
+            mMap.addMarker(MarkerOptions().position(it).title(getAddress(it,this)))
+            selectedLocation = it
+        }
 
     }
 

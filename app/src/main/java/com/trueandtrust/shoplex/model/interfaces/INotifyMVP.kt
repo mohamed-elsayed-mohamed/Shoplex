@@ -1,8 +1,6 @@
 package com.trueandtrust.shoplex.model.interfaces
 
-import com.trueandtrust.shoplex.model.pojo.Product
-import com.trueandtrust.shoplex.model.pojo.Property
-import com.trueandtrust.shoplex.model.pojo.Store
+import com.trueandtrust.shoplex.model.pojo.*
 import kotlin.collections.ArrayList
 
 interface INotifyMVP {
@@ -18,4 +16,5 @@ interface INotifyMVP {
 
     fun onStoreInfoReady(isAccountActive: Boolean){}
     fun onStoreInfoFailed(){}
+    fun onCurrentOrderReady(orders:ArrayList<Order>){}
 }
