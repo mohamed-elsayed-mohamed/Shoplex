@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.model.pojo.Review
 
 class ProductsVM: ViewModel, INotifyMVP {
     var products: MutableLiveData<ArrayList<Product>> = MutableLiveData()
+    var reviews:MutableLiveData<ArrayList<Review>> = MutableLiveData()
     private var productsDBModel = ProductsDBModel(this)
 
     constructor(){
@@ -21,4 +23,15 @@ class ProductsVM: ViewModel, INotifyMVP {
     override fun onAllProductsReady(products: ArrayList<Product>) {
         this.products.value = products
     }
+
+    override fun onAllReviwsReady(reviews: ArrayList<Review>) {
+       this.reviews.value=reviews
+    }
+    fun getReviewByProductId(productId: String){
+        productsDBModel.getReviewByProductId(productId)
+    }
+    fun getProductById(productId: String){
+        productsDBModel.getProductById(productId)
+    }
+
 }
