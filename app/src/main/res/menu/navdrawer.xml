@@ -25,6 +25,10 @@
 
     </item>
     <item
+        android:id="@+id/report"
+        android:icon="@drawable/ic_report"
+        android:title="@string/Report"/>
+    <item
         android:id="@+id/Logout"
         android:icon="@drawable/logout"
         android:title="@string/Logout"/>

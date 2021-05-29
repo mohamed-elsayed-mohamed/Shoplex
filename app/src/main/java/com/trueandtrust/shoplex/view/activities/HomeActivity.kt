@@ -21,14 +21,19 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
+import com.shoplex.shoplex.Report
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityHomeBinding
+import com.trueandtrust.shoplex.databinding.DialogAddReportBinding
 import com.trueandtrust.shoplex.databinding.NavHeaderBinding
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 
 
@@ -109,6 +114,10 @@ class HomeActivity : AppCompatActivity() {
                 R.id.locationFragment -> {
                     startActivity(Intent(this, StoreLocationActivity::class.java))
                 }
+                R.id.report -> {
+                    showAddReportDialog()
+
+                }
 
                 R.id.Logout -> {
                     Firebase.auth.signOut()
@@ -150,6 +159,21 @@ class HomeActivity : AppCompatActivity() {
             }
 
         }
+    }
+    private fun showAddReportDialog() {
+        val dialogbinding = DialogAddReportBinding.inflate(layoutInflater)
+        val reportBtnSheetDialog = BottomSheetDialog(dialogbinding.root.context)
+
+        dialogbinding.btnSendReport.setOnClickListener {
+            val reportMsg = dialogbinding.edReport.text.toString()
+            val report = Report("Seller",
+                reportMsg, Timestamp.now().toDate())
+            FirebaseReferences.ReportRef.add(report)
+            reportBtnSheetDialog.dismiss()
+        }
+        reportBtnSheetDialog.setContentView(dialogbinding.root)
+        reportBtnSheetDialog.show()
+
     }
 
 
