@@ -36,7 +36,7 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
 
     fun addProduct() {
         reference.document(product.productID).set(product).addOnSuccessListener {
-            Toast.makeText(context, "Success: ", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, R.string.Success.toString() , Toast.LENGTH_LONG).show()
         }.addOnFailureListener {
             Toast.makeText(context, context.getString(R.string.Failed) + it.localizedMessage, Toast.LENGTH_LONG).show()
             Log.d("FIRE", it.localizedMessage)
@@ -67,7 +67,7 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
     fun deleteImage(path: String) {
         val imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(path)
         imageRef.delete().addOnFailureListener {
-            Toast.makeText(context, "Failed to remove image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.Failed.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

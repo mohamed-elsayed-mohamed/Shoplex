@@ -27,11 +27,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        Log.e("message","Message Received ...");
+        Log.e("message",R.string.Message_Received.toString());
 
         if (remoteMessage.data.size > 0) {
-            val title = remoteMessage.data["title"]
-            val body = remoteMessage.data["body"]
+            val title = remoteMessage.data[R.string.title.toString()]
+            val body = remoteMessage.data[R.string.body.toString()]
             showNotification(applicationContext, title, body)
         } else {
             val title = remoteMessage.notification!!.title
@@ -43,7 +43,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
-        Log.e("token","New Token")
+        Log.e("token",R.string.New_Token.toString())
     }
 
 
@@ -54,8 +54,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     ) {
         val ii: Intent
         ii = Intent(context, HomeActivity::class.java)
-        ii.data = Uri.parse("custom://" + System.currentTimeMillis())
-        ii.action = "actionstring" + System.currentTimeMillis()
+        ii.data = Uri.parse(R.string.custom.toString() + System.currentTimeMillis())
+        ii.action = R.string.actionstring.toString() + System.currentTimeMillis()
         ii.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         val pi =
             PendingIntent.getActivity(context, 0, ii, PendingIntent.FLAG_UPDATE_CURRENT)

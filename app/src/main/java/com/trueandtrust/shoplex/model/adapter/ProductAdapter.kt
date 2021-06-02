@@ -59,7 +59,7 @@ class ProductAdapter(var productsInfo: ArrayList<Product>) : RecyclerView.Adapte
             }
         }
         override fun onProductRemoved() {
-            Toast.makeText(this.binding.root.context, "Product Removed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this.binding.root.context,R.string. Product.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 }

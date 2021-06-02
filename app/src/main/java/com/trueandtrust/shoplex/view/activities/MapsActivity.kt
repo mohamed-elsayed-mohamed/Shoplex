@@ -35,7 +35,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: ActivityMapsBinding
     private val REQUEST_CODE = 101
-    // val activityName = intent.getStringExtra("LOCATION STORE")
+   // val activityName = intent.getStringExtra("LOCATION STORE")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
