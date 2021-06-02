@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,14 +21,19 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
+import com.shoplex.shoplex.Report
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityHomeBinding
+import com.trueandtrust.shoplex.databinding.DialogAddReportBinding
 import com.trueandtrust.shoplex.databinding.NavHeaderBinding
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 
 
@@ -51,8 +58,6 @@ class HomeActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
         navView = binding.navView
         drawerLayout = binding.drawerLayout
-
-        // Toast.makeText(this, Timestamp.now().toDate().time.toString(), Toast.LENGTH_SHORT).show()
 
         //subscribe Topic
         Firebase.messaging.subscribeToTopic("Notify")
@@ -90,6 +95,17 @@ class HomeActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.setDrawerIndicatorEnabled(true)
         drawerToggle.syncState()
+       val switchId = navView.menu.getItem(3).actionView.findViewById<SwitchCompat>(R.id.switch_id)
+           switchId.setOnClickListener {
+            if(switchId.isChecked()){
+                Toast.makeText(applicationContext,"checked",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(applicationContext,"not checked",Toast.LENGTH_SHORT).show()
+
+            }
+        }
+
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.lastOrderFragment -> {
@@ -98,6 +114,11 @@ class HomeActivity : AppCompatActivity() {
                 R.id.locationFragment -> {
                     startActivity(Intent(this, StoreLocationActivity::class.java))
                 }
+                R.id.report -> {
+                    showAddReportDialog()
+
+                }
+
                 R.id.Logout -> {
                     Firebase.auth.signOut()
                     startActivity(Intent(this, LoginActivity::class.java))
@@ -107,6 +128,7 @@ class HomeActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+
 
         val header: NavHeaderBinding = NavHeaderBinding.inflate(layoutInflater, this.navView, true)
         if (StoreInfo.image != null)
@@ -129,9 +151,8 @@ class HomeActivity : AppCompatActivity() {
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
-        }
-        else {
-            if (seletedItemId==R.id.homeFragment) {
+        } else {
+            if (seletedItemId == R.id.homeFragment) {
                 finishAffinity()
             } else {
                 //supportActionBar?.setTitle("Home")
@@ -139,6 +160,21 @@ class HomeActivity : AppCompatActivity() {
             }
 
         }
+    }
+    private fun showAddReportDialog() {
+        val dialogbinding = DialogAddReportBinding.inflate(layoutInflater)
+        val reportBtnSheetDialog = BottomSheetDialog(dialogbinding.root.context)
+
+        dialogbinding.btnSendReport.setOnClickListener {
+            val reportMsg = dialogbinding.edReport.text.toString()
+            val report = Report("Seller",
+                reportMsg, Timestamp.now().toDate())
+            FirebaseReferences.ReportRef.add(report)
+            reportBtnSheetDialog.dismiss()
+        }
+        reportBtnSheetDialog.setContentView(dialogbinding.root)
+        reportBtnSheetDialog.show()
+
     }
 
 

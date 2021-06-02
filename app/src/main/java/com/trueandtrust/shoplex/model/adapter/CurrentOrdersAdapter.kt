@@ -4,9 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.shoplex.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.databinding.HomeRvBinding
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.pojo.Order
 import com.trueandtrust.shoplex.model.pojo.Orders
 
@@ -33,6 +36,12 @@ class CurrentOrdersAdapter(val orders: ArrayList<Order>) :
             binding.tvCategory.text = order.product?.category.toString()
             binding.tvPrice.text = order.product?.price.toString()
             binding.tvStatus.text = order.orderStatus.toString()
+            binding.btnDeliveryOrder.setOnClickListener {
+                FirebaseReferences.ordersRef.document(order.orderID.toString())
+                    .update("orderStatus", OrderStatus.Delivered).addOnSuccessListener {
+                        Toast.makeText(binding.root.context, "success", Toast.LENGTH_SHORT).show()
+                    }
+            }
         }
     }
 }

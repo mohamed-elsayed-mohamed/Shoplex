@@ -95,14 +95,14 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             if (product.imagesListURI.count() < MAX_IMAGES_SIZE) {
                 openGalleryForImages()
             } else {
-                Toast.makeText(this, R.string.Max.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
             }
         }
 
         //Open Dialog Button
         binding.btnAddProperty.setOnClickListener {
             val propertyDialog = PropertyDialog(this)
-            propertyDialog.show(supportFragmentManager, "Property Dialog")
+            propertyDialog.show(supportFragmentManager, getString(R.string.propertyDialog))
         }
 
         // AddProduct Button
@@ -210,7 +210,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     private fun openGalleryForImages() {
         var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.type = R.string.image.toString()
+        intent.type = "image/*"
         startActivityForResult(intent, OPEN_GALLERY_CODE)
     }
 
@@ -230,7 +230,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
                         product.imagesListURI.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
                     } else if (product.imagesListURI.count() >= MAX_IMAGES_SIZE) {
-                        Toast.makeText(this, R.string.Max.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else if (data?.data != null) {
@@ -269,7 +269,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         } else {
             Toast.makeText(
                 this,
-                R.string.Please_wait_until_image_uploaded_then_remove.toString(),
+                getString(R.string.alertonImageRemove),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -331,7 +331,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         }
 
         if (product.imagesListURI.isNullOrEmpty()) {
-            Toast.makeText(this, R.string.Please_Select_Your_Product_Images.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please Select Your Product Images", Toast.LENGTH_SHORT).show()
             return false
         }
 

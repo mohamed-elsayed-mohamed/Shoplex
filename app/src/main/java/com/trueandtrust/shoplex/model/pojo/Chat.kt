@@ -1,6 +1,6 @@
 package com.trueandtrust.shoplex.model.pojo
 
-data class Chat(var chatID : String = "", val userID: String = "", val storeID: String = "", var productIDs: ArrayList<String> = arrayListOf(String())) {
+data class Chat(var chatID : String = "", val userID: String = "",val userName:String = "", val storeID: String = "", var productIDs: ArrayList<String> = arrayListOf(String())) {
 
     fun getAllMessages(chatID : Int) : ArrayList<Message>{
 

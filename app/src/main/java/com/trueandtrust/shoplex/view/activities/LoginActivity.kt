@@ -1,33 +1,31 @@
 package com.trueandtrust.shoplex.view.activities
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.system.Os.close
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLoginBinding
-import com.trueandtrust.shoplex.model.extra.StoreInfo
-import com.trueandtrust.shoplex.model.firebase.StoreDBModel
-import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
-import com.trueandtrust.shoplex.model.pojo.Store
+import com.trueandtrust.shoplex.viewmodel.AuthVM
+import com.trueandtrust.shoplex.viewmodel.AuthVMFactory
 
-class LoginActivity : AppCompatActivity(), INotifyMVP {
-
+class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var authVM: AuthVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        authVM = ViewModelProvider(this, AuthVMFactory(this)).get(AuthVM::class.java)
+        binding.storeData = authVM
 
         //Not Have Account
         binding.tvCreateAccount.setOnClickListener {
@@ -41,24 +39,8 @@ class LoginActivity : AppCompatActivity(), INotifyMVP {
 
         //Login button
         binding.btnLogin.setOnClickListener {
-            signIn(binding.edEmail.text.toString(), binding.edPassword.text.toString())
+            authVM.login()
         }
-    }
-
-    //Sign In
-    private fun signIn(email: String, password: String) {
-        Firebase.auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    StoreDBModel(this).getStoreByMail(email)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(
-                        baseContext, getString(R.string.authentication_fail),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
     }
 
     //openDialog
@@ -94,21 +76,5 @@ class LoginActivity : AppCompatActivity(), INotifyMVP {
                     .show()
             }
         }
-    }
-
-    override fun onStoreInfoReady(isAccountActive: Boolean) {
-        if(isAccountActive) {
-            StoreInfo.updateTokenID()
-            // Sign in success, update UI with the signed-in user's information
-            Toast.makeText(baseContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-            startActivity(Intent(applicationContext, HomeActivity::class.java))
-            finish()
-        }else{
-            Toast.makeText(applicationContext, getString(R.string.Please_wait_until_your_account_accepted), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onStoreInfoFailed() {
-        super.onStoreInfoFailed()
     }
 }

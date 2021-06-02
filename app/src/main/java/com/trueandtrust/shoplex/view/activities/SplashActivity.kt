@@ -16,10 +16,9 @@ import com.trueandtrust.shoplex.databinding.ActivitySplashBinding
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.StoreDBModel
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
-import com.trueandtrust.shoplex.model.pojo.Store
 
-class SplashActivity : AppCompatActivity() {
-    val Splash_Screen = 4000
+class SplashActivity : AppCompatActivity(), INotifyMVP {
+    private val Splash_Screen = 4000
     private lateinit var binding: ActivitySplashBinding
     private lateinit var topAnimation: Animation
     private lateinit var bottomAnimation: Animation
@@ -28,10 +27,10 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        StoreInfo.readStoreInfo(applicationContext)
         currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
-            currentUser?.reload()
-            StoreDBModel(null).getStoreByMail(currentUser!!.email)
+            currentUser!!.reload()
         }
 
         window.setFlags(
@@ -51,19 +50,14 @@ class SplashActivity : AppCompatActivity() {
             if (currentUser != null) {
                 if (StoreInfo.storeID != null) {
                     startActivity(Intent(applicationContext, HomeActivity::class.java))
+                    StoreInfo.saveToRecentVisits()
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
-                    Toast.makeText(
-                        applicationContext,
-                        getString(R.string.Please_wait_until_your_account_accepted),
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
-                StoreDBModel(null).getStoreByMail(currentUser!!.email)
             } else {
                 startActivity(Intent(applicationContext, LoginActivity::class.java))
-                finish()
             }
+            finish()
 
         }, Splash_Screen.toLong())
     }

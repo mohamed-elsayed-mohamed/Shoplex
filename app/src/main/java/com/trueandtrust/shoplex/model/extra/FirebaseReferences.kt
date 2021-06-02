@@ -20,7 +20,11 @@ object FirebaseReferences {
     val productsRef = database.collection("Products")
     val locationRef = database.collection("Pending Locations")
     val storeRef = database.collection("Sellers")
-val ordersRef= database.collection("Orders")
+    val recentVisits = database.collection("Recent Visits")
+    val sellersDashboardDoc = database.collection("Dashboard").document("Sellers")
+    val chatRef = database.collection("Chats")
+    val ordersRef= database.collection("Orders")
+    val ReportRef=database.collection("Reports")
 
     // -----------------------> Storage <----------------------- //
     // Products

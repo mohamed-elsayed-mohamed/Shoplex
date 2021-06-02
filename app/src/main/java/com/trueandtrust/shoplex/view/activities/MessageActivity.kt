@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.UserInfo
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -16,7 +17,10 @@ import com.trueandtrust.shoplex.databinding.ActivityMessageBinding
 import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
 import com.trueandtrust.shoplex.model.adapter.LeftMessageItem
 import com.trueandtrust.shoplex.model.adapter.RightMessageItem
+import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Message
+import com.trueandtrust.shoplex.model.pojo.StoreAccount
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -24,7 +28,6 @@ import com.xwray.groupie.GroupieViewHolder
 class MessageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMessageBinding
     val messageAdapter = GroupAdapter<GroupieViewHolder>()
-    val db = Firebase.firestore
     lateinit var chatID: String
     lateinit var userID: String
 
@@ -67,7 +70,7 @@ class MessageActivity : AppCompatActivity() {
         val messageText = binding.edSendMesssage.text
         messageAdapter.add(RightMessageItem(Message(message = messageText.toString())))
         var message = Message(messageID, Timestamp.now().toDate(), userID, messageText.toString())
-        db.collection("Chats").document(chatID).collection("messages").document(messageID)
+        FirebaseReferences.chatRef.document(chatID).collection("messages").document(messageID)
             .set(message)
         messageText.clear()
 
@@ -75,41 +78,40 @@ class MessageActivity : AppCompatActivity() {
 
     fun getAllMessage() {
 
-        db.collection("Chats").document(chatID).collection("messages")
-            .whereNotEqualTo("toId", userID).get().addOnSuccessListener { result ->
-                for (leftMessage in result) {
-                    var msg: Message = leftMessage.toObject<Message>()
-                    messageAdapter.add(
-                        LeftMessageItem(
-                            Message(
-                                msg.messageID,
-                                msg.messageDate,
-                                msg.toId,
-                                msg.message
+        FirebaseReferences.chatRef.document(chatID).collection("messages").get()
+            .addOnSuccessListener { result ->
+                for (message in result) {
+                    var msg: Message = message.toObject<Message>()
+                    if (msg.toId.equals(StoreInfo.storeID)) {
+                        messageAdapter.add(
+                            LeftMessageItem(
+                                Message(
+                                    msg.messageID,
+                                    msg.messageDate,
+                                    msg.toId,
+                                    msg.message
+                                )
                             )
                         )
-                    )
-                }
-                binding.rcMessage.adapter = messageAdapter
-            }
-        db.collection("Chats").document(chatID).collection("messages").whereEqualTo("toId", userID)
-            .get().addOnSuccessListener { result ->
-                for (rightMessage in result) {
-                    var msg: Message = rightMessage.toObject<Message>()
-                    messageAdapter.add(
-                        RightMessageItem(
-                            Message(
-                                msg.messageID,
-                                msg.messageDate,
-                                msg.toId,
-                                msg.message
-                            )
-                        )
-                    )
-                }
-                binding.rcMessage.adapter = messageAdapter
-            }
+                    } else if (!msg.toId.equals(StoreInfo.storeID)) {
 
+                        messageAdapter.add(
+                            RightMessageItem(
+                                Message(
+                                    msg.messageID,
+                                    msg.messageDate,
+                                    msg.toId,
+                                    msg.message
+                                )
+                            )
+                        )
+
+                    }
+                    binding.rcMessage.scrollToPosition(result.size() -1);
+                }
+
+                binding.rcMessage.adapter = messageAdapter
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
