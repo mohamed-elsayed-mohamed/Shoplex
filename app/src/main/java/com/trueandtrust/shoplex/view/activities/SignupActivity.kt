@@ -51,12 +51,6 @@ class SignupActivity : AppCompatActivity() {
             if (checkEditText()) {
                 authVM.createAccount()
                 finish()
-                //createSellerAccount(binding.edEmail.text.toString(),binding.edPassword.text.toString())
-                // Register New Account
-                //addSeller(store)
-
-                //startActivity(Intent(this, LoginActivity::class.java))
-                //finish()
             }
         }
 
