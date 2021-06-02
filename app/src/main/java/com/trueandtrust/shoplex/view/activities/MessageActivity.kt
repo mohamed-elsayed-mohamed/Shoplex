@@ -119,7 +119,7 @@ class MessageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.sale -> Toast.makeText(this, "sale", Toast.LENGTH_SHORT).show()
+            R.id.sale -> Toast.makeText(this, getString(R.string.sale), Toast.LENGTH_SHORT).show()
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)

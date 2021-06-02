@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ChatHeadItemRowBinding
+import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter.Companion.CHAT_TITLE_KEY
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 import com.trueandtrust.shoplex.view.activities.MessageActivity
 
@@ -14,7 +16,7 @@ class ChatHeadAdapter(private val chatHead: ArrayList<ChatHead>) :
     RecyclerView.Adapter<ChatHeadAdapter.ChatHeadViewHolder>() {
 
     companion object {
-        val CHAT_TITLE_KEY = "CHAT_TITLE_KEY"
+        val CHAT_TITLE_KEY = R.string.CHAT_TITLE_KEY.toString()
         val CHAT_IMG_KEY = "CHAT_IMG_KEY"
         val CHAT_ID_KEY  = "CHAT_ID_KEY"
         val USER_ID_KEY = "USER_ID_KEY"

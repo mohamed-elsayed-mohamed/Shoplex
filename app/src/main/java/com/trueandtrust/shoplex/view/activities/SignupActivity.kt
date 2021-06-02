@@ -1,5 +1,6 @@
 package com.trueandtrust.shoplex.view.activities
 
+import android.content.Context
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
@@ -60,15 +61,16 @@ class SignupActivity : AppCompatActivity() {
 
     //Add Seller
     fun addSeller(store: Store){
+        val context:Context = binding.root.context
         FirebaseReferences.pendingProductsRef.document(store.storeID).set(store).addOnSuccessListener {
-            Toast.makeText(baseContext, "Success", Toast.LENGTH_LONG).show()
+            Toast.makeText(baseContext,context.getString(R.string.Success), Toast.LENGTH_LONG).show()
             StoreInfo.updateStoreInfo(store)
             StoreInfo.updateTokenID()
         }.addOnFailureListener{
-            Toast.makeText(baseContext, "Failed: ${it.localizedMessage}", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.Failed) + it.localizedMessage, Toast.LENGTH_LONG).show()
             Log.d("FIRE", it.localizedMessage)
         }.addOnCanceledListener {
-            Toast.makeText(baseContext, "Canceled", Toast.LENGTH_LONG).show()
+            Toast.makeText(baseContext, getText(R.string.Success), Toast.LENGTH_LONG).show()
         }
     }
 

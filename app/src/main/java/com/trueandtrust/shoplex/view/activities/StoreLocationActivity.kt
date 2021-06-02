@@ -19,7 +19,7 @@ class StoreLocationActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
     private var store : Store = Store()
     private val LOCATION_CODE = 203
-    val LOCATION_STORE = "LOCATION STORE"
+    val LOCATION_STORE = R.string.LOCATION_STORE.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class StoreLocationActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == LOCATION_CODE){
             if(resultCode == RESULT_OK){
-                val location: Parcelable? = data?.getParcelableExtra("AddLoc")
+                val location: Parcelable? = data?.getParcelableExtra(getString(R.string.AddLoc))
                 if(location != null) {
                     val loc = location as LatLng
                     val location : Location = Location("b31eafa4-8167-4ee0-92de-6fb5d3b1c0ef","abeerStore",Location.getAddress(loc,this), loc)

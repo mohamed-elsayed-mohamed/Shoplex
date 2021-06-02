@@ -47,7 +47,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         fetchLastLocation()
 
         binding.btnOK.setOnClickListener {
-            setResult(RESULT_OK, Intent().putExtra("Loc", selectedLocation))
+            setResult(RESULT_OK, Intent().putExtra(R.string.Location.toString(), selectedLocation))
             finish()
         }
     }
@@ -90,7 +90,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
              val sydney = LatLng(currentLocation.latitude, currentLocation.longitude)
              mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney))
              mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16F))
-             mMap.addMarker(MarkerOptions().position(sydney).title("Your Location Now"))
+             mMap.addMarker(MarkerOptions().position(sydney).title(R.string.Your_Location_Now.toString))
              mMap.setOnMapClickListener {
                  mMap.clear()
                  mMap.addMarker(MarkerOptions().position(it).title(getAddress(it,this)))

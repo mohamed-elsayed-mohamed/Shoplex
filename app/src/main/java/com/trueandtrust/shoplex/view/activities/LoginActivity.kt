@@ -104,7 +104,7 @@ class LoginActivity : AppCompatActivity(), INotifyMVP {
             startActivity(Intent(applicationContext, HomeActivity::class.java))
             finish()
         }else{
-            Toast.makeText(applicationContext, "Please wait until your account accepted!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.Please_wait_until_your_account_accepted), Toast.LENGTH_SHORT).show()
         }
     }
 

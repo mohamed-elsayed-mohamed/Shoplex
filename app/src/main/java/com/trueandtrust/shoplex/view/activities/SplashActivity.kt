@@ -55,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
                     Toast.makeText(
                         applicationContext,
-                        "Please wait until your account accepted!",
+                        getString(R.string.Please_wait_until_your_account_accepted),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
