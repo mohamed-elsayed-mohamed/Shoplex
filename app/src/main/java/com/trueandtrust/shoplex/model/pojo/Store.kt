@@ -5,10 +5,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class Store {
-    constructor(){
-
-    }
-
     var storeID : String = UUID.randomUUID().toString()
     var name : String = ""
     var email : String = ""

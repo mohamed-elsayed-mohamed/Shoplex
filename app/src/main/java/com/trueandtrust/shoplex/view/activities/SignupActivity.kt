@@ -8,6 +8,7 @@ import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
@@ -16,11 +17,14 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySignupBinding
+import com.trueandtrust.shoplex.model.enumurations.LocationAction
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Loc
 import com.trueandtrust.shoplex.model.pojo.Location.Companion.getAddress
 import com.trueandtrust.shoplex.model.pojo.Store
+import com.trueandtrust.shoplex.viewmodel.AuthVM
+import com.trueandtrust.shoplex.viewmodel.AuthVMFactory
 import java.io.IOException
 import java.util.*
 
@@ -32,68 +36,37 @@ class SignupActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivitySignupBinding
     private var store : Store = Store()
-    private val MAPS_CODE = 202
+    private lateinit var authVM: AuthVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        authVM = ViewModelProvider(this, AuthVMFactory(this)).get(AuthVM::class.java)
+        binding.storeData = authVM
 
         binding.btnSignup.setOnClickListener {
             store.image =  "https://img.etimg.com/thumb/width-1200,height-900,imgsize-122620,resizemode-1,msid-75214721/industry/services/retail/future-group-negotiates-rents-for-its-1700-stores.jpg"
-            store.name = binding.edName.text.toString()
-            store.email = binding.edEmail.text.toString()
-            store.phone = binding.edPhone.text.toString()
-            store.date = Timestamp.now().toDate()
-           // store.location = binding.tvLocation.text
+            authVM.store.value?.date = Timestamp.now().toDate()
             if (checkEditText()) {
-                createSellerAccount(binding.edEmail.text.toString(),binding.edPassword.text.toString())
-                // Register New Account
-                addSeller(store)
-                startActivity(Intent(this, LoginActivity::class.java))
+                authVM.createAccount()
                 finish()
+                //createSellerAccount(binding.edEmail.text.toString(),binding.edPassword.text.toString())
+                // Register New Account
+                //addSeller(store)
+
+                //startActivity(Intent(this, LoginActivity::class.java))
+                //finish()
             }
         }
 
         binding.btnLocation.setOnClickListener {
-            startActivityForResult(Intent(this, MapsActivity::class.java), MAPS_CODE)
+            startActivityForResult(Intent(this, MapsActivity::class.java)
+                .apply {
+                    putExtra(MapsActivity.LOCATION_ACTION, LocationAction.Add.name)
+                }, MapsActivity.MAPS_CODE)
         }
     }
-
-    //Add Seller
-    fun addSeller(store: Store){
-        FirebaseReferences.pendingSellersRef.document(store.storeID).set(store).addOnSuccessListener {
-            Toast.makeText(baseContext, "Success", Toast.LENGTH_LONG).show()
-            StoreInfo.updateStoreInfo(store, this)
-            StoreInfo.updateTokenID()
-        }.addOnFailureListener{
-            Toast.makeText(baseContext, "Failed: ${it.localizedMessage}", Toast.LENGTH_LONG).show()
-            Log.d("FIRE", it.localizedMessage)
-        }.addOnCanceledListener {
-            Toast.makeText(baseContext, "Canceled", Toast.LENGTH_LONG).show()
-        }
-    }
-
-
-    private fun createSellerAccount(email: String, password: String) {
-        Firebase.auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("TAG", "createUserWithEmail:success")
-
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w("TAG", "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                }
-            }
-    }
-
 
     //check EditText
     fun checkEditText(): Boolean {
@@ -154,9 +127,17 @@ class SignupActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == MAPS_CODE){
+        if(requestCode == MapsActivity.MAPS_CODE){
             if(resultCode == RESULT_OK){
-                val location: Parcelable? = data?.getParcelableExtra("Loc")
+                val location: LatLng? = data?.getParcelableExtra(MapsActivity.LOCATION)
+                val address: String? = data?.getStringExtra(MapsActivity.ADDRESS)
+                if (location != null) {
+                    binding.tvLocation.text = address
+                    authVM.store.value!!.addresses.add(address!!)
+                    authVM.store.value!!.locations.add(Loc(location.latitude, location.longitude))
+                    authVM.primaryAddress.value = address
+                }
+
                 if(location != null) {
                     val address = getAddress(location as LatLng,this)
                     store.locations.add(Loc(location.latitude, location.longitude))

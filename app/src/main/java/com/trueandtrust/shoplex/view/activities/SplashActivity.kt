@@ -18,7 +18,7 @@ import com.trueandtrust.shoplex.model.firebase.StoreDBModel
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 
 class SplashActivity : AppCompatActivity(), INotifyMVP {
-    val Splash_Screen = 5000
+    private val Splash_Screen = 4000
     private lateinit var binding: ActivitySplashBinding
     private lateinit var topAnimation: Animation
     private lateinit var bottomAnimation: Animation
@@ -30,9 +30,7 @@ class SplashActivity : AppCompatActivity(), INotifyMVP {
         StoreInfo.readStoreInfo(applicationContext)
         currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
-            currentUser?.reload()
-            if (StoreInfo.storeID == null)
-                StoreDBModel(this).getStoreByMail(currentUser!!.email)
+            currentUser!!.reload()
         }
 
         window.setFlags(
@@ -55,18 +53,11 @@ class SplashActivity : AppCompatActivity(), INotifyMVP {
                     StoreInfo.saveToRecentVisits()
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
-                    Toast.makeText(
-                        applicationContext,
-                        "Please wait until your account accepted!",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
-                if (StoreInfo.storeID == null)
-                    StoreDBModel(this).getStoreByMail(currentUser!!.email)
             } else {
                 startActivity(Intent(applicationContext, LoginActivity::class.java))
-                finish()
             }
+            finish()
 
         }, Splash_Screen.toLong())
     }
