@@ -16,7 +16,6 @@ import com.trueandtrust.shoplex.databinding.ActivitySplashBinding
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.StoreDBModel
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
-import com.trueandtrust.shoplex.model.pojo.Store
 
 class SplashActivity : AppCompatActivity(), INotifyMVP {
     val Splash_Screen = 5000
@@ -28,7 +27,7 @@ class SplashActivity : AppCompatActivity(), INotifyMVP {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        StoreInfo.getStoreInfo(applicationContext)
+        StoreInfo.readStoreInfo(applicationContext)
         currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
             currentUser?.reload()
@@ -53,6 +52,7 @@ class SplashActivity : AppCompatActivity(), INotifyMVP {
             if (currentUser != null) {
                 if (StoreInfo.storeID != null) {
                     startActivity(Intent(applicationContext, HomeActivity::class.java))
+                    StoreInfo.saveToRecentVisits()
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
                     Toast.makeText(

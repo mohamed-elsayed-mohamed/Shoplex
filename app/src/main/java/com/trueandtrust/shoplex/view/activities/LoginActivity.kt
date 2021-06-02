@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity(), INotifyMVP {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     StoreDBModel(this).getStoreByMail(email)
+                    StoreInfo.saveToRecentVisits()
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(

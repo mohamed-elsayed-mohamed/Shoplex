@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.trueandtrust.shoplex.model.pojo.Loc
 import com.trueandtrust.shoplex.model.pojo.NotificationToken
+import com.trueandtrust.shoplex.model.pojo.RecentVisit
 import com.trueandtrust.shoplex.model.pojo.Store
 import java.lang.reflect.Type
 import java.util.*
@@ -20,7 +21,7 @@ object StoreInfo {
     var image : String? = null
     var locations : ArrayList<Loc> = arrayListOf()
     var addresses : ArrayList<String> = arrayListOf()
-    var phone : String? = null
+    var phone : String = ""
 
     fun updateStoreInfo(store: Store, context: Context){
         this.storeID = store.storeID
@@ -57,7 +58,7 @@ object StoreInfo {
             .apply()
     }
 
-    fun getStoreInfo(context: Context){
+    fun readStoreInfo(context: Context){
         val sharedPref = context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE)
         storeID = sharedPref.getString("storeID", null)
         if(storeID == null)
@@ -65,11 +66,15 @@ object StoreInfo {
         name = sharedPref.getString("name", "")!!
         email = sharedPref.getString("email", "")!!
         image = sharedPref.getString("image", null)
-        phone = sharedPref.getString("phone", phone)
+        phone = sharedPref.getString("phone", "")!!
         val addressesType: Type = object : TypeToken<ArrayList<String>>() {}.type
         val locationsType: Type = object : TypeToken<ArrayList<Loc>>() {}.type
         addresses = Gson().fromJson(sharedPref.getString("addresses", null), addressesType)
         locations = Gson().fromJson(sharedPref.getString("locations", null), locationsType)
+    }
+
+    fun saveToRecentVisits(){
+        FirebaseReferences.recentVisits.add(RecentVisit())
     }
 
     fun clear(){
@@ -79,6 +84,6 @@ object StoreInfo {
         this.image = null
         this.locations = arrayListOf()
         this.addresses = arrayListOf()
-        this.phone = null
+        this.phone = ""
     }
 }

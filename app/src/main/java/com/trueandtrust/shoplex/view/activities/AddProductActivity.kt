@@ -102,7 +102,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         //Open Dialog Button
         binding.btnAddProperty.setOnClickListener {
             val propertyDialog = PropertyDialog(this)
-            propertyDialog.show(supportFragmentManager, "Property Dialog")
+            propertyDialog.show(supportFragmentManager, getString(R.string.propertyDialog))
         }
 
         // AddProduct Button
@@ -269,7 +269,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         } else {
             Toast.makeText(
                 this,
-                "Please wait until image uploaded, then remove!",
+                getString(R.string.alertonImageRemove),
                 Toast.LENGTH_SHORT
             ).show()
         }

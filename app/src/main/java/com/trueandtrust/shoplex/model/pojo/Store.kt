@@ -15,6 +15,6 @@ class Store {
     var image : String = ""
     var locations : ArrayList<Loc> = arrayListOf()
     var addresses : ArrayList<String> = arrayListOf()
-    var phone : String? = null
+    var phone : String = ""
     var date: Date? = null
 }
