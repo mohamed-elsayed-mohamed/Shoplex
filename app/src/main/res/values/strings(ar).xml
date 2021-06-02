@@ -46,8 +46,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_product_details">تفاصيل المنتج</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">علامة التبويب 1</string>
+    <string name="tab_text_2">علامة التبويب  2</string>
     <string name="product">منتج</string>
     <string name="reviews">تعليقات</string>
     <string name="_4_5_5">4.5/5</string>
@@ -56,7 +56,7 @@
     <string name="Plus_Sign">+</string>
 
 
-    <string name="home">المنزل</string>
+    <string name="home">الصفخه الرئسيه</string>
     <string name="products">المنتجات</string>
     <string name="chat">المحادثات</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -91,7 +91,7 @@
     <string name="discountRange">0-90 %</string>
     <string name="search">بحث</string>
     <string name="user_name">اسم المستخدم</string>
-    <string name="sales_Off">Sales Off</string>
+    <string name="sales_Off">تخقيضات</string>
     <string name="all_review">اجمالى</string>
     <string name="rating">كل التقييم</string>
     <string name="customer_name">اسم المشترى</string>
@@ -132,7 +132,7 @@
     <string name="currentOrders">الطلب الحالى</string>
     <string name="update_product">تحديث المنتج</string>
     <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
-    <string name="fcm_message">FCM Message</string>
+    <string name="fcm_message">FCM رساله</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="title_activity_splash">SplashActivity</string>
     <!-- Strings used for fragments for navigation -->
