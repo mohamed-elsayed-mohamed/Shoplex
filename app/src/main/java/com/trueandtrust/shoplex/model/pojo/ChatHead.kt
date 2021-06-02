@@ -17,6 +17,9 @@ data class ChatHead(
     val numOfMessage: Int=0,
     val date : Date = Timestamp.now().toDate()) {
 
+
+
+
     fun getChatHeadsInfo() : ArrayList<ChatHead>{
         return arrayListOf()
     }

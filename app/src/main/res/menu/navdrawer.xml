@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
         <item
@@ -15,9 +16,18 @@
             android:icon="@drawable/language"
             android:title="@string/Language"/>
     <item
-        android:id="@+id/Notification"
         android:icon="@drawable/notifications"
-        android:title="@string/Notification"/>
+        android:title="@string/Notification"
+        app:actionLayout="@layout/onoff_toggle"
+        android:id="@+id/checkable_menu"
+        app:showAsAction="always"
+        >
+
+    </item>
+    <item
+        android:id="@+id/report"
+        android:icon="@drawable/ic_report"
+        android:title="@string/Report"/>
     <item
         android:id="@+id/Logout"
         android:icon="@drawable/logout"
