@@ -12,6 +12,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
@@ -37,7 +38,7 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
         reference.document(product.productID).set(product).addOnSuccessListener {
             Toast.makeText(context, "Success: ", Toast.LENGTH_LONG).show()
         }.addOnFailureListener {
-            Toast.makeText(context, "Failed: ${it.localizedMessage}", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.Failed) + it.localizedMessage, Toast.LENGTH_LONG).show()
             Log.d("FIRE", it.localizedMessage)
         }
 
