@@ -47,7 +47,7 @@ class ChatFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item!!.itemId) {
             R.id.search ->
-                Toast.makeText(context, "You CLicked ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.You_CLicked.toString() , Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -89,7 +89,7 @@ class ChatFragment : Fragment() {
                 }
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.Error), Toast.LENGTH_LONG).show()
             }
     }
 }

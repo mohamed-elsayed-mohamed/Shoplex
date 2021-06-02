@@ -3,6 +3,7 @@ package com.trueandtrust.shoplex.model.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.view.fragments.ProductFragment
 import com.trueandtrust.shoplex.view.fragments.ReviewFragment
@@ -28,10 +29,10 @@ class PagerAdapter(fm:FragmentManager, val product: Product) : FragmentPagerAdap
     override fun getPageTitle(position: Int): CharSequence? {
         when(position) {
             0 -> {
-                return "Products"
+                return R.string.Products.toString()
             }
             else -> {
-                return "Reviews"
+                return R.string.Reviews.toString()
             }
         }
     }

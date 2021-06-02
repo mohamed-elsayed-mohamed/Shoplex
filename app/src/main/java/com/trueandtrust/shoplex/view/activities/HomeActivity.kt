@@ -64,7 +64,7 @@ class HomeActivity : AppCompatActivity() {
         //get Token
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w("Token", "Fetching FCM registration token failed", task.exception)
+                Log.w("Token", R.string.Fetching_FCM_registration_token_failed.toString(), task.exception)
                 return@OnCompleteListener
             }
 
