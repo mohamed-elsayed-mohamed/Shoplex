@@ -1,6 +1,5 @@
 <resources>
     <string name="PRODUCT_KEY">PRODUCT</string>
-
     <string name="app_name">ShopLex Store</string>
     <string name="product_name">Name</string>
     <string name="old_price_strike"><strike>Old Price</strike></string>
