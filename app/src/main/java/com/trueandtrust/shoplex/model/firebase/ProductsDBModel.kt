@@ -15,6 +15,7 @@ import com.google.firebase.storage.StorageReference
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.model.pojo.Review
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -85,7 +86,20 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
                 }
             }
     }
+    fun getProductById(productId: String) {
 
+        FirebaseReferences.productsRef.whereEqualTo("productID", productId)
+            .addSnapshotListener { values, _ ->
+                var products = arrayListOf<Product>()
+                for (document: DocumentSnapshot in values?.documents!!) {
+                    var product: Product? = document.toObject<Product>()
+                    if (product != null) {
+                        products.add(product)
+                    }
+                }
+                this.notifier?.onAllProductsReady(products)
+            }
+    }
     fun deleteProduct(productID: String, images: ArrayList<String?>){
         FirebaseReferences.productsRef.document(productID).delete().addOnSuccessListener {
             this.notifier?.onProductRemoved()
@@ -94,5 +108,18 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
             }
         }
     }
+    fun getReviewByProductId(productId: String) {
 
+        FirebaseReferences.productsRef.document(productId).collection("Reviews")
+            .addSnapshotListener  { values,_ ->
+                var reviews = arrayListOf<Review>()
+                for (document in values?.documents!!) {
+                    var review: Review? = document.toObject<Review>()
+                    if (review != null) {
+                        reviews.add(review)
+                    }
+                }
+                this.notifier?.onAllReviwsReady(reviews)
+            }
+    }
 }

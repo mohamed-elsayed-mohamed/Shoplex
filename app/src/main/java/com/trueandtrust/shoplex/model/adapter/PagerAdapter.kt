@@ -20,7 +20,7 @@ class PagerAdapter(fm:FragmentManager, val product: Product) : FragmentPagerAdap
                 return ProductFragment(product)
             }
             else -> {
-                return ReviewFragment()
+                return ReviewFragment(product.productID)
             }
         }
     }

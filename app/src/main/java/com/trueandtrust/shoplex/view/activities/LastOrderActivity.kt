@@ -4,20 +4,25 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 //import com.example.graddemo.model.adapter.LastOrderAdapter
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLastOrderBinding
+import com.trueandtrust.shoplex.model.adapter.CurrentOrdersAdapter
+import com.trueandtrust.shoplex.viewmodel.OrdersVM
 
 class LastOrderActivity : AppCompatActivity() {
     lateinit var binding : ActivityLastOrderBinding
     lateinit var toolbar: Toolbar
-  //  private lateinit var lastOrderAdapter: LastOrderAdapter
+    private lateinit var ordersVm: OrdersVM
+    private lateinit var lastOrderAdapter: CurrentOrdersAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLastOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.ordersVm = OrdersVM()
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -38,6 +43,11 @@ class LastOrderActivity : AppCompatActivity() {
         //lastOrderAdapter = LastOrderAdapter(order)
         //binding.rvLastOrders.adapter = lastOrderAdapter
 
+        ordersVm.getLastOrders()
+        ordersVm.lastOrders.observe(this, Observer { orders ->
+            lastOrderAdapter = CurrentOrdersAdapter(orders)
+            binding.rvLastOrders.adapter = lastOrderAdapter
+        })
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // handle arrow click here

@@ -33,4 +33,23 @@ class OrdersDBModel (val notifier : INotifyMVP){
 
             }
     }
+    fun getLastOrders() {
+        FirebaseReferences.ordersRef.whereEqualTo("storeID",StoreInfo.storeID).whereIn("orderStatus",
+            listOf("Delivered","Canceled"))
+            .addSnapshotListener { values, _ ->
+                var orders = arrayListOf<Order>()
+                for (document: DocumentSnapshot in values?.documents!!) {
+                    var order: Order? = document.toObject<Order>()
+                    if (order != null) {
+                        orders.add(order)
+                        FirebaseReferences.productsRef.document(order.productID).get().addOnSuccessListener {
+                            order.product=it.toObject<Product>()
+                            if (document==values.last()){
+                                this.notifier?.onLastOrderReady(orders)
+                            }
+                        }
+                    }
+                }
+            }
+    }
 }
