@@ -138,7 +138,6 @@ class MessageActivity : AppCompatActivity() {
                 SalesBtnSheetDialog.setContentView(binding.root)
                 SalesBtnSheetDialog.show()}
 
-
                     android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
