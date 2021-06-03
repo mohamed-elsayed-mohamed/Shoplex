@@ -42,9 +42,9 @@ class MessageActivity : AppCompatActivity() {
             setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         }
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        if (supportActionBar != null) {
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true);
+            supportActionBar!!.setDisplayShowHomeEnabled(true);
         }
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
@@ -73,16 +73,15 @@ class MessageActivity : AppCompatActivity() {
         FirebaseReferences.chatRef.document(chatID).collection("messages").document(messageID)
             .set(message)
         messageText.clear()
-
     }
 
-    fun getAllMessage() {
+    private fun getAllMessage() {
 
         FirebaseReferences.chatRef.document(chatID).collection("messages").get()
             .addOnSuccessListener { result ->
                 for (message in result) {
                     var msg: Message = message.toObject<Message>()
-                    if (msg.toId.equals(StoreInfo.storeID)) {
+                    if (msg.toId == StoreInfo.storeID) {
                         messageAdapter.add(
                             LeftMessageItem(
                                 Message(
@@ -93,7 +92,7 @@ class MessageActivity : AppCompatActivity() {
                                 )
                             )
                         )
-                    } else if (!msg.toId.equals(StoreInfo.storeID)) {
+                    } else if (msg.toId != StoreInfo.storeID) {
 
                         messageAdapter.add(
                             RightMessageItem(

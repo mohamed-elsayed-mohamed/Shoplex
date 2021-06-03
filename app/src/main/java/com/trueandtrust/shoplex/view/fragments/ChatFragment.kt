@@ -45,22 +45,22 @@ class ChatFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item!!.itemId) {
+        when (item.itemId) {
             R.id.search ->
                 Toast.makeText(context, R.string.You_CLicked.toString() , Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun getChatHeadsInfo() {
+    private fun getChatHeadsInfo() {
         FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     if (document.exists()) {
-                        var chat: Chat = document.toObject<Chat>()
+                        var chat: Chat = document.toObject()
                         var product = Product()
                         FirebaseReferences.productsRef
-                            .document(chat.productIDs[chat.productIDs.size - 1]).get()
+                            .document(chat.productIDs.last()).get()
                             .addOnSuccessListener { productDocument ->
                                 if (productDocument != null) {
                                     product = productDocument.toObject<Product>()!!
@@ -88,7 +88,7 @@ class ChatFragment : Fragment() {
                     }
                 }
             }
-            .addOnFailureListener { exception ->
+            .addOnFailureListener {
                 Toast.makeText(context, getString(R.string.Error), Toast.LENGTH_LONG).show()
             }
     }

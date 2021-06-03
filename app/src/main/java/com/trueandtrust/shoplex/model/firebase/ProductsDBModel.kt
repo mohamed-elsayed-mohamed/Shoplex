@@ -64,7 +64,7 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
         }
     }
 
-    fun deleteImage(path: String) {
+    private fun deleteImage(path: String) {
         val imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(path)
         imageRef.delete().addOnFailureListener {
             Toast.makeText(context, R.string.Failed.toString(), Toast.LENGTH_SHORT).show()
@@ -73,7 +73,7 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
 
     fun getAllProducts(storeID: String) {
         FirebaseReferences.productsRef.whereEqualTo("storeID", storeID)
-            .addSnapshotListener { values, error ->
+            .addSnapshotListener { values, _ ->
                 var products = arrayListOf<Product>()
                 for (document: DocumentSnapshot in values?.documents!!) {
                     var product: Product? = document.toObject<Product>()
