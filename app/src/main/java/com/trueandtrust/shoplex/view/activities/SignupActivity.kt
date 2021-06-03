@@ -3,11 +3,14 @@ package com.trueandtrust.shoplex.view.activities
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Timestamp
@@ -26,6 +29,7 @@ import com.trueandtrust.shoplex.model.pojo.Store
 import com.trueandtrust.shoplex.viewmodel.AuthVM
 import com.trueandtrust.shoplex.viewmodel.AuthVMFactory
 import java.io.IOException
+import java.net.URI
 import java.util.*
 
 
@@ -37,6 +41,8 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var binding : ActivitySignupBinding
     private var store : Store = Store()
     private lateinit var authVM: AuthVM
+    private val OPEN_GALLERY_CODE = 200
+    var uri:Uri? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +50,7 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
         authVM = ViewModelProvider(this, AuthVMFactory(this)).get(AuthVM::class.java)
         binding.storeData = authVM
+
 
         binding.btnSignup.setOnClickListener {
             store.image =  "https://img.etimg.com/thumb/width-1200,height-900,imgsize-122620,resizemode-1,msid-75214721/industry/services/retail/future-group-negotiates-rents-for-its-1700-stores.jpg"
@@ -59,6 +66,37 @@ class SignupActivity : AppCompatActivity() {
                 .apply {
                     putExtra(MapsActivity.LOCATION_ACTION, LocationAction.Add.name)
                 }, MapsActivity.MAPS_CODE)
+        }
+        binding.imgLogo.setOnClickListener{
+            openGallary()
+        }
+        onEditTextChanged()
+    }
+    private fun openGallary() {
+        var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+        intent.type = "image/*"
+        startActivityForResult(intent, OPEN_GALLERY_CODE)
+    }
+
+    private fun onEditTextChanged(){
+        binding.edName.addTextChangedListener {
+            binding.tiName.error = null
+        }
+        binding.edEmail.addTextChangedListener {
+            binding.tiEmail.error = null
+        }
+        binding.edPassword.addTextChangedListener {
+            binding.tiPassword.error = null
+        }
+        binding.edConfirmPassword.addTextChangedListener {
+            binding.tiConfirmPassword.error = null
+        }
+        binding.edPhone.addTextChangedListener {
+            binding.tiPhone.error = null
+        }
+        binding.tvLocation.addTextChangedListener{
+            binding.tvLocation.error = null
         }
     }
 
@@ -84,8 +122,21 @@ class SignupActivity : AppCompatActivity() {
                     R.string.not_match
                 )
 
-            binding.edPhone.length() == 0 -> binding.edPhone.error = getString(R.string.Required)
+            binding.edPhone.text.toString().isEmpty() -> binding.tiPhone.error =
+                getString(R.string.Required)
+
+            !isValidMobile(binding.edPhone.text.toString()) -> binding.tiPhone.error =
+                "Please Enter Valid Mobile"
+
+
+//            binding.edPhone.length() == 0 -> binding.edPhone.error = getString(R.string.Required)
             store.addresses.size == 0 || store.locations?.size == 0 -> Toast.makeText(this,"Choose Your Location",Toast.LENGTH_LONG).show()
+
+            authVM.store.value?.image.isNullOrEmpty() -> Toast.makeText(
+                this,
+                "Please, Choose Image",
+                Toast.LENGTH_SHORT
+            ).show()
             else -> return true
         }
         return false
@@ -98,26 +149,11 @@ class SignupActivity : AppCompatActivity() {
         val matcher: Matcher = pattern.matcher(email)
         return matcher.matches()
     }
-
-    //hash password
-    /*fun computeMD5Hash(password: String) : String {
-        val MD5Hash = StringBuffer()
-        try {
-            // Create MD5 Hash
-            val digest: MessageDigest = MessageDigest.getInstance("MD5")
-            digest.update(password.toByteArray())
-            val messageDigest: ByteArray = digest.digest()
-            for (i in messageDigest.indices) {
-                var h = Integer.toHexString(0xFF and messageDigest[i].toInt())
-                while (h.length < 2) h = "0$h"
-                MD5Hash.append(h)
-            }
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        }
-        return MD5Hash.toString()
-    }*/
-
+    private fun isValidMobile(phone: String): Boolean {
+        return if (!Pattern.matches("[a-zA-Z]+", phone)) {
+            phone.length > 11 && phone.length <= 13
+        } else false
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == MapsActivity.MAPS_CODE){
@@ -138,6 +174,21 @@ class SignupActivity : AppCompatActivity() {
                     store.addresses.add(address)
                 }
             }
+        }else if(requestCode == OPEN_GALLERY_CODE){
+         if(resultCode== RESULT_OK){
+             if (data==null || data.data == null){
+                 return
+
+             }
+             uri=data.data
+             authVM.store.value!!.image=uri.toString()
+             try {
+                 val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                 binding.imgLogo.setImageBitmap(bitmap)
+             } catch (e: IOException) {
+                 e.printStackTrace()
+             }
+         }
         }
     }
 }
