@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.UserInfo
@@ -15,12 +16,14 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityMessageBinding
+import com.trueandtrust.shoplex.databinding.DialogAddSaleBinding
 import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
 import com.trueandtrust.shoplex.model.adapter.LeftMessageItem
 import com.trueandtrust.shoplex.model.adapter.RightMessageItem
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Message
+import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.StoreAccount
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -121,8 +124,19 @@ class MessageActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
-            R.id.sale -> Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
+            R.id.sale -> {
+                Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
+                val binding = DialogAddSaleBinding.inflate(layoutInflater)
+                val SalesBtnSheetDialog = BottomSheetDialog(binding.root.context)
+
+               // var product  = arrayListOf<Product>(Product())
+               // var salesProductAdapter = SalesAdapter(product)
+               // binding.rcSalesProduct.adapter = salesProductAdapter
+
+                SalesBtnSheetDialog.setContentView(binding.root)
+                SalesBtnSheetDialog.show()}
 
                     android.R.id.home -> finish()
         }

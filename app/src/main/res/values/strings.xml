@@ -182,4 +182,11 @@
     <string name="reportsuccess">Your Report has sent Thank You</string>
     <string name="max">Max</string>
     <string name="imageSelected">Please Select Your Product Images</string>
+    <string name="discountType">Type</string>
+    <string name="discount_type">Discount Type</string>
+
+    <string-array name="arr_type_discount">
+        <item>Percentage</item>
+        <item>Fixed</item>
+    </string-array>
 </resources>
