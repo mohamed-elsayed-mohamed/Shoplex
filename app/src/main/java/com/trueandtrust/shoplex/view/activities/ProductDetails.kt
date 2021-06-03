@@ -19,7 +19,7 @@ class ProductDetails : AppCompatActivity() {
 
         product = this.intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))!!
 
-        var pagerAdapter: PagerAdapter = PagerAdapter(supportFragmentManager, product)
+        var pagerAdapter: PagerAdapter = PagerAdapter(supportFragmentManager,this, product)
         binding.tabLayout.setupWithViewPager(binding.viewPager)
         binding.viewPager.adapter = pagerAdapter
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

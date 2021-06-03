@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/lightgray"
     android:layout_height="match_parent"
     tools:context=".view.fragments.ProductFragment">
 
@@ -41,7 +42,7 @@
             android:layout_marginStart="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_8"
             android:text="@string/product_name"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/darkblue"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,49 +92,63 @@
             android:id="@+id/tvDetailsNewPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_8"
             android:text="@string/newPrice"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/red"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/tvDetailsReview"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailsReview" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvDetailsOldPrice"
+            app:layout_constraintStart_toEndOf="@+id/tvDetailsOldPrice"
+            app:layout_constraintTop_toTopOf="@+id/tvDetailsOldPrice"
+            />
 
         <TextView
             android:id="@+id/tvDetailsDiscount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginEnd="16dp"
             android:text="@string/discount"
-            android:textColor="@android:color/holo_red_dark"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/discount"
+            android:textColor="@color/white"
             android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/tvDetailsOldPrice"
-            app:layout_constraintStart_toEndOf="@+id/tvDetailsOldPrice"
             app:layout_constraintTop_toTopOf="@+id/tvDetailsOldPrice" />
 
         <TextView
             android:id="@+id/tvDetailsOldPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/old_price_strike"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDetailsNewPrice"
-            app:layout_constraintStart_toEndOf="@+id/tvDetailsNewPrice"
-            app:layout_constraintTop_toTopOf="@+id/tvDetailsNewPrice" />
-
+            app:layout_constraintStart_toStartOf="@+id/tvDetailsReview"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailsReview" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            android:background="@drawable/card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetailsNewPrice">
         <TextView
             android:id="@+id/tvDetailsDescription"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_8"
+
             android:padding="@dimen/padding_4"
             android:text="@string/longtext"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailsNewPrice" />
-
+ />
+        </LinearLayout>
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
@@ -141,11 +156,11 @@
             android:layout_marginStart="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_8"
             android:text="@string/all_properties"
-            android:textColor="@color/purple_700"
+            android:textColor="@color/darkblue"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetailsDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_properties"

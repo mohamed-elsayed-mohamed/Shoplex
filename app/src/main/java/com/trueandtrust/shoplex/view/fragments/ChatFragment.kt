@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
@@ -89,7 +90,7 @@ class ChatFragment : Fragment() {
                 }
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(context, getString(R.string.Error), Toast.LENGTH_LONG).show()
+                Snackbar.make(binding.root, getString(R.string.Error), Snackbar.LENGTH_LONG).show()
             }
     }
 }

@@ -174,4 +174,12 @@
     <string name="custom">custom://</string>
     <string name="image">image/*</string>
     <string name="Please_wait_until_image_uploaded_then_remove">Please wait until image uploaded, then remove!</string>
+    <string name="logOut">Logout</string>
+    <string name="logoutMessage">Are You Sure You Want To Logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="logoutSuccess">Logout Success</string>
+    <string name="reportsuccess">Your Report has sent Thank You</string>
+    <string name="max">Max</string>
+    <string name="imageSelected">Please Select Your Product Images</string>
 </resources>

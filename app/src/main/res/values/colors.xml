@@ -13,4 +13,14 @@
     <color name="darkblue">#1C2D7A</color>
     <color name="red">#C5372D</color>
     <color name="yellow">#FFC107</color>
+    <color name="redShopex">#ff5757</color>
+    <color name="yellowShopex">#ffde59</color>
+    <color name="orangeShopex">#ff914d</color>
+    <color name="greenShopex">#c9e265</color>
+    <color name="blueShopex">#38b6ff</color>
+    <color name="grayShopex">#a6a6a6</color>
+    <color name="dkblue">#0278ae</color>
+
+    <color name="blueshop">#65AFE4</color>
+
 </resources>

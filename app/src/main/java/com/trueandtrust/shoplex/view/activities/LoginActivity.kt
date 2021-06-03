@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
@@ -69,11 +70,11 @@ class LoginActivity : AppCompatActivity() {
     private fun forgetPassword(email: String) {
         Firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(baseContext, getString(R.string.email_send), Toast.LENGTH_SHORT)
-                    .show()
+                Snackbar.make(binding.root, getString(R.string.email_send), Snackbar.LENGTH_LONG).show()
+
             }else{
-                Toast.makeText(baseContext, getString(R.string.require_email), Toast.LENGTH_SHORT)
-                    .show()
+                Snackbar.make(binding.root, getString(R.string.require_email), Snackbar.LENGTH_LONG).show()
+
             }
         }
     }

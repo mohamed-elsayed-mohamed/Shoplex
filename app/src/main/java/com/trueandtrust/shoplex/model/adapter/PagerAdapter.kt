@@ -1,5 +1,6 @@
 package com.trueandtrust.shoplex.model.adapter
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -9,7 +10,7 @@ import com.trueandtrust.shoplex.view.fragments.ProductFragment
 import com.trueandtrust.shoplex.view.fragments.ReviewFragment
 
 
-class PagerAdapter(fm:FragmentManager, val product: Product) : FragmentPagerAdapter(fm) {
+class PagerAdapter(fm:FragmentManager, val context: Context, val product: Product) : FragmentPagerAdapter(fm) {
 
     override fun getCount(): Int {
         return 2
@@ -29,10 +30,10 @@ class PagerAdapter(fm:FragmentManager, val product: Product) : FragmentPagerAdap
     override fun getPageTitle(position: Int): CharSequence? {
         when(position) {
             0 -> {
-                return R.string.Products.toString()
+                return this.context.getString(R.string.Products)
             }
             else -> {
-                return R.string.Reviews.toString()
+                return this.context.getString(R.string.Reviews)
             }
         }
     }

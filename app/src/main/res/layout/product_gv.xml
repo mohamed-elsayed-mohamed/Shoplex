@@ -29,7 +29,7 @@
                 android:layout_width="@dimen/width_165"
                 android:layout_height="@dimen/height_120"
                 android:layout_gravity="center"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:src="@drawable/product"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

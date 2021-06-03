@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -120,9 +122,7 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 R.id.Logout -> {
-                    Firebase.auth.signOut()
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
+                   showDialog()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -171,10 +171,31 @@ class HomeActivity : AppCompatActivity() {
                 reportMsg, Timestamp.now().toDate())
             FirebaseReferences.ReportRef.add(report)
             reportBtnSheetDialog.dismiss()
+            Snackbar.make(binding.root, getString(R.string.reportsuccess), Snackbar.LENGTH_LONG).show()
+
         }
         reportBtnSheetDialog.setContentView(dialogbinding.root)
         reportBtnSheetDialog.show()
 
+    }
+    fun showDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder?.setTitle(getString(R.string.logOut))
+        builder?.setMessage(getString(R.string.logoutMessage))
+
+        builder?.setPositiveButton(getString(R.string.yes)) { dialog, which ->
+            Firebase.auth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            Snackbar.make(binding.root, getString(R.string.logoutSuccess), Snackbar.LENGTH_LONG).show()
+
+        }
+
+        builder?.setNegativeButton(getString(R.string.no)) { dialog, which ->
+            dialog.cancel()
+        }
+
+        builder?.show()
     }
 
 

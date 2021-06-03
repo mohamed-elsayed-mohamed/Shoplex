@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.UserInfo
 import com.google.firebase.firestore.Query
@@ -121,8 +122,9 @@ class MessageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.sale -> Toast.makeText(this, getString(R.string.sale), Toast.LENGTH_SHORT).show()
-            android.R.id.home -> finish()
+            R.id.sale -> Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
+
+                    android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
     }
