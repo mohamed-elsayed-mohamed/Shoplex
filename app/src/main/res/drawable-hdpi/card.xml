@@ -5,8 +5,7 @@
 
       <stroke
           android:width="@dimen/width_1"
-          android:color="@color/lightgray"
-          >
+          android:color="@color/lightgray">
 
       </stroke>
 
