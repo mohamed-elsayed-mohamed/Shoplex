@@ -282,7 +282,7 @@
                     android:layout_marginStart="@dimen/margin_16"
                     android:layout_marginTop="@dimen/margin_16"
                     android:text="@string/enter_your_product_properties"
-                    android:textColor="@color/purple_700"
+                    android:textColor="@color/darkblue"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
@@ -320,7 +320,7 @@
             android:id="@+id/btnAddProduct"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/button_effect"
+            android:layout_margin="@dimen/margin_16"
             android:clickable="true"
             android:text="@string/add_product"
             android:textAllCaps="false"
