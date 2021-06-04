@@ -34,6 +34,8 @@ class MessageActivity : AppCompatActivity() {
     val messageAdapter = GroupAdapter<GroupieViewHolder>()
     lateinit var chatID: String
     lateinit var userID: String
+    private var firstUnread: Int = -1
+    private var productsIDs: ArrayList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +48,15 @@ class MessageActivity : AppCompatActivity() {
             setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         }
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        if (supportActionBar != null) {
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true);
+            supportActionBar!!.setDisplayShowHomeEnabled(true);
         }
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
         chatID = intent.getStringExtra(ChatHeadAdapter.CHAT_ID_KEY).toString()
         userID = intent.getStringExtra(ChatHeadAdapter.USER_ID_KEY).toString()
+        productsIDs = intent.getStringArrayListExtra(ChatHeadAdapter.PRODUCTS_IDS)
 
         binding.imgToolbarChat.setImageResource(R.drawable.product)
         binding.tvToolbarUserChat.text = userName
@@ -65,39 +68,46 @@ class MessageActivity : AppCompatActivity() {
 
             performSendMessage()
         }
-
     }
 
     private fun performSendMessage() {
         //send Message to Firebase
-        val messageID = Timestamp.now().toDate().time.toString()
         val messageText = binding.edSendMesssage.text
         messageAdapter.add(RightMessageItem(Message(message = messageText.toString())))
-        var message = Message(messageID, Timestamp.now().toDate(), userID, messageText.toString())
-        FirebaseReferences.chatRef.document(chatID).collection("messages").document(messageID)
+        var message = Message(toId = userID, message = messageText.toString())
+        FirebaseReferences.chatRef.document(chatID).collection("messages")
+            .document(message.messageID)
             .set(message)
         messageText.clear()
-
     }
 
-    fun getAllMessage() {
-
+    private fun getAllMessage() {
         FirebaseReferences.chatRef.document(chatID).collection("messages").get()
             .addOnSuccessListener { result ->
-                for (message in result) {
+                for ((index, message) in result.withIndex()) {
                     var msg: Message = message.toObject<Message>()
-                    if (msg.toId.equals(StoreInfo.storeID)) {
+                    if (msg.toId == StoreInfo.storeID) {
                         messageAdapter.add(
                             LeftMessageItem(
+                                chatID,
                                 Message(
                                     msg.messageID,
                                     msg.messageDate,
                                     msg.toId,
-                                    msg.message
+                                    msg.message,
+                                    msg.isSent,
+                                    msg.isRead
                                 )
                             )
                         )
-                    } else if (!msg.toId.equals(StoreInfo.storeID)) {
+
+                        if (!msg.isSent) {
+                            FirebaseReferences.chatRef.document(chatID).collection("messages")
+                                .document(msg.messageID).update("isSent", true)
+                            if (firstUnread == -1)
+                                firstUnread = index
+                        }
+                    } else if (msg.toId != StoreInfo.storeID) {
 
                         messageAdapter.add(
                             RightMessageItem(
@@ -111,7 +121,10 @@ class MessageActivity : AppCompatActivity() {
                         )
 
                     }
-                    binding.rcMessage.scrollToPosition(result.size() -1);
+                    if (firstUnread != -1)
+                        binding.rcMessage.scrollToPosition(firstUnread)
+                    else
+                        binding.rcMessage.scrollToPosition(result.size() - 1);
                 }
 
                 binding.rcMessage.adapter = messageAdapter
@@ -127,22 +140,36 @@ class MessageActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.sale -> {
-                Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
-                val binding = DialogAddSaleBinding.inflate(layoutInflater)
-                val SalesBtnSheetDialog = BottomSheetDialog(binding.root.context)
-
-               // var product  = arrayListOf<Product>(Product())
-               // var salesProductAdapter = SalesAdapter(product)
-               // binding.rcSalesProduct.adapter = salesProductAdapter
-
-                SalesBtnSheetDialog.setContentView(binding.root)
-                SalesBtnSheetDialog.show()}
-
-                    android.R.id.home -> finish()
+                if (productsIDs != null) {
+                    FirebaseReferences.productsRef.whereIn("productID", productsIDs!!).get()
+                        .addOnCompleteListener {
+                            var products: ArrayList<Product> = arrayListOf()
+                            for (product in it.result) {
+                                products.add(product.toObject())
+                                if (product == it.result.last()) {
+                                    openSnackBar(products)
+                                }
+                            }
+                        }
+                }
+                // Toast.makeText(this, getString(R.string.sale) + chatID, Toast.LENGTH_SHORT).show()
+            }
+            android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun openSnackBar(products: ArrayList<Product>){
+        Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
+        val binding = DialogAddSaleBinding.inflate(layoutInflater)
+        val SalesBtnSheetDialog = BottomSheetDialog(binding.root.context)
+
+        var salesProductAdapter = SalesAdapter(products)
+        binding.rcSalesProduct.adapter = salesProductAdapter
+
+        SalesBtnSheetDialog.setContentView(binding.root)
+        SalesBtnSheetDialog.show()
+    }
 }
 
 

@@ -2,8 +2,10 @@ package com.trueandtrust.shoplex.model.firebase
 
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -36,15 +38,33 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
     }
 
     private fun addNewStore(store: Store) {
+        val image =store.image
+        store.image=""
         val ref: DocumentReference = FirebaseReferences.pendingSellersRef.document()
         store.storeID = ref.id
         ref.set(store).addOnSuccessListener {
+            addImage(Uri.parse(image),store.storeID)
             //listener.onAddNewStore(store)
             Toast.makeText(context, "Success to create your account!", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             //listener.onAddNewStore(null)
             Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show()
             listener.onAddStoreFailed()
+        }
+
+    }
+    private fun addImage(uri : Uri , storeId :String){
+        val imageRef = FirebaseReferences.imgStroreRef.child(storeId)
+        imageRef.putFile(uri).addOnSuccessListener { _ ->
+            imageRef.downloadUrl.addOnSuccessListener {
+                FirebaseReferences.pendingSellersRef.document(storeId).update("image",it.toString())
+                //update profile
+                val profileUpdates = userProfileChangeRequest {
+                    photoUri = it
+                }
+                Firebase.auth.currentUser.updateProfile(profileUpdates)
+
+            }
         }
     }
 

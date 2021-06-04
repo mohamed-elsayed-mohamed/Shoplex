@@ -1,13 +1,5 @@
 package com.trueandtrust.shoplex.model.pojo
 
-data class Chat(var chatID : String = "", val userID: String = "",val userName:String = "", val storeID: String = "", var productIDs: ArrayList<String> = arrayListOf(String())) {
+import com.google.firebase.firestore.Exclude
 
-    fun getAllMessages(chatID : Int) : ArrayList<Message>{
-
-        return  arrayListOf(Message())
-    }
-
-    fun getMessages(message: Message,chatID : Int) : Boolean{
-        return true
-    }
-}
+data class Chat(var chatID : String = "", val userID: String = "",val userName:String = "", val storeID: String = "", var productIDs: ArrayList<String> = arrayListOf(String()), val unreadStoreMessages: Int = 0, @Exclude @set:Exclude var unreadCustomerMessages: Int = 0)

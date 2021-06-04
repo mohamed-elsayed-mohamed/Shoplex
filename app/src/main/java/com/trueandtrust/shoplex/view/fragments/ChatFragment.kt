@@ -10,7 +10,6 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentChatBinding
 import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
@@ -19,7 +18,6 @@ import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Chat
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 import com.trueandtrust.shoplex.model.pojo.Product
-import java.util.*
 
 
 class ChatFragment : Fragment() {
@@ -40,15 +38,15 @@ class ChatFragment : Fragment() {
 
 
 
-    fun getChatHeadsInfo() {
+    private fun getChatHeadsInfo() {
         FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     if (document.exists()) {
-                        var chat: Chat = document.toObject<Chat>()
+                        var chat: Chat = document.toObject()
                         var product = Product()
                         FirebaseReferences.productsRef
-                            .document(chat.productIDs[chat.productIDs.size - 1]).get()
+                            .document(chat.productIDs.last()).get()
                             .addOnSuccessListener { productDocument ->
                                 if (productDocument != null) {
                                     product = productDocument.toObject<Product>()!!
@@ -56,16 +54,15 @@ class ChatFragment : Fragment() {
                                 }
                                 chatHeadList.add(
                                     ChatHead(
-                                        product.productID,
+                                        chat.productIDs,
                                         product.storeID,
                                         chat.chatID,
                                         product.name,
-                                        "",
                                         product.price,
                                         product.images[0],
                                         chat.userID,
                                         chat.userName,
-                                        1
+                                        chat.unreadStoreMessages
                                     )
                                 )
                                 if (document.equals(result.last())) {
