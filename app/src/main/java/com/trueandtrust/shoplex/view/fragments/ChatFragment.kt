@@ -5,11 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentChatBinding
 import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
@@ -18,7 +14,6 @@ import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Chat
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 import com.trueandtrust.shoplex.model.pojo.Product
-import java.util.*
 
 
 class ChatFragment : Fragment() {
@@ -68,16 +63,15 @@ class ChatFragment : Fragment() {
                                 }
                                 chatHeadList.add(
                                     ChatHead(
-                                        product.productID,
+                                        chat.productIDs,
                                         product.storeID,
                                         chat.chatID,
                                         product.name,
-                                        "",
                                         product.price,
                                         product.images[0],
                                         chat.userID,
                                         chat.userName,
-                                        1
+                                        chat.unreadStoreMessages
                                     )
                                 )
                                 if (document.equals(result.last())) {

@@ -20,6 +20,7 @@ import com.trueandtrust.shoplex.model.adapter.RightMessageItem
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Message
+import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.StoreAccount
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -30,6 +31,8 @@ class MessageActivity : AppCompatActivity() {
     val messageAdapter = GroupAdapter<GroupieViewHolder>()
     lateinit var chatID: String
     lateinit var userID: String
+    private var firstUnread: Int = -1
+    private var productsIDs: ArrayList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,7 @@ class MessageActivity : AppCompatActivity() {
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
         chatID = intent.getStringExtra(ChatHeadAdapter.CHAT_ID_KEY).toString()
         userID = intent.getStringExtra(ChatHeadAdapter.USER_ID_KEY).toString()
+        productsIDs = intent.getStringArrayListExtra(ChatHeadAdapter.PRODUCTS_IDS)
 
         binding.imgToolbarChat.setImageResource(R.drawable.product)
         binding.tvToolbarUserChat.text = userName
@@ -61,37 +65,43 @@ class MessageActivity : AppCompatActivity() {
 
             performSendMessage()
         }
-
     }
 
     private fun performSendMessage() {
         //send Message to Firebase
-        val messageID = Timestamp.now().toDate().time.toString()
         val messageText = binding.edSendMesssage.text
         messageAdapter.add(RightMessageItem(Message(message = messageText.toString())))
-        var message = Message(messageID, Timestamp.now().toDate(), userID, messageText.toString())
-        FirebaseReferences.chatRef.document(chatID).collection("messages").document(messageID)
+        var message = Message(toId = userID, message = messageText.toString())
+        FirebaseReferences.chatRef.document(chatID).collection("messages").document(message.messageID)
             .set(message)
         messageText.clear()
     }
 
     private fun getAllMessage() {
-
         FirebaseReferences.chatRef.document(chatID).collection("messages").get()
             .addOnSuccessListener { result ->
-                for (message in result) {
+                for ((index, message) in result.withIndex()) {
                     var msg: Message = message.toObject<Message>()
                     if (msg.toId == StoreInfo.storeID) {
                         messageAdapter.add(
                             LeftMessageItem(
+                                chatID,
                                 Message(
                                     msg.messageID,
                                     msg.messageDate,
                                     msg.toId,
-                                    msg.message
+                                    msg.message,
+                                    msg.isSent,
+                                    msg.isRead
                                 )
                             )
                         )
+
+                        if(!msg.isSent){
+                            FirebaseReferences.chatRef.document(chatID).collection("messages").document(msg.messageID).update("isSent", true)
+                            if (firstUnread == -1)
+                                firstUnread = index
+                        }
                     } else if (msg.toId != StoreInfo.storeID) {
 
                         messageAdapter.add(
@@ -106,7 +116,10 @@ class MessageActivity : AppCompatActivity() {
                         )
 
                     }
-                    binding.rcMessage.scrollToPosition(result.size() -1);
+                    if (firstUnread != -1)
+                        binding.rcMessage.scrollToPosition(firstUnread)
+                    else
+                        binding.rcMessage.scrollToPosition(result.size() -1);
                 }
 
                 binding.rcMessage.adapter = messageAdapter
@@ -120,7 +133,20 @@ class MessageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.sale -> Toast.makeText(this, getString(R.string.sale), Toast.LENGTH_SHORT).show()
+            R.id.sale -> {
+                if(productsIDs !=null) {
+                    FirebaseReferences.productsRef.whereIn("productID", productsIDs!!).get().addOnCompleteListener {
+                    var products: ArrayList<Product> = arrayListOf()
+                        for (product in it.result){
+                            products.add(product.toObject())
+                            if(product == it.result.last()){
+                                Toast.makeText(this, products.last().productID, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+                // Toast.makeText(this, getString(R.string.sale) + chatID, Toast.LENGTH_SHORT).show()
+            }
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
