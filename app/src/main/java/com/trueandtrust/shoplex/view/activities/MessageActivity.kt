@@ -75,7 +75,8 @@ class MessageActivity : AppCompatActivity() {
         val messageText = binding.edSendMesssage.text
         messageAdapter.add(RightMessageItem(Message(message = messageText.toString())))
         var message = Message(toId = userID, message = messageText.toString())
-        FirebaseReferences.chatRef.document(chatID).collection("messages").document(message.messageID)
+        FirebaseReferences.chatRef.document(chatID).collection("messages")
+            .document(message.messageID)
             .set(message)
         messageText.clear()
     }
@@ -100,8 +101,9 @@ class MessageActivity : AppCompatActivity() {
                             )
                         )
 
-                        if(!msg.isSent){
-                            FirebaseReferences.chatRef.document(chatID).collection("messages").document(msg.messageID).update("isSent", true)
+                        if (!msg.isSent) {
+                            FirebaseReferences.chatRef.document(chatID).collection("messages")
+                                .document(msg.messageID).update("isSent", true)
                             if (firstUnread == -1)
                                 firstUnread = index
                         }
@@ -122,7 +124,7 @@ class MessageActivity : AppCompatActivity() {
                     if (firstUnread != -1)
                         binding.rcMessage.scrollToPosition(firstUnread)
                     else
-                        binding.rcMessage.scrollToPosition(result.size() -1);
+                        binding.rcMessage.scrollToPosition(result.size() - 1);
                 }
 
                 binding.rcMessage.adapter = messageAdapter
@@ -138,37 +140,36 @@ class MessageActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.sale -> {
-                if(productsIDs !=null) {
-                    FirebaseReferences.productsRef.whereIn("productID", productsIDs!!).get().addOnCompleteListener {
-                    var products: ArrayList<Product> = arrayListOf()
-                        for (product in it.result){
-                            products.add(product.toObject())
-                            if(product == it.result.last()){
-                                Toast.makeText(this, products.last().productID, Toast.LENGTH_SHORT).show()
+                if (productsIDs != null) {
+                    FirebaseReferences.productsRef.whereIn("productID", productsIDs!!).get()
+                        .addOnCompleteListener {
+                            var products: ArrayList<Product> = arrayListOf()
+                            for (product in it.result) {
+                                products.add(product.toObject())
+                                if (product == it.result.last()) {
+                                    openSnackBar(products)
+                                }
                             }
                         }
-                    }
                 }
                 // Toast.makeText(this, getString(R.string.sale) + chatID, Toast.LENGTH_SHORT).show()
             }
             android.R.id.home -> finish()
-            R.id.sale -> {
-                Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
-                val binding = DialogAddSaleBinding.inflate(layoutInflater)
-                val SalesBtnSheetDialog = BottomSheetDialog(binding.root.context)
-
-               // var product  = arrayListOf<Product>(Product())
-               // var salesProductAdapter = SalesAdapter(product)
-               // binding.rcSalesProduct.adapter = salesProductAdapter
-
-                SalesBtnSheetDialog.setContentView(binding.root)
-                SalesBtnSheetDialog.show()}
-
-                    android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun openSnackBar(products: ArrayList<Product>){
+        Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
+        val binding = DialogAddSaleBinding.inflate(layoutInflater)
+        val SalesBtnSheetDialog = BottomSheetDialog(binding.root.context)
+
+        var salesProductAdapter = SalesAdapter(products)
+        binding.rcSalesProduct.adapter = salesProductAdapter
+
+        SalesBtnSheetDialog.setContentView(binding.root)
+        SalesBtnSheetDialog.show()
+    }
 }
 
 

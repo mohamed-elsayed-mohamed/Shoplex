@@ -57,7 +57,6 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
         val imageRef = FirebaseReferences.imgStroreRef.child(storeId)
         imageRef.putFile(uri).addOnSuccessListener { _ ->
             imageRef.downloadUrl.addOnSuccessListener {
-                //add Image to firestorage
                 FirebaseReferences.pendingSellersRef.document(storeId).update("image",it.toString())
                 //update profile
                 val profileUpdates = userProfileChangeRequest {
