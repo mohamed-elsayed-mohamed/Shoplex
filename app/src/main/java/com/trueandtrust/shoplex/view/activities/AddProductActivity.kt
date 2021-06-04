@@ -15,6 +15,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
@@ -95,7 +96,8 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             if (product.imagesListURI.count() < MAX_IMAGES_SIZE) {
                 openGalleryForImages()
             } else {
-                Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, getString(R.string.max), Snackbar.LENGTH_LONG).show()
+
             }
         }
 
@@ -267,11 +269,8 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             binding.rvUploadImages.adapter?.notifyDataSetChanged()
             updateSliderUI()
         } else {
-            Toast.makeText(
-                this,
-                getString(R.string.alertonImageRemove),
-                Toast.LENGTH_SHORT
-            ).show()
+            Snackbar.make(binding.root, getString(R.string.alertonImageRemove), Snackbar.LENGTH_LONG).show()
+
         }
     }
 
@@ -331,7 +330,8 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         }
 
         if (product.imagesListURI.isNullOrEmpty()) {
-            Toast.makeText(this, "Please Select Your Product Images", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, getString(R.string.imageSelected), Snackbar.LENGTH_LONG).show()
+
             return false
         }
 

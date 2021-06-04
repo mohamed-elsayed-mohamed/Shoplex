@@ -36,7 +36,7 @@ class ProductFragment(val product: Product) : Fragment() {
 
         binding.tvDetailsName.text = product.name
         binding.tvDetailsReview.text = product.rate.toString()
-        binding.tvDetailsDiscount.text = product.discount.toString()
+        binding.tvDetailsDiscount.text = product.discount.toString()+"%"
         binding.tvDetailsOldPrice.text = product.price.toString()
         binding.tvDetailsNewPrice.text = product.newPrice.toString()
         binding.tvDetailsDescription.text = product.description
