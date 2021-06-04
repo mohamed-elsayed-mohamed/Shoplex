@@ -76,7 +76,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
             text = product.price.toString()
         }
 
-        binding.tvNewPriceConfirm.text = product.newPrice.toString()
+        binding.tvNewPriceConfirm.text = product.newPrice.toString() + "EGP"
         binding.tvDiscountConfirm.text = product.discount.toString() + " %"
 
         if(product.discount == 0) {
