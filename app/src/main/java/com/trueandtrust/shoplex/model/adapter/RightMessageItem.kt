@@ -16,9 +16,3 @@ class RightMessageItem(val message: Message) : BindableItem<ChatItemRightBinding
         return R.layout.chat_item_right
     }
 }
-
-/*  fun getDate(date: Date): String {
-        val sdf = java.text.SimpleDateFormat("dd-MM-yyyy hh:mm a")
-        val result = sdf.format(date)
-        return result
-    }*/

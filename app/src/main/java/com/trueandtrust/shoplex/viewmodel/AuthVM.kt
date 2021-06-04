@@ -32,6 +32,7 @@ class AuthVM(val context: Context): ViewModel(), AuthListener {
     }
 
     fun createAccount() {
+       store.value!!.email=email.value!!
         userDBModel.createAccount(store.value!!, password.value!!)
     }
 

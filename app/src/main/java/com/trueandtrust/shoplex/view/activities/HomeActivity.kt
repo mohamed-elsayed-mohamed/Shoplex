@@ -97,8 +97,8 @@ class HomeActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.setDrawerIndicatorEnabled(true)
         drawerToggle.syncState()
-       val switchId = navView.menu.getItem(3).actionView.findViewById<SwitchCompat>(R.id.switch_id)
-           switchId.setOnClickListener {
+        val switchId = navView.menu.getItem(3).actionView.findViewById<SwitchCompat>(R.id.switch_id)
+        switchId.setOnClickListener {
             if(switchId.isChecked()){
                 Toast.makeText(applicationContext,"checked",Toast.LENGTH_SHORT).show()
             }

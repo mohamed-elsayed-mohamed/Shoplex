@@ -117,4 +117,3 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 }
-
