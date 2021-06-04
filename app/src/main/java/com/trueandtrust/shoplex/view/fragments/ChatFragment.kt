@@ -35,23 +35,10 @@ class ChatFragment : Fragment() {
 
         getChatHeadsInfo()
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.chat)
-        setHasOptionsMenu(true);
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.chat_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
 
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item!!.itemId) {
-            R.id.search ->
-                Toast.makeText(context, R.string.You_CLicked.toString() , Toast.LENGTH_SHORT).show()
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     fun getChatHeadsInfo() {
         FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).get()

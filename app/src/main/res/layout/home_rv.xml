@@ -116,7 +116,7 @@
             <Button
                 android:id="@+id/btnDeliveryOrder"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/height_30"
+                android:layout_height="@dimen/height_40"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="Deliver"
