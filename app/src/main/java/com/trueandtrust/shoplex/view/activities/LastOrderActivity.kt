@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-//import com.example.graddemo.model.adapter.LastOrderAdapter
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLastOrderBinding
 import com.trueandtrust.shoplex.model.adapter.CurrentOrdersAdapter

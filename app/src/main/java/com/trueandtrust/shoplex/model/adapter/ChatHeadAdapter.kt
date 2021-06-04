@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.model.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -74,6 +75,9 @@ class ChatHeadAdapter(private val chatHeads: ArrayList<ChatHead>):
             binding.tvUserNameChatHead.text = chatHead.userName
             binding.tvProductNameChatHead.text = chatHead.productName
             binding.tvNumOfMessage.text = chatHead.numOfMessage.toString()
+            if (chatHead.numOfMessage==0){
+                binding.tvNumOfMessage.visibility= View.GONE
+            }
             binding.tvPriceChatHeader.text = chatHead.price.toString()
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, MessageActivity::class.java)
