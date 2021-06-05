@@ -21,4 +21,5 @@ class LeftMessageItem(private val chatID: String, val message: Message) : Bindab
     override fun getLayout(): Int {
         return R.layout.chat_item_left
     }
+
 }

@@ -16,6 +16,6 @@ interface StoreDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addLeftMessage(message: Message)
 
-    @Query("SELECT * FROM message")
-    fun readAllMessage():LiveData<List<Message>>
+    @Query("SELECT * FROM message where chatId = :chatID order by messageDate")
+    fun readAllMessage(chatID : String):LiveData<List<Message>>
 }

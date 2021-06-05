@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.Exclude
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -16,6 +17,7 @@ data class Message(
     var message: String = "",
     @field:JvmField val isSent: Boolean = false,
     @field:JvmField val isRead: Boolean = false,
-    @PrimaryKey(autoGenerate = true)
-    val id:Int = 0
+    @PrimaryKey
+    @Exclude @set:Exclude @get:Exclude
+    var chatId:String = ""
 ):Parcelable

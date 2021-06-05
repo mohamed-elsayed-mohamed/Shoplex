@@ -1,8 +1,8 @@
 package com.trueandtrust.shoplex.room.viewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.trueandtrust.shoplex.model.pojo.Message
 import com.trueandtrust.shoplex.room.data.ShoplexDatabase
@@ -10,13 +10,13 @@ import com.trueandtrust.shoplex.room.repository.MessageRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MessageViewModel(application: Application) : AndroidViewModel(application) {
-    private val readAllMessage : LiveData<List<Message>>
+class MessageViewModel(context: Context,chatID : String) : ViewModel() {
+    val readAllMessage : LiveData<List<Message>>
     private val messageRepo : MessageRepo
 
     init {
-        val messageDao = ShoplexDatabase.getDatabase(application).storeDao()
-        messageRepo = MessageRepo(messageDao)
+        val messageDao = ShoplexDatabase.getDatabase(context).storeDao()
+        messageRepo = MessageRepo(messageDao,chatID)
         readAllMessage=messageRepo.readAllMessage
     }
 
