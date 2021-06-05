@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.Timestamp
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
@@ -12,12 +13,13 @@ import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
 import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.room.viewModel.ProductViewModel
 
 class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var binding: ActivityConfirmProductBinding
     private lateinit var product: Product
     private var isUpdate: Boolean = false
-
+    private lateinit var productViewModel: ProductViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConfirmProductBinding.inflate(layoutInflater)
@@ -25,6 +27,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
 
         product = this.intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))!!
         isUpdate = intent.getBooleanExtra(getString(R.string.update_product), false)
+        productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
 
         showAll()
 
@@ -52,6 +55,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
             val dbModel = ProductsDBModel(product, this, isUpdate)
             product.date = Timestamp.now().toDate()
             dbModel.addProduct()
+            productViewModel.addProduct(product)
             startActivity(
                 Intent(
                     this,

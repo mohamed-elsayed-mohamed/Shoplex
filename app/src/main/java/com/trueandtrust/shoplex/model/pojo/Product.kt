@@ -4,6 +4,8 @@ package com.trueandtrust.shoplex.model.pojo
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
@@ -11,37 +13,48 @@ import com.google.firebase.firestore.Exclude
 import com.google.firebase.messaging.FirebaseMessaging
 import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.extra.StoreInfo
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 import kotlin.collections.ArrayList
+@Entity(tableName = "product")
+data class Product(
+    @PrimaryKey
+    var productID: String = UUID.randomUUID().toString(),
+    var storeID: String = StoreInfo.storeID!!,
+    var storeName: String = StoreInfo.name,
+    var deliveryLoc: LatLng? = null,
+    var name: String = "",
+    var description: String = "",
+    var price: Float = 10F,
+    var newPrice: Float = 10F,
+    var discount: Int = 0,
+    var category: String = "",
+    var subCategory: String = "",
+    var rate: Float? = null,
+    var premium: Premium? = null,
+    var premiumDays: Int = 0,
+    var properties: ArrayList<Property> = arrayListOf(),
+    var date: Date? = null,
 
-open class Product() : Parcelable {
-    var productID : String = UUID.randomUUID().toString()
-    var storeID : String = StoreInfo.storeID!!
-    var storeName : String = StoreInfo.name
-    var deliveryLoc: LatLng? = null
-    var name : String = ""
-    var description: String = ""
-    var price : Float = 10F
-    var newPrice : Float = 10F
-    var discount : Int = 0
-    var category : String = ""
-    var subCategory : String = ""
-    var rate : Float? = null
-    var premium : Premium? = null
-    var premiumDays: Int = 0
-    var properties: ArrayList<Property> = arrayListOf()
-    var date: Date? = null
+    var images: ArrayList<String?> = arrayListOf(),
 
-    var images : ArrayList<String?> = arrayListOf()
+    @Exclude
+    @set:Exclude
+    @get:Exclude
+    var removedImages: ArrayList<String> = arrayListOf(),
 
-    @Exclude @set:Exclude @get:Exclude
-    var removedImages : ArrayList<String> = arrayListOf()
+    @Exclude
+    @set:Exclude
+    @get:Exclude
+    var imagesListURI: ArrayList<Uri> = arrayListOf(),
 
-    @Exclude @set:Exclude @get:Exclude
-    var imagesListURI : ArrayList<Uri> = arrayListOf()
+    @Exclude
+    @set:Exclude
+    @get:Exclude
+    var imageSlideList: ArrayList<SlideModel> = arrayListOf()
 
-    @Exclude @set:Exclude @get:Exclude
-    var imageSlideList : ArrayList<SlideModel> = arrayListOf()
+) : Parcelable {
+
 
     constructor(parcel: Parcel) : this() {
         productID = parcel.readString().toString()
@@ -61,15 +74,15 @@ open class Product() : Parcelable {
     }
 
     @Exclude
-    fun getImageSlides(): ArrayList<SlideModel>{
+    fun getImageSlides(): ArrayList<SlideModel> {
         this.imageSlideList.clear()
-        for(image in imagesListURI){
+        for (image in imagesListURI) {
             imageSlideList.add(SlideModel(image.toString()))
         }
         return imageSlideList
     }
 
-    fun calculateNewPrice(): String{
+    fun calculateNewPrice(): String {
         val value = (this.price - (this.price * (this.discount / 100.0F)))
         this.newPrice = "%.2f".format(value).toFloat()
         return this.newPrice.toString()

@@ -5,10 +5,8 @@ import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.toObject
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
-import com.trueandtrust.shoplex.model.extra.StoreInfo.storeID
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Order
-import com.trueandtrust.shoplex.model.pojo.Orders
 import com.trueandtrust.shoplex.model.pojo.Product
 
 class OrdersDBModel (val notifier : INotifyMVP){
