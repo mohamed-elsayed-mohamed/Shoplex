@@ -73,7 +73,7 @@
         android:background="@drawable/chat_text_rounded"
         android:hint="@string/type_a_message"
         android:inputType="textMultiLine"
-        android:maxLines="5"
+        android:maxLines="1"
         android:padding="@dimen/padding_16"
         android:textColor="@color/black"
         android:textColorHint="@color/grey_font"
@@ -83,13 +83,12 @@
 
     <ImageButton
         android:id="@+id/btnSendMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="@dimen/margin_8"
         android:layout_marginBottom="@dimen/margin_8"
         android:background="@drawable/send_button_style"
         android:contentDescription="@string/todo"
-        android:padding="@dimen/margin_16"
         android:src="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
