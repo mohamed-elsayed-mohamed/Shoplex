@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -25,6 +26,7 @@ import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Message
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.StoreAccount
+import com.trueandtrust.shoplex.room.viewModel.MessageViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -36,6 +38,7 @@ class MessageActivity : AppCompatActivity() {
     lateinit var userID: String
     private var firstUnread: Int = -1
     private var productsIDs: ArrayList<String>? = null
+    private lateinit var messageVM : MessageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,9 @@ class MessageActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true);
             supportActionBar!!.setDisplayShowHomeEnabled(true);
         }
+
+        messageVM = ViewModelProvider(this).get(MessageViewModel::class.java)
+
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
         chatID = intent.getStringExtra(ChatHeadAdapter.CHAT_ID_KEY).toString()
@@ -78,6 +84,7 @@ class MessageActivity : AppCompatActivity() {
         FirebaseReferences.chatRef.document(chatID).collection("messages")
             .document(message.messageID)
             .set(message)
+        messageVM.addRightMessage(message)
         messageText.clear()
     }
 
@@ -108,17 +115,9 @@ class MessageActivity : AppCompatActivity() {
                                 firstUnread = index
                         }
                     } else if (msg.toId != StoreInfo.storeID) {
+                        var message = Message(msg.messageID, msg.messageDate, msg.toId, msg.message)
+                        messageAdapter.add(RightMessageItem(message))
 
-                        messageAdapter.add(
-                            RightMessageItem(
-                                Message(
-                                    msg.messageID,
-                                    msg.messageDate,
-                                    msg.toId,
-                                    msg.message
-                                )
-                            )
-                        )
 
                     }
                     if (firstUnread != -1)
