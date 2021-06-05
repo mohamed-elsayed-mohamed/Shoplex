@@ -1,7 +1,15 @@
 package com.trueandtrust.shoplex.room.data
 
+import android.net.Uri
 import androidx.room.TypeConverter
+import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.gms.maps.model.LatLng
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
+import com.trueandtrust.shoplex.model.pojo.Property
+import java.lang.reflect.Type
 import java.util.*
+
 
 class Conventers {
 
@@ -15,4 +23,84 @@ class Conventers {
         return date?.time
     }
 
+    @TypeConverter
+    fun fromString(value: String?): ArrayList<String?>? {
+        val listType: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromArrayList(list: ArrayList<String?>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+    @TypeConverter
+    fun fromUri(value: String?): ArrayList<Uri?>? {
+        val listType: Type = object : TypeToken<ArrayList<Uri?>?>() {}.getType()
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun toUri(list: ArrayList<Uri?>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+    @TypeConverter
+    fun fromProperty(value: String?): ArrayList<Property?>? {
+        val listType: Type = object : TypeToken<ArrayList<Property?>?>() {}.getType()
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun toProperty(list: ArrayList<Property?>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+    @TypeConverter
+    fun fromSlideModel(value: String?): ArrayList<SlideModel?>? {
+        val listType: Type = object : TypeToken<ArrayList<SlideModel?>?>() {}.getType()
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun toSlideModel(list: ArrayList<SlideModel?>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+
+    @TypeConverter
+    fun stringToModel(json: String?): LatLng? {
+        val gson = Gson()
+        val type = object : TypeToken<LatLng?>() {}.type
+        return gson.fromJson(json, type)
+    }
+
+    @TypeConverter
+    fun modelToString(position: LatLng?): String? {
+        val gson = Gson()
+        val type = object : TypeToken<LatLng?>() {}.type
+        return gson.toJson(position, type)
+    }
+
+//    @TypeConverter // note this annotation
+//    fun fromOptionValuesList(optionValues: List<OptionValues?>?): String? {
+//        if (optionValues == null) {
+//            return null
+//        }
+//        val gson = Gson()
+//        val type = object :
+//            TypeToken<List<OptionValues?>?>() {}.type
+//        return gson.toJson(optionValues, type)
+//    }
+//
+//    @TypeConverter // note this annotation
+//    fun toOptionValuesList(optionValuesString: String?): List<OptionValues?>? {
+//        if (optionValuesString == null) {
+//            return null
+//        }
+//        val gson = Gson()
+//        val type = object :
+//            TypeToken<List<OptionValues?>?>() {}.type
+//        return gson.fromJson(optionValuesString, type)
+//    }
 }
