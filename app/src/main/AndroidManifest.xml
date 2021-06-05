@@ -42,7 +42,7 @@
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".view.activities.HomeActivity"
-            android:theme="@style/AppTheme.Home">
+           >
 
         </activity>
         <activity
@@ -53,10 +53,10 @@
         <activity android:name=".view.activities.MessageActivity" />
         <activity
             android:name=".view.activities.StoreLocationActivity"
-            android:theme="@style/AppTheme.Home" />
+            />
         <activity
             android:name=".view.activities.LastOrderActivity"
-            android:theme="@style/AppTheme.Home" />
+           />
         <activity android:name=".view.activities.MainActivity" />
         <activity android:name=".view.activities.LoginActivity"/>
         <activity android:name=".view.activities.SignupActivity" />

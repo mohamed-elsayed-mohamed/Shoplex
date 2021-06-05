@@ -36,10 +36,10 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
 
     fun addProduct() {
         reference.document(product.productID).set(product).addOnSuccessListener {
-            Toast.makeText(context, R.string.Success.toString() , Toast.LENGTH_LONG).show()
+          //  Toast.makeText(context, R.string.Success.toString() , Toast.LENGTH_LONG).show()
         }.addOnFailureListener {
             Toast.makeText(context, context.getString(R.string.Failed) + it.localizedMessage, Toast.LENGTH_LONG).show()
-            Log.d("FIRE", it.localizedMessage)
+          //  Log.d("FIRE", it.localizedMessage)
         }
 
         for (imgURI in product.imagesListURI)

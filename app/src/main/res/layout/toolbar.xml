@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
+        app:titleTextColor="@color/darkblue"
+
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 <!--    <TextView-->
 <!--        android:layout_width="wrap_content"-->

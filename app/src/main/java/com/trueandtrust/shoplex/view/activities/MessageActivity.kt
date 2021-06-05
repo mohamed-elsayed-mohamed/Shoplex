@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.ktx.toObject
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityMessageBinding
@@ -19,6 +22,8 @@ import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Message
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.room.viewModel.MessageFactoryModel
+import com.trueandtrust.shoplex.room.viewModel.MessageViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -30,6 +35,7 @@ class MessageActivity : AppCompatActivity() {
     lateinit var userID: String
     private var firstUnread: Int = -1
     private var productsIDs: ArrayList<String>? = null
+    private lateinit var messageVM: MessageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +52,15 @@ class MessageActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true);
             supportActionBar!!.setDisplayShowHomeEnabled(true);
         }
+
+
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
         chatID = intent.getStringExtra(ChatHeadAdapter.CHAT_ID_KEY).toString()
         userID = intent.getStringExtra(ChatHeadAdapter.USER_ID_KEY).toString()
         productsIDs = intent.getStringArrayListExtra(ChatHeadAdapter.PRODUCTS_IDS)
+
+        messageVM = ViewModelProvider(this,MessageFactoryModel(this,chatID)).get(MessageViewModel::class.java)
 
         binding.imgToolbarChat.setImageResource(R.drawable.product)
         binding.tvToolbarUserChat.text = userName
@@ -72,29 +82,70 @@ class MessageActivity : AppCompatActivity() {
         FirebaseReferences.chatRef.document(chatID).collection("messages")
             .document(message.messageID)
             .set(message)
+
         messageText.clear()
     }
 
+    private fun listenToNewMessages(lastID: String){
+        FirebaseReferences.chatRef.document(chatID).collection("messages").whereGreaterThan("messageID",lastID).addSnapshotListener{snapshots,error ->
+           if(error != null){
+               return@addSnapshotListener
+           }
+            for (dc in snapshots!!.documentChanges) {
+                if (dc.type ==   DocumentChange.Type.ADDED) {
+                  val message = dc.document.toObject<Message>()
+                    if (message.toId == StoreInfo.storeID) {
+                        messageAdapter.add(LeftMessageItem(chatID, message))
+                        messageVM.addLeftMessage(message)
+
+                    } else if (message.toId != StoreInfo.storeID) {
+                        messageVM.addRightMessage(message)
+                    }
+                }
+            }
+
+        }
+    }
+
     private fun getAllMessage() {
-        FirebaseReferences.chatRef.document(chatID).collection("messages").get()
+        messageVM.readAllMessage.observe(this, Observer {
+            for (message in it) {
+                if (message.toId == StoreInfo.storeID) {
+                    messageAdapter.add(LeftMessageItem(chatID, message))
+
+                } else if (message.toId != StoreInfo.storeID) {
+                    messageAdapter.add(RightMessageItem(message))
+                }
+            }
+            val lastID = if(it.isEmpty()){
+                "1"
+            }else{
+                it.last().messageID
+            }
+            getAllMessageFromFirebase(lastID)
+
+            // binding.rcMessage.scrollToPosition(it.size - 1);
+            //binding.rcMessage.adapter = messageAdapter
+        })
+    }
+
+    private fun getAllMessageFromFirebase(lastID: String) {
+        FirebaseReferences.chatRef.document(chatID).collection("messages")
+            .whereGreaterThan("messageID", lastID).get()
             .addOnSuccessListener { result ->
                 for ((index, message) in result.withIndex()) {
                     var msg: Message = message.toObject<Message>()
                     if (msg.toId == StoreInfo.storeID) {
-                        messageAdapter.add(
-                            LeftMessageItem(
-                                chatID,
-                                Message(
-                                    msg.messageID,
-                                    msg.messageDate,
-                                    msg.toId,
-                                    msg.message,
-                                    msg.isSent,
-                                    msg.isRead
-                                )
-                            )
+                        var message = Message(
+                            msg.messageID,
+                            msg.messageDate,
+                            msg.toId,
+                            msg.message,
+                            msg.isSent,
+                            msg.isRead
                         )
-
+                        messageAdapter.add(LeftMessageItem(chatID, message))
+                        messageVM.addLeftMessage(message)
                         if (!msg.isSent) {
                             FirebaseReferences.chatRef.document(chatID).collection("messages")
                                 .document(msg.messageID).update("isSent", true)
@@ -102,25 +153,16 @@ class MessageActivity : AppCompatActivity() {
                                 firstUnread = index
                         }
                     } else if (msg.toId != StoreInfo.storeID) {
-
-                        messageAdapter.add(
-                            RightMessageItem(
-                                Message(
-                                    msg.messageID,
-                                    msg.messageDate,
-                                    msg.toId,
-                                    msg.message
-                                )
-                            )
-                        )
-
+                        var message = Message(msg.messageID, msg.messageDate, msg.toId, msg.message)
+                        messageAdapter.add(RightMessageItem(message))
+                        messageVM.addRightMessage(message)
                     }
                     if (firstUnread != -1)
                         binding.rcMessage.scrollToPosition(firstUnread)
                     else
                         binding.rcMessage.scrollToPosition(result.size() - 1);
                 }
-
+                listenToNewMessages(lastID)
                 binding.rcMessage.adapter = messageAdapter
             }
     }
@@ -153,7 +195,7 @@ class MessageActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun openSnackBar(products: ArrayList<Product>){
+    private fun openSnackBar(products: ArrayList<Product>) {
         Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
         val binding = DialogAddSaleBinding.inflate(layoutInflater)
         val SalesBtnSheetDialog = BottomSheetDialog(binding.root.context)

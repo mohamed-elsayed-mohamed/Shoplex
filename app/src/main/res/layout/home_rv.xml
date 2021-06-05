@@ -14,28 +14,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cardElevation="5dp"
-        app:cardCornerRadius="15dp"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/margin_8"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
+            <LinearLayout
+                android:id="@id/img_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/img_product"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/width_1"
+                android:layout_height="@dimen/height_120"
                 android:layout_gravity="end"
-                android:scaleType="fitXY"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:scaleType="fitCenter"
+
                 android:src="@drawable/product" />
 
-
+            </LinearLayout>
 
 
 
@@ -48,8 +52,8 @@
                 android:text="@string/productName"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/img_product"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/img_card"
+                app:layout_constraintTop_toBottomOf="@id/img_card"
                 android:layout_marginLeft="8dp" />
 
             <TextView
@@ -62,7 +66,7 @@
                 android:layout_marginStart="8dp"
                 android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_name"
-                app:layout_constraintStart_toEndOf="@+id/img_product"
+                app:layout_constraintStart_toStartOf="@+id/img_card"
                 android:layout_marginLeft="8dp" />
 
 
@@ -78,8 +82,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/img_product"
-                app:layout_constraintTop_toBottomOf="@+id/tv_category" />
+                app:layout_constraintStart_toEndOf="@+id/tv_category"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
             <TextView
                 android:id="@+id/tv_location"
@@ -91,8 +95,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                app:layout_constraintStart_toEndOf="@id/img_product"
-                app:layout_constraintTop_toBottomOf="@+id/tv_price" />
+                android:layout_marginBottom="@dimen/margin_8"
+                app:layout_constraintStart_toStartOf="@id/img_card"
+                app:layout_constraintTop_toBottomOf="@+id/tv_price"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
             <TextView
                 android:id="@+id/tv_status"
@@ -104,15 +111,18 @@
                 android:textColor="@color/red"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/img_card" />
 
             <Button
                 android:id="@+id/btnDeliveryOrder"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_40"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Delivery"
+                android:text="Deliver"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/darkblue"
+                android:background="@drawable/roundedbutton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

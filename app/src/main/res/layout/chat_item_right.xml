@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.trueandtrust.shoplex.model.pojo.DateUtils"/>
         <variable
             name="message"
             type="com.trueandtrust.shoplex.model.pojo.Message" />
@@ -39,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/drawable_padding"
-                android:text="@{String.valueOf(message.messageDate)}"
+                android:text="@{DateUtils.getDate(message.messageDate)}"
                 android:textColor="@color/grey_font"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/tvSendMessage"
