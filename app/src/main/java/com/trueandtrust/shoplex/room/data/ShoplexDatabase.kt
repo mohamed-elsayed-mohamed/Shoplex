@@ -3,8 +3,9 @@ package com.trueandtrust.shoplex.room.data
 import android.content.Context
 import androidx.room.*
 import com.trueandtrust.shoplex.model.pojo.Message
+import com.trueandtrust.shoplex.model.pojo.Product
 
-@Database(entities = [Message::class],version = 2 ,exportSchema = false)
+@Database(entities = [Message::class, Product::class],version = 2 ,exportSchema = false)
 @TypeConverters(Conventers::class)
 abstract class ShoplexDatabase : RoomDatabase() {
 
