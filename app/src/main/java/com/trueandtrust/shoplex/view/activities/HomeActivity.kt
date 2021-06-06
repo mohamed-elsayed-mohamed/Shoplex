@@ -1,18 +1,13 @@
 package com.trueandtrust.shoplex.view.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -22,7 +17,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
@@ -30,8 +24,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.ktx.messaging
 import com.shoplex.shoplex.Report
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityHomeBinding
@@ -39,7 +31,6 @@ import com.trueandtrust.shoplex.databinding.DialogAddReportBinding
 import com.trueandtrust.shoplex.databinding.NavHeaderBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
-
 
 class HomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityHomeBinding
@@ -63,6 +54,7 @@ class HomeActivity : AppCompatActivity() {
         navView = binding.navView
         drawerLayout = binding.drawerLayout
 
+        /*
         //subscribe Topic
         Firebase.messaging.subscribeToTopic("Notify")
         //get Token
@@ -81,6 +73,8 @@ class HomeActivity : AppCompatActivity() {
             //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
+        */
+
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -97,16 +91,19 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         drawerLayout.addDrawerListener(drawerToggle)
-        drawerToggle.setDrawerIndicatorEnabled(true)
+        drawerToggle.isDrawerIndicatorEnabled = true
         drawerToggle.syncState()
         val switchId = navView.menu.getItem(3).actionView.findViewById<SwitchCompat>(R.id.switch_id)
         switchId.setOnClickListener {
-            if(switchId.isChecked()){
-                Toast.makeText(applicationContext,"checked",Toast.LENGTH_SHORT).show()
+            if(switchId.isChecked){
+                //StoreInfo.setNotificationControl(applicationContext, true)
+                // Toast.makeText(applicationContext,"checked",Toast.LENGTH_SHORT).show()
+                FirebaseReferences.notificationTokensRef.document(StoreInfo.storeID!!).update("notification", true)
             }
             else{
-                Toast.makeText(applicationContext,"not checked",Toast.LENGTH_SHORT).show()
-
+                //StoreInfo.setNotificationControl(applicationContext, false)
+                //Toast.makeText(applicationContext,"not checked",Toast.LENGTH_SHORT).show()
+                FirebaseReferences.notificationTokensRef.document(StoreInfo.storeID!!).update("notification", false)
             }
         }
 

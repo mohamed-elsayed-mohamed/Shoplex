@@ -7,7 +7,7 @@ import com.trueandtrust.shoplex.room.data.StoreDao
 
 class MessageRepo(private val messageDao: StoreDao ,val chatID : String) {
 
-    val readAllMessage : LiveData<List<Message>> = messageDao.readAllMessage(chatID)
+    val readAllMessage : LiveData<List<Message>> = messageDao.readAllMessage()
 
     suspend fun addRightMessage(rightMessage : Message){
         messageDao.addRightMessage(rightMessage)

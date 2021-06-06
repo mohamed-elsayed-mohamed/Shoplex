@@ -1,32 +1,42 @@
 package com.trueandtrust.shoplex.model.pojo
 
-import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import com.google.android.gms.maps.model.LatLng
-import java.io.IOException
-import java.util.*
+import android.os.Parcel
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.TypeConverter
+import com.google.gson.Gson
 
+class Location() : Parcelable {
 
-data class Location(var storeID: String = "", var storeName: String = "", var address: String, var location:LatLng) {
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
 
-    companion object {
-        fun getAddress(latLng: LatLng,context : Context): String {
-            val geocoder = Geocoder(context, Locale.getDefault())
-            var addresses: List<Address>? = null
-            var address: String = " "
-            try {
-                addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-                if (addresses.size > 0) {
-                    address = addresses[0].getAddressLine(0)
-                    //Toast.makeText(this, address, Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            return address
-        }
-
+    constructor(parcel: Parcel) : this() {
+        latitude = parcel.readDouble()
+        longitude = parcel.readDouble()
     }
 
+    constructor(latitude:Double, longitude:Double): this(){
+        this.latitude = latitude
+        this.longitude = longitude
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeDouble(latitude)
+        parcel.writeDouble(longitude)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Location> {
+        override fun createFromParcel(parcel: Parcel): Location {
+            return Location(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Location?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

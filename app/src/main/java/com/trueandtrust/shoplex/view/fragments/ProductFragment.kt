@@ -18,7 +18,7 @@ class ProductFragment(val product: Product) : Fragment() {
     private lateinit var binding: FragmentProductBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var propertiesAdapter: PropertyAdapter
-    private lateinit var productsVm: ProductsVM
+    //private lateinit var productsVm: ProductsVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +27,7 @@ class ProductFragment(val product: Product) : Fragment() {
 
         val imageList = ArrayList<SlideModel>()
         binding = FragmentProductBinding.inflate(inflater, container, false)
-        this.productsVm = ProductsVM()
+        //productsVm = ProductsVM()
 
         for (imgURL in product.images)
             imageList.add(SlideModel(imgURL))
@@ -40,9 +40,8 @@ class ProductFragment(val product: Product) : Fragment() {
         binding.tvDetailsOldPrice.text = product.price.toString()
         binding.tvDetailsNewPrice.text = product.newPrice.toString()
         binding.tvDetailsDescription.text = product.description
-        binding.tvCatSubCat.text = "${product.category.toLowerCase().capitalize()}, ${
-            product.subCategory.toLowerCase().capitalize()
-        }"
+        binding.tvCatSubCat.text = "${product.category.toLowerCase().capitalize()}, ${product.subCategory.toLowerCase().capitalize()}"
+
         if (product.premiumDays != 0) {
             binding.tvPremiumDays.visibility = View.VISIBLE
             binding.tvPremiumDays.text = product.premiumDays.toString() + " Days"

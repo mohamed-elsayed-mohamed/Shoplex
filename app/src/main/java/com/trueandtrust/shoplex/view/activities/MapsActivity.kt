@@ -3,31 +3,20 @@ package com.trueandtrust.shoplex.view.activities
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.Task
-import com.shoplex.shoplex.model.maps.LocationManager
+import com.trueandtrust.shoplex.model.maps.LocationManager
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityMapsBinding
-import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
-import com.trueandtrust.shoplex.model.extra.FirebaseReferences
-import com.trueandtrust.shoplex.model.pojo.Location.Companion.getAddress
-import java.io.IOException
-import java.util.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -63,15 +52,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             when(locationAction){
                 LocationAction.Add -> {
                     setResult(RESULT_OK, Intent().apply {
-                        val selectedLocation = locationManager.selectedLocation
+                        val selectedLocation = com.trueandtrust.shoplex.model.pojo.Location(locationManager.selectedLocation.latitude, locationManager.selectedLocation.longitude)
                         val address = locationManager.getAddress(
-                            LatLng(
+                            com.trueandtrust.shoplex.model.pojo.Location(
                                 selectedLocation.latitude,
                                 selectedLocation.longitude
-                            ), applicationContext
-                        )
-                        putExtra(ADDRESS, address)
+                            ))
                         putExtra(LOCATION, selectedLocation)
+                        putExtra(ADDRESS, address)
                     })
                 }
             }
@@ -79,7 +67,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun requestPermission() {
+    private fun requestPermission() {
         if(ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)

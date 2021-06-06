@@ -1,28 +1,23 @@
 package com.trueandtrust.shoplex.model.pojo
 
-
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.denzcoskun.imageslider.models.SlideModel
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.Exclude
-import com.google.firebase.messaging.FirebaseMessaging
 import com.trueandtrust.shoplex.model.enumurations.Premium
 import com.trueandtrust.shoplex.model.extra.StoreInfo
-import kotlinx.android.parcel.Parcelize
 import java.util.*
-import kotlin.collections.ArrayList
+
 @Entity(tableName = "product")
 data class Product(
     @PrimaryKey
     var productID: String = UUID.randomUUID().toString(),
     var storeID: String = StoreInfo.storeID!!,
     var storeName: String = StoreInfo.name,
-    var deliveryLoc: LatLng? = null,
+    var storeLocation: Location = Location(),
     var name: String = "",
     var description: String = "",
     var price: Float = 10F,
@@ -35,6 +30,7 @@ data class Product(
     var premiumDays: Int = 0,
     var properties: ArrayList<Property> = arrayListOf(),
     var date: Date? = null,
+    val deleted: Boolean = false,
 
     var images: ArrayList<String?> = arrayListOf(),
 
@@ -65,7 +61,6 @@ data class Product(
         discount = parcel.readInt()
         category = parcel.readString().toString()
         subCategory = parcel.readString().toString()
-        //rate = parcel.readFloat()
         premiumDays = parcel.readInt()
         parcel.readStringList(removedImages)
         parcel.readStringList(images)
@@ -97,7 +92,6 @@ data class Product(
         parcel.writeInt(discount)
         parcel.writeString(category)
         parcel.writeString(subCategory)
-        //rate?.let { parcel.writeFloat(it) }
         parcel.writeInt(premiumDays)
         parcel.writeStringList(removedImages)
         parcel.writeStringList(images)
@@ -118,6 +112,4 @@ data class Product(
             return arrayOfNulls(size)
         }
     }
-
-
 }

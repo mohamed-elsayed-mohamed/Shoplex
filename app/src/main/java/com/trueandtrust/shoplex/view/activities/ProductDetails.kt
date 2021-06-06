@@ -9,9 +9,11 @@ import com.trueandtrust.shoplex.model.adapter.PagerAdapter
 import com.trueandtrust.shoplex.databinding.ActivityProductDetailsBinding
 import com.trueandtrust.shoplex.model.pojo.Product
 
-class ProductDetails : AppCompatActivity() {
+class ProductDetails : AppCompatActivity {
     private lateinit var binding: ActivityProductDetailsBinding
     private lateinit var product: Product
+
+    constructor()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

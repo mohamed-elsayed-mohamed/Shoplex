@@ -5,7 +5,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.trueandtrust.shoplex.model.pojo.Loc
+import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.NotificationToken
 import com.trueandtrust.shoplex.model.pojo.RecentVisit
 import com.trueandtrust.shoplex.model.pojo.Store
@@ -15,11 +15,12 @@ import kotlin.collections.ArrayList
 
 object StoreInfo {
     private val SHARED_USER_INFO = "USER_INFO"
+    private val NOTIFICATION = "NOTIFICATION"
     var storeID: String? = null
     var name : String = ""
     var email : String = ""
     var image : String? = null
-    var locations : ArrayList<Loc> = arrayListOf()
+    var locations : ArrayList<Location> = arrayListOf()
     var addresses : ArrayList<String> = arrayListOf()
     var phone : String = ""
 
@@ -68,10 +69,22 @@ object StoreInfo {
         image = sharedPref.getString("image", null)
         phone = sharedPref.getString("phone", "")!!
         val addressesType: Type = object : TypeToken<ArrayList<String>>() {}.type
-        val locationsType: Type = object : TypeToken<ArrayList<Loc>>() {}.type
+        val locationsType: Type = object : TypeToken<ArrayList<Location>>() {}.type
         addresses = Gson().fromJson(sharedPref.getString("addresses", null), addressesType)
         locations = Gson().fromJson(sharedPref.getString("locations", null), locationsType)
     }
+
+    /*
+    fun setNotificationControl(context: Context, value: Boolean){
+        context.getSharedPreferences(NOTIFICATION, Context.MODE_PRIVATE)
+            .edit()
+            .putBoolean("Notification", value).apply()
+    }
+
+    fun getNotificationControl(context: Context): Boolean{
+        return context.getSharedPreferences(NOTIFICATION, Context.MODE_PRIVATE).getBoolean("Notification", true)
+    }
+    */
 
     fun saveToRecentVisits(){
         FirebaseReferences.recentVisits.add(RecentVisit())

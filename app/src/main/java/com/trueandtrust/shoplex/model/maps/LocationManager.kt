@@ -1,25 +1,19 @@
-package com.shoplex.shoplex.model.maps
+package com.trueandtrust.shoplex.model.maps
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.directions.route.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
 import java.util.*
-import kotlin.collections.ArrayList
 
 class LocationManager: RoutingListener {
     val alexandria: Alexandria = Alexandria()
@@ -72,9 +66,8 @@ class LocationManager: RoutingListener {
 
         mMap.animateCamera(CameraUpdateFactory.newLatLng(currentLocation))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
-        marker = mMap.addMarker(
-            MarkerOptions().position(currentLocation).title(getAddress(currentLocation, context))
-        )
+        val title = getAddress(com.trueandtrust.shoplex.model.pojo.Location(currentLocation.latitude, currentLocation.longitude))
+        marker = mMap.addMarker(MarkerOptions().position(currentLocation).title(title))
         selectedLocation = currentLocation
 
         val polygon = mMap.addPolygon(
@@ -124,12 +117,12 @@ class LocationManager: RoutingListener {
         routing.execute()
     }
 
-    fun getAddress(location: LatLng, context: Context): String? {
+    fun getAddress(location: com.trueandtrust.shoplex.model.pojo.Location): String {
 
         val geocoder = Geocoder(context, Locale.getDefault())
         var addresses: List<Address>? =
             geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        return addresses?.get(0)?.getAddressLine(0)
+        return addresses?.get(0)?.getAddressLine(0)?: ""
     }
 
     override fun onRoutingFailure(p0: RouteException?) {

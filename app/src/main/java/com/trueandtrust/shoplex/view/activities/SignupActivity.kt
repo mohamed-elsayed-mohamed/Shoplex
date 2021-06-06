@@ -1,35 +1,23 @@
 package com.trueandtrust.shoplex.view.activities
 
 import android.content.Intent
-import android.location.Address
-import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySignupBinding
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
-import com.trueandtrust.shoplex.model.extra.FirebaseReferences
-import com.trueandtrust.shoplex.model.extra.StoreInfo
-import com.trueandtrust.shoplex.model.pojo.Loc
-import com.trueandtrust.shoplex.model.pojo.Location.Companion.getAddress
+import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.Store
 import com.trueandtrust.shoplex.viewmodel.AuthVM
 import com.trueandtrust.shoplex.viewmodel.AuthVMFactory
 import java.io.IOException
-import java.net.URI
 import java.util.*
 
 
@@ -101,7 +89,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
     //check EditText
-    fun checkEditText(): Boolean {
+    private fun checkEditText(): Boolean {
         when {
             binding.edName.length() == 0 -> binding.edName.error = getString(R.string.Required)
             binding.edName.length() < 5 -> binding.edName.error =
@@ -143,17 +131,19 @@ class SignupActivity : AppCompatActivity() {
     }
 
     //Email Validation
-    fun isEmailValid(email: String?): Boolean {
+    private fun isEmailValid(email: String?): Boolean {
         val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
         val pattern: Pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
         val matcher: Matcher = pattern.matcher(email)
         return matcher.matches()
     }
+
     private fun isValidMobile(phone: String): Boolean {
         return if (!Pattern.matches("[a-zA-Z]+", phone)) {
             phone.length > 11 && phone.length <= 13
         } else false
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == MapsActivity.MAPS_CODE){
@@ -163,13 +153,12 @@ class SignupActivity : AppCompatActivity() {
                 if (location != null) {
                     binding.tvLocation.text = address
                     authVM.store.value!!.addresses.add(address!!)
-                    authVM.store.value!!.locations.add(Loc(location.latitude, location.longitude))
+                    authVM.store.value!!.locations.add(Location(location.latitude, location.longitude))
                     authVM.primaryAddress.value = address
                 }
 
-                if(location != null) {
-                    val address = getAddress(location as LatLng,this)
-                    store.locations.add(Loc(location.latitude, location.longitude))
+                if(location != null && address != null) {
+                    store.locations.add(Location(location.latitude, location.longitude))
                     binding.tvLocation.text = address
                     store.addresses.add(address)
                 }

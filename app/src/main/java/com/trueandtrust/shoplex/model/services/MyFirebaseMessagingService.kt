@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.trueandtrust.shoplex.R
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.view.activities.HomeActivity
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -27,9 +28,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        Log.e("message",R.string.Message_Received.toString());
+        // Log.e("message",R.string.Message_Received.toString());
 
-        if (remoteMessage.data.size > 0) {
+        if (remoteMessage.data.isNotEmpty()) {
             val title = remoteMessage.data[R.string.title.toString()]
             val body = remoteMessage.data[R.string.body.toString()]
             showNotification(applicationContext, title, body)
@@ -47,7 +48,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
 
-    fun showNotification(
+    private fun showNotification(
         context: Context,
         title: String?,
         message: String?
@@ -63,7 +64,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //Log.e("Notification", "Created in up to orio OS device");
             notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setOngoing(true)
+                //.setOngoing(true)
                 .setSmallIcon(getNotificationIcon())
                 .setContentText(message)
                 .setAutoCancel(true)

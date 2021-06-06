@@ -6,6 +6,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.Property
 import java.lang.reflect.Type
 import java.util.*
@@ -80,6 +81,20 @@ class Conventers {
         val gson = Gson()
         val type = object : TypeToken<LatLng?>() {}.type
         return gson.toJson(position, type)
+    }
+
+    @TypeConverter
+    fun toLocation(locationString: String?): Location? {
+        return try {
+            Gson().fromJson(locationString, Location::class.java)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    @TypeConverter
+    fun toLocationString(location: Location?): String? {
+        return Gson().toJson(location)
     }
 
 //    @TypeConverter // note this annotation

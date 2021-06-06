@@ -31,19 +31,17 @@ class LocationAdapter(val locationsList: ArrayList<String>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: String) {
             binding.tvLocation.text = item
-          /*  binding.btnColse.setOnClickListener {
-                //Toast.makeText(binding.root.context,"delete",Toast.LENGTH_SHORT).show()
-                FirebaseReferences.storeRef.document(StoreInfo.storeID.toString()).get().addOnSuccessListener {
-                    if (it.exists()){
-                        val store = it.toObject<Store>()
-                        val updates = hashMapOf<String,Any>(
-                            binding.root.context.getString(R.string.addresses) to FieldValue.arrayRemove(item)
-                        )
-                        FirebaseReferences.storeRef.document(store!!.storeID).update(updates)
-                    }
+            binding.btnColse.setOnClickListener {
+                if(locationsList.count() > 1) {
+                    FirebaseReferences.storeRef.document(StoreInfo.storeID.toString())
+                        .update("addresses", FieldValue.arrayRemove(item))
+                    locationsList.remove(item)
+                    notifyDataSetChanged()
+                }else{
+                    Toast.makeText(binding.root.context, "You must have at least one location", Toast.LENGTH_SHORT)
+                        .show()
                 }
-            }*/
+            }
         }
     }
-
 }

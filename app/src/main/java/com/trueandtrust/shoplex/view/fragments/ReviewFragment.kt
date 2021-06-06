@@ -25,7 +25,6 @@ class ReviewFragment(val productId: String) : Fragment() {
         // Inflate the layout for this fragment
         binding= FragmentReviewBinding.inflate(inflater,container,false)
         this.productsVm = ProductsVM()
-        Toast.makeText(context,productId,Toast.LENGTH_SHORT).show()
 //        val review = ArrayList<Review>()
 //        val attrs: AttributeSet? = null
 //

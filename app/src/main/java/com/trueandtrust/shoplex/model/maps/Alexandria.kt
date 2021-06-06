@@ -1,4 +1,4 @@
-package com.shoplex.shoplex.model.maps
+package com.trueandtrust.shoplex.model.maps
 
 import com.google.android.gms.maps.model.LatLng
 
