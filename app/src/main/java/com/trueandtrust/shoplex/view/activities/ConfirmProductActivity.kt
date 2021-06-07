@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.firestore.FieldValue
 import com.google.gson.Gson
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
@@ -240,7 +239,6 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
                     ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 )
                 finish()
-
                 Toast.makeText(
                     this,
                     "Payment Complete",

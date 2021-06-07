@@ -19,4 +19,5 @@ interface INotifyMVP {
     fun onCurrentOrderReady(orders:ArrayList<Order>){}
     fun onLastOrderReady(lastOrders:ArrayList<Order>){}
     fun onAllReviwsReady(reviews:ArrayList<Review>){}
+    fun ongetChatHead(chatHeads: ArrayList<ChatHead>){}
 }
