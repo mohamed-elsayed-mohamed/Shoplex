@@ -99,4 +99,10 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 
+    // Stripe for payment methods
+
+    implementation 'com.stripe:stripe-android:16.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+
 }

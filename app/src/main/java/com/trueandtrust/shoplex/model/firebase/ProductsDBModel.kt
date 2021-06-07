@@ -73,6 +73,7 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
 
     fun getAllProducts(storeID: String) {
         FirebaseReferences.productsRef.whereEqualTo("storeID", storeID)
+            .whereEqualTo("deleted", false)
             .addSnapshotListener { values, _ ->
                 var products = arrayListOf<Product>()
                 for (document: DocumentSnapshot in values?.documents!!) {
@@ -102,11 +103,16 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
             }
     }
     fun deleteProduct(productID: String, images: ArrayList<String?>){
+        /*
         FirebaseReferences.productsRef.document(productID).delete().addOnSuccessListener {
             this.notifier?.onProductRemoved()
             for (imgURL in images){
                 FirebaseStorage.getInstance().getReferenceFromUrl(imgURL!!).delete()
             }
+        }
+        */
+        FirebaseReferences.productsRef.document(productID).update("deleted", true).addOnSuccessListener {
+            this.notifier?.onProductRemoved()
         }
     }
     fun getReviewByProductId(productId: String) {

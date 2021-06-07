@@ -7,21 +7,20 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.ktx.toObject
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityStoreLocationBinding
 import com.trueandtrust.shoplex.model.adapter.LocationAdapter
+import com.trueandtrust.shoplex.model.enumurations.LocationAction
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Location
+import com.trueandtrust.shoplex.model.pojo.PendingLocation
 import com.trueandtrust.shoplex.model.pojo.Store
 
 class StoreLocationActivity : AppCompatActivity() {
     lateinit var binding: ActivityStoreLocationBinding
     lateinit var toolbar: Toolbar
-    private val LOCATION_CODE = 203
-    val LOCATION_STORE = "LOCATION STORE"
     private var locarions = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +32,11 @@ class StoreLocationActivity : AppCompatActivity() {
         supportActionBar?.apply {
             title = getString(R.string.StoreLocation)
             setHomeAsUpIndicator(R.drawable.ic_arrow_back)
-
         }
-        if (getSupportActionBar() != null) {
-            getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+
+        if (supportActionBar != null) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true);
+            supportActionBar?.setDisplayShowHomeEnabled(true);
         }
 
         FirebaseReferences.storeRef.whereEqualTo("storeID", StoreInfo.storeID).get()
@@ -55,11 +54,12 @@ class StoreLocationActivity : AppCompatActivity() {
             }
 
         binding.fabAddLocation.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra(LOCATION_STORE, "Location Store")
-            startActivityForResult(intent, LOCATION_CODE)
+                startActivityForResult(Intent(this, MapsActivity::class.java)
+                    .apply {
+                        putExtra(MapsActivity.LOCATION_ACTION, LocationAction.Add.name)
+                    }, MapsActivity.MAPS_CODE
+                )
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,20 +72,25 @@ class StoreLocationActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == LOCATION_CODE) {
+        if (requestCode == MapsActivity.MAPS_CODE) {
             if (resultCode == RESULT_OK) {
-                val location: Parcelable? = data?.getParcelableExtra("Loc")
-                if (location != null) {
-                    val loc = location as LatLng
-                    val location = Location(
+                val location: Parcelable? = data?.getParcelableExtra(MapsActivity.LOCATION)
+                val address: String? = data?.getStringExtra(MapsActivity.ADDRESS)
+
+                if (location != null && address != null) {
+                    val loc = location as Location
+                    val pendingLocation = PendingLocation(
                         StoreInfo.storeID.toString(),
                         StoreInfo.name,
-                        Location.getAddress(loc, this),
+                        address,
                         loc
                     )
-                    FirebaseReferences.locationRef.add(location).addOnSuccessListener {
+                    FirebaseReferences.locationRef.add(pendingLocation).addOnSuccessListener {
                         Toast.makeText(this, "susses", Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    Toast.makeText(this, "Failed please select valid address", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }

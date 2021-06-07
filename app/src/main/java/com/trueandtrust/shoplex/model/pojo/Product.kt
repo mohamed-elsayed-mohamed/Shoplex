@@ -1,28 +1,23 @@
 package com.trueandtrust.shoplex.model.pojo
 
-
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.denzcoskun.imageslider.models.SlideModel
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.Exclude
-import com.google.firebase.messaging.FirebaseMessaging
-import com.trueandtrust.shoplex.model.enumurations.Premium
+import com.google.firebase.firestore.ServerTimestamp
 import com.trueandtrust.shoplex.model.extra.StoreInfo
-import kotlinx.android.parcel.Parcelize
 import java.util.*
-import kotlin.collections.ArrayList
+
 @Entity(tableName = "product")
 data class Product(
     @PrimaryKey
     var productID: String = UUID.randomUUID().toString(),
     var storeID: String = StoreInfo.storeID!!,
     var storeName: String = StoreInfo.name,
-    var deliveryLoc: LatLng? = null,
+    var storeLocation: Location = Location(),
     var name: String = "",
     var description: String = "",
     var price: Float = 10F,
@@ -32,9 +27,11 @@ data class Product(
     var subCategory: String = "",
     var rate: Float? = null,
     var premium: Premium? = null,
-    var premiumDays: Int = 0,
     var properties: ArrayList<Property> = arrayListOf(),
+    @ServerTimestamp
     var date: Date? = null,
+    val deleted: Boolean = false,
+    var quantity: Int = 1,
 
     var images: ArrayList<String?> = arrayListOf(),
 
@@ -54,8 +51,6 @@ data class Product(
     var imageSlideList: ArrayList<SlideModel> = arrayListOf()
 
 ) : Parcelable {
-
-
     constructor(parcel: Parcel) : this() {
         productID = parcel.readString().toString()
         name = parcel.readString().toString()
@@ -65,12 +60,12 @@ data class Product(
         discount = parcel.readInt()
         category = parcel.readString().toString()
         subCategory = parcel.readString().toString()
-        //rate = parcel.readFloat()
-        premiumDays = parcel.readInt()
+        premium = parcel.readParcelable(Premium::class.java.classLoader)
         parcel.readStringList(removedImages)
         parcel.readStringList(images)
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
         properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
+        quantity = parcel.readInt()
     }
 
     @Exclude
@@ -97,12 +92,12 @@ data class Product(
         parcel.writeInt(discount)
         parcel.writeString(category)
         parcel.writeString(subCategory)
-        //rate?.let { parcel.writeFloat(it) }
-        parcel.writeInt(premiumDays)
+        parcel.writeParcelable(premium, 0)
         parcel.writeStringList(removedImages)
         parcel.writeStringList(images)
         parcel.writeArray(imagesListURI.toArray())
         parcel.writeArray(properties.toArray())
+        parcel.writeInt(quantity)
     }
 
     override fun describeContents(): Int {
@@ -118,6 +113,4 @@ data class Product(
             return arrayOfNulls(size)
         }
     }
-
-
 }

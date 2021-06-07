@@ -1,6 +1,5 @@
 package com.trueandtrust.shoplex.viewmodel
 
-import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.trueandtrust.shoplex.model.enumurations.*

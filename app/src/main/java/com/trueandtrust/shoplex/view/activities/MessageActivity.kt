@@ -17,6 +17,7 @@ import com.trueandtrust.shoplex.databinding.DialogAddSaleBinding
 import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
 import com.trueandtrust.shoplex.model.adapter.LeftMessageItem
 import com.trueandtrust.shoplex.model.adapter.RightMessageItem
+import com.trueandtrust.shoplex.model.adapter.SalesAdapter
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Message
@@ -190,7 +191,7 @@ class MessageActivity : AppCompatActivity() {
         val binding = DialogAddSaleBinding.inflate(layoutInflater)
         val SalesBtnSheetDialog = BottomSheetDialog(binding.root.context)
 
-        var salesProductAdapter = SalesAdapter(products)
+        var salesProductAdapter = SalesAdapter(products, userID)
         binding.rcSalesProduct.adapter = salesProductAdapter
 
         SalesBtnSheetDialog.setContentView(binding.root)
