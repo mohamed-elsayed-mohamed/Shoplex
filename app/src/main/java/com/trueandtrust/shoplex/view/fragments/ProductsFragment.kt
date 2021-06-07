@@ -38,7 +38,7 @@ class ProductsFragment : Fragment() {
         savedInstanceState: Bundle?): View? {
         binding = FragmentProductsBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.products)
+//        (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.products)
         rvProducts = binding.rvProducts
         rvProducts.layoutManager = GridLayoutManager(this.context, getGridColumnsCount())
         this.productsVM = ProductsVM()

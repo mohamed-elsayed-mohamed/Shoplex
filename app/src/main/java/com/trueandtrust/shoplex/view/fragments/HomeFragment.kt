@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         this.ordersVm = OrdersVM()
         // Inflate the layout for this fragment
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.home)
+        //(activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.home)
         val currentOrders: ArrayList<Order> = arrayListOf()
 //
 //        currentOrders.add(Orders())

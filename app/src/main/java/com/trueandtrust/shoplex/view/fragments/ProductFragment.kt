@@ -42,9 +42,9 @@ class ProductFragment(val product: Product) : Fragment() {
         binding.tvDetailsDescription.text = product.description
         binding.tvCatSubCat.text = "${product.category.toLowerCase().capitalize()}, ${product.subCategory.toLowerCase().capitalize()}"
 
-        if (product.premiumDays != 0) {
+        if (product.premium?.premiumDays != 0) {
             binding.tvPremiumDays.visibility = View.VISIBLE
-            binding.tvPremiumDays.text = product.premiumDays.toString() + " Days"
+            binding.tvPremiumDays.text = product.premium?.premiumDays.toString() + " Days"
         }
 
         //RecyclerView
