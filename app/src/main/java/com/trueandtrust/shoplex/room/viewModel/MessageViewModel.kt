@@ -20,15 +20,10 @@ class MessageViewModel(context: Context,chatID : String) : ViewModel() {
         readAllMessage=messageRepo.readAllMessage
     }
 
-    fun addRightMessage(rightMessage: Message){
+    fun addMessage(rightMessage: Message){
         viewModelScope.launch(Dispatchers.IO) {
-            messageRepo.addRightMessage(rightMessage)
+            messageRepo.addMessage(rightMessage)
         }
     }
 
-    fun addLeftMessage(leftMessage: Message){
-        viewModelScope.launch(Dispatchers.IO) {
-            messageRepo.addLeftMessage(leftMessage)
-        }
-    }
 }

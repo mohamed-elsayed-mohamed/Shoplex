@@ -9,10 +9,7 @@ class MessageRepo(private val messageDao: StoreDao ,val chatID : String) {
 
     val readAllMessage : LiveData<List<Message>> = messageDao.readAllMessage(chatID)
 
-    suspend fun addRightMessage(rightMessage : Message){
-        messageDao.addRightMessage(rightMessage)
-    }
-    suspend fun addLeftMessage(leftMessage : Message){
-        messageDao.addRightMessage(leftMessage)
+    suspend fun addMessage(rightMessage : Message){
+        messageDao.addMessage(rightMessage)
     }
 }

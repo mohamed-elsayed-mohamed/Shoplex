@@ -31,12 +31,10 @@ class ChatFragment : Fragment() {
     ): View? {
         binding = FragmentChatBinding.inflate(inflater, container, false)
 
-        getChatHeadsInfo()
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.chat)
+        getChatHeadsInfo()
         return binding.root
     }
-
-
 
     private fun getChatHeadsInfo() {
         FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).get()

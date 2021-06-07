@@ -94,11 +94,11 @@ class MessageActivity : AppCompatActivity() {
                 if (dc.type ==   DocumentChange.Type.ADDED) {
                   val message = dc.document.toObject<Message>()
                     if (message.toId == StoreInfo.storeID) {
-                        messageAdapter.add(LeftMessageItem(chatID, message))
-                        messageVM.addLeftMessage(message)
+                        //messageAdapter.add(LeftMessageItem(chatID, message))
+                        messageVM.addMessage(message)
 
                     } else if (message.toId != StoreInfo.storeID) {
-                        messageVM.addRightMessage(message)
+                        messageVM.addMessage(message)
                     }
                 }
             }
@@ -123,8 +123,6 @@ class MessageActivity : AppCompatActivity() {
             }
             getAllMessageFromFirebase(lastID)
 
-            // binding.rcMessage.scrollToPosition(it.size - 1);
-            //binding.rcMessage.adapter = messageAdapter
         })
     }
 
@@ -135,16 +133,9 @@ class MessageActivity : AppCompatActivity() {
                 for ((index, message) in result.withIndex()) {
                     var msg: Message = message.toObject<Message>()
                     if (msg.toId == StoreInfo.storeID) {
-                        var message = Message(
-                            msg.messageID,
-                            msg.messageDate,
-                            msg.toId,
-                            msg.message,
-                            msg.isSent,
-                            msg.isRead
-                        )
+                        var message = Message(msg.messageID,msg.messageDate, msg.toId, msg.message, msg.isSent, msg.isRead)
                         messageAdapter.add(LeftMessageItem(chatID, message))
-                        messageVM.addLeftMessage(message)
+                        messageVM.addMessage(message)
                         if (!msg.isSent) {
                             FirebaseReferences.chatRef.document(chatID).collection("messages")
                                 .document(msg.messageID).update("isSent", true)
@@ -154,7 +145,7 @@ class MessageActivity : AppCompatActivity() {
                     } else if (msg.toId != StoreInfo.storeID) {
                         var message = Message(msg.messageID, msg.messageDate, msg.toId, msg.message)
                         messageAdapter.add(RightMessageItem(message))
-                        messageVM.addRightMessage(message)
+                        messageVM.addMessage(message)
                     }
                     if (firstUnread != -1)
                         binding.rcMessage.scrollToPosition(firstUnread)
