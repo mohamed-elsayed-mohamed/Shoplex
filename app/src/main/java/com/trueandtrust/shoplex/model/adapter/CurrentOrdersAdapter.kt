@@ -29,7 +29,7 @@ class CurrentOrdersAdapter(val orders: ArrayList<Order>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(order: Order) {
             // Your custom view code here
-            Glide.with(itemView.context).load(order.product!!.images[0]).into(binding.imgProduct)
+            Glide.with(itemView.context).load(order.product!!.images.firstOrNull()).into(binding.imgProduct)
             binding.tvProductName.text = order.product?.name
             binding.tvCategory.text = order.product?.category.toString()
             binding.tvPrice.text = order.product?.price.toString()+"EGP"
@@ -44,7 +44,6 @@ class CurrentOrdersAdapter(val orders: ArrayList<Order>) :
             }else{
                 binding.btnDeliveryOrder.visibility = View.GONE
             }
-
         }
     }
 }

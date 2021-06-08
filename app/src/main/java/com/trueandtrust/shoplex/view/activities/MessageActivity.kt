@@ -53,7 +53,6 @@ class MessageActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayShowHomeEnabled(true);
         }
 
-
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
         chatID = intent.getStringExtra(ChatHeadAdapter.CHAT_ID_KEY).toString()
