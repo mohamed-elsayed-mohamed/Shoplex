@@ -19,7 +19,6 @@ import com.trueandtrust.shoplex.model.pojo.Chat
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 import com.trueandtrust.shoplex.model.pojo.Product
 
-
 class ChatFragment : Fragment() {
     private lateinit var binding: FragmentChatBinding
     private lateinit var chatHeadAdapter: ChatHeadAdapter
@@ -35,8 +34,6 @@ class ChatFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.chat)
         return binding.root
     }
-
-
 
     private fun getChatHeadsInfo() {
         FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).get()
@@ -59,7 +56,7 @@ class ChatFragment : Fragment() {
                                         chat.chatID,
                                         product.name,
                                         product.price,
-                                        product.images[0],
+                                        product.images.firstOrNull(),
                                         chat.userID,
                                         chat.userName,
                                         chat.unreadStoreMessages
@@ -73,7 +70,7 @@ class ChatFragment : Fragment() {
                     }
                 }
             }
-            .addOnFailureListener { exception ->
+            .addOnFailureListener { _ ->
                 Snackbar.make(binding.root, getString(R.string.Error), Snackbar.LENGTH_LONG).show()
             }
     }

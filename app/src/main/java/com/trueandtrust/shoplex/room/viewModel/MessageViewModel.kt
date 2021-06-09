@@ -11,22 +11,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MessageViewModel(context: Context,chatID : String) : ViewModel() {
-    val readAllMessage : LiveData<List<Message>>
-    private val messageRepo : MessageRepo
+    val readAllMessage: LiveData<List<Message>>
+    private val messageRepo: MessageRepo
 
     init {
         val messageDao = ShoplexDatabase.getDatabase(context).storeDao()
-        messageRepo = MessageRepo(messageDao,chatID)
-        readAllMessage=messageRepo.readAllMessage
+        messageRepo = MessageRepo(messageDao, chatID)
+        readAllMessage = messageRepo.readAllMessage
     }
 
-    fun addRightMessage(rightMessage: Message){
+    fun addRightMessage(rightMessage: Message) {
         viewModelScope.launch(Dispatchers.IO) {
             messageRepo.addRightMessage(rightMessage)
         }
     }
 
-    fun addLeftMessage(leftMessage: Message){
+    fun addLeftMessage(leftMessage: Message) {
         viewModelScope.launch(Dispatchers.IO) {
             messageRepo.addLeftMessage(leftMessage)
         }
