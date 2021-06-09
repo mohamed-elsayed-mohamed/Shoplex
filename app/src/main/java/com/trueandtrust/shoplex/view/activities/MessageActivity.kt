@@ -33,7 +33,7 @@ class MessageActivity : AppCompatActivity() {
     val messageAdapter = GroupAdapter<GroupieViewHolder>()
     lateinit var chatID: String
     lateinit var userID: String
-    private var firstUnread: Int = -1
+    private var position: Int = -1
     private var productsIDs: ArrayList<String>? = null
     private lateinit var messageVM: MessageViewModel
 
@@ -94,21 +94,30 @@ class MessageActivity : AppCompatActivity() {
                 if (error != null) {
                     return@addSnapshotListener
                 }
-                for (dc in snapshots!!.documentChanges) {
-                    if (dc.type == DocumentChange.Type.ADDED) {
+                for ((index,dc) in snapshots!!.documentChanges.withIndex()) {
+                    if ((dc.type) == DocumentChange.Type.ADDED) {
                         val message = dc.document.toObject<Message>()
                         if (message.toId == StoreInfo.storeID) {
                             message.chatId = chatID
+                            if (!message.isSent) {
+                                FirebaseReferences.chatRef.document(chatID).collection("messages")
+                                    .document(message.messageID).update("isSent", true)
+                            }
+                            if (!message.isRead && position == -1)
+                                position = messageAdapter.groupCount + index -1
+
                             messageAdapter.add(LeftMessageItem(chatID, message))
                             messageVM.addMessage(message)
-
                         } else if (message.toId != StoreInfo.storeID) {
                             message.chatId = chatID
                             messageVM.addMessage(message)
                         }
                     }
                 }
-
+                if (position > 0){
+                    binding.rcMessage.scrollToPosition(position)
+                    position = 0
+                }
             }
     }
 
@@ -126,10 +135,13 @@ class MessageActivity : AppCompatActivity() {
             val lastID = if (it.isEmpty()) {
                 "1"
             } else {
+               // position = it.count() - 1
+                binding.rcMessage.scrollToPosition(it.count() - 1)
                 it.last().messageID
             }
             messageVM.readAllMessage.removeObservers(this)
             listenToNewMessages(lastID)
+            //getAllMessageFromFirebase(lastID)
         })
     }
 
