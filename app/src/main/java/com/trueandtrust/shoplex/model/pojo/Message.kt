@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
-@Entity(tableName = "message")
+@Entity(tableName = "message", primaryKeys = ["messageID","chatId"])
 data class Message(
     var messageID: String = Timestamp.now().toDate().time.toString(),
     var messageDate: Date = Timestamp.now().toDate(),
@@ -17,7 +17,5 @@ data class Message(
     var message: String = "",
     @field:JvmField val isSent: Boolean = false,
     @field:JvmField val isRead: Boolean = false,
-    @PrimaryKey
-    @Exclude @set:Exclude @get:Exclude
     var chatId:String = ""
 ):Parcelable

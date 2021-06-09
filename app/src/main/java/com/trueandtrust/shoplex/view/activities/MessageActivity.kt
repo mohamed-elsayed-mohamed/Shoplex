@@ -33,7 +33,7 @@ class MessageActivity : AppCompatActivity() {
     val messageAdapter = GroupAdapter<GroupieViewHolder>()
     lateinit var chatID: String
     lateinit var userID: String
-    private var firstUnread: Int = -1
+    private var position: Int = -1
     private var productsIDs: ArrayList<String>? = null
     private lateinit var messageVM: MessageViewModel
 
@@ -53,14 +53,16 @@ class MessageActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayShowHomeEnabled(true);
         }
 
-
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
         val productImg = intent.getStringExtra(ChatHeadAdapter.CHAT_IMG_KEY)
         chatID = intent.getStringExtra(ChatHeadAdapter.CHAT_ID_KEY).toString()
         userID = intent.getStringExtra(ChatHeadAdapter.USER_ID_KEY).toString()
         productsIDs = intent.getStringArrayListExtra(ChatHeadAdapter.PRODUCTS_IDS)
 
-        messageVM = ViewModelProvider(this,MessageFactoryModel(this,chatID)).get(MessageViewModel::class.java)
+        messageVM = ViewModelProvider(
+            this,
+            MessageFactoryModel(this, chatID)
+        ).get(MessageViewModel::class.java)
 
         binding.imgToolbarChat.setImageResource(R.drawable.product)
         binding.tvToolbarUserChat.text = userName
@@ -86,28 +88,41 @@ class MessageActivity : AppCompatActivity() {
         messageText.clear()
     }
 
-    private fun listenToNewMessages(lastID: String){
-        FirebaseReferences.chatRef.document(chatID).collection("messages").whereGreaterThan("messageID",lastID).addSnapshotListener{snapshots,error ->
-           if(error != null){
-               return@addSnapshotListener
-           }
-            for (dc in snapshots!!.documentChanges) {
-                if (dc.type ==   DocumentChange.Type.ADDED) {
-                  val message = dc.document.toObject<Message>()
-                    if (message.toId == StoreInfo.storeID) {
-                        messageAdapter.add(LeftMessageItem(chatID, message))
-                        messageVM.addLeftMessage(message)
+    private fun listenToNewMessages(lastID: String) {
+        FirebaseReferences.chatRef.document(chatID).collection("messages")
+            .whereGreaterThan("messageID", lastID).addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+                for ((index,dc) in snapshots!!.documentChanges.withIndex()) {
+                    if ((dc.type) == DocumentChange.Type.ADDED) {
+                        val message = dc.document.toObject<Message>()
+                        if (message.toId == StoreInfo.storeID) {
+                            message.chatId = chatID
+                            if (!message.isSent) {
+                                FirebaseReferences.chatRef.document(chatID).collection("messages")
+                                    .document(message.messageID).update("isSent", true)
+                            }
+                            if (!message.isRead && position == -1)
+                                position = messageAdapter.groupCount + index -1
 
-                    } else if (message.toId != StoreInfo.storeID) {
-                        messageVM.addRightMessage(message)
+                            messageAdapter.add(LeftMessageItem(chatID, message))
+                            messageVM.addMessage(message)
+                        } else if (message.toId != StoreInfo.storeID) {
+                            message.chatId = chatID
+                            messageVM.addMessage(message)
+                        }
                     }
                 }
+                if (position > 0){
+                    binding.rcMessage.scrollToPosition(position)
+                    position = 0
+                }
             }
-
-        }
     }
 
     private fun getAllMessage() {
+        binding.rcMessage.adapter = messageAdapter
         messageVM.readAllMessage.observe(this, Observer {
             for (message in it) {
                 if (message.toId == StoreInfo.storeID) {
@@ -117,55 +132,19 @@ class MessageActivity : AppCompatActivity() {
                     messageAdapter.add(RightMessageItem(message))
                 }
             }
-            val lastID = if(it.isEmpty()){
+            val lastID = if (it.isEmpty()) {
                 "1"
-            }else{
+            } else {
+               // position = it.count() - 1
+                binding.rcMessage.scrollToPosition(it.count() - 1)
                 it.last().messageID
             }
-            getAllMessageFromFirebase(lastID)
-
-            // binding.rcMessage.scrollToPosition(it.size - 1);
-            //binding.rcMessage.adapter = messageAdapter
+            messageVM.readAllMessage.removeObservers(this)
+            listenToNewMessages(lastID)
+            //getAllMessageFromFirebase(lastID)
         })
     }
 
-    private fun getAllMessageFromFirebase(lastID: String) {
-        FirebaseReferences.chatRef.document(chatID).collection("messages")
-            .whereGreaterThan("messageID", lastID).get()
-            .addOnSuccessListener { result ->
-                for ((index, message) in result.withIndex()) {
-                    var msg: Message = message.toObject<Message>()
-                    if (msg.toId == StoreInfo.storeID) {
-                        var message = Message(
-                            msg.messageID,
-                            msg.messageDate,
-                            msg.toId,
-                            msg.message,
-                            msg.isSent,
-                            msg.isRead
-                        )
-                        messageAdapter.add(LeftMessageItem(chatID, message))
-                        messageVM.addLeftMessage(message)
-                        if (!msg.isSent) {
-                            FirebaseReferences.chatRef.document(chatID).collection("messages")
-                                .document(msg.messageID).update("isSent", true)
-                            if (firstUnread == -1)
-                                firstUnread = index
-                        }
-                    } else if (msg.toId != StoreInfo.storeID) {
-                        var message = Message(msg.messageID, msg.messageDate, msg.toId, msg.message)
-                        messageAdapter.add(RightMessageItem(message))
-                        messageVM.addRightMessage(message)
-                    }
-                    if (firstUnread != -1)
-                        binding.rcMessage.scrollToPosition(firstUnread)
-                    else
-                        binding.rcMessage.scrollToPosition(result.size() - 1);
-                }
-                listenToNewMessages(lastID)
-                binding.rcMessage.adapter = messageAdapter
-            }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.message_menu, menu)
