@@ -59,7 +59,10 @@ class MessageActivity : AppCompatActivity() {
         userID = intent.getStringExtra(ChatHeadAdapter.USER_ID_KEY).toString()
         productsIDs = intent.getStringArrayListExtra(ChatHeadAdapter.PRODUCTS_IDS)
 
-        messageVM = ViewModelProvider(this,MessageFactoryModel(this,chatID)).get(MessageViewModel::class.java)
+        messageVM = ViewModelProvider(
+            this,
+            MessageFactoryModel(this, chatID)
+        ).get(MessageViewModel::class.java)
 
         binding.imgToolbarChat.setImageResource(R.drawable.product)
         binding.tvToolbarUserChat.text = userName
@@ -85,28 +88,32 @@ class MessageActivity : AppCompatActivity() {
         messageText.clear()
     }
 
-    private fun listenToNewMessages(lastID: String){
-        FirebaseReferences.chatRef.document(chatID).collection("messages").whereGreaterThan("messageID",lastID).addSnapshotListener{snapshots,error ->
-           if(error != null){
-               return@addSnapshotListener
-           }
-            for (dc in snapshots!!.documentChanges) {
-                if (dc.type ==   DocumentChange.Type.ADDED) {
-                  val message = dc.document.toObject<Message>()
-                    if (message.toId == StoreInfo.storeID) {
-                        //messageAdapter.add(LeftMessageItem(chatID, message))
-                        messageVM.addMessage(message)
+    private fun listenToNewMessages(lastID: String) {
+        FirebaseReferences.chatRef.document(chatID).collection("messages")
+            .whereGreaterThan("messageID", lastID).addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+                for (dc in snapshots!!.documentChanges) {
+                    if (dc.type == DocumentChange.Type.ADDED) {
+                        val message = dc.document.toObject<Message>()
+                        if (message.toId == StoreInfo.storeID) {
+                            message.chatId = chatID
+                            messageAdapter.add(LeftMessageItem(chatID, message))
+                            messageVM.addMessage(message)
 
-                    } else if (message.toId != StoreInfo.storeID) {
-                        messageVM.addMessage(message)
+                        } else if (message.toId != StoreInfo.storeID) {
+                            message.chatId = chatID
+                            messageVM.addMessage(message)
+                        }
                     }
                 }
-            }
 
-        }
+            }
     }
 
     private fun getAllMessage() {
+        binding.rcMessage.adapter = messageAdapter
         messageVM.readAllMessage.observe(this, Observer {
             for (message in it) {
                 if (message.toId == StoreInfo.storeID) {
@@ -116,13 +123,14 @@ class MessageActivity : AppCompatActivity() {
                     messageAdapter.add(RightMessageItem(message))
                 }
             }
-            val lastID = if(it.isEmpty()){
+            val lastID = if (it.isEmpty()) {
                 "1"
-            }else{
+            } else {
                 it.last().messageID
             }
-            getAllMessageFromFirebase(lastID)
-
+            messageVM.readAllMessage.removeObservers(this)
+            listenToNewMessages(lastID)
+            //getAllMessageFromFirebase(lastID)
         })
     }
 
@@ -133,8 +141,16 @@ class MessageActivity : AppCompatActivity() {
                 for ((index, message) in result.withIndex()) {
                     var msg: Message = message.toObject<Message>()
                     if (msg.toId == StoreInfo.storeID) {
-                        var message = Message(msg.messageID,msg.messageDate, msg.toId, msg.message, msg.isSent, msg.isRead)
-                        messageAdapter.add(LeftMessageItem(chatID, message))
+                        var message = Message(
+                            msg.messageID,
+                            msg.messageDate,
+                            msg.toId,
+                            msg.message,
+                            msg.isSent,
+                            msg.isRead,
+                            chatID
+                        )
+                        // messageAdapter.add(LeftMessageItem(chatID, message))
                         messageVM.addMessage(message)
                         if (!msg.isSent) {
                             FirebaseReferences.chatRef.document(chatID).collection("messages")
@@ -143,8 +159,14 @@ class MessageActivity : AppCompatActivity() {
                                 firstUnread = index
                         }
                     } else if (msg.toId != StoreInfo.storeID) {
-                        var message = Message(msg.messageID, msg.messageDate, msg.toId, msg.message)
-                        messageAdapter.add(RightMessageItem(message))
+                        var message = Message(
+                            msg.messageID,
+                            msg.messageDate,
+                            msg.toId,
+                            msg.message,
+                            chatId = chatID
+                        )
+                        //messageAdapter.add(RightMessageItem(message))
                         messageVM.addMessage(message)
                     }
                     if (firstUnread != -1)

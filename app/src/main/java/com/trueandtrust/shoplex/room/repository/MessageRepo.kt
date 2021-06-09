@@ -1,6 +1,7 @@
 package com.trueandtrust.shoplex.room.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Message
 import com.trueandtrust.shoplex.room.data.StoreDao
