@@ -130,54 +130,9 @@ class MessageActivity : AppCompatActivity() {
             }
             messageVM.readAllMessage.removeObservers(this)
             listenToNewMessages(lastID)
-            //getAllMessageFromFirebase(lastID)
         })
     }
 
-    private fun getAllMessageFromFirebase(lastID: String) {
-        FirebaseReferences.chatRef.document(chatID).collection("messages")
-            .whereGreaterThan("messageID", lastID).get()
-            .addOnSuccessListener { result ->
-                for ((index, message) in result.withIndex()) {
-                    var msg: Message = message.toObject<Message>()
-                    if (msg.toId == StoreInfo.storeID) {
-                        var message = Message(
-                            msg.messageID,
-                            msg.messageDate,
-                            msg.toId,
-                            msg.message,
-                            msg.isSent,
-                            msg.isRead,
-                            chatID
-                        )
-                        // messageAdapter.add(LeftMessageItem(chatID, message))
-                        messageVM.addMessage(message)
-                        if (!msg.isSent) {
-                            FirebaseReferences.chatRef.document(chatID).collection("messages")
-                                .document(msg.messageID).update("isSent", true)
-                            if (firstUnread == -1)
-                                firstUnread = index
-                        }
-                    } else if (msg.toId != StoreInfo.storeID) {
-                        var message = Message(
-                            msg.messageID,
-                            msg.messageDate,
-                            msg.toId,
-                            msg.message,
-                            chatId = chatID
-                        )
-                        //messageAdapter.add(RightMessageItem(message))
-                        messageVM.addMessage(message)
-                    }
-                    if (firstUnread != -1)
-                        binding.rcMessage.scrollToPosition(firstUnread)
-                    else
-                        binding.rcMessage.scrollToPosition(result.size() - 1);
-                }
-                listenToNewMessages(lastID)
-                binding.rcMessage.adapter = messageAdapter
-            }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.message_menu, menu)
