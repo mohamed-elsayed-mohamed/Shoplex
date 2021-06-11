@@ -16,7 +16,7 @@ class AddProductVM: ViewModel {
 
     fun getCategory(){
         this.arrCategory.value = Category.values().map {
-            it.toString().split("_").joinToString(" ")
+            it.toString().replace("_", " ")
         }.toTypedArray()
     }
 
@@ -32,7 +32,7 @@ class AddProductVM: ViewModel {
             }
 
         this.arrSubCategory.value = (listSubCat as Array<Any>).map {
-            it.toString().split("_").joinToString(" ")
+            it.toString().replace("_", " ")
         }.toTypedArray()
     }
 }

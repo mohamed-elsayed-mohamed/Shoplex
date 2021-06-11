@@ -123,7 +123,7 @@ class MessageActivity : AppCompatActivity() {
 
     private fun getAllMessage() {
         binding.rcMessage.adapter = messageAdapter
-        messageVM.readAllMessage.observe(this, Observer {
+        messageVM.readAllMessage.observe(this, {
             for (message in it) {
                 if (message.toId == StoreInfo.storeID) {
                     messageAdapter.add(LeftMessageItem(chatID, message))
