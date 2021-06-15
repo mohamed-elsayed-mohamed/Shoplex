@@ -1,51 +1,36 @@
 package com.trueandtrust.shoplex.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentHomeBinding
 import com.trueandtrust.shoplex.model.adapter.CurrentOrdersAdapter
-import com.trueandtrust.shoplex.model.pojo.Order
 import com.trueandtrust.shoplex.viewmodel.OrdersVM
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
 class HomeFragment : Fragment() {
-    private lateinit var homeAdapter: CurrentOrdersAdapter
-    lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var ordersVm: OrdersVM
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        this.ordersVm = OrdersVM()
-        // Inflate the layout for this fragment
-        //(activity as AppCompatActivity?)!!.supportActionBar!!.title = getString(R.string.home)
-        val currentOrders: ArrayList<Order> = arrayListOf()
-//
-//        currentOrders.add(Orders())
-//        currentOrders.add(Orders())
-//        currentOrders.add(Orders())
-//        currentOrders.add(Orders())
-//        currentOrders.add(Orders())
-//        currentOrders.add(Orders())
+        ordersVm = ViewModelProvider(requireActivity()).get(OrdersVM::class.java)
 
-        ordersVm.getCurrentOrders()
-        ordersVm.order.observe(viewLifecycleOwner, Observer { orders ->
-            homeAdapter = CurrentOrdersAdapter(orders)
-            binding.rvHome.adapter = homeAdapter
+        if (ordersVm.order.value == null)
+            ordersVm.getCurrentOrders()
+
+        requireActivity().title = getString(R.string.home)
+
+        ordersVm.order.observe(viewLifecycleOwner, { orders ->
+            binding.rvHome.adapter = CurrentOrdersAdapter(orders)
         })
 
-
-//        homeAdapter = HomeAdapter(currentOrders)
-//        binding.rvHome.adapter = homeAdapter
         return binding.root
     }
 }

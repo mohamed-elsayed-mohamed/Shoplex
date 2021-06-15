@@ -18,12 +18,12 @@ class ReviewFragment(val productId: String) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
+
         binding= FragmentReviewBinding.inflate(inflater,container,false)
         this.productsVm = ProductsVM()
 
-        productsVm.getReviewByProductId(productId)
+        productsVm.getReviewsByProductId(productId)
         productsVm.reviews.observe(viewLifecycleOwner, Observer{ reviews ->
             reviewAdapter = ReviewsAdapter(reviews)
             binding.rvReview.adapter = reviewAdapter

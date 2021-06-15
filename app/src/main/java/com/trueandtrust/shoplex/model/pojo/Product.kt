@@ -32,6 +32,7 @@ data class Product(
     var date: Date? = null,
     val deleted: Boolean = false,
     var quantity: Int = 1,
+    var sold: Int = 0,
 
     var images: ArrayList<String?> = arrayListOf(),
 

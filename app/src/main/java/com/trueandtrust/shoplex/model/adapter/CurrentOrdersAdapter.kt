@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FieldValue
 import com.shoplex.shoplex.model.enumurations.OrderStatus
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.HomeRvBinding
-import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.firebase.OrdersDBModel
 import com.trueandtrust.shoplex.model.pojo.Order
 
 class CurrentOrdersAdapter(val orders: ArrayList<Order>) :
@@ -20,25 +20,22 @@ class CurrentOrdersAdapter(val orders: ArrayList<Order>) :
         )
     }
 
-    override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) = holder.bind(orders[position])
+    override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) = holder.bind(orders[position], position)
 
     override fun getItemCount() = orders.size
 
     inner class OrdersViewHolder(val binding: HomeRvBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(order: Order) {
-            // Your custom view code here
-            Glide.with(itemView.context).load(order.product!!.images.firstOrNull()).into(binding.imgProduct)
-            binding.tvProductName.text = order.product?.name
-            binding.tvCategory.text = order.product?.category.toString()
-            binding.tvPrice.text = order.product?.price.toString() + "EGP"
-            binding.tvStatus.text = order.orderStatus.toString()
+        fun bind(order: Order, position: Int) {
+
+            Glide.with(itemView.context).load(order.product!!.images.firstOrNull()).error(R.drawable.product).into(binding.imgProduct)
+            binding.order = order
+
             if (order.orderStatus.toString() == OrderStatus.Current.name) {
                 binding.btnDeliveryOrder.setOnClickListener {
-                    FirebaseReferences.ordersRef.document(order.orderID.toString())
-                        .update("orderStatus", OrderStatus.Delivered).addOnSuccessListener {
-                            FirebaseReferences.productsRef.document(order.productID).update("quantity", FieldValue.increment(-1))
-                        }
+                    OrdersDBModel.deliverOrder(order.orderID.toString())
+                    orders.removeAt(bindingAdapterPosition)
+                    notifyItemRemoved(bindingAdapterPosition)
                 }
             } else {
                 binding.btnDeliveryOrder.visibility = View.GONE

@@ -73,10 +73,11 @@
     <string name="currentProduct">Current Product</string>
     <string name="old_price"><strike>Old Price</strike></string>
     <string name="rating_value">4.5/5</string>
+    <string name="LE">%s L.E</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_price">New Price</string>
-    <string name="sold">12 Sold</string>
+    <string name="sold">%s Sold</string>
     <string name="Required">Required</string>
     <string name="min_description_err">Minimum Product Description is 30 Characters</string>
     <string name="min_product_name_err">Minimum Name is 5 characters</string>

@@ -54,27 +54,6 @@ class HomeActivity : AppCompatActivity() {
         navView = binding.navView
         drawerLayout = binding.drawerLayout
 
-        /*
-        //subscribe Topic
-        Firebase.messaging.subscribeToTopic("Notify")
-        //get Token
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("Token", R.string.Fetching_FCM_registration_token_failed.toString(), task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            // Log and toast
-            val msg = getString(R.string.msg_token_fmt, token)
-            Log.d("Token", msg)
-            //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-        })
-
-        */
-
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
             drawerLayout,

@@ -77,7 +77,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_price">سعر جديد</string>
-    <string name="sold">12 تم البيع</string>
+    <string name="sold">%s تم البيع</string>
     <string name="Required">مطلوب</string>
     <string name="min_description_err">الحد الأدنى لوصف المنتج 30 حرفًا</string>
     <string name="min_product_name_err">الحد الأدنى للاسم هو 5 أحرف</string>

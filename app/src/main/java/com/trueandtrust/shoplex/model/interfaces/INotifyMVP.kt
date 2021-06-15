@@ -11,14 +11,12 @@ interface INotifyMVP {
     fun onUploadFailed(){}
     fun onNewPropertyAdded(property: Property){}
     fun onPropertyRemoved(position: Int){}
-    fun onAllProductsReady(products: ArrayList<Product>){}
-    fun onProductRemoved(){}
+
+
 
     fun onStoreInfoReady(isAccountActive: Boolean){}
     fun onStoreInfoFailed(){}
-    fun onCurrentOrderReady(orders:ArrayList<Order>){}
-    fun onLastOrderReady(lastOrders:ArrayList<Order>){}
-    fun onAllReviwsReady(reviews:ArrayList<Review>){}
-    fun onReviewStatisticsReady(reviewStatistics: ReviewStatistics){}
-    fun ongetChatHead(chatHeads: ArrayList<ChatHead>){}
+
+
+
 }
