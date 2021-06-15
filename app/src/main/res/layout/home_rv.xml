@@ -23,8 +23,8 @@
 
             <LinearLayout
                 android:id="@id/img_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:layout_height="150dp"
                 android:background="@drawable/card"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -33,9 +33,9 @@
                 android:id="@+id/img_product"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="@dimen/width_1"
-                android:layout_height="@dimen/height_120"
+                android:layout_height="150dp"
                 android:layout_gravity="end"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
 
                 android:src="@drawable/product" />
 
@@ -52,8 +52,8 @@
                 android:text="@string/productName"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/img_card"
-                app:layout_constraintTop_toBottomOf="@id/img_card"
+                app:layout_constraintStart_toEndOf="@+id/img_card"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginLeft="8dp" />
 
             <TextView
@@ -66,7 +66,7 @@
                 android:layout_marginStart="8dp"
                 android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_name"
-                app:layout_constraintStart_toStartOf="@+id/img_card"
+                app:layout_constraintStart_toEndOf="@+id/img_card"
                 android:layout_marginLeft="8dp" />
 
 
@@ -82,8 +82,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/tv_category"
-                app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
+                app:layout_constraintStart_toEndOf="@+id/img_card"
+                app:layout_constraintTop_toBottomOf="@+id/tv_category" />
 
             <TextView
                 android:id="@+id/tv_location"
@@ -96,22 +96,22 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginBottom="@dimen/margin_8"
-                app:layout_constraintStart_toStartOf="@id/img_card"
+                app:layout_constraintStart_toEndOf="@id/img_card"
                 app:layout_constraintTop_toBottomOf="@+id/tv_price"
-                app:layout_constraintBottom_toBottomOf="parent"
                 />
 
             <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:text="@string/stauts"
                 android:textColor="@color/red"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_card" />
+                app:layout_constraintTop_toTopOf="@id/tv_product_name"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_name"
+                />
 
             <Button
                 android:id="@+id/btnDeliveryOrder"
@@ -119,12 +119,14 @@
                 android:layout_height="@dimen/height_40"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/darkblue"
                 android:text="Deliver"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/darkblue"
-                android:background="@drawable/roundedbutton"
+                android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_location" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
