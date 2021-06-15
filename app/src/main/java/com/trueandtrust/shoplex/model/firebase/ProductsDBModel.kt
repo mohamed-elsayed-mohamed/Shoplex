@@ -18,6 +18,7 @@ import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.Review
+import com.trueandtrust.shoplex.model.pojo.ReviewStatistics
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -131,4 +132,15 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
                 this.notifier?.onAllReviwsReady(reviews)
             }
     }
+
+    fun getReviewsStatistics(productId: String){
+        FirebaseReferences.productsRef.document(productId).collection("Statistics").document("Reviews").get().addOnSuccessListener {
+            if(it.exists()) {
+                val statistic: ReviewStatistics = it.toObject()!!
+                this.notifier?.onReviewStatisticsReady(statistic)
+            }
+
+        }
+    }
+
 }
