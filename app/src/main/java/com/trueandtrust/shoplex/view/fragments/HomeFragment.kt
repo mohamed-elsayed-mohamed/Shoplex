@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentHomeBinding
-import com.trueandtrust.shoplex.model.adapter.CurrentOrdersAdapter
+import com.trueandtrust.shoplex.model.adapter.OrdersAdapter
 import com.trueandtrust.shoplex.viewmodel.OrdersVM
 
 class HomeFragment : Fragment() {
@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
         requireActivity().title = getString(R.string.home)
 
         ordersVm.order.observe(viewLifecycleOwner, { orders ->
-            binding.rvHome.adapter = CurrentOrdersAdapter(orders)
+            binding.rvHome.adapter = OrdersAdapter(orders)
         })
 
         return binding.root

@@ -19,6 +19,7 @@ interface AuthListener {
         StoreInfo.updateTokenID()
         StoreInfo.saveStoreInfo(context)
         StoreInfo.saveToRecentVisits()
+        StoreInfo.saveNotification(context, true)
     }
 
     fun onPendingStore(){

@@ -1,17 +1,6 @@
-package com.shoplex.shoplex
+package com.trueandtrust.shoplex.model.pojo
 
+import com.google.firebase.firestore.ServerTimestamp
 import java.util.*
 
-class Report {
-    var type : String = ""
-    var reportComment : String = ""
-    lateinit var date : Date
-
-    constructor()
-    constructor(type: String, reportComment: String, date: Date) {
-        this.type = type
-        this.reportComment = reportComment
-        this.date = date
-    }
-
-}
+data class Report(val reportComment : String = "", @ServerTimestamp val date : Date? = null, val type : String = "Seller")

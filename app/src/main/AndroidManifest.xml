@@ -46,7 +46,7 @@
             android:name=".view.activities.AddProductActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".view.activities.ConfirmProductActivity" />
-        <activity android:name=".view.activities.ProductDetails" />
+        <activity android:name=".view.activities.DetailsActivity" />
         <activity android:name=".view.activities.MessageActivity" />
         <activity android:name=".view.activities.StoreLocationActivity"/>
         <activity android:name=".view.activities.LastOrderActivity"/>

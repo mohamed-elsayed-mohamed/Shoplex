@@ -12,7 +12,7 @@ import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
 import com.trueandtrust.shoplex.model.interfaces.ProductsListener
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.view.activities.AddProductActivity
-import com.trueandtrust.shoplex.view.activities.ProductDetails
+import com.trueandtrust.shoplex.view.activities.DetailsActivity
 
 class ProductsAdapter(var products: ArrayList<Product>) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
 
@@ -49,7 +49,7 @@ class ProductsAdapter(var products: ArrayList<Product>) : RecyclerView.Adapter<P
             }
 
             itemView.setOnClickListener {
-                context.startActivity(Intent(context, ProductDetails::class.java).apply {
+                context.startActivity(Intent(context, DetailsActivity::class.java).apply {
                     this.putExtra(context.getString(R.string.PRODUCT_KEY), product)
                 })
             }

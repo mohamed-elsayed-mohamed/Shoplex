@@ -1,6 +1,5 @@
 package com.trueandtrust.shoplex.model.firebase
 
-
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
@@ -62,7 +61,7 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
                 val profileUpdates = userProfileChangeRequest {
                     photoUri = it
                 }
-                Firebase.auth.currentUser.updateProfile(profileUpdates)
+                Firebase.auth.currentUser?.updateProfile(profileUpdates)
 
             }
         }
@@ -71,7 +70,7 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
     private fun loginWithEmail(userEmail: String) {
         FirebaseReferences.storeRef.whereEqualTo("email", userEmail).get()
             .addOnSuccessListener {
-                var store: Store?
+                val store: Store?
                 when {
                     it.documents.count() > 0 -> {
                         store = it.documents[0].toObject()!!

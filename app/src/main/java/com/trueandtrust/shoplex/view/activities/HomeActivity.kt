@@ -3,7 +3,6 @@ package com.trueandtrust.shoplex.view.activities
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -12,7 +11,6 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -21,87 +19,72 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.shoplex.shoplex.Report
+import com.trueandtrust.shoplex.model.pojo.Report
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityHomeBinding
 import com.trueandtrust.shoplex.databinding.DialogAddReportBinding
 import com.trueandtrust.shoplex.databinding.NavHeaderBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
+import com.trueandtrust.shoplex.viewmodel.AuthVM
 
 class HomeActivity : AppCompatActivity() {
-    lateinit var binding: ActivityHomeBinding
-    lateinit var bottomNavigationView: BottomNavigationView
-    lateinit var navController: NavController
-    lateinit var toolbar: Toolbar
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var navView: NavigationView
+    private lateinit var binding: ActivityHomeBinding
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var toolbar: Toolbar
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        navController = findNavController(R.id.nav_host_fragment)
+
         bottomNavigationView = binding.navigationView
+        bottomNavigationView.setupWithNavController(findNavController(R.id.nav_host_fragment))
+
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.setTitle(getString(R.string.home))
-        bottomNavigationView.setupWithNavController(navController)
+
         navView = binding.navView
         drawerLayout = binding.drawerLayout
 
-        val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+        val drawerToggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
             toolbar,
             R.string.drawer_open,
             R.string.drawer_close
-        ) {
-            override fun onDrawerClosed(view: View) {
-                super.onDrawerClosed(view)
-            }
-
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-            }
-        }
+        )
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.isDrawerIndicatorEnabled = true
         drawerToggle.syncState()
-        val switchId = navView.menu.getItem(3).actionView.findViewById<SwitchCompat>(R.id.switch_id)
-        switchId.setOnClickListener {
-            if(switchId.isChecked){
-                //StoreInfo.setNotificationControl(applicationContext, true)
-                // Toast.makeText(applicationContext,"checked",Toast.LENGTH_SHORT).show()
-                FirebaseReferences.notificationTokensRef.document(StoreInfo.storeID!!).update("notification", true)
-            }
-            else{
-                //StoreInfo.setNotificationControl(applicationContext, false)
-                //Toast.makeText(applicationContext,"not checked",Toast.LENGTH_SHORT).show()
-                FirebaseReferences.notificationTokensRef.document(StoreInfo.storeID!!).update("notification", false)
+        val switch = navView.menu.getItem(3).actionView.findViewById<SwitchCompat>(R.id.switch_id)
+        switch.isChecked = StoreInfo.readNotification(this)
+
+        switch.setOnClickListener {
+            if (switch.isChecked) {
+                StoreInfo.saveNotification(this, true)
+            } else {
+                StoreInfo.saveNotification(this, false)
             }
         }
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.lastOrderFragment -> {
-                    startActivity(Intent(this, LastOrderActivity::class.java))
-                }
-                R.id.locationFragment -> {
-                    startActivity(Intent(this, StoreLocationActivity::class.java))
-                }
-                R.id.report -> {
-                    showAddReportDialog()
+                R.id.lastOrderFragment -> startActivity(Intent(this, LastOrderActivity::class.java))
 
-                }
+                R.id.locationFragment -> startActivity(
+                    Intent(
+                        this,
+                        StoreLocationActivity::class.java
+                    )
+                )
 
-                R.id.Logout -> {
-                   showDialog()
-                }
+                R.id.report -> showAddReportDialog()
+
+                R.id.Logout -> showDialog()
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
@@ -109,13 +92,10 @@ class HomeActivity : AppCompatActivity() {
 
 
         val header: NavHeaderBinding = NavHeaderBinding.inflate(layoutInflater, this.navView, true)
-        if (StoreInfo.image != null)
-            Glide.with(this).load(StoreInfo.image).into(header.navHeaderImage)
+        Glide.with(this).load(StoreInfo.image).error(R.drawable.product).into(header.navHeaderImage)
         header.tvStoreName.text = StoreInfo.name
         header.tvStoreEmail.text = StoreInfo.email
-
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
@@ -123,57 +103,48 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-
     override fun onBackPressed() {
-        val seletedItemId = bottomNavigationView.selectedItemId
-
+        val selectedItemId = bottomNavigationView.selectedItemId
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            if (seletedItemId == R.id.homeFragment) {
-                finishAffinity()
-            } else {
-                //supportActionBar?.setTitle("Home")
-                findNavController(R.id.nav_host_fragment).popBackStack()
-            }
-
+            if (selectedItemId == R.id.homeFragment) finishAffinity()
+            else findNavController(R.id.nav_host_fragment).popBackStack()
         }
     }
+
     private fun showAddReportDialog() {
-        val dialogbinding = DialogAddReportBinding.inflate(layoutInflater)
-        val reportBtnSheetDialog = BottomSheetDialog(dialogbinding.root.context,R.style.BottomSheetDialogTheme)
-        dialogbinding.btnSendReport.setOnClickListener {
-            val reportMsg = dialogbinding.edReport.text.toString()
-            val report = Report("Seller",
-                reportMsg, Timestamp.now().toDate())
-            FirebaseReferences.ReportRef.add(report)
+        val dialogBinding = DialogAddReportBinding.inflate(layoutInflater)
+        val reportBtnSheetDialog =
+            BottomSheetDialog(dialogBinding.root.context, R.style.BottomSheetDialogTheme)
+        dialogBinding.btnSendReport.setOnClickListener {
+            val reportMsg = dialogBinding.edReport.text.toString()
+            FirebaseReferences.ReportRef.add(Report(reportMsg))
             reportBtnSheetDialog.dismiss()
-            Snackbar.make(binding.root, getString(R.string.reportsuccess), Snackbar.LENGTH_LONG).show()
-
+            Snackbar.make(binding.root, getString(R.string.reportsuccess), Snackbar.LENGTH_LONG)
+                .show()
         }
-        reportBtnSheetDialog.setContentView(dialogbinding.root)
+        reportBtnSheetDialog.setContentView(dialogBinding.root)
         reportBtnSheetDialog.show()
-
     }
-    fun showDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder?.setTitle(getString(R.string.logOut))
-        builder?.setMessage(getString(R.string.logoutMessage))
 
-        builder?.setPositiveButton(getString(R.string.yes)) { dialog, which ->
-            Firebase.auth.signOut()
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.logOut))
+        builder.setMessage(getString(R.string.logoutMessage))
+
+        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
+            AuthVM.logout(this)
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
-            Snackbar.make(binding.root, getString(R.string.logoutSuccess), Snackbar.LENGTH_LONG).show()
-
+            Snackbar.make(binding.root, getString(R.string.logoutSuccess), Snackbar.LENGTH_LONG)
+                .show()
         }
 
-        builder?.setNegativeButton(getString(R.string.no)) { dialog, which ->
+        builder.setNegativeButton(getString(R.string.no)) { dialog, _ ->
             dialog.cancel()
         }
 
-        builder?.show()
+        builder.show()
     }
-
-
 }

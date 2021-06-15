@@ -9,7 +9,6 @@ import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.view.fragments.ProductFragment
 import com.trueandtrust.shoplex.view.fragments.ReviewFragment
 
-
 class PagerAdapter(fm:FragmentManager, val context: Context, val product: Product) : FragmentPagerAdapter(fm) {
 
     override fun getCount(): Int {
@@ -17,23 +16,23 @@ class PagerAdapter(fm:FragmentManager, val context: Context, val product: Produc
     }
 
     override fun getItem(position: Int): Fragment {
-        when(position) {
+        return when(position) {
             0 -> {
-                return ProductFragment(product)
+                ProductFragment(product)
             }
             else -> {
-                return ReviewFragment(product.productID)
+                ReviewFragment(product.productID)
             }
         }
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        when(position) {
+    override fun getPageTitle(position: Int): CharSequence {
+        return when(position) {
             0 -> {
-                return this.context.getString(R.string.Products)
+                this.context.getString(R.string.Products)
             }
             else -> {
-                return this.context.getString(R.string.Reviews)
+                this.context.getString(R.string.Reviews)
             }
         }
     }

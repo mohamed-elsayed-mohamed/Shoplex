@@ -21,10 +21,10 @@ import com.trueandtrust.shoplex.model.enumurations.LocationAction
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     companion object{
-        val MAPS_CODE = 202
-        val LOCATION_ACTION = "LOCATION_ACTION"
-        val ADDRESS = "ADDRESS"
-        val LOCATION = "LOCATION"
+        const val MAPS_CODE = 202
+        const val LOCATION_ACTION = "LOCATION_ACTION"
+        const val ADDRESS = "ADDRESS"
+        const val LOCATION = "LOCATION"
     }
 
     private lateinit var mGoogleMap: GoogleMap
@@ -45,7 +45,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         requestPermission()
         if(intent.getStringExtra(LOCATION_ACTION) == LocationAction.Add.toString()){
             locationAction = LocationAction.Add
-        }else{
         }
 
         binding.btnOK.setOnClickListener {
@@ -73,7 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
 
         } else{
-            var task: Task<Location> = mFusedLocationClient.lastLocation
+            val task: Task<Location> = mFusedLocationClient.lastLocation
             task.addOnSuccessListener { location ->
                 val mapFragment = supportFragmentManager
                     .findFragmentById(R.id.map) as SupportMapFragment
@@ -95,6 +94,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

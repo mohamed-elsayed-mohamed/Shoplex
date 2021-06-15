@@ -6,6 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.AuthDBModel
 import com.trueandtrust.shoplex.model.interfaces.AuthListener
 import com.trueandtrust.shoplex.model.pojo.Store
@@ -55,5 +58,13 @@ class AuthVM(val context: Context): ViewModel(), AuthListener {
     override fun onAddStoreFailed() {
         super.onAddStoreFailed()
         Toast.makeText(context, "Failed to add store!", Toast.LENGTH_SHORT).show()
+    }
+
+    companion object{
+        fun logout(context: Context){
+            StoreInfo.saveNotification(context, false)
+            Firebase.auth.signOut()
+            StoreInfo.clear()
+        }
     }
 }

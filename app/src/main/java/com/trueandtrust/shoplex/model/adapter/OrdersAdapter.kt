@@ -1,5 +1,7 @@
 package com.trueandtrust.shoplex.model.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,23 +12,27 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.HomeRvBinding
 import com.trueandtrust.shoplex.model.firebase.OrdersDBModel
 import com.trueandtrust.shoplex.model.pojo.Order
+import com.trueandtrust.shoplex.view.activities.DetailsActivity
 
-class CurrentOrdersAdapter(val orders: ArrayList<Order>) :
-    RecyclerView.Adapter<CurrentOrdersAdapter.OrdersViewHolder>() {
+class OrdersAdapter(val orders: ArrayList<Order>) :
+    RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
+
+    private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersViewHolder {
+        context = parent.context
         return OrdersViewHolder(
             HomeRvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) = holder.bind(orders[position], position)
+    override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) = holder.bind(orders[position])
 
     override fun getItemCount() = orders.size
 
     inner class OrdersViewHolder(val binding: HomeRvBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(order: Order, position: Int) {
+        fun bind(order: Order) {
 
             Glide.with(itemView.context).load(order.product!!.images.firstOrNull()).error(R.drawable.product).into(binding.imgProduct)
             binding.order = order
@@ -39,6 +45,12 @@ class CurrentOrdersAdapter(val orders: ArrayList<Order>) :
                 }
             } else {
                 binding.btnDeliveryOrder.visibility = View.GONE
+            }
+
+            itemView.setOnClickListener {
+                context.startActivity(Intent(context, DetailsActivity::class.java).apply {
+                    this.putExtra(context.getString(R.string.PRODUCT_KEY), order.product)
+                })
             }
         }
     }

@@ -14,8 +14,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 object StoreInfo {
-    private val SHARED_USER_INFO = "USER_INFO"
-    private val NOTIFICATION = "NOTIFICATION"
+    private const val SHARED_USER_INFO = "USER_INFO"
     var storeID: String? = null
     var name : String = ""
     var email : String = ""
@@ -72,6 +71,20 @@ object StoreInfo {
         val locationsType: Type = object : TypeToken<ArrayList<Location>>() {}.type
         addresses = Gson().fromJson(sharedPref.getString("addresses", null), addressesType)
         locations = Gson().fromJson(sharedPref.getString("locations", null), locationsType)
+    }
+
+    fun saveNotification(context: Context, value: Boolean){
+        FirebaseReferences.notificationTokensRef.document(storeID!!)
+            .update("notification", value)
+        context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE).edit().putBoolean("notification", value).apply()
+    }
+
+    fun readNotification(context: Context) : Boolean{
+        val shared = context.getSharedPreferences(
+            SHARED_USER_INFO,
+            Context.MODE_PRIVATE
+        )
+        return shared.getBoolean("notification", true)
     }
 
     /*
