@@ -40,24 +40,16 @@
         <activity
             android:name=".view.activities.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".view.activities.HomeActivity"
-           >
+        <activity android:name=".view.activities.HomeActivity" />
 
-        </activity>
         <activity
             android:name=".view.activities.AddProductActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".view.activities.ConfirmProductActivity" />
         <activity android:name=".view.activities.ProductDetails" />
         <activity android:name=".view.activities.MessageActivity" />
-        <activity
-            android:name=".view.activities.StoreLocationActivity"
-            />
-        <activity
-            android:name=".view.activities.LastOrderActivity"
-           />
-        <activity android:name=".view.activities.MainActivity" />
+        <activity android:name=".view.activities.StoreLocationActivity"/>
+        <activity android:name=".view.activities.LastOrderActivity"/>
         <activity android:name=".view.activities.LoginActivity"/>
         <activity android:name=".view.activities.SignupActivity" />
 

@@ -16,6 +16,7 @@ class ProductsVM: ViewModel, INotifyMVP {
 
     constructor(){
         products.value = arrayListOf()
+        reviewStatistics.value = ReviewStatistics()
     }
 
     fun getAllProducts(storeID: String) {
@@ -30,9 +31,14 @@ class ProductsVM: ViewModel, INotifyMVP {
        this.reviews.value=reviews
     }
     fun getReviewByProductId(productId: String){
-        productsDBModel.getReviewByProductId(productId)
         productsDBModel.getReviewsStatistics(productId)
+        productsDBModel.getReviewByProductId(productId)
     }
+
+    override fun onReviewStatisticsReady(reviewStatistics: ReviewStatistics) {
+        this.reviewStatistics.value = reviewStatistics
+    }
+
     fun getProductById(productId: String){
         productsDBModel.getProductById(productId)
     }
