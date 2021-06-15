@@ -34,11 +34,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
     private lateinit var productViewModel: ProductViewModel
 
     private lateinit var paymentSheet: PaymentSheet
-
-    private lateinit var customerId: String
-    private lateinit var ephemeralKeySecret: String
     private lateinit var paymentIntentClientSecret: String
-
     private lateinit var buyButton: Button
 
 

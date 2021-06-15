@@ -14,6 +14,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.Review
@@ -35,6 +36,7 @@ class ProductsDBModel(val notifier: INotifyMVP?) {
     }
 
     fun addProduct() {
+        product.storeLocation = StoreInfo.locations[0]
         reference.document(product.productID).set(product).addOnSuccessListener {
           //  Toast.makeText(context, R.string.Success.toString() , Toast.LENGTH_LONG).show()
         }.addOnFailureListener {

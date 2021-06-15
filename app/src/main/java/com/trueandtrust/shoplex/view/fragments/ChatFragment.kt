@@ -18,8 +18,9 @@ class ChatFragment : Fragment() {
     private lateinit var chatHeadVm: ChatHeadVM
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = FragmentChatBinding.inflate(inflater, container, false)
         this.chatHeadVm = ChatHeadVM()
