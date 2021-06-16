@@ -3,9 +3,7 @@ package com.trueandtrust.shoplex.view.activities
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +15,7 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
 import com.trueandtrust.shoplex.model.enumurations.Plan
 import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
-import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.model.interfaces.ProductsListener
 import com.trueandtrust.shoplex.model.pojo.Premium
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.room.viewModel.ProductViewModel
@@ -27,7 +25,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
 
-class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
+class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
     private lateinit var binding: ActivityConfirmProductBinding
     private lateinit var product: Product
     private var isUpdate: Boolean = false
@@ -35,8 +33,7 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
 
     private lateinit var paymentSheet: PaymentSheet
     private lateinit var paymentIntentClientSecret: String
-    private lateinit var buyButton: Button
-
+    private var premiumPlan: Plan? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,48 +47,27 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         showAll()
 
         binding.btnBuyBasic.setOnClickListener {
-            product.premium = Premium(Plan.Bronze, 14)
+            product.premium = Premium(Plan.Bronze, 14 + (product.premium?.premiumDays?:0))
+            premiumPlan = Plan.Bronze
             binding.cardStandard.visibility = View.INVISIBLE
             binding.cardPremium.visibility = View.INVISIBLE
         }
 
         binding.btnBuyStandard.setOnClickListener {
-            product.premium = Premium(Plan.Silver, 30)
+            product.premium = Premium(Plan.Silver, 30 + (product.premium?.premiumDays?:0))
+            premiumPlan = Plan.Silver
             binding.cardBasic.visibility = View.INVISIBLE
             binding.cardPremium.visibility = View.INVISIBLE
         }
 
         binding.btnBuyPremium.setOnClickListener {
-            product.premium = Premium(Plan.Gold, 90)
+            product.premium = Premium(Plan.Gold, 90 + (product.premium?.premiumDays?:0))
+            premiumPlan = Plan.Gold
             binding.cardBasic.visibility = View.INVISIBLE
             binding.cardStandard.visibility = View.INVISIBLE
         }
 
-        /*
-        binding.btnConfirm.setOnClickListener {
-            val dbModel = ProductsDBModel(product, this, isUpdate)
-            product.date = Timestamp.now().toDate()
-            dbModel.addProduct()
-            productViewModel.addProduct(product)
-            startActivity(
-                Intent(
-                    this,
-                    HomeActivity::class.java
-                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            )
-            finish()
-        }
-        */
-
-        /*
-        PaymentConfiguration.init(
-            applicationContext,
-            "pk_test_51IzX9KFY0dskT72W2vHiMNJU0OGs9DukriXP1pfarCuYGkGPvZ8TaMRxxOK2W3WfQa1zO7JEOpiSqRya9BIn6okK00AZ4bRvHz"
-        )
-        */
-        buyButton = binding.btnConfirm
-
-        buyButton.isEnabled = false
+        //binding.btnConfirm.isEnabled = false
 
         PaymentConfiguration.init(this, STRIPE_PUBLISHABLE_KEY)
 
@@ -99,11 +75,36 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
             onPaymentSheetResult(result)
         }
 
-        buyButton.setOnClickListener {
-            presentPaymentSheet()
-        }
+        binding.btnConfirm.setOnClickListener {
+            var premiumPrice = 0
+            if(product.premium != null && premiumPlan != null){
+                premiumPrice = when(premiumPlan){
+                    Plan.Bronze -> 20
+                    Plan.Silver -> 30
+                    Plan.Gold -> 75
+                    else -> 0
+                }
+            }
 
-        fetchInitData()
+            val price = ((product.newPrice * product.quantity) * 0.1) + premiumPrice
+            if(!isUpdate) {
+                if(price > 10) {
+                    fetchInitData(price)
+                }else{
+                    Toast.makeText(this, "Minimum Charge 100 L.E", Toast.LENGTH_SHORT).show()
+                }
+            }else if(premiumPrice > 0){
+                fetchInitData(premiumPrice.toDouble())
+            }else{
+                addUpdateProduct()
+            }
+        }
+    }
+
+    private fun presentPaymentSheet() {
+        paymentSheet.presentWithPaymentIntent(
+            paymentIntentClientSecret
+        )
     }
 
     private fun showAll(){
@@ -130,29 +131,17 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
         }
     }
 
-    override fun onUploadSuccess() {
-        super.onUploadSuccess()
-    }
-
-    override fun onUploadFailed() {
-        super.onUploadFailed()
-    }
-
-
     // Payment
-    private fun fetchInitData() {
-        val amount: Double = 1000.0
+    private fun fetchInitData(price: Double) {
+        val amount: Double = price * 100
 
         val payMap: MutableMap<String, Any> = HashMap()
         val itemMap: MutableMap<String, Any> = HashMap()
         val itemList: MutableList<Map<String, Any>> = ArrayList()
         payMap["currency"] = "egp"
-
-        // itemMap["id"] = "photo_subscription"
         itemMap["amount"] = amount
         itemList.add(itemMap)
         payMap["items"] = itemList
-
 
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val json = Gson().toJson(payMap)
@@ -166,41 +155,45 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
             .enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread {
-                        Toast.makeText(applicationContext, "Failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            applicationContext,
+                            "Failed to load payment method",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
                     if (!response.isSuccessful) {
                         runOnUiThread {
-                            Toast.makeText(applicationContext, "Not Success", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                applicationContext,
+                                "Failed to load payment method",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
                         runOnUiThread {
-                            Toast.makeText(applicationContext, "Success", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                applicationContext,
+                                "Payment method ready",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         val responseData = response.body?.string()
                         val responseJson =
                             responseData?.let { JSONObject(it) } ?: JSONObject()
 
-
-                        //customerId = responseJson.getString("customer")
-                        //ephemeralKeySecret = responseJson.getString("ephemeralKey")
                         paymentIntentClientSecret = responseJson.getString("clientSecret")
 
                         runOnUiThread {
-                            buyButton.isEnabled = true
+                            // binding.btnConfirm.isEnabled = true
+                            presentPaymentSheet()
                         }
                     }
                 }
             }
             )
-    }
-
-    private fun presentPaymentSheet() {
-        paymentSheet.presentWithPaymentIntent(
-            paymentIntentClientSecret
-        )
     }
 
     private fun onPaymentSheetResult(
@@ -217,24 +210,14 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
             is PaymentSheetResult.Failed -> {
                 Toast.makeText(
                     this,
-                    "Payment Failed. See logcat for details.",
+                    "Payment Failed.",
                     Toast.LENGTH_LONG
                 ).show()
-                Log.e("App", "Got error: ${paymentSheetResult.error}")
             }
             is PaymentSheetResult.Completed -> {
 
-                val dbModel = ProductsDBModel(product, this, isUpdate)
-                //product.date =  FieldValue.serverTimestamp()
-                dbModel.addProduct()
-                productViewModel.addProduct(product)
-                startActivity(
-                    Intent(
-                        this,
-                        HomeActivity::class.java
-                    ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                )
-                finish()
+                addUpdateProduct()
+
                 Toast.makeText(
                     this,
                     "Payment Complete",
@@ -242,6 +225,33 @@ class ConfirmProductActivity : AppCompatActivity(), INotifyMVP {
                 ).show()
             }
         }
+    }
+
+    private fun addUpdateProduct() {
+        val dbModel = ProductsDBModel(product, this, isUpdate, this)
+        dbModel.addUpdateProduct()
+        /*
+        if (isUpdate)
+            productViewModel.updateProduct(product)
+        else
+            productViewModel.addProduct(product)
+        */
+
+        startActivity(
+            Intent(
+                this,
+                HomeActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
+        finish()
+    }
+
+    override fun onProductAdded() {
+        Toast.makeText(
+            this,
+            "Product Added Successfully!",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private companion object {

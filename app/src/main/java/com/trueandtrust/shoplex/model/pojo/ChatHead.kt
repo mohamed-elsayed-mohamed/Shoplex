@@ -14,4 +14,5 @@ data class ChatHead(
     val userID : String = " ",
     val userName: String="",
     var numOfMessage: Int=0,
-    val date : Date = Timestamp.now().toDate())
+    val date : Date = Timestamp.now().toDate(),
+    var isClientOnline: Boolean = false)

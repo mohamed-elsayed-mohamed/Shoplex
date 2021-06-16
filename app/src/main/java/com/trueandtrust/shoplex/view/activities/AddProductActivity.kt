@@ -210,7 +210,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     }
 
     private fun openGalleryForImages() {
-        var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.type = "image/*"
         startActivityForResult(intent, OPEN_GALLERY_CODE)
@@ -223,10 +223,10 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             // if multiple images are selected
 
             if (data?.clipData != null) {
-                var count = data.clipData?.itemCount
+                val count = data.clipData?.itemCount
 
                 for (i in 0 until count!!) {
-                    var imageUri: Uri = data.clipData?.getItemAt(i)!!.uri
+                    val imageUri: Uri = data.clipData?.getItemAt(i)!!.uri
 
                     if (!product.imagesListURI.contains(imageUri) && product.imagesListURI.count() < MAX_IMAGES_SIZE) {
                         product.imagesListURI.add(imageUri)
@@ -238,7 +238,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             } else if (data?.data != null) {
                 // if single image is selected
 
-                var imageUri: Uri = data.data!!
+                val imageUri: Uri = data.data!!
                 if (!product.imagesListURI.contains(imageUri)) {
                     product.imagesListURI.add(imageUri)
                     product.imageSlideList.add(SlideModel(imageUri.toString()))
@@ -254,24 +254,18 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
     }
 
     override fun onImageRemoved(position: Int) {
-        if (product.imageSlideList[position] != null) {
-            product.imageSlideList.removeAt(position)
-            product.imagesListURI.removeAt(position)
-            //database.removeImage(product.images.removeAt(position)!!, isUpdate)
-            if (product.images.count() > 0)
-                product.removedImages.add(product.images.removeAt(position)!!)
+        product.imageSlideList.removeAt(position)
+        product.imagesListURI.removeAt(position)
+        if (product.images.count() > 0)
+            product.removedImages.add(product.images.removeAt(position)!!)
 
-            binding.imgSliderAddProduct.setImageList(
-                product.imageSlideList,
-                ScaleTypes.CENTER_INSIDE
-            )
+        binding.imgSliderAddProduct.setImageList(
+            product.imageSlideList,
+            ScaleTypes.CENTER_INSIDE
+        )
 
-            binding.rvUploadImages.adapter?.notifyDataSetChanged()
-            updateSliderUI()
-        } else {
-            Snackbar.make(binding.root, getString(R.string.alertonImageRemove), Snackbar.LENGTH_LONG).show()
-
-        }
+        binding.rvUploadImages.adapter?.notifyItemRemoved(position)
+        updateSliderUI()
     }
 
     private fun updateSliderUI() {
@@ -284,8 +278,8 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
         } else {
             binding.imgSliderAddProduct.background = null
             binding.rvUploadImages.setBackgroundResource(R.drawable.ed_style)
-            val margin_16 = resources.getDimension(R.dimen.margin_16).toInt()
-            param.setMargins(margin_16, margin_16, margin_16, 0)
+            val margin16 = resources.getDimension(R.dimen.margin_16).toInt()
+            param.setMargins(margin16, margin16, margin16, 0)
         }
 
         binding.rvUploadImages.layoutParams = param
@@ -312,7 +306,7 @@ class AddProductActivity : AppCompatActivity(), INotifyMVP {
             }
             binding.edDescription.length() < 30 -> {
                 binding.tiDescription.error =
-                    getString(com.trueandtrust.shoplex.R.string.min_description_err)
+                    getString(R.string.min_description_err)
                 return false
             }
             binding.edOldPrice.length() == 0 -> {

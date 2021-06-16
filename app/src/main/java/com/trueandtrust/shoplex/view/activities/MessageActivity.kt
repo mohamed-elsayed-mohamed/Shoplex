@@ -3,8 +3,8 @@ package com.trueandtrust.shoplex.view.activities
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -26,7 +26,7 @@ import com.trueandtrust.shoplex.room.viewModel.MessageFactoryModel
 import com.trueandtrust.shoplex.room.viewModel.MessageViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-
+import kotlinx.android.synthetic.main.activity_message.*
 
 class MessageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMessageBinding
@@ -64,6 +64,14 @@ class MessageActivity : AppCompatActivity() {
             MessageFactoryModel(this, chatID)
         ).get(MessageViewModel::class.java)
 
+        messageVM.isOnline.observe(this, {
+            if(it){
+                cardIsOnline.visibility = View.VISIBLE
+            }else{
+                cardIsOnline.visibility = View.INVISIBLE
+            }
+        })
+
         binding.imgToolbarChat.setImageResource(R.drawable.product)
         binding.tvToolbarUserChat.text = userName
         Glide.with(this).load(productImg).into(binding.imgToolbarChat)
@@ -79,13 +87,15 @@ class MessageActivity : AppCompatActivity() {
     private fun performSendMessage() {
         //send Message to Firebase
         val messageText = binding.edSendMesssage.text
-        messageAdapter.add(RightMessageItem(Message(message = messageText.toString())))
+
         var message = Message(toId = userID, message = messageText.toString())
+        message.chatID = chatID
         FirebaseReferences.chatRef.document(chatID).collection("messages")
             .document(message.messageID)
-            .set(message)
-
-        messageText.clear()
+            .set(message).addOnSuccessListener {
+                messageAdapter.add(RightMessageItem(message, messageVM))
+                messageText.clear()
+            }
     }
 
     private fun listenToNewMessages(lastID: String) {
@@ -122,15 +132,55 @@ class MessageActivity : AppCompatActivity() {
             }
     }
 
+    /*
+    private fun listenToMyMessages(firstUnReadMessage: String){
+        FirebaseReferences.chatRef.document(chatID).collection("messages").whereEqualTo("messageID", firstUnReadMessage).addSnapshotListener { snapshots, error ->
+            if (error != null) {
+                return@addSnapshotListener
+            }
+            for ((index,dc) in snapshots!!.documentChanges.withIndex()) {
+               // if ((dc.type) == DocumentChange.Type.MODIFIED) {
+                    val message = dc.document.toObject<Message>()
+//                    if (message.toId == StoreInfo.storeID) {
+//                        message.chatID = chatID
+//                        if (!message.isSent) {
+//                            FirebaseReferences.chatRef.document(chatID).collection("messages")
+//                                .document(message.messageID).update("isSent", true)
+//                            message.isSent = true
+//                        }
+//                        if (!message.isRead && position == -1)
+//                            position = messageAdapter.groupCount + index -1
+//
+//                        messageAdapter.add(LeftMessageItem(chatID, message, messageVM))
+//                        messageVM.addMessage(message)
+//                    } else
+                //messageAdapter.notifyDataSetChanged()
+                    if (message.toId != StoreInfo.storeID) {
+                        message.chatID = chatID
+
+                        if(message.isSent)
+                            messageVM.setSent(message.messageID)
+                        if(message.isRead)
+                            messageVM.setRead(message.messageID)
+                    }
+             //   }
+            }
+        }
+    }
+*/
     private fun getAllMessage() {
         binding.rcMessage.adapter = messageAdapter
         messageVM.readAllMessage.observe(this, {
+//            var firstUnReadMessage = "1"
             for (message in it) {
                 if (message.toId == StoreInfo.storeID) {
                     messageAdapter.add(LeftMessageItem(chatID, message, messageVM))
 
                 } else if (message.toId != StoreInfo.storeID) {
-                    messageAdapter.add(RightMessageItem(message))
+                    messageAdapter.add(RightMessageItem(message, messageVM))
+//                    if(firstUnReadMessage == "1" && !message.isSent){
+//                        firstUnReadMessage = message.messageID
+//                    }
                 }
             }
             val lastID = if (it.isEmpty()) {
@@ -142,6 +192,7 @@ class MessageActivity : AppCompatActivity() {
             }
             messageVM.readAllMessage.removeObservers(this)
             listenToNewMessages(lastID)
+            //listenToMyMessages(firstUnReadMessage)
             //getAllMessageFromFirebase(lastID)
         })
     }

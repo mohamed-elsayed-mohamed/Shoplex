@@ -13,7 +13,7 @@
     <string name="item">Item</string>
     <string name="category">Category</string>
     <string name="men">Men</string>
-    <string name="_90_off_sale">90% Off Sale</string>
+    <string name="saleOff">%s Off Sale</string>
     <string name="sub_category">Sub Category</string>
     <string name="store_name">Store Name</string>
     <string name="offers">Offers</string>

@@ -17,13 +17,13 @@ import com.trueandtrust.shoplex.model.pojo.Review
 import com.trueandtrust.shoplex.model.pojo.ReviewStatistics
 import java.util.*
 
-class ProductsDBModel(val listener: ProductsListener?) {
+class ProductsDBModel(val listener: ProductsListener) {
     private lateinit var product: Product
     private lateinit var context: Context
 
     private lateinit var reference: CollectionReference
 
-    constructor(product: Product, context: Context, isUpdate: Boolean) : this(null) {
+    constructor(product: Product, context: Context, isUpdate: Boolean, listener: ProductsListener) : this(listener) {
         this.product = product
         this.context = context
 
@@ -31,10 +31,10 @@ class ProductsDBModel(val listener: ProductsListener?) {
             if (isUpdate) FirebaseReferences.productsRef else FirebaseReferences.pendingProductsRef
     }
 
-    fun addProduct() {
+    fun addUpdateProduct() {
         product.storeLocation = StoreInfo.locations.firstOrNull() ?: Location()
         reference.document(product.productID).set(product).addOnSuccessListener {
-            listener?.onProductAdded()
+            listener.onProductAdded()
         }
 
         for (imgURI in product.imagesListURI)
@@ -75,7 +75,7 @@ class ProductsDBModel(val listener: ProductsListener?) {
                     }
 
                     if (document == values.documents.last()) {
-                        this.listener?.onAllProductsReady(products)
+                        this.listener.onAllProductsReady(products)
                     }
                 }
             }
@@ -84,7 +84,7 @@ class ProductsDBModel(val listener: ProductsListener?) {
     fun deleteProduct(productID: String) {
         FirebaseReferences.productsRef.document(productID).update("deleted", true)
             .addOnSuccessListener {
-                this.listener?.onProductRemoved()
+                this.listener.onProductRemoved()
             }
     }
 
@@ -99,7 +99,7 @@ class ProductsDBModel(val listener: ProductsListener?) {
                         reviews.add(review)
                     }
                 }
-                this.listener?.onAllReviewsReady(reviews)
+                this.listener.onAllReviewsReady(reviews)
             }
     }
 
@@ -108,7 +108,7 @@ class ProductsDBModel(val listener: ProductsListener?) {
             .document("Reviews").get().addOnSuccessListener {
             if (it.exists()) {
                 val statistic: ReviewStatistics = it.toObject()!!
-                this.listener?.onReviewStatisticsReady(statistic)
+                this.listener.onReviewStatisticsReady(statistic)
             }
 
         }

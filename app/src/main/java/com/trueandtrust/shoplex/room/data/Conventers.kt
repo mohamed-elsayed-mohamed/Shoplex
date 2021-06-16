@@ -99,10 +99,15 @@ class Conventers {
     }
 
     @TypeConverter
-    fun sdToString(specialDiscount: Premium): String = Gson().toJson(specialDiscount)
+    fun sdToString(specialDiscount: Premium?): String? {
+        if(specialDiscount != null)
+            return Gson().toJson(specialDiscount)
+        return null
+    }
 
     @TypeConverter
-    fun stringToSd(string: String): Premium = Gson().fromJson(string, Premium::class.java)
+    fun stringToSd(string: String?): Premium? = Gson().fromJson(string, Premium::class.java)
+
 
 //    @TypeConverter // note this annotation
 //    fun fromOptionValuesList(optionValues: List<OptionValues?>?): String? {

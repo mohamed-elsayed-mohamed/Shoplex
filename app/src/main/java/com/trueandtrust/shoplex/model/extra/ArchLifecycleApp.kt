@@ -18,7 +18,7 @@ class ArchLifecycleApp : Application(), LifecycleObserver {
         if (StoreInfo.storeID != null) {
             FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID!!).get().addOnSuccessListener {
                 for(ref in it.documents)
-                    ref.reference.update("isOnline", true)
+                    ref.reference.update("isStoreOnline", true)
             }
         }
     }
@@ -28,7 +28,7 @@ class ArchLifecycleApp : Application(), LifecycleObserver {
         if (StoreInfo.storeID != null) {
             FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID!!).get().addOnSuccessListener {
                 for(ref in it.documents)
-                    ref.reference.update("isOnline", false)
+                    ref.reference.update("isStoreOnline", false)
             }
         }
     }

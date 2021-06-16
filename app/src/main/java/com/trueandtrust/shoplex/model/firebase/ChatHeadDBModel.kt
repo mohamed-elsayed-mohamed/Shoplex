@@ -71,6 +71,7 @@ class ChatHeadDBModel(val listener: ChatsListener) {
                             }
                         }
                 }
+                chatHead.isClientOnline = chat.isClientOnline
                 chatHead.numOfMessage = chat.unreadStoreMessages
                 listener.onChatHeadChanged(position)
             }
