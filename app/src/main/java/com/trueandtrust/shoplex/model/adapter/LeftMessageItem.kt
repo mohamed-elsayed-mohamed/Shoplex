@@ -7,8 +7,6 @@ import com.trueandtrust.shoplex.model.pojo.Message
 import com.trueandtrust.shoplex.room.viewModel.MessageViewModel
 import com.xwray.groupie.databinding.BindableItem
 
-
-
 class LeftMessageItem(private val chatID: String, val message: Message, private val messageVM: MessageViewModel) : BindableItem<ChatItemLeftBinding>(){
 
     override fun bind(binding: ChatItemLeftBinding, position: Int) {
