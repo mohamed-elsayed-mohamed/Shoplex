@@ -1,21 +1,17 @@
 package com.trueandtrust.shoplex.model.pojo
 
-import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.Exclude
-import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-@Parcelize
-@Entity(tableName = "message", primaryKeys = ["messageID","chatId"])
+@Entity(tableName = "message", primaryKeys = ["messageID","chatID"])
 data class Message(
     var messageID: String = Timestamp.now().toDate().time.toString(),
     var messageDate: Date = Timestamp.now().toDate(),
     val toId: String? = "",
     var message: String = "",
-    @field:JvmField val isSent: Boolean = false,
+    @field:JvmField var isSent: Boolean = false,
     @field:JvmField val isRead: Boolean = false,
-    var chatId:String = ""
-):Parcelable
+    @Exclude @set:Exclude @get:Exclude var chatID:String = ""
+)

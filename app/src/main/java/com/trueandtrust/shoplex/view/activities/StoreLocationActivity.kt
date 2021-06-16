@@ -37,8 +37,8 @@ class StoreLocationActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        storeVM.storeAddresses.observe(this, { addresses ->
-           //binding.rcLocation.adapter = LocationAdapter(addresses)
+        storeVM.storeAddresses.observe(this, { locations ->
+           binding.rcLocation.adapter = LocationAdapter(locations)
         })
 
         binding.fabAddLocation.setOnClickListener {
@@ -73,6 +73,7 @@ class StoreLocationActivity : AppCompatActivity() {
                         loc
                     )
                     storeVM.addStoreLocation(pendingLocation)
+                    StoreInfo.addStoreLocation(this, pendingLocation)
                 } else {
                     Toast.makeText(this, "Failed please select valid address", Toast.LENGTH_SHORT)
                         .show()

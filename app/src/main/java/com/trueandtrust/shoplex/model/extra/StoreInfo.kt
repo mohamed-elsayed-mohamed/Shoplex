@@ -5,10 +5,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.trueandtrust.shoplex.model.pojo.Location
-import com.trueandtrust.shoplex.model.pojo.NotificationToken
-import com.trueandtrust.shoplex.model.pojo.RecentVisit
-import com.trueandtrust.shoplex.model.pojo.Store
+import com.trueandtrust.shoplex.model.pojo.*
 import java.lang.reflect.Type
 import java.util.*
 import kotlin.collections.ArrayList
@@ -71,6 +68,15 @@ object StoreInfo {
         val locationsType: Type = object : TypeToken<ArrayList<Location>>() {}.type
         addresses = Gson().fromJson(sharedPref.getString("addresses", null), addressesType)
         locations = Gson().fromJson(sharedPref.getString("locations", null), locationsType)
+    }
+
+    fun addStoreLocation(context: Context, pendingLocation: PendingLocation){
+        addresses.add(pendingLocation.address)
+        locations.add(pendingLocation.location)
+        context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE).edit()
+            .putString("locations", Gson().toJson(locations))
+            .putString("addresses", Gson().toJson(addresses))
+            .apply()
     }
 
     fun saveNotification(context: Context, value: Boolean){

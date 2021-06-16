@@ -11,22 +11,8 @@ import com.trueandtrust.shoplex.model.pojo.Store
 
 class StoreDBModel(val listener: StoreListener) {
 
-    fun getStoreAddresses() {
-        FirebaseReferences.storeRef.document(StoreInfo.storeID!!).get()
-            .addOnSuccessListener {
-                if (it.exists()) {
-                    val store = it.toObject<Store>()
-                    if (store != null){
-                        //for (locationAddress in store.addresses)
-                        listener.onAllAddressesReady(store.addresses, store.locations)
-                    }
-
-                }
-            }
-    }
-
     fun addStoreLocation(pendingLocation: PendingLocation){
-        FirebaseReferences.locationRef.add(pendingLocation)
+        FirebaseReferences.pendingLocationsRef.add(pendingLocation)
     }
 
     fun  removeLocationAddress(address: String, location: Location){

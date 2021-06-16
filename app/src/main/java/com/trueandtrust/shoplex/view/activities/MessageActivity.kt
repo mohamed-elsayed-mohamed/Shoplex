@@ -98,18 +98,19 @@ class MessageActivity : AppCompatActivity() {
                     if ((dc.type) == DocumentChange.Type.ADDED) {
                         val message = dc.document.toObject<Message>()
                         if (message.toId == StoreInfo.storeID) {
-                            message.chatId = chatID
+                            message.chatID = chatID
                             if (!message.isSent) {
                                 FirebaseReferences.chatRef.document(chatID).collection("messages")
                                     .document(message.messageID).update("isSent", true)
+                                message.isSent = true
                             }
                             if (!message.isRead && position == -1)
                                 position = messageAdapter.groupCount + index -1
 
-                            messageAdapter.add(LeftMessageItem(chatID, message))
+                            messageAdapter.add(LeftMessageItem(chatID, message, messageVM))
                             messageVM.addMessage(message)
                         } else if (message.toId != StoreInfo.storeID) {
-                            message.chatId = chatID
+                            message.chatID = chatID
                             messageVM.addMessage(message)
                         }
                     }
@@ -126,7 +127,7 @@ class MessageActivity : AppCompatActivity() {
         messageVM.readAllMessage.observe(this, {
             for (message in it) {
                 if (message.toId == StoreInfo.storeID) {
-                    messageAdapter.add(LeftMessageItem(chatID, message))
+                    messageAdapter.add(LeftMessageItem(chatID, message, messageVM))
 
                 } else if (message.toId != StoreInfo.storeID) {
                     messageAdapter.add(RightMessageItem(message))

@@ -5,16 +5,16 @@ import androidx.room.*
 import com.trueandtrust.shoplex.model.pojo.Message
 import com.trueandtrust.shoplex.model.pojo.Product
 
-@Database(entities = [Message::class, Product::class],version = 2 ,exportSchema = false)
+@Database(entities = [Message::class, Product::class], version = 1)
 @TypeConverters(Conventers::class)
-abstract class ShoplexDatabase : RoomDatabase() {
+abstract class ShopLexDatabase : RoomDatabase() {
 
     abstract fun storeDao() : StoreDao
 
     companion object{
         @Volatile
-        private var INSTANCE : ShoplexDatabase? = null
-        fun getDatabase(context: Context):ShoplexDatabase{
+        private var INSTANCE : ShopLexDatabase? = null
+        fun getDatabase(context: Context):ShopLexDatabase{
             val tempInstance = INSTANCE
             if(tempInstance != null){
                 return tempInstance
@@ -22,9 +22,9 @@ abstract class ShoplexDatabase : RoomDatabase() {
             synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    ShoplexDatabase::class.java,
+                    ShopLexDatabase::class.java,
                     "Shoplex_Store_Database"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }

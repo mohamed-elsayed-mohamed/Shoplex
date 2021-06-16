@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.StoreDBModel
 import com.trueandtrust.shoplex.model.interfaces.StoreListener
 import com.trueandtrust.shoplex.model.pojo.Location
@@ -14,20 +15,21 @@ class StoreVM: ViewModel(), StoreListener {
     var isLocationRemoved: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getAllAddresses(){
-        storeDBModel.getStoreAddresses()
+        val storeLocationAddresses = StoreInfo.addresses.zip(StoreInfo.locations)
+        var storeLocations: ArrayList<PendingLocation> = arrayListOf()
+        for (storeLocation in storeLocationAddresses){
+            val location = PendingLocation(address=storeLocation.first, location = storeLocation.second)
+            storeLocations.add(location)
+        }
+        storeAddresses.value = storeLocations
     }
 
     fun addStoreLocation(pendingLocation: PendingLocation){
         storeDBModel.addStoreLocation(pendingLocation)
     }
 
-    fun removeLocationAddress(address: String, location: Location){
-
-    }
-
-    override fun onAllAddressesReady(addresses: ArrayList<String>, locations:ArrayList<Location>) {
-
-      //  storeAddresses.value = addresses
+    fun removeLocationAddress(location: PendingLocation){
+        storeDBModel.removeLocationAddress(address = location.address, location = location.location)
     }
 
     override fun onRemoveLocationSuccess() {

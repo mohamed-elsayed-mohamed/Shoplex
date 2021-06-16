@@ -42,7 +42,7 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
         val ref: DocumentReference = FirebaseReferences.pendingSellersRef.document()
         store.storeID = ref.id
         ref.set(store).addOnSuccessListener {
-            addImage(Uri.parse(image),store.storeID)
+            addImage(Uri.parse(image), store.storeID)
             //listener.onAddNewStore(store)
             Toast.makeText(context, "Success to create your account!", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {

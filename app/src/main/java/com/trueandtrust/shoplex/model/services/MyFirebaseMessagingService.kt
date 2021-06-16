@@ -31,8 +31,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Log.e("message",R.string.Message_Received.toString());
 
         if (remoteMessage.data.isNotEmpty()) {
-            val title = remoteMessage.data[R.string.title.toString()]
-            val body = remoteMessage.data[R.string.body.toString()]
+            val title = remoteMessage.data[this.getString(R.string.title)]
+            val body = remoteMessage.data[this.getString(R.string.body)]
             showNotification(applicationContext, title, body)
         } else {
             val title = remoteMessage.notification!!.title
@@ -55,8 +55,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     ) {
         val ii: Intent
         ii = Intent(context, HomeActivity::class.java)
-        ii.data = Uri.parse(R.string.custom.toString() + System.currentTimeMillis())
-        ii.action = R.string.actionstring.toString() + System.currentTimeMillis()
+        ii.data = Uri.parse(context.getString(R.string.custom) + System.currentTimeMillis())
+        ii.action = context.getString(R.string.actionstring) + System.currentTimeMillis()
         ii.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         val pi =
             PendingIntent.getActivity(context, 0, ii, PendingIntent.FLAG_UPDATE_CURRENT)

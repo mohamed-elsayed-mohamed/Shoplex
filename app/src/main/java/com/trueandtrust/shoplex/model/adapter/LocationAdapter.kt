@@ -11,9 +11,10 @@ import com.google.firebase.firestore.FieldValue
 import com.trueandtrust.shoplex.databinding.LocationItemRowBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
+import com.trueandtrust.shoplex.model.pojo.PendingLocation
 import com.trueandtrust.shoplex.viewmodel.StoreVM
 
-class LocationAdapter(val locationsList: ArrayList<String>) :
+class LocationAdapter(val locationsList: ArrayList<PendingLocation>) :
     RecyclerView.Adapter<LocationAdapter.LocationsViewHolder>() {
 
     private lateinit var storeVM: StoreVM
@@ -32,16 +33,16 @@ class LocationAdapter(val locationsList: ArrayList<String>) :
 
     inner class LocationsViewHolder(val binding: LocationItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(address: String) {
-            binding.tvLocation.text = address
+        fun bind(location: PendingLocation) {
+            binding.tvLocation.text = location.address
 
             binding.btnColse.setOnClickListener {
                 if(locationsList.count() > 1) {
-                    //storeVM.removeLocationAddress(address, )
+                    storeVM.removeLocationAddress(location)
                     storeVM.isLocationRemoved.observe(it.context as AppCompatActivity, { isRemoved ->
                         if(isRemoved == true){
-                            locationsList.remove(address)
-                            notifyDataSetChanged()
+                            locationsList.remove(location.address)
+                            notifyItemRemoved(bindingAdapterPosition)
                         }
                     })
 

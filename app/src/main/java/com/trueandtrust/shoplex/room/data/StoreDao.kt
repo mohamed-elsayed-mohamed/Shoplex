@@ -15,8 +15,11 @@ interface StoreDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMessage(message: Message)
 
-    @Query("SELECT * FROM message where chatId = :chatID order by messageDate")
+    @Query("SELECT * FROM message where chatID = :chatID order by messageID")
     fun readAllMessage(chatID : String): LiveData<List<Message>>
+
+    @Query("UPDATE message SET isRead = 1 where messageID = :messageID")
+    fun setReadMessage(messageID : String)
 
     //product
     @Insert(onConflict = OnConflictStrategy.IGNORE)
