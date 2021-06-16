@@ -32,6 +32,21 @@
                 tools:srcCompat="@tools:sample/avatars" />
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardImg"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="@dimen/margin_16"
+            app:cardCornerRadius="@dimen/height_50"
+            app:cardElevation="@dimen/margin_6"
+            android:layout_marginBottom="@dimen/margin_4"
+            android:layout_marginEnd="@dimen/margin_4"
+            app:layout_constraintEnd_toEndOf="@id/cardImgChatHead"
+            android:layout_alignTop="@id/cardImgChatHead"
+            android:backgroundTint="#1DDA25"
+            app:layout_constraintBottom_toBottomOf="parent">
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/tvUserNameChatHead"
             android:layout_width="wrap_content"
