@@ -6,52 +6,40 @@ import android.os.Parcelable
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import com.google.firebase.firestore.ktx.toObject
+import androidx.lifecycle.ViewModelProvider
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityStoreLocationBinding
 import com.trueandtrust.shoplex.model.adapter.LocationAdapter
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
-import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.PendingLocation
-import com.trueandtrust.shoplex.model.pojo.Store
+import com.trueandtrust.shoplex.viewmodel.StoreVM
 
 class StoreLocationActivity : AppCompatActivity() {
-    lateinit var binding: ActivityStoreLocationBinding
-    lateinit var toolbar: Toolbar
-    private var locarions = ArrayList<String>()
+    private lateinit var binding: ActivityStoreLocationBinding
+
+    private lateinit var storeVM: StoreVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStoreLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            title = getString(R.string.StoreLocation)
-            setHomeAsUpIndicator(R.drawable.ic_arrow_back)
-        }
 
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true);
-            supportActionBar?.setDisplayShowHomeEnabled(true);
-        }
+        storeVM = ViewModelProvider(this).get(StoreVM::class.java)
 
-        FirebaseReferences.storeRef.whereEqualTo("storeID", StoreInfo.storeID).get()
-            .addOnSuccessListener {
-                for (item in it) {
-                    if (item.exists()) {
-                        var seller = item.toObject<Store>()
-                        for (loc in seller.addresses) {
-                            locarions.add(loc)
-                        }
-                    }
-                }
-                var locAdapter = LocationAdapter(locarions)
-                binding.rcLocation.adapter = locAdapter
-            }
+        if(storeVM.storeAddresses.value == null)
+            storeVM.getAllAddresses()
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.title = getString(R.string.StoreLocation)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        storeVM.storeAddresses.observe(this, { addresses ->
+           //binding.rcLocation.adapter = LocationAdapter(addresses)
+        })
 
         binding.fabAddLocation.setOnClickListener {
                 startActivityForResult(Intent(this, MapsActivity::class.java)
@@ -63,10 +51,9 @@ class StoreLocationActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // handle arrow click here
-        if (item.itemId == android.R.id.home) {
-            finish() // close this activity and return to preview activity (if there is any)
-        }
+        if (item.itemId == android.R.id.home)
+            finish()
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -85,9 +72,7 @@ class StoreLocationActivity : AppCompatActivity() {
                         address,
                         loc
                     )
-                    FirebaseReferences.locationRef.add(pendingLocation).addOnSuccessListener {
-                        Toast.makeText(this, "susses", Toast.LENGTH_SHORT).show()
-                    }
+                    storeVM.addStoreLocation(pendingLocation)
                 } else {
                     Toast.makeText(this, "Failed please select valid address", Toast.LENGTH_SHORT)
                         .show()

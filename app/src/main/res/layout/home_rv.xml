@@ -7,130 +7,116 @@
             type="com.trueandtrust.shoplex.model.pojo.Order" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/homeConstraint"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="7dp"
+        android:layout_margin="@dimen/margin_4"
+        app:layout_constraintVertical_bias="0.0">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_home"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:cardElevation="5dp"
-            android:layout_margin="@dimen/margin_8"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:src="@drawable/product"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:id="@id/img_card"
-                    android:layout_width="140dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/card"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/img_product"
-                        android:layout_width="match_parent"
-                        android:layout_marginBottom="@dimen/width_1"
-                        android:layout_height="150dp"
-                        android:layout_gravity="end"
-                        android:scaleType="fitXY"
-
-                        android:src="@drawable/product" />
-
-                </LinearLayout>
+            <TextView
+                android:id="@+id/tv_product_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@{order.product.name}"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_marginRight="@dimen/margin_4"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginLeft="@dimen/margin_4"
+                app:layout_constraintEnd_toStartOf="@+id/tv_status"
+                app:layout_constraintStart_toEndOf="@+id/img_product"
+                app:layout_constraintTop_toTopOf="@+id/img_product" />
 
 
-                <TextView
-                    android:id="@+id/tv_product_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="8dp"
-                    android:text="@{order.product.name}"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@+id/img_card"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginLeft="8dp" />
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{order.product.storeName}"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_status"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tv_product_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
 
-                <TextView
-                    android:id="@+id/tv_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{order.product.storeName}"
-                    android:textColor="@color/gray"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="8dp"
-                    android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_product_name"
-                    app:layout_constraintStart_toEndOf="@+id/img_card"
-                    android:layout_marginLeft="8dp" />
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{@string/LE(order.totalPrice)}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_category"
+                app:layout_constraintTop_toBottomOf="@+id/tv_category" />
 
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{order.deliveryAddress}"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:maxLines="2"
+                android:scrollHorizontally="false"
+                android:layout_marginRight="@dimen/margin_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_price"
+                app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/LE(order.totalPrice)}"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toEndOf="@+id/img_card"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_category" />
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_8"
+                android:text="@{order.orderStatus.name()}"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_product_name"
+                app:layout_constraintBottom_toBottomOf="@id/tv_product_name" />
 
-                <TextView
-                    android:id="@+id/tv_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{order.deliveryAddress}"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginBottom="@dimen/margin_8"
-                    app:layout_constraintStart_toEndOf="@id/img_card"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_price" />
-
-                <TextView
-                    android:id="@+id/tv_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_16"
-                    android:text="@{order.orderStatus.name()}"
-                    android:textColor="@color/red"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_product_name"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_product_name" />
-
-                <Button
-                    android:id="@+id/btnDeliveryOrder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/height_40"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/roundedbutton"
-                    android:backgroundTint="@color/darkblue"
-                    android:text="Deliver"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_location" />
+            <Button
+                android:id="@+id/btnDeliveryOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_40"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/roundedbutton"
+                android:backgroundTint="@color/darkblue"
+                android:layout_marginTop="@dimen/margin_8"
+                android:text="Delivered"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_location" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

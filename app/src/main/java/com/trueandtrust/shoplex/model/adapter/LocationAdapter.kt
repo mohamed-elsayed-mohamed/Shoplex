@@ -3,20 +3,23 @@ package com.trueandtrust.shoplex.model.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.storage.FirebaseStorage
-import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.LocationItemRowBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
-import com.trueandtrust.shoplex.model.pojo.Store
+import com.trueandtrust.shoplex.viewmodel.StoreVM
 
 class LocationAdapter(val locationsList: ArrayList<String>) :
     RecyclerView.Adapter<LocationAdapter.LocationsViewHolder>() {
 
+    private lateinit var storeVM: StoreVM
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationsViewHolder {
+        storeVM = ViewModelProvider(parent.context as AppCompatActivity).get(StoreVM::class.java)
         return LocationsViewHolder(
             LocationItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
@@ -29,14 +32,19 @@ class LocationAdapter(val locationsList: ArrayList<String>) :
 
     inner class LocationsViewHolder(val binding: LocationItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: String) {
-            binding.tvLocation.text = item
+        fun bind(address: String) {
+            binding.tvLocation.text = address
+
             binding.btnColse.setOnClickListener {
                 if(locationsList.count() > 1) {
-                    FirebaseReferences.storeRef.document(StoreInfo.storeID.toString())
-                        .update("addresses", FieldValue.arrayRemove(item))
-                    locationsList.remove(item)
-                    notifyDataSetChanged()
+                    //storeVM.removeLocationAddress(address, )
+                    storeVM.isLocationRemoved.observe(it.context as AppCompatActivity, { isRemoved ->
+                        if(isRemoved == true){
+                            locationsList.remove(address)
+                            notifyDataSetChanged()
+                        }
+                    })
+
                 }else{
                     Toast.makeText(binding.root.context, "You must have at least one location", Toast.LENGTH_SHORT)
                         .show()

@@ -1,29 +1,38 @@
 package com.trueandtrust.shoplex.model.firebase
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.toObject
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
-import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.model.interfaces.StoreListener
+import com.trueandtrust.shoplex.model.pojo.Location
+import com.trueandtrust.shoplex.model.pojo.PendingLocation
 import com.trueandtrust.shoplex.model.pojo.Store
 
-class StoreDBModel(val notifier: INotifyMVP?) {
-    fun getStoreByMail(userEmail: String) {
-        FirebaseReferences.storeRef.whereEqualTo("email", userEmail).get().addOnSuccessListener {
-            if(it.count() > 0) {
-                val store: Store = it.documents[0].toObject()!!
-                StoreInfo.updateStoreInfo(store, (notifier as AppCompatActivity).applicationContext)
+class StoreDBModel(val listener: StoreListener) {
 
-                this.notifier?.onStoreInfoReady(true)
+    fun getStoreAddresses() {
+        FirebaseReferences.storeRef.document(StoreInfo.storeID!!).get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    val store = it.toObject<Store>()
+                    if (store != null){
+                        //for (locationAddress in store.addresses)
+                        listener.onAllAddressesReady(store.addresses, store.locations)
+                    }
+
+                }
             }
-            else {
-                this.notifier?.onStoreInfoReady(false)
-                StoreInfo.clear()
-            }
-        }.addOnFailureListener {
-            this.notifier?.onStoreInfoFailed()
-            StoreInfo.clear()
+    }
+
+    fun addStoreLocation(pendingLocation: PendingLocation){
+        FirebaseReferences.locationRef.add(pendingLocation)
+    }
+
+    fun  removeLocationAddress(address: String, location: Location){
+        FirebaseReferences.storeRef.document(StoreInfo.storeID.toString()).update("addresses", FieldValue.arrayRemove(address))
+        FirebaseReferences.storeRef.document(StoreInfo.storeID.toString()).update("locations", FieldValue.arrayRemove(location)).addOnSuccessListener {
+            listener.onRemoveLocationSuccess()
         }
     }
 }
