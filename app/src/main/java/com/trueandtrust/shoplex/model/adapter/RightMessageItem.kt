@@ -9,19 +9,19 @@ import com.trueandtrust.shoplex.room.viewModel.MessageViewModel
 import com.xwray.groupie.databinding.BindableItem
 import java.util.*
 
-
-class RightMessageItem(val message: Message, private val messageVM: MessageViewModel) : BindableItem<ChatItemRightBinding>(){
+class RightMessageItem(val message: Message, private val messageVM: MessageViewModel) : BindableItem<ChatItemRightBinding>() {
 
     override fun bind(binding: ChatItemRightBinding, position: Int) {
         binding.message = message
 
-        if(!message.isRead){
-            FirebaseReferences.chatRef.document(message.chatID).collection("messages").whereEqualTo("messageID", message.messageID).addSnapshotListener { value, error ->
-                if(value == null || error != null)
+        if (!message.isRead) {
+            FirebaseReferences.chatRef.document(message.chatID).collection("messages")
+                .whereEqualTo("messageID", message.messageID).addSnapshotListener { value, error ->
+                if (value == null || error != null)
                     return@addSnapshotListener
 
                 val updatedMessage = value.documents.first().toObject<Message>()
-                if(updatedMessage != null) {
+                if (updatedMessage != null) {
                     updatedMessage.chatID = message.chatID
                     if (updatedMessage.isSent)
                         messageVM.setSent(updatedMessage.messageID)
@@ -36,6 +36,5 @@ class RightMessageItem(val message: Message, private val messageVM: MessageViewM
     override fun getLayout(): Int {
         return R.layout.chat_item_right
     }
-
 }
 

@@ -10,7 +10,7 @@
     <color name="blue">#667EEA</color>
     <color name="gray">#565758</color>
     <color name="lightgray">#EEEEEE</color>
-    <color name="darkblue">#1C2D7A</color>
+    <color name="dark_blue">#1C2D7A</color>
     <color name="red">#C5372D</color>
     <color name="yellow">#FFC107</color>
     <color name="redShopex">#ff5757</color>
@@ -22,5 +22,10 @@
     <color name="dkblue">#0278ae</color>
 
     <color name="blueshop">#65AFE4</color>
+    <!--    <color name="google">#DB4437</color>-->
+    <color name="facebook">#3b5998 </color>
+    <color name="google">#db4a39</color>
+    <color name="quantum_googblue900">#1c3aa9</color>
+
 
 </resources>

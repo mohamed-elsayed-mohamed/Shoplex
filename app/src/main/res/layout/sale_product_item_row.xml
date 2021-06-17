@@ -20,31 +20,40 @@
             android:id="@+id/imgSaleProduct"
             android:layout_width="@dimen/height_75"
             android:layout_height="@dimen/height_75"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/product_two" />
+            tools:srcCompat="@drawable/product_two"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/tvSalesProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
             android:text="@string/productName"
             app:layout_constraintStart_toEndOf="@+id/imgSaleProduct"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/imgSaleProduct" />
 
         <TextView
             android:id="@+id/tvProductCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/category"
             app:layout_constraintStart_toStartOf="@+id/tvSalesProductName"
             app:layout_constraintTop_toBottomOf="@+id/tvSalesProductName" />
+
+        <TextView
+            android:id="@+id/tvProductPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/price"
+            app:layout_constraintStart_toStartOf="@+id/tvProductCategory"
+            app:layout_constraintTop_toBottomOf="@+id/tvProductCategory" />
 
         <View
             android:id="@+id/divider2"
@@ -63,13 +72,13 @@
             android:id="@+id/tvDiscountType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:text="@string/discount_type"
-            android:textColor="@color/darkblue"
+            android:textColor="@color/dark_blue"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tiDiscountType"
+            app:layout_constraintStart_toStartOf="@+id/tiDiscountType"
             app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -79,8 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="0.5"
+            android:layout_marginEnd="@dimen/margin_8"
             android:hint="@string/discountType"
             app:errorEnabled="true"
             app:layout_constraintEnd_toStartOf="@+id/tiSaleDiscount"
@@ -92,8 +100,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="12sp"
-                android:inputType="none" />
+                android:inputType="none"
+                android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,12 +110,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/discount"
-            android:textColor="@color/darkblue"
+            android:textColor="@color/dark_blue"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tvDiscountType"
-            app:layout_constraintEnd_toStartOf="@+id/tvCurrentPrice"
-            app:layout_constraintStart_toEndOf="@+id/tvDiscountType"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvDiscountType" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -119,6 +127,7 @@
             app:errorEnabled="true"
             app:helperText="@string/discountRange"
             app:layout_constraintEnd_toEndOf="@+id/tvSalesDiscount"
+            app:layout_constraintStart_toStartOf="@+id/tvSalesDiscount"
             app:layout_constraintTop_toBottomOf="@+id/tvSalesDiscount">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -128,8 +137,7 @@
                 android:gravity="center"
                 android:hint="@string/value"
                 android:inputType="number"
-                android:maxLength="2"
-                 />
+                android:maxLength="2" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,39 +145,42 @@
             android:id="@+id/tvCurrentPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
             android:text="@string/price"
-            android:textColor="@color/darkblue"
+            android:textColor="@color/dark_blue"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tvSalesDiscount"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvSalesPrice"
+            app:layout_constraintStart_toStartOf="@+id/tvSalesPrice"
             app:layout_constraintTop_toTopOf="@+id/tvSalesDiscount" />
 
 
         <TextView
             android:id="@+id/tvSalesPrice"
-            android:layout_width="@dimen/width_120"
+            android:layout_width="0dp"
             android:layout_height="@dimen/height_50"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:ems="10"
             android:gravity="center"
-            android:maxLength="7"
             android:padding="@dimen/padding_4"
+            android:layout_marginStart="@dimen/margin_8"
             android:text="@string/price"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tiSaleDiscount"
             app:layout_constraintTop_toBottomOf="@+id/tvCurrentPrice" />
 
         <Button
             android:id="@+id/btnConfirmSales"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="33dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="@string/confirm"
+            android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

@@ -20,6 +20,12 @@ class AuthVM(val context: Context): ViewModel(), AuthListener {
     var password: MutableLiveData<String> = MutableLiveData()
     var primaryAddress: MutableLiveData<String> = MutableLiveData()
 
+    var isLoginBtnPressed: MutableLiveData<Boolean> = MutableLiveData()
+    var isSignupBtnPressed: MutableLiveData<Boolean> = MutableLiveData()
+
+    var isLoginValid: MutableLiveData<Boolean> = MutableLiveData()
+    var isSignupValid: MutableLiveData<Boolean> = MutableLiveData()
+
     private var userDBModel: AuthDBModel
 
     init {

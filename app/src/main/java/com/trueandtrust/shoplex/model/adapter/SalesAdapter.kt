@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.trueandtrust.shoplex.R
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.shoplex.shoplex.model.enumurations.DiscountType
+import com.trueandtrust.shoplex.model.enumurations.DiscountType
 import com.trueandtrust.shoplex.databinding.SaleProductItemRowBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.pojo.Product
@@ -31,18 +31,20 @@ class SalesAdapter(val SalesProduct: ArrayList<Product>, val userID: String) :
     inner class SalesViewHolder(val binding: SaleProductItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
-            Glide.with(itemView.context).load(product.images[0]).into(binding.imgSaleProduct)
+            Glide.with(itemView.context).load(product.images.firstOrNull()).error(R.drawable.product).into(binding.imgSaleProduct)
             binding.tvSalesProductName.text = product.name
             binding.tvProductCategory.text = product.category
             binding.tvSalesPrice.text = product.price.toString()
-            val arrayDiscountTypeAdapter = ArrayAdapter(binding.root.context, R.layout.dropdown_discount_type_item,DiscountType.values())
+            binding.tvProductPrice.text = product.price.toString()
+            val arrayDiscountTypeAdapter = ArrayAdapter(binding.root.context, R.layout.dropdown_discount_type_item,
+                DiscountType.values())
             binding.actDiscountType.setText(DiscountType.Percentage.name)
             binding.actDiscountType.setAdapter(arrayDiscountTypeAdapter)
             binding.actDiscountType.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
                 if(position==0){
                     binding.tiSaleDiscount.helperText = "0-90%"
                 }else {
-                    binding.tiSaleDiscount.helperText = "0-500"
+                    binding.tiSaleDiscount.helperText = "0-100"
 
                 }
             }

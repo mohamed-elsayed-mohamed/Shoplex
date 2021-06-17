@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        app:titleTextColor="@color/darkblue"
+        app:titleTextColor="@color/dark_blue"
 
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 <!--    <TextView-->

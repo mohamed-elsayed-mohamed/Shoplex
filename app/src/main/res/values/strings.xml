@@ -189,6 +189,14 @@
     <string name="quantityRange">1 - 100</string>
     <string name="quantity">Quantity</string>
 
+    <string name="Login">Login</string>
+    <string name="Signup">Signup</string>
+    <string name="Name">Name</string>
+    <string name="phone_hint">+201206899532</string>
+    <string name="Confirmpassword">Confirm password</string>
+    <string name="orLoginvia">Or Login Via</string>
+    <string name="orSignUpvia">Or Sign Up Via</string>
+
     <string-array name="arr_type_discount">
         <item>Percentage</item>
         <item>Fixed</item>

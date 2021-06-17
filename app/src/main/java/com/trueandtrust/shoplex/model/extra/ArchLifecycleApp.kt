@@ -32,4 +32,14 @@ class ArchLifecycleApp : Application(), LifecycleObserver {
             }
         }
     }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onAppDestroy(){
+        if (StoreInfo.storeID != null) {
+            FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID!!).get().addOnSuccessListener {
+                for(ref in it.documents)
+                    ref.reference.update("isStoreOnline", false)
+            }
+        }
+    }
 }

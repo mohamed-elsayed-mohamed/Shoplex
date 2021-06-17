@@ -1,6 +1,6 @@
 package com.trueandtrust.shoplex.model.pojo
 
-import com.shoplex.shoplex.model.enumurations.DiscountType
+import com.trueandtrust.shoplex.model.enumurations.DiscountType
 
 class SpecialDiscount {
     var discount: Float = 0F

@@ -9,6 +9,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.AuthListener
 import com.trueandtrust.shoplex.model.pojo.Store
 
@@ -43,6 +44,8 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
         store.storeID = ref.id
         ref.set(store).addOnSuccessListener {
             addImage(Uri.parse(image), store.storeID)
+            StoreInfo.storeID = store.storeID
+            StoreInfo.updateTokenID()
             //listener.onAddNewStore(store)
             Toast.makeText(context, "Success to create your account!", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
@@ -62,7 +65,6 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
                     photoUri = it
                 }
                 Firebase.auth.currentUser?.updateProfile(profileUpdates)
-
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.trueandtrust.shoplex.model.pojo
 
+import com.google.firebase.firestore.ServerTimestamp
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -11,6 +12,6 @@ data class Store(
     var locations : ArrayList<Location> = arrayListOf(),
     var addresses : ArrayList<String> = arrayListOf(),
     var phone : String = "",
-    var date: Date? = null,
+    @ServerTimestamp var date: Date? = null,
     val notification: Boolean = true
 )

@@ -6,7 +6,6 @@ import android.os.Handler
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -14,8 +13,8 @@ import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySplashBinding
 import com.trueandtrust.shoplex.model.extra.StoreInfo
-import com.trueandtrust.shoplex.model.firebase.StoreDBModel
 import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
 
 class SplashActivity : AppCompatActivity(), INotifyMVP {
     private val Splash_Screen = 4000
@@ -52,10 +51,10 @@ class SplashActivity : AppCompatActivity(), INotifyMVP {
                     startActivity(Intent(applicationContext, HomeActivity::class.java))
                     StoreInfo.saveToRecentVisits()
                 } else {
-                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    startActivity(Intent(applicationContext, AuthActivity::class.java))
                 }
             } else {
-                startActivity(Intent(applicationContext, LoginActivity::class.java))
+                startActivity(Intent(applicationContext, AuthActivity::class.java))
             }
             finish()
 

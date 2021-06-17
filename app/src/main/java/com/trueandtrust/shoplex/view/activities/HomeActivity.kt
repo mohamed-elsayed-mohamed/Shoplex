@@ -26,6 +26,7 @@ import com.trueandtrust.shoplex.databinding.DialogAddReportBinding
 import com.trueandtrust.shoplex.databinding.NavHeaderBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
+import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
 import com.trueandtrust.shoplex.viewmodel.AuthVM
 
 class HomeActivity : AppCompatActivity() {
@@ -135,7 +136,7 @@ class HomeActivity : AppCompatActivity() {
 
         builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             AuthVM.logout(this)
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, AuthActivity::class.java))
             finish()
             Snackbar.make(binding.root, getString(R.string.logoutSuccess), Snackbar.LENGTH_LONG)
                 .show()

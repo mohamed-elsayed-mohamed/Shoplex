@@ -1,70 +1,104 @@
-package com.trueandtrust.shoplex.view.activities
+package com.trueandtrust.shoplex.view.activities.auth
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.Timestamp
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.databinding.ActivitySignupBinding
+import com.trueandtrust.shoplex.databinding.SignupTabFragmentBinding
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
 import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.Store
+import com.trueandtrust.shoplex.view.activities.MapsActivity
 import com.trueandtrust.shoplex.viewmodel.AuthVM
-import com.trueandtrust.shoplex.viewmodel.AuthVMFactory
 import java.io.IOException
-import java.util.*
-
-
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class SignupActivity : AppCompatActivity() {
+class SignupTabFragment(private val authVM: AuthVM): Fragment() {
+    private lateinit var binding: SignupTabFragmentBinding
 
-    private lateinit var binding : ActivitySignupBinding
+    private lateinit var startImageChooser: ActivityResultLauncher<Intent>
+    private lateinit var startMaps: ActivityResultLauncher<Intent>
+
     private var store : Store = Store()
-    private lateinit var authVM: AuthVM
     private val OPEN_GALLERY_CODE = 200
-    var uri:Uri? =null
+    var uri: Uri? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        authVM = ViewModelProvider(this, AuthVMFactory(this)).get(AuthVM::class.java)
+        startImageChooser =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = it.data
+                    if (data != null || data?.data != null) {
+                        uri = data.data
+                        authVM.store.value!!.image = uri.toString()
+                        binding.imgSignup.setImageURI(uri)
+                    }
+                }
+            }
+
+        startMaps = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = it.data
+                if (data != null || data?.data != null) {
+                    val location: Location? = data.getParcelableExtra(MapsActivity.LOCATION)
+                    val address: String? = data.getStringExtra(MapsActivity.ADDRESS)
+                    if (location != null && address != null) {
+                        binding.tvLocation.text = address
+                        authVM.store.value!!.addresses.add(address)
+                        authVM.store.value!!.locations.add(location)
+                        authVM.primaryAddress.value = address
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = SignupTabFragmentBinding.inflate(inflater, container, false)
+
         binding.storeData = authVM
 
 
-        binding.btnSignup.setOnClickListener {
-            store.image =  "https://img.etimg.com/thumb/width-1200,height-900,imgsize-122620,resizemode-1,msid-75214721/industry/services/retail/future-group-negotiates-rents-for-its-1700-stores.jpg"
-            authVM.store.value?.date = Timestamp.now().toDate()
-            if (checkEditText()) {
-                authVM.createAccount()
-                finish()
+        authVM.isSignupBtnPressed.observe(requireActivity(), {
+            if(it){
+                authVM.isSignupValid.value = checkEditText()
+                authVM.isLoginBtnPressed.value = false
             }
-        }
+        })
 
         binding.btnLocation.setOnClickListener {
-            startActivityForResult(Intent(this, MapsActivity::class.java)
-                .apply {
-                    putExtra(MapsActivity.LOCATION_ACTION, LocationAction.Add.name)
-                }, MapsActivity.MAPS_CODE)
+            startMaps.launch(Intent(requireContext(), MapsActivity::class.java).apply {
+                this.putExtra(MapsActivity.LOCATION_ACTION, LocationAction.Add.name)
+            })
         }
-        binding.imgLogo.setOnClickListener{
-            openGallary()
+
+        binding.imgSignup.setOnClickListener{
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+            intent.type = "image/*"
+
+            startImageChooser.launch(intent)
         }
         onEditTextChanged()
-    }
-    private fun openGallary() {
-        var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-        intent.type = "image/*"
-        startActivityForResult(intent, OPEN_GALLERY_CODE)
+
+        return binding.root
     }
 
     private fun onEditTextChanged(){
@@ -118,10 +152,10 @@ class SignupActivity : AppCompatActivity() {
 
 
 //            binding.edPhone.length() == 0 -> binding.edPhone.error = getString(R.string.Required)
-            store.addresses.size == 0 || store.locations?.size == 0 -> Toast.makeText(this,"Choose Your Location",Toast.LENGTH_LONG).show()
+            authVM.store.value?.addresses?.size == 0 || authVM.store.value?.locations?.size == 0 -> Toast.makeText(requireContext(),"Choose Your Location",Toast.LENGTH_LONG).show()
 
             authVM.store.value?.image.isNullOrEmpty() -> Toast.makeText(
-                this,
+                requireContext(),
                 "Please, Choose Image",
                 Toast.LENGTH_SHORT
             ).show()
@@ -142,42 +176,5 @@ class SignupActivity : AppCompatActivity() {
         return if (!Pattern.matches("[a-zA-Z]+", phone)) {
             phone.length > 11 && phone.length <= 13
         } else false
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == MapsActivity.MAPS_CODE){
-            if(resultCode == RESULT_OK){
-                val location: LatLng? = data?.getParcelableExtra(MapsActivity.LOCATION)
-                val address: String? = data?.getStringExtra(MapsActivity.ADDRESS)
-                if (location != null) {
-                    binding.tvLocation.text = address
-                    authVM.store.value!!.addresses.add(address!!)
-                    authVM.store.value!!.locations.add(Location(location.latitude, location.longitude))
-                    authVM.primaryAddress.value = address
-                }
-
-                if(location != null && address != null) {
-                    store.locations.add(Location(location.latitude, location.longitude))
-                    binding.tvLocation.text = address
-                    store.addresses.add(address)
-                }
-            }
-        }else if(requestCode == OPEN_GALLERY_CODE){
-         if(resultCode== RESULT_OK){
-             if (data==null || data.data == null){
-                 return
-
-             }
-             uri=data.data
-             authVM.store.value!!.image=uri.toString()
-             try {
-                 val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                 binding.imgLogo.setImageBitmap(bitmap)
-             } catch (e: IOException) {
-                 e.printStackTrace()
-             }
-         }
-        }
     }
 }

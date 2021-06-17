@@ -50,8 +50,7 @@
         <activity android:name=".view.activities.MessageActivity" />
         <activity android:name=".view.activities.StoreLocationActivity"/>
         <activity android:name=".view.activities.LastOrderActivity"/>
-        <activity android:name=".view.activities.LoginActivity"/>
-        <activity android:name=".view.activities.SignupActivity" />
+        <activity android:name=".view.activities.auth.AuthActivity"/>
 
         <service
             android:name="com.trueandtrust.shoplex.model.services.MyFirebaseMessagingService"
