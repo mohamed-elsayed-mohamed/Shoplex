@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.model.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.trueandtrust.shoplex.R
@@ -34,8 +35,17 @@ class SalesAdapter(val SalesProduct: ArrayList<Product>, val userID: String) :
             binding.tvSalesProductName.text = product.name
             binding.tvProductCategory.text = product.category
             binding.tvSalesPrice.text = product.price.toString()
-            val arrayDiscountTypeAdapter = ArrayAdapter(binding.root.context, R.layout.dropdown_discount_type_item,binding.root.context.resources.getStringArray(R.array.arr_type_discount))
+            val arrayDiscountTypeAdapter = ArrayAdapter(binding.root.context, R.layout.dropdown_discount_type_item,DiscountType.values())
+            binding.actDiscountType.setText(DiscountType.Percentage.name)
             binding.actDiscountType.setAdapter(arrayDiscountTypeAdapter)
+            binding.actDiscountType.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+                if(position==0){
+                    binding.tiSaleDiscount.helperText = "0-90%"
+                }else {
+                    binding.tiSaleDiscount.helperText = "0-500"
+
+                }
+            }
             binding.btnConfirmSales.setOnClickListener {
                 // Toast.makeText(binding.root.context, "User: " + userID + ", ID: " + product.productID, Toast.LENGTH_SHORT).show()
                 addDiscount(product)
