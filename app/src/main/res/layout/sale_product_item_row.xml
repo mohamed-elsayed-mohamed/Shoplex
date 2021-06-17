@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
+    android:layout_marginBottom="@dimen/margin_8"
+    android:layout_marginTop="@dimen/margin_8"
+    android:layout_marginEnd="@dimen/margin_16"
+    android:layout_marginStart="@dimen/margin_16"
+    app:cardCornerRadius="@dimen/margin_16"
+    app:cardElevation="@dimen/margin_8"
     android:background="@drawable/card">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,11 +48,11 @@
 
         <View
             android:id="@+id/divider2"
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_16"
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -87,6 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textSize="12sp"
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -120,10 +126,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="@string/percentage"
+                android:hint="@string/value"
                 android:inputType="number"
                 android:maxLength="2"
-                android:text="@={`` + product.discount}" />
+                 />
 
         </com.google.android.material.textfield.TextInputLayout>
 

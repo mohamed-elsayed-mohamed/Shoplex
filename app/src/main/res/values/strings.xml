@@ -18,14 +18,14 @@
     <string name="store_name">Store Name</string>
     <string name="offers">Offers</string>
     <string name="premium_card">Premium Card</string>
-    <string name="basic">Basic</string>
+    <string name="basic">Bronze</string>
     <string name="price">Price</string>
     <string name="_2_weeks_of_ads">2 Weeks of Ads</string>
     <string name="buy_now">Buy Now</string>
-    <string name="standard">Standard</string>
+    <string name="standard">Silver</string>
     <string name="_1_month_of_ads">1 Month of Ads</string>
     <string name="_3_month_of_ads">3 Month of Ads</string>
-    <string name="premium">Premium</string>
+    <string name="premium">Gold</string>
     <string name="confirm">Confirm</string>
 
     <string-array name="arr_category">

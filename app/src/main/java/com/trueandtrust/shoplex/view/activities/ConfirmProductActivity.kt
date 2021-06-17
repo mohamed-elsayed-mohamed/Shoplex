@@ -108,27 +108,28 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
     }
 
     private fun showAll(){
-        binding.tvProductName.text = product.name
+        binding.product=product
+     //   binding.tvProductName.text = product.name
         binding.imgSlideConfirm.setImageList(product.getImageSlides())
         binding.imgProductConfirm.setImageURI(product.imagesListURI[0])
-        if(product.price == product.newPrice) {
-            binding.tvOldPriceConfirm.visibility = View.GONE
-            binding.tvDiscountConfirm.visibility = View.GONE
-        }
+//        if(product.price == product.newPrice) {
+//            binding.tvOldPriceConfirm.visibility = View.GONE
+//            binding.tvDiscountConfirm.visibility = View.GONE
+//        }
 
-        binding.tvOldPriceConfirm.apply {
-            paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            text = product.price.toString()
-        }
+//        binding.tvOldPriceConfirm.apply {
+//            paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+//            text = product.price.toString()
+//        }
 
-        binding.tvNewPriceConfirm.text = product.newPrice.toString() + "EGP"
-        binding.tvDiscountConfirm.text = product.discount.toString() + " %"
+      //  binding.tvNewPriceConfirm.text = product.newPrice.toString() + "EGP"
+      //  binding.tvDiscountConfirm.text = product.discount.toString() + " %"
 
-        if(product.discount == 0) {
-            binding.tvSalesOffer.visibility = View.GONE
-        }else {
-            binding.tvSalesOffer.text = "${product.discount} % ${getString(R.string.sales_Off)}"
-        }
+//        if(product.discount == 0) {
+//            binding.tvSalesOffer.visibility = View.GONE
+//        }else {
+//            binding.tvSalesOffer.text = "${product.discount} % ${getString(R.string.sales_Off)}"
+//        }
     }
 
     // Payment

@@ -31,7 +31,6 @@
                 android:padding="@dimen/margin_8"
                 android:text="@{message.message}"
                 android:textColor="@color/white"
-                android:drawableRight="@{(message.isSent? (message.isRead? @drawable/ic_read:@drawable/ic_sent):@drawable/ic_not_sent)}"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/drawable_padding"
                 android:text="@{DateUtils.getDate(message.messageDate)}"
+                android:drawableRight="@{(message.isSent? (message.isRead? @drawable/ic_readdone:@drawable/ic_sentdone):@drawable/ic_right)}"
                 android:textColor="@color/grey_font"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/tvSendMessage"
