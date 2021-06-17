@@ -15,7 +15,7 @@ class RightMessageItem(val message: Message, private val messageVM: MessageViewM
     override fun bind(binding: ChatItemRightBinding, position: Int) {
         binding.message = message
 
-        if(!message.isSent){
+        if(!message.isRead){
             FirebaseReferences.chatRef.document(message.chatID).collection("messages").whereEqualTo("messageID", message.messageID).addSnapshotListener { value, error ->
                 if(value == null || error != null)
                     return@addSnapshotListener
