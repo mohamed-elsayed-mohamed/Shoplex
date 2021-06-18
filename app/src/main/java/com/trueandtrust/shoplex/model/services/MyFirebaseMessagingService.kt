@@ -16,11 +16,9 @@ import com.google.firebase.messaging.RemoteMessage
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.view.activities.HomeActivity
-import com.trueandtrust.shoplex.view.activities.LoginActivity
 import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
-    private val TAG = "FireBaseMessagingService"
     private val NOTIFICATION_CHANNEL_ID = "net.larntech.notification"
     val NOTIFICATION_ID = 100
 
