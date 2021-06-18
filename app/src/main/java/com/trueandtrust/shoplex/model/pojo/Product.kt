@@ -67,6 +67,7 @@ data class Product(
         imagesListURI = parcel.readArrayList(Uri::class.java.classLoader) as ArrayList<Uri>
         properties = parcel.readArrayList(Property::class.java.classLoader) as ArrayList<Property>
         quantity = parcel.readInt()
+        rate = parcel.readFloat()
     }
 
     @Exclude
@@ -99,6 +100,7 @@ data class Product(
         parcel.writeArray(imagesListURI.toArray())
         parcel.writeArray(properties.toArray())
         parcel.writeInt(quantity)
+        rate?.let { parcel.writeFloat(it) }
     }
 
     override fun describeContents(): Int {

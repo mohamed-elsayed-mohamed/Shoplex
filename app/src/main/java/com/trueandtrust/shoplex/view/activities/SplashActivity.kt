@@ -1,6 +1,7 @@
 package com.trueandtrust.shoplex.view.activities
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
@@ -13,10 +14,11 @@ import com.google.firebase.ktx.Firebase
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySplashBinding
 import com.trueandtrust.shoplex.model.extra.StoreInfo
-import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.model.interfaces.AddProductListener
 import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
+import java.util.*
 
-class SplashActivity : AppCompatActivity(), INotifyMVP {
+class SplashActivity : AppCompatActivity(), AddProductListener {
     private val Splash_Screen = 4000
     private lateinit var binding: ActivitySplashBinding
     private lateinit var topAnimation: Animation
@@ -47,6 +49,7 @@ class SplashActivity : AppCompatActivity(), INotifyMVP {
             currentUser = Firebase.auth.currentUser
 
             if (currentUser != null) {
+                setLocale(StoreInfo.lang)
                 if (StoreInfo.storeID != null) {
                     startActivity(Intent(applicationContext, HomeActivity::class.java))
                     StoreInfo.saveToRecentVisits()
@@ -59,5 +62,17 @@ class SplashActivity : AppCompatActivity(), INotifyMVP {
             finish()
 
         }, Splash_Screen.toLong())
+    }
+
+    fun setLocale(lang: String) {
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+        baseContext.createConfigurationContext(config)
+        baseContext.resources.updateConfiguration(
+            config,
+            baseContext.resources.displayMetrics
+        )
     }
 }

@@ -196,6 +196,7 @@
     <string name="Confirmpassword">Confirm password</string>
     <string name="orLoginvia">Or Login Via</string>
     <string name="orSignUpvia">Or Sign Up Via</string>
+    <string name="Delivered">Delivered</string>
 
     <string-array name="arr_type_discount">
         <item>Percentage</item>

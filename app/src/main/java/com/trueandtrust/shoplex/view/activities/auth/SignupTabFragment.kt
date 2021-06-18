@@ -2,39 +2,30 @@ package com.trueandtrust.shoplex.view.activities.auth
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import com.google.android.gms.maps.model.LatLng
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.SignupTabFragmentBinding
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
 import com.trueandtrust.shoplex.model.pojo.Location
-import com.trueandtrust.shoplex.model.pojo.Store
 import com.trueandtrust.shoplex.view.activities.MapsActivity
 import com.trueandtrust.shoplex.viewmodel.AuthVM
-import java.io.IOException
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class SignupTabFragment(private val authVM: AuthVM): Fragment() {
+class SignupTabFragment: Fragment() {
     private lateinit var binding: SignupTabFragmentBinding
+    private lateinit var authVM: AuthVM
 
     private lateinit var startImageChooser: ActivityResultLauncher<Intent>
     private lateinit var startMaps: ActivityResultLauncher<Intent>
-
-    private var store : Store = Store()
-    private val OPEN_GALLERY_CODE = 200
-    var uri: Uri? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +34,7 @@ class SignupTabFragment(private val authVM: AuthVM): Fragment() {
                 if (it.resultCode == Activity.RESULT_OK) {
                     val data: Intent? = it.data
                     if (data != null || data?.data != null) {
-                        uri = data.data
+                        val uri = data.data
                         authVM.store.value!!.image = uri.toString()
                         binding.imgSignup.setImageURI(uri)
                     }
@@ -72,7 +63,7 @@ class SignupTabFragment(private val authVM: AuthVM): Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = SignupTabFragmentBinding.inflate(inflater, container, false)
-
+        authVM = (activity as AuthActivity).authVM
         binding.storeData = authVM
 
 
@@ -174,7 +165,7 @@ class SignupTabFragment(private val authVM: AuthVM): Fragment() {
 
     private fun isValidMobile(phone: String): Boolean {
         return if (!Pattern.matches("[a-zA-Z]+", phone)) {
-            phone.length > 11 && phone.length <= 13
+            phone.length in 12..13
         } else false
     }
 }

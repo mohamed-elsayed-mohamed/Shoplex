@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.model.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -39,6 +40,12 @@ class ChatHeadAdapter(private val chatHeads: ArrayList<ChatHead>):
             Glide.with(itemView.context).load(chatHead.productImageURL).into(binding.imgChatHead)
 
             binding.chatHead = chatHead
+
+            if(chatHead.numOfMessage > 0)
+                binding.tvNumOfMessage.visibility = View.VISIBLE
+
+            if(chatHead.isClientOnline)
+                binding.cardImg.visibility = View.VISIBLE
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, MessageActivity::class.java)

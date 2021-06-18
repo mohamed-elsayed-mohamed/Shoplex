@@ -1,4 +1,4 @@
-package com.shoplex.shoplex.model.enumurations
+package com.trueandtrust.shoplex.model.enumurations
 
 enum class OrderStatus {
     Current,

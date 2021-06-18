@@ -37,12 +37,14 @@ class ProductsDBModel(val listener: ProductsListener) {
             listener.onProductAdded()
         }
 
+        // New Added Images
         for (imgURI in product.imagesListURI)
             if (!product.images.contains(imgURI.path))
                 addImage(imgURI)
 
+        // Removed Images
         for (imgURL in product.removedImages)
-            deleteImage(imgURL)
+            deleteImage(imgURL, product.productID)
     }
 
     private fun addImage(uri: Uri) {
@@ -58,7 +60,9 @@ class ProductsDBModel(val listener: ProductsListener) {
         }
     }
 
-    private fun deleteImage(path: String) {
+    private fun deleteImage(path: String, productID: String) {
+        reference.document(productID)
+            .update("images", FieldValue.arrayRemove(path))
         val imageRef = FirebaseStorage.getInstance().getReferenceFromUrl(path)
         imageRef.delete()
     }

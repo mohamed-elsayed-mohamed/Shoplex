@@ -17,14 +17,16 @@ import com.trueandtrust.shoplex.viewmodel.AuthVM
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class LoginTabFragment(private val authVM: AuthVM) :Fragment() {
+class LoginTabFragment :Fragment() {
+
     private lateinit var binding: LoginTabFragmentBinding
+    private lateinit var authVM: AuthVM
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+        authVM = (activity as AuthActivity).authVM
         binding = LoginTabFragmentBinding.inflate(inflater, container, false)
         binding.storeData = authVM
         binding.tvForgetPass.setOnClickListener {

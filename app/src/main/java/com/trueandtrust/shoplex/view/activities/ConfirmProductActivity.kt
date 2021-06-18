@@ -1,7 +1,6 @@
 package com.trueandtrust.shoplex.view.activities
 
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -112,24 +111,6 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
      //   binding.tvProductName.text = product.name
         binding.imgSlideConfirm.setImageList(product.getImageSlides())
         binding.imgProductConfirm.setImageURI(product.imagesListURI[0])
-//        if(product.price == product.newPrice) {
-//            binding.tvOldPriceConfirm.visibility = View.GONE
-//            binding.tvDiscountConfirm.visibility = View.GONE
-//        }
-
-//        binding.tvOldPriceConfirm.apply {
-//            paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-//            text = product.price.toString()
-//        }
-
-      //  binding.tvNewPriceConfirm.text = product.newPrice.toString() + "EGP"
-      //  binding.tvDiscountConfirm.text = product.discount.toString() + " %"
-
-//        if(product.discount == 0) {
-//            binding.tvSalesOffer.visibility = View.GONE
-//        }else {
-//            binding.tvSalesOffer.text = "${product.discount} % ${getString(R.string.sales_Off)}"
-//        }
     }
 
     // Payment

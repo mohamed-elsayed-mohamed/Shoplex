@@ -71,6 +71,7 @@ class AuthVM(val context: Context): ViewModel(), AuthListener {
             StoreInfo.saveNotification(context, false)
             Firebase.auth.signOut()
             StoreInfo.clear()
+            StoreInfo.clearSharedPref(context)
         }
     }
 }

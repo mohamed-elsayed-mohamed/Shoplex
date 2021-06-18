@@ -6,7 +6,7 @@ import com.trueandtrust.shoplex.model.pojo.Message
 import com.trueandtrust.shoplex.model.pojo.Product
 
 @Database(entities = [Message::class, Product::class], version = 1)
-@TypeConverters(Conventers::class)
+@TypeConverters(Converters::class)
 abstract class ShopLexDatabase : RoomDatabase() {
 
     abstract fun storeDao() : StoreDao

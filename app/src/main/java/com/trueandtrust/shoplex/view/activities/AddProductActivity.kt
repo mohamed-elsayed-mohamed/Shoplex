@@ -20,14 +20,14 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
-import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.model.interfaces.AddProductListener
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.enumurations.*
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
 
-class AddProductActivity : AppCompatActivity(), INotifyMVP {
+class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
     private val MAX_IMAGES_SIZE = 6
     private lateinit var binding: ActivityAddProductBinding

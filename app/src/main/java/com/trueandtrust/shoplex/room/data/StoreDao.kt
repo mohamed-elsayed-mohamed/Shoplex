@@ -30,5 +30,4 @@ interface StoreDao {
 
     @Query("SELECT * FROM product")
     fun readAllProducts():LiveData<List<Product>>
-
 }

@@ -1,6 +1,7 @@
 package com.trueandtrust.shoplex.view.activities
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
@@ -19,15 +20,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.trueandtrust.shoplex.model.pojo.Report
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityHomeBinding
 import com.trueandtrust.shoplex.databinding.DialogAddReportBinding
 import com.trueandtrust.shoplex.databinding.NavHeaderBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
+import com.trueandtrust.shoplex.model.pojo.Report
 import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
 import com.trueandtrust.shoplex.viewmodel.AuthVM
+import java.util.*
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -82,6 +84,16 @@ class HomeActivity : AppCompatActivity() {
                         StoreLocationActivity::class.java
                     )
                 )
+
+                R.id.Language -> {
+                    if(it.title.toString().contains("Ar", true)){
+                        getSharedPreferences("LANG", MODE_PRIVATE).edit().putString("Language", "ar").apply()
+                        setLocale("ar")
+                    }else{
+                        getSharedPreferences("LANG", MODE_PRIVATE).edit().putString("Language", "en").apply()
+                        setLocale("en")
+                    }
+                }
 
                 R.id.report -> showAddReportDialog()
 
@@ -147,5 +159,20 @@ class HomeActivity : AppCompatActivity() {
         }
 
         builder.show()
+    }
+
+    fun setLocale(lang: String) {
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+        baseContext.createConfigurationContext(config)
+        baseContext.resources.updateConfiguration(
+            config,
+            baseContext.resources.displayMetrics
+        )
+        val refresh = Intent(this, HomeActivity::class.java)
+        finish()
+        startActivity(refresh)
     }
 }

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.StoreDBModel
 import com.trueandtrust.shoplex.model.interfaces.StoreListener
-import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.PendingLocation
 
 class StoreVM: ViewModel(), StoreListener {
@@ -16,7 +15,7 @@ class StoreVM: ViewModel(), StoreListener {
 
     fun getAllAddresses(){
         val storeLocationAddresses = StoreInfo.addresses.zip(StoreInfo.locations)
-        var storeLocations: ArrayList<PendingLocation> = arrayListOf()
+        val storeLocations: ArrayList<PendingLocation> = arrayListOf()
         for (storeLocation in storeLocationAddresses){
             val location = PendingLocation(address=storeLocation.first, location = storeLocation.second)
             storeLocations.add(location)

@@ -3,9 +3,8 @@ package com.trueandtrust.shoplex.model.firebase
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.toObject
-import com.shoplex.shoplex.model.enumurations.OrderStatus
+import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
-import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
 import com.trueandtrust.shoplex.model.interfaces.OrdersListener
 import com.trueandtrust.shoplex.model.pojo.Order
 import com.trueandtrust.shoplex.model.pojo.Product

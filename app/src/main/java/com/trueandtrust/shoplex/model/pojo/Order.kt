@@ -1,9 +1,9 @@
 package com.trueandtrust.shoplex.model.pojo
 
 import com.google.firebase.firestore.Exclude
-import com.shoplex.shoplex.model.enumurations.DeliveryMethod
-import com.shoplex.shoplex.model.enumurations.OrderStatus
-import com.shoplex.shoplex.model.enumurations.PaymentMethod
+import com.trueandtrust.shoplex.model.enumurations.DeliveryMethod
+import com.trueandtrust.shoplex.model.enumurations.OrderStatus
+import com.trueandtrust.shoplex.model.enumurations.PaymentMethod
 
 class Order {
     var orderID: String? = null

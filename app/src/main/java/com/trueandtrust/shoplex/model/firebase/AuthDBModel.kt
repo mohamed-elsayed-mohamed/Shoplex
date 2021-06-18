@@ -26,20 +26,29 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
     }
 
     fun createAccount(store: Store, password: String) {
-        Firebase.auth.createUserWithEmailAndPassword(store.email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    addNewStore(store)
+        Firebase.auth.fetchSignInMethodsForEmail(store.email).addOnCompleteListener {
+            if (it.isSuccessful) {
+                if (it.result?.signInMethods?.size == 0) {
+                    Firebase.auth.createUserWithEmailAndPassword(store.email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                addNewStore(store)
+                            } else {
+                                Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show()
+                                listener.onAddStoreFailed()
+                            }
+                        }
                 } else {
-                    Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show()
-                    listener.onAddStoreFailed()
+                    listener.onUserExists(context)
                 }
             }
+        }
+
     }
 
     private fun addNewStore(store: Store) {
-        val image =store.image
-        store.image=""
+        val image = store.image
+        store.image = ""
         val ref: DocumentReference = FirebaseReferences.pendingSellersRef.document()
         store.storeID = ref.id
         ref.set(store).addOnSuccessListener {
@@ -55,11 +64,13 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
         }
 
     }
-    private fun addImage(uri : Uri , storeId :String){
-        val imageRef = FirebaseReferences.imgStroreRef.child(storeId)
+
+    private fun addImage(uri: Uri, storeId: String) {
+        val imageRef = FirebaseReferences.imagesStoreRef.child(storeId)
         imageRef.putFile(uri).addOnSuccessListener { _ ->
             imageRef.downloadUrl.addOnSuccessListener {
-                FirebaseReferences.pendingSellersRef.document(storeId).update("image",it.toString())
+                FirebaseReferences.pendingSellersRef.document(storeId)
+                    .update("image", it.toString())
                 //update profile
                 val profileUpdates = userProfileChangeRequest {
                     photoUri = it
@@ -88,7 +99,7 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
             }
     }
 
-    private fun checkPendingStore(userEmail: String){
+    private fun checkPendingStore(userEmail: String) {
         FirebaseReferences.pendingSellersRef.whereEqualTo("email", userEmail).get()
             .addOnSuccessListener {
                 // var store: Store?

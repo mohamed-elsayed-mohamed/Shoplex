@@ -5,9 +5,5 @@ import java.util.*
 
 object DateUtils {
     @JvmStatic
-    fun getDate(date: Date): String {
-        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm a")
-        val result = sdf.format(date)
-        return result
-    }
+    fun getDate(date: Date): String = SimpleDateFormat("dd-MM-yyyy hh:mm a").format(date)
 }

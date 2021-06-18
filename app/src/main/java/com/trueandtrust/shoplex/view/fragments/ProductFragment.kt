@@ -29,6 +29,9 @@ class ProductFragment(val product: Product) : Fragment() {
 
         binding.product = product
 
+        if(!product.properties.isNullOrEmpty())
+            binding.textView4.visibility = View.VISIBLE
+
         // Properties Adapter
         binding.rcProperties.layoutManager = LinearLayoutManager(context)
         binding.rcProperties.adapter = PropertyAdapter(product.properties, true)
