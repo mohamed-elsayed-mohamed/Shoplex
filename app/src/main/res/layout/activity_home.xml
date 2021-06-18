@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
-            app:itemBackground="@color/white"
             app:menu="@menu/bottom_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,9 +46,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:itemTextColor="@color/gray"
-        app:itemIconTint="@color/gray"
-
         app:menu="@menu/navdrawer"
         />
 </androidx.drawerlayout.widget.DrawerLayout>

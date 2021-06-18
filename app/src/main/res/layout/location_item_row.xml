@@ -30,7 +30,6 @@
             android:layout_marginEnd="@dimen/margin_16"
             android:layout_marginBottom="8dp"
             android:text="@string/Location"
-            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

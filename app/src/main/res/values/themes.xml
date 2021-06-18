@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.Shoplex" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/dark_blue</item>
-        <item name="colorPrimaryVariant">@color/dark_blue</item>
+        <item name="colorPrimary">@color/primaryShoplex</item>
+        <item name="colorPrimaryVariant">@color/primaryShoplex</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/dark_blue</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/primaryShoplex</item>
+        <item name="colorSecondaryVariant">@color/secondaryShoplex</item>
         <item name="colorOnSecondary">@color/gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -15,7 +15,15 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="titleTextColor">@color/dark_blue</item>
         <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
+    </style>
 
+    <style name="MyAlertDialogPropertyStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/secondaryShoplex</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/black</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/white</item>
     </style>
 
     <!--    <style name="AppTheme.Home" parent="Theme.AppCompat.Light.NoActionBar">-->
@@ -48,7 +56,7 @@
 
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/dark_blue</item>
+        <item name="color">@color/secondaryShoplex</item>
     </style>
 
     <style name="TabStyleCustom" parent="TextAppearance.Design.Tab">
@@ -74,4 +82,20 @@
         <item name="cornerSizeTopRight">25dp</item>
     </style>
 
+    <style name="CustomCardview">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardCornerRadius">7dp</item>
+    </style>
+
+    <style name="TitleColor" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/secondaryShoplex</item>
+    </style>
+
+    <style name="WhiteColorText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/grayShopex</item>
+    </style>
+
+    <style name="light_Blue_Text" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/gray</item>
+    </style>
 </resources>

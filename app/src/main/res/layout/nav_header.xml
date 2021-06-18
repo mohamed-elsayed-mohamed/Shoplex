@@ -20,7 +20,7 @@
     android:id="@+id/navHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/blue"
+    android:background="@color/primaryShoplex"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
