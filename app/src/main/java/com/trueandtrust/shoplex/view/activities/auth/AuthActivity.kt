@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_auth.*
 
 class AuthActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthBinding
-    private lateinit var authVM: AuthVM
+    lateinit var authVM: AuthVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +19,7 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
         authVM = ViewModelProvider(this, AuthVMFactory(this)).get(AuthVM::class.java)
         binding.tabLatout.setupWithViewPager(binding.viewPager)
-        binding.viewPager.adapter = AuthAdapter(supportFragmentManager, this, authVM)
+        binding.viewPager.adapter = AuthAdapter(supportFragmentManager, this)
 
         binding.tabLatout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

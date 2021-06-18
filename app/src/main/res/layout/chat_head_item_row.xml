@@ -41,7 +41,7 @@
             app:cardElevation="@dimen/margin_6"
             android:layout_marginBottom="@dimen/margin_4"
             android:layout_marginEnd="@dimen/margin_4"
-            android:visibility="@{chatHead.clientOnline? View.VISIBLE: View.INVISIBLE}"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@id/cardImgChatHead"
             android:layout_alignTop="@id/cardImgChatHead"
             android:backgroundTint="#1DDA25"
@@ -81,7 +81,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvUserNameChatHead"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvUserNameChatHead"
-            android:visibility="@{chatHead.numOfMessage == 0? View.INVISIBLE: View.VISIBLE}"
+            android:visibility="invisible"
             tools:text="@{`` + chatHead.numOfMessage}" />
 
         <TextView

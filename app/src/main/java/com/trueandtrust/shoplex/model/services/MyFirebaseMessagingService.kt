@@ -10,26 +10,20 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.view.activities.HomeActivity
+import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
-
-
-    private val TAG = "FireBaseMessagingService"
-    var NOTIFICATION_CHANNEL_ID = "net.larntech.notification"
+    private val NOTIFICATION_CHANNEL_ID = "net.larntech.notification"
     val NOTIFICATION_ID = 100
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-
-        // Log.e("message",R.string.Message_Received.toString());
-
         if (remoteMessage.data.isNotEmpty()) {
             val title = remoteMessage.data[this.getString(R.string.title)]
             val body = remoteMessage.data[this.getString(R.string.body)]
@@ -41,25 +35,28 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-
-    override fun onNewToken(p0: String) {
-        super.onNewToken(p0)
-        Log.e("token",R.string.New_Token.toString())
-    }
-
-
     private fun showNotification(
         context: Context,
         title: String?,
         message: String?
     ) {
         val ii: Intent
-        ii = Intent(context, HomeActivity::class.java)
-        ii.data = Uri.parse(context.getString(R.string.custom) + System.currentTimeMillis())
-        ii.action = context.getString(R.string.actionstring) + System.currentTimeMillis()
-        ii.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        val pi =
-            PendingIntent.getActivity(context, 0, ii, PendingIntent.FLAG_UPDATE_CURRENT)
+        var pi: PendingIntent? = null
+        if(title?.contains("Product Accepted", true) == true){
+            ii = Intent(context, HomeActivity::class.java)
+            ii.data = Uri.parse(context.getString(R.string.custom) + System.currentTimeMillis())
+            ii.action = context.getString(R.string.actionstring) + System.currentTimeMillis()
+            ii.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            pi =PendingIntent.getActivity(context, 0, ii, PendingIntent.FLAG_UPDATE_CURRENT)
+            StoreInfo.readStoreInfo(context)
+        }else if(title?.contains("Account Accepted", true) == true){
+            ii = Intent(context, AuthActivity::class.java)
+            ii.data = Uri.parse(context.getString(R.string.custom) + System.currentTimeMillis())
+            ii.action = context.getString(R.string.actionstring) + System.currentTimeMillis()
+            ii.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            pi =PendingIntent.getActivity(context, 0, ii, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
         val notification: Notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //Log.e("Notification", "Created in up to orio OS device");
@@ -68,12 +65,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setSmallIcon(getNotificationIcon())
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setContentIntent(pi)
+                //.setContentIntent(pi)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .setWhen(System.currentTimeMillis())
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentTitle(title).build()
+                .setContentTitle(title).apply {
+                    if(pi != null)
+                        this.setContentIntent(pi)
+                }.build()
             val notificationManager = context.getSystemService(
                 Context.NOTIFICATION_SERVICE
             ) as NotificationManager
@@ -89,9 +89,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setSmallIcon(getNotificationIcon())
                 .setAutoCancel(true)
                 .setContentText(message)
-                .setContentIntent(pi)
+                //.setContentIntent(pi)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentTitle(title).build()
+                .setContentTitle(title).apply {
+                    if(pi != null)
+                        this.setContentIntent(pi)
+                }.build()
             val notificationManager = context.getSystemService(
                 Context.NOTIFICATION_SERVICE
             ) as NotificationManager

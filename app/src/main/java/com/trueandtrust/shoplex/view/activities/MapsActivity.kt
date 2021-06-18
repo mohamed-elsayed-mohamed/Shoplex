@@ -13,10 +13,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.tasks.Task
-import com.trueandtrust.shoplex.model.maps.LocationManager
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityMapsBinding
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
+import com.trueandtrust.shoplex.model.maps.LocationManager
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -43,7 +43,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         requestPermission()
-        if(intent.getStringExtra(LOCATION_ACTION) == LocationAction.Add.toString()){
+        if(intent.getStringExtra(LOCATION_ACTION) == LocationAction.Add.name){
             locationAction = LocationAction.Add
         }
 

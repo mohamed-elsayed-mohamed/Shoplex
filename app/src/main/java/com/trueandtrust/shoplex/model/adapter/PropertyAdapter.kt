@@ -44,17 +44,17 @@ class PropertyAdapter(val properties: ArrayList<Property>, val isViewOnly: Boole
                     chipItem = LayoutInflater.from(binding.root.context).inflate(R.layout.chip_entry_item, null, false) as Chip
                     binding.btnDelteProperty.setOnClickListener {
                         properties.remove(property)
-                        notifyItemRemoved(adapterPosition)
+                        notifyItemRemoved(bindingAdapterPosition)
                     }
                 }
 
                 chipItem.text = value
                 chipItem.setOnCloseIconClickListener {
                     binding.cgPropValue.removeView(it)
-                    properties[adapterPosition].values.remove(value)
+                    properties[bindingAdapterPosition].values.remove(value)
                     if (property.values.count() == 0) {
                         properties.remove(property)
-                        notifyItemRemoved(adapterPosition)
+                        notifyItemRemoved(bindingAdapterPosition)
                     }
                 }
 

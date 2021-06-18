@@ -11,7 +11,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 object StoreInfo {
-    private const val SHARED_USER_INFO = "USER_INFO"
+    const val SHARED_USER_INFO = "USER_INFO"
     var storeID: String? = null
     var name : String = ""
     var email : String = ""
@@ -19,17 +19,7 @@ object StoreInfo {
     var locations : ArrayList<Location> = arrayListOf()
     var addresses : ArrayList<String> = arrayListOf()
     var phone : String = ""
-
-    fun updateStoreInfo(store: Store, context: Context){
-        this.storeID = store.storeID
-        this.name = store.name
-        this.email = store.email
-        this.image = store.image
-        this.locations = store.locations
-        this.addresses = store.addresses
-        this.phone = store.phone
-        saveStoreInfo(context)
-    }
+    var lang: String = "en"
 
     fun updateTokenID(){
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -68,6 +58,19 @@ object StoreInfo {
         val locationsType: Type = object : TypeToken<ArrayList<Location>>() {}.type
         addresses = Gson().fromJson(sharedPref.getString("addresses", null), addressesType)
         locations = Gson().fromJson(sharedPref.getString("locations", null), locationsType)
+
+        lang = context.getSharedPreferences("LANG", Context.MODE_PRIVATE).getString("Language", "en")?: "en"
+    }
+
+    fun clearSharedPref(context: Context){
+        context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE).edit()
+            .remove("name")
+            .remove("email")
+            .remove("image")
+            .remove("phone")
+            .remove("locations")
+            .remove("addresses")
+            .apply()
     }
 
     fun addStoreLocation(context: Context, pendingLocation: PendingLocation){

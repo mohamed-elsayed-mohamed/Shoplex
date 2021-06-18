@@ -12,8 +12,7 @@ import com.trueandtrust.shoplex.model.pojo.Property
 import java.lang.reflect.Type
 import java.util.*
 
-
-class Conventers {
+class Converters {
 
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
@@ -27,7 +26,7 @@ class Conventers {
 
     @TypeConverter
     fun fromString(value: String?): ArrayList<String?>? {
-        val listType: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+        val listType: Type = object : TypeToken<ArrayList<String?>?>() {}.type
         return Gson().fromJson(value, listType)
     }
 
@@ -38,7 +37,7 @@ class Conventers {
     }
     @TypeConverter
     fun fromUri(value: String?): ArrayList<Uri?>? {
-        val listType: Type = object : TypeToken<ArrayList<Uri?>?>() {}.getType()
+        val listType: Type = object : TypeToken<ArrayList<Uri?>?>() {}.type
         return Gson().fromJson(value, listType)
     }
 

@@ -5,8 +5,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 
-
-
 object FirebaseReferences {
     // -----------------------> Databases <----------------------- //
     @SuppressLint("StaticFieldLeak")
@@ -21,19 +19,15 @@ object FirebaseReferences {
     val pendingLocationsRef = database.collection("Pending Locations")
     val storeRef = database.collection("Sellers")
     val recentVisits = database.collection("Recent Visits")
-    val sellersDashboardDoc = database.collection("Dashboard").document("Sellers")
     val chatRef = database.collection("Chats")
     val ordersRef = database.collection("Orders")
     val ReportRef = database.collection("Reports")
-    //val specialDiscount = database.collection("Special Discounts")
-
 
     // -----------------------> Storage <----------------------- //
     // Products
     val imagesProductsRef = imagesDatabase.child("Products")
-    val imgStroreRef = imagesDatabase.child("Sellers")
+    val imagesStoreRef = imagesDatabase.child("Sellers")
 
     //----------------------> Notifications <---------------------------//
     val notificationTokensRef = database.collection("Notification Center")
-
 }

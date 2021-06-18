@@ -2,9 +2,6 @@ package com.trueandtrust.shoplex.model.pojo
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.TypeConverter
-import com.google.gson.Gson
 
 class Location() : Parcelable {
 

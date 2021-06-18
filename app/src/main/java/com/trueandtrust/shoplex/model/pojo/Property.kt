@@ -2,7 +2,6 @@ package com.trueandtrust.shoplex.model.pojo
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.firebase.firestore.PropertyName
 
 class Property() : Parcelable {
     var name : String = ""
@@ -11,11 +10,6 @@ class Property() : Parcelable {
     constructor(parcel: Parcel) : this() {
         name = parcel.readString().toString()
         parcel.readStringList(values)
-    }
-
-    constructor(name: String, values: ArrayList<String>) : this() {
-        this.name = name
-        this.values = values
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

@@ -13,8 +13,7 @@ data class Premium(val plan: Plan? = null,
     constructor(parcel: Parcel) : this(
         plan = Plan.valueOf(parcel.readString().toString()),
         parcel.readInt(),
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(plan?.name)

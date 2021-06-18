@@ -29,12 +29,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_8">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:cardCornerRadius="@dimen/height_50"
                     android:layout_marginRight="@dimen/margin_8"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -44,8 +45,8 @@
 
                     <ImageView
                         android:id="@+id/imgToolbarChat"
-                        android:layout_width="@dimen/height_45"
-                        android:layout_height="@dimen/height_45"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:contentDescription="@string/todo"
                         android:scaleType="centerCrop"
                         tools:src="@tools:sample/avatars" />
@@ -55,10 +56,10 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardIsOnline"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:backgroundTint="#1DDA25"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:cardCornerRadius="@dimen/height_50"
                     app:cardElevation="@dimen/margin_6"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView"

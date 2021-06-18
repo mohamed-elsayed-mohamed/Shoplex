@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModel
 import com.trueandtrust.shoplex.model.enumurations.*
 import com.trueandtrust.shoplex.model.pojo.Product
 
-class AddProductVM: ViewModel {
+class AddProductVM : ViewModel() {
     var product: MutableLiveData<Product> = MutableLiveData()
     var arrCategory: MutableLiveData<Array<String>> = MutableLiveData()
     var arrSubCategory: MutableLiveData<Array<String>> = MutableLiveData()
 
-    constructor(){
+    init {
         product.value = Product()
     }
 
@@ -31,7 +31,7 @@ class AddProductVM: ViewModel {
                 Category.Books -> SubBook.values()
             }
 
-        this.arrSubCategory.value = (listSubCat as Array<Any>).map {
+        this.arrSubCategory.value = (listSubCat as Array<*>).map {
             it.toString().replace("_", " ")
         }.toTypedArray()
     }

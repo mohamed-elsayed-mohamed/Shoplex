@@ -5,9 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.trueandtrust.shoplex.R
-import com.trueandtrust.shoplex.viewmodel.AuthVM
 
-class AuthAdapter(fm:FragmentManager, val context:Context, private val authVM: AuthVM) : FragmentPagerAdapter(fm) {
+class AuthAdapter(fm:FragmentManager, val context:Context) : FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
         return 2
     }
@@ -15,10 +14,10 @@ class AuthAdapter(fm:FragmentManager, val context:Context, private val authVM: A
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> {
-                LoginTabFragment(authVM)
+                LoginTabFragment()
             }
             else -> {
-                SignupTabFragment(authVM)
+                SignupTabFragment()
             }
         }
     }

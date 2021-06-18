@@ -14,7 +14,7 @@ import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.SpecialDiscount
 
-class SalesAdapter(val SalesProduct: ArrayList<Product>, val userID: String) :
+class SalesAdapter(private val salesProduct: ArrayList<Product>, val userID: String) :
     RecyclerView.Adapter<SalesAdapter.SalesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SalesViewHolder {
@@ -24,9 +24,9 @@ class SalesAdapter(val SalesProduct: ArrayList<Product>, val userID: String) :
     }
 
     override fun onBindViewHolder(holder: SalesViewHolder, position: Int) =
-        holder.bind(SalesProduct[position])
+        holder.bind(salesProduct[position])
 
-    override fun getItemCount() = SalesProduct.size
+    override fun getItemCount() = salesProduct.size
 
     inner class SalesViewHolder(val binding: SaleProductItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -40,7 +40,7 @@ class SalesAdapter(val SalesProduct: ArrayList<Product>, val userID: String) :
                 DiscountType.values())
             binding.actDiscountType.setText(DiscountType.Percentage.name)
             binding.actDiscountType.setAdapter(arrayDiscountTypeAdapter)
-            binding.actDiscountType.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            binding.actDiscountType.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 if(position==0){
                     binding.tiSaleDiscount.helperText = "0-90%"
                 }else {
@@ -48,11 +48,10 @@ class SalesAdapter(val SalesProduct: ArrayList<Product>, val userID: String) :
 
                 }
             }
+
             binding.btnConfirmSales.setOnClickListener {
-                // Toast.makeText(binding.root.context, "User: " + userID + ", ID: " + product.productID, Toast.LENGTH_SHORT).show()
                 addDiscount(product)
             }
-
         }
 
         private fun addDiscount(product: Product){

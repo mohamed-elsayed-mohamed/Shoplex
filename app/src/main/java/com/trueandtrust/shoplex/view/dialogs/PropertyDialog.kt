@@ -1,23 +1,19 @@
 package com.trueandtrust.shoplex.view.dialogs
 
-
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.view.size
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.PropDialogBinding
-import com.trueandtrust.shoplex.model.interfaces.INotifyMVP
+import com.trueandtrust.shoplex.model.interfaces.AddProductListener
 import com.trueandtrust.shoplex.model.pojo.Property
 
-class PropertyDialog(val listener: INotifyMVP): AppCompatDialogFragment() {
+class PropertyDialog(val listener: AddProductListener): AppCompatDialogFragment() {
     private lateinit var binding: PropDialogBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

@@ -19,9 +19,7 @@ class LocationManager: RoutingListener {
     val alexandria: Alexandria = Alexandria()
     private lateinit var marker: Marker
 
-    //private lateinit var currentLocation: Location
     lateinit var selectedLocation: LatLng
-    private val REQUEST_CODE = 101
 
     private lateinit var mMap: GoogleMap
     private val API_KEY = "AIzaSyAyj2_BzoXGMR432LsT4dpv6TV6SdNbtDg"
@@ -97,7 +95,7 @@ class LocationManager: RoutingListener {
         }
     }
 
-    fun launchGoogleMaps(location: LatLng) {
+    fun launchGoogleMaps(location: com.trueandtrust.shoplex.model.pojo.Location) {
         val gmmIntentUri =
             Uri.parse("google.navigation:q=" + location.latitude + "," + location.longitude)
         //Uri gmmIntentUri = Uri.parse("google.navigation:q=" + destination);
@@ -120,7 +118,7 @@ class LocationManager: RoutingListener {
     fun getAddress(location: com.trueandtrust.shoplex.model.pojo.Location): String {
 
         val geocoder = Geocoder(context, Locale.getDefault())
-        var addresses: List<Address>? =
+        val addresses: List<Address>? =
             geocoder.getFromLocation(location.latitude, location.longitude, 1)
         return addresses?.get(0)?.getAddressLine(0)?: ""
     }
@@ -148,7 +146,6 @@ class LocationManager: RoutingListener {
                 val polyline: Polyline = mMap.addPolyline(polyOptions)
                 polylineStartLatLng = polyline.points[0]
                 polylineEndLatLng = polyline.points[polyline.points.size - 1]
-            } else {
             }
         }
 

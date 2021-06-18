@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_message.*
 
 class MessageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMessageBinding
-    val messageAdapter = GroupAdapter<GroupieViewHolder>()
+    private val messageAdapter = GroupAdapter<GroupieViewHolder>()
     lateinit var chatID: String
     lateinit var userID: String
     private var position: Int = -1
@@ -49,8 +49,8 @@ class MessageActivity : AppCompatActivity() {
         }
 
         if (supportActionBar != null) {
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true);
-            supportActionBar!!.setDisplayShowHomeEnabled(true);
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setDisplayShowHomeEnabled(true)
         }
 
         val userName = intent.getStringExtra(ChatHeadAdapter.CHAT_TITLE_KEY)
@@ -79,7 +79,6 @@ class MessageActivity : AppCompatActivity() {
         getAllMessage()
 
         binding.btnSendMessage.setOnClickListener {
-
             performSendMessage()
         }
     }
@@ -88,23 +87,26 @@ class MessageActivity : AppCompatActivity() {
         //send Message to Firebase
         val messageText = binding.edSendMesssage.text
 
-        var message = Message(toId = userID, message = messageText.toString())
+        val message = Message(toId = userID, message = messageText.toString())
         message.chatID = chatID
         FirebaseReferences.chatRef.document(chatID).collection("messages")
             .document(message.messageID)
             .set(message).addOnSuccessListener {
                 messageAdapter.add(RightMessageItem(message, messageVM))
                 messageText.clear()
+                binding.rcMessage.smoothScrollToPosition(messageAdapter.groupCount)
             }
     }
 
     private fun listenToNewMessages(lastID: String) {
+        var firstTimeToLoadMessages = (lastID == "1")
         FirebaseReferences.chatRef.document(chatID).collection("messages")
             .whereGreaterThan("messageID", lastID).addSnapshotListener { snapshots, error ->
                 if (error != null) {
                     return@addSnapshotListener
                 }
-                for ((index,dc) in snapshots!!.documentChanges.withIndex()) {
+
+                for ((index, dc) in snapshots!!.documentChanges.withIndex()) {
                     if ((dc.type) == DocumentChange.Type.ADDED) {
                         val message = dc.document.toObject<Message>()
                         if (message.toId == StoreInfo.storeID) {
@@ -114,86 +116,48 @@ class MessageActivity : AppCompatActivity() {
                                     .document(message.messageID).update("isSent", true)
                                 message.isSent = true
                             }
+
                             if (!message.isRead && position == -1)
-                                position = messageAdapter.groupCount + index -1
+                                position = messageAdapter.groupCount + index - 1
 
                             messageAdapter.add(LeftMessageItem(chatID, message, messageVM))
                             messageVM.addMessage(message)
                         } else if (message.toId != StoreInfo.storeID) {
+                            if (firstTimeToLoadMessages)
+                                messageAdapter.add(RightMessageItem(message, messageVM))
                             message.chatID = chatID
                             messageVM.addMessage(message)
                         }
                     }
                 }
+
+                firstTimeToLoadMessages = false
+
                 if (position > 0){
-                    binding.rcMessage.scrollToPosition(position)
+                    binding.rcMessage.smoothScrollToPosition(position)
                     position = 0
                 }
             }
     }
 
-    /*
-    private fun listenToMyMessages(firstUnReadMessage: String){
-        FirebaseReferences.chatRef.document(chatID).collection("messages").whereEqualTo("messageID", firstUnReadMessage).addSnapshotListener { snapshots, error ->
-            if (error != null) {
-                return@addSnapshotListener
-            }
-            for ((index,dc) in snapshots!!.documentChanges.withIndex()) {
-               // if ((dc.type) == DocumentChange.Type.MODIFIED) {
-                    val message = dc.document.toObject<Message>()
-//                    if (message.toId == StoreInfo.storeID) {
-//                        message.chatID = chatID
-//                        if (!message.isSent) {
-//                            FirebaseReferences.chatRef.document(chatID).collection("messages")
-//                                .document(message.messageID).update("isSent", true)
-//                            message.isSent = true
-//                        }
-//                        if (!message.isRead && position == -1)
-//                            position = messageAdapter.groupCount + index -1
-//
-//                        messageAdapter.add(LeftMessageItem(chatID, message, messageVM))
-//                        messageVM.addMessage(message)
-//                    } else
-                //messageAdapter.notifyDataSetChanged()
-                    if (message.toId != StoreInfo.storeID) {
-                        message.chatID = chatID
-
-                        if(message.isSent)
-                            messageVM.setSent(message.messageID)
-                        if(message.isRead)
-                            messageVM.setRead(message.messageID)
-                    }
-             //   }
-            }
-        }
-    }
-*/
     private fun getAllMessage() {
         binding.rcMessage.adapter = messageAdapter
         messageVM.readAllMessage.observe(this, {
-//            var firstUnReadMessage = "1"
             for (message in it) {
                 if (message.toId == StoreInfo.storeID) {
                     messageAdapter.add(LeftMessageItem(chatID, message, messageVM))
-
                 } else if (message.toId != StoreInfo.storeID) {
                     messageAdapter.add(RightMessageItem(message, messageVM))
-//                    if(firstUnReadMessage == "1" && !message.isSent){
-//                        firstUnReadMessage = message.messageID
-//                    }
                 }
             }
             val lastID = if (it.isEmpty()) {
                 "1"
             } else {
-               // position = it.count() - 1
-                binding.rcMessage.scrollToPosition(it.count() - 1)
+                binding.rcMessage.smoothScrollToPosition(it.count() - 1)
                 it.last().messageID
             }
             messageVM.readAllMessage.removeObservers(this)
             listenToNewMessages(lastID)
-            //listenToMyMessages(firstUnReadMessage)
-            //getAllMessageFromFirebase(lastID)
         })
     }
 
@@ -210,7 +174,7 @@ class MessageActivity : AppCompatActivity() {
                 if (productsIDs != null) {
                     FirebaseReferences.productsRef.whereIn("productID", productsIDs!!).get()
                         .addOnCompleteListener {
-                            var products: ArrayList<Product> = arrayListOf()
+                            val products: ArrayList<Product> = arrayListOf()
                             for (product in it.result) {
                                 products.add(product.toObject())
                                 if (product == it.result.last()) {
@@ -219,7 +183,6 @@ class MessageActivity : AppCompatActivity() {
                             }
                         }
                 }
-                // Toast.makeText(this, getString(R.string.sale) + chatID, Toast.LENGTH_SHORT).show()
             }
             android.R.id.home -> finish()
         }
@@ -229,13 +192,13 @@ class MessageActivity : AppCompatActivity() {
     private fun openSnackBar(products: ArrayList<Product>) {
         Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
         val binding = DialogAddSaleBinding.inflate(layoutInflater)
-        val SalesBtnSheetDialog = BottomSheetDialog(binding.root.context)
+        val salesBtnSheetDialog = BottomSheetDialog(binding.root.context)
 
-        var salesProductAdapter = SalesAdapter(products, userID)
+        val salesProductAdapter = SalesAdapter(products, userID)
         binding.rcSalesProduct.adapter = salesProductAdapter
 
-        SalesBtnSheetDialog.setContentView(binding.root)
-        SalesBtnSheetDialog.show()
+        salesBtnSheetDialog.setContentView(binding.root)
+        salesBtnSheetDialog.show()
     }
 }
 

@@ -24,7 +24,7 @@ class ReviewFragment(val productId: String) : Fragment() {
         this.productsVm = ProductsVM()
 
         productsVm.getReviewsByProductId(productId)
-        productsVm.reviews.observe(viewLifecycleOwner, Observer{ reviews ->
+        productsVm.reviews.observe(viewLifecycleOwner, { reviews ->
             reviewAdapter = ReviewsAdapter(reviews)
             binding.rvReview.adapter = reviewAdapter
 
