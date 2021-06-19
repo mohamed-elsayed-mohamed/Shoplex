@@ -138,7 +138,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">الثالى</string>
     <string name="previous">السابق</string>
-    <string name="delivered">تم التوصيل</string>
+    <string name="Delivered">تم التوصيل</string>
 
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="shoplex">shoplex Store</string>
