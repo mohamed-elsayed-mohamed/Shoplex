@@ -17,7 +17,7 @@ class RightMessageItem(val message: Message, private val messageVM: MessageViewM
         if (!message.isRead) {
             FirebaseReferences.chatRef.document(message.chatID).collection("messages")
                 .whereEqualTo("messageID", message.messageID).addSnapshotListener { value, error ->
-                if (value == null || error != null)
+                if (value == null || error != null || value.documents.isNullOrEmpty())
                     return@addSnapshotListener
 
                 val updatedMessage = value.documents.first().toObject<Message>()

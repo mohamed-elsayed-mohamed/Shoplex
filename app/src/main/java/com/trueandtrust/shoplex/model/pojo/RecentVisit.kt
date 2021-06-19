@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 
 data class RecentVisit(
-    val storeID: String = StoreInfo.storeID!!,
+    val ID: String = StoreInfo.storeID!!,
     val name:String = StoreInfo.name,
     val email: String = StoreInfo.email,
     val image: String = StoreInfo.image!!,

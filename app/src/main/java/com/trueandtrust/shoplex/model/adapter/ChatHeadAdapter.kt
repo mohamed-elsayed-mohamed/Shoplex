@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ChatHeadItemRowBinding
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 import com.trueandtrust.shoplex.view.activities.MessageActivity
@@ -27,9 +28,7 @@ class ChatHeadAdapter(private val chatHeads: ArrayList<ChatHead>):
         )
     }
 
-    override fun onBindViewHolder(viewHolder: ChatHeadViewHolder, position: Int) {
-        viewHolder.bind(chatHeads[position])
-    }
+    override fun onBindViewHolder(viewHolder: ChatHeadViewHolder, position: Int) = viewHolder.bind(chatHeads[position])
 
     override fun getItemCount() = chatHeads.size
 
@@ -37,15 +36,19 @@ class ChatHeadAdapter(private val chatHeads: ArrayList<ChatHead>):
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(chatHead: ChatHead) {
-            Glide.with(itemView.context).load(chatHead.productImageURL).into(binding.imgChatHead)
+            Glide.with(itemView.context).load(chatHead.productImageURL).error(R.drawable.product).into(binding.imgChatHead)
 
             binding.chatHead = chatHead
 
             if(chatHead.numOfMessage > 0)
                 binding.tvNumOfMessage.visibility = View.VISIBLE
+            else
+                binding.tvNumOfMessage.visibility = View.INVISIBLE
 
             if(chatHead.isClientOnline)
                 binding.cardImg.visibility = View.VISIBLE
+            else
+                binding.cardImg.visibility = View.INVISIBLE
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, MessageActivity::class.java)
@@ -58,5 +61,4 @@ class ChatHeadAdapter(private val chatHeads: ArrayList<ChatHead>):
             }
         }
     }
-
 }

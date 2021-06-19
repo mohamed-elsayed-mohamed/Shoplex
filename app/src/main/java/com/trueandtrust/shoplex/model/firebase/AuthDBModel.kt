@@ -27,23 +27,20 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
 
     fun createAccount(store: Store, password: String) {
         Firebase.auth.fetchSignInMethodsForEmail(store.email).addOnCompleteListener {
-            if (it.isSuccessful) {
-                if (it.result?.signInMethods?.size == 0) {
-                    Firebase.auth.createUserWithEmailAndPassword(store.email, password)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                addNewStore(store)
-                            } else {
-                                Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show()
-                                listener.onAddStoreFailed()
-                            }
+            if (it.isSuccessful && it.result?.signInMethods?.size == 0) {
+                Firebase.auth.createUserWithEmailAndPassword(store.email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            addNewStore(store)
+                        } else {
+                            Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show()
+                            listener.onAddStoreFailed()
                         }
-                } else {
-                    listener.onUserExists(context)
-                }
+                    }
+            } else {
+                listener.onUserExists(context)
             }
         }
-
     }
 
     private fun addNewStore(store: Store) {

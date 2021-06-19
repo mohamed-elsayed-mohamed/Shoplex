@@ -59,15 +59,12 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:backgroundTint="#1DDA25"
-                    android:visibility="visible"
+                    android:visibility="invisible"
                     app:cardCornerRadius="@dimen/height_50"
                     app:cardElevation="@dimen/margin_6"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView"
                     app:layout_constraintEnd_toEndOf="@+id/cardView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
             <TextView
                 android:id="@+id/tvToolbarUserChat"

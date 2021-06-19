@@ -5,30 +5,29 @@ import com.trueandtrust.shoplex.model.enumurations.DeliveryMethod
 import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.model.enumurations.PaymentMethod
 
-class Order {
-    var orderID: String? = null
-    var productID: String = ""
-    var userID: String = ""
-    var storeID: String = ""
-    var storeName: String = ""
-    var orderStatus: OrderStatus = OrderStatus.Current
-    var quantity: Int = 1
-    var specialDiscount: SpecialDiscount? = null
+data class Order (
+    var orderID: String? = null,
+    var productID: String = "",
+    var userID: String = "",
+    var storeID: String = "",
+    var storeName: String = "",
+    var orderStatus: OrderStatus = OrderStatus.Current,
+    var quantity: Int = 1,
+    var specialDiscount: SpecialDiscount? = null,
 
-    var productPrice: Float = 0.0F
-    var subTotalPrice: Float = 0F
-    var totalDiscount: Float = 0F
-    var shipping: Float = 0F
-    var totalPrice: Float = 0F
+    var productPrice: Float = 0.0F,
+    var subTotalPrice: Float = 0F,
+    var totalDiscount: Float = 0F,
+    var shipping: Float = 0F,
+    var totalPrice: Float = 0F,
 
     @Exclude
     @set:Exclude @get:Exclude
-    var product:Product? = null
+    var product:Product? = null,
 
-    var deliveryMethod: String = DeliveryMethod.Door.name
-    var paymentMethod: String = PaymentMethod.Cash.name
-    var deliveryLoc: Location? = null
-    var deliveryAddress: String = ""
-
-    constructor()
-}
+    var deliveryMethod: String = DeliveryMethod.Door.name,
+    var paymentMethod: String = PaymentMethod.Cash.name,
+    var deliveryLoc: Location? = null,
+    var deliveryAddress: String = "",
+    val properties: ArrayList<String>? = null
+)

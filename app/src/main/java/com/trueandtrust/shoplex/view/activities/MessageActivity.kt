@@ -31,10 +31,10 @@ import kotlinx.android.synthetic.main.activity_message.*
 class MessageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMessageBinding
     private val messageAdapter = GroupAdapter<GroupieViewHolder>()
-    lateinit var chatID: String
-    lateinit var userID: String
-    private var position: Int = -1
+    private lateinit var chatID: String
+    private lateinit var userID: String
     private var productsIDs: ArrayList<String>? = null
+    private var position: Int = -1
     private lateinit var messageVM: MessageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,9 +66,9 @@ class MessageActivity : AppCompatActivity() {
 
         messageVM.isOnline.observe(this, {
             if(it){
-                cardIsOnline.visibility = View.VISIBLE
+                binding.cardIsOnline.visibility = View.VISIBLE
             }else{
-                cardIsOnline.visibility = View.INVISIBLE
+                binding.cardIsOnline.visibility = View.INVISIBLE
             }
         })
 

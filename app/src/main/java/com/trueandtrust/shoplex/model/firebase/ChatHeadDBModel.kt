@@ -9,7 +9,7 @@ import com.trueandtrust.shoplex.model.pojo.Chat
 import com.trueandtrust.shoplex.model.pojo.ChatHead
 import com.trueandtrust.shoplex.model.pojo.Product
 
-class ChatHeadDBModel(val listener: ChatsListener) {
+class ChatHeadDBModel(private val listener: ChatsListener) {
 
     fun getChatHeads() {
         val chatHeads = arrayListOf<ChatHead>()
@@ -30,10 +30,11 @@ class ChatHeadDBModel(val listener: ChatsListener) {
                                             chat.chatID,
                                             product.name,
                                             product.price,
-                                            product.images[0],
+                                            product.images.first(),
                                             chat.userID,
                                             chat.userName,
-                                            chat.unreadStoreMessages
+                                            chat.unreadStoreMessages,
+                                            isClientOnline = chat.isClientOnline
                                         )
                                         setListener(chatHead, chatHeads.size)
                                         chatHeads.add(chatHead)
@@ -66,7 +67,7 @@ class ChatHeadDBModel(val listener: ChatsListener) {
                                 chatHead.storeId = product.storeID
                                 chatHead.productName = product.name
                                 chatHead.price = product.price
-                                chatHead.productImageURL = product.images[0]
+                                chatHead.productImageURL = product.images.first()
                                 chatHead.numOfMessage = chat.unreadStoreMessages
                             }
                         }
