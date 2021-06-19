@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.trueandtrust.shoplex.model.pojo.DateUtils"/>
+        <import type="com.trueandtrust.shoplex.model.extra.DateUtils"/>
         <variable
             name="message"
             type="com.trueandtrust.shoplex.model.pojo.Message" />

@@ -1,4 +1,4 @@
-package com.trueandtrust.shoplex.model.pojo
+package com.trueandtrust.shoplex.model.extra
 
 import java.text.SimpleDateFormat
 import java.util.*
