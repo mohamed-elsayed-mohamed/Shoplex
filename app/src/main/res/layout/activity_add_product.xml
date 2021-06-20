@@ -66,14 +66,14 @@
             <TextView
                 android:id="@+id/edNewPrice"
                 android:layout_width="@dimen/width_120"
-                android:layout_height="@dimen/height_50"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:ems="10"
                 android:gravity="center"
                 android:maxLength="7"
                 android:padding="@dimen/padding_4"
                 android:text="@={`` + product.newPrice}"
+                app:layout_constraintBottom_toBottomOf="@+id/tiDiscountNum"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tiDiscountNum" />
 
@@ -99,8 +99,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/product_name"
                     android:inputType="textPersonName"
-                    android:text="@={product.name}"
-                    android:maxLength="40" />
+                    android:maxLength="40"
+                    android:text="@={product.name}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,10 +108,10 @@
                 android:id="@+id/tvOldPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/originalPrice"
-                app:layout_constraintEnd_toEndOf="@+id/tiOldPrice"
-                app:layout_constraintStart_toStartOf="@+id/tiOldPrice"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tiProductName" />
 
             <TextView
@@ -121,7 +121,6 @@
                 android:text="@string/discount"
                 app:layout_constraintBottom_toBottomOf="@+id/tvOldPrice"
                 app:layout_constraintEnd_toEndOf="@+id/tiDiscountNum"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/tiDiscountNum"
                 app:layout_constraintTop_toTopOf="@+id/tvOldPrice" />
 
@@ -129,10 +128,10 @@
                 android:id="@+id/tvNewPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:text="@string/afterDiscount"
                 app:layout_constraintBottom_toBottomOf="@+id/tvDiscount"
-                app:layout_constraintEnd_toEndOf="@+id/edNewPrice"
-                app:layout_constraintStart_toStartOf="@+id/edNewPrice"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvDiscount" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -140,8 +139,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="@dimen/width_120"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 app:errorEnabled="true"
                 app:helperText="@string/priceRange"
                 app:layout_constraintStart_toStartOf="parent"
@@ -168,18 +167,19 @@
                 app:helperText="@string/discountRange"
                 app:layout_constraintBottom_toBottomOf="@+id/tiOldPrice"
                 app:layout_constraintEnd_toStartOf="@+id/edNewPrice"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/tiOldPrice"
                 app:layout_constraintTop_toTopOf="@+id/tiOldPrice">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edDiscountNum"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="69dp"
                     android:gravity="center"
                     android:hint="@string/percentage"
-                    android:text="@={`` + product.discount}"
                     android:inputType="number"
-                    android:maxLength="2" />
+                    android:maxLength="2"
+                    android:text="@={`` + product.discount}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -207,11 +207,11 @@
                     android:layout_gravity="top"
                     android:ems="10"
                     android:gravity="start"
-                    android:text="@={product.description}"
                     android:hint="@string/description"
                     android:inputType="textMultiLine"
                     android:maxLength="200"
-                    android:minLines="5" />
+                    android:minLines="5"
+                    android:text="@={product.description}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -292,12 +292,12 @@
 
             <TextView
                 android:id="@+id/tvEnterProperty"
+                style="@style/WhiteColorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_16"
                 android:text="@string/enter_your_product_properties"
-                android:textColor="@color/dark_blue"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />

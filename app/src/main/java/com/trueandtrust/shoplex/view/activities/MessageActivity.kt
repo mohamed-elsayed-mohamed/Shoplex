@@ -45,7 +45,7 @@ class MessageActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarMessage)
         supportActionBar?.apply {
             title = ""
-            setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+           // setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         }
 
         if (supportActionBar != null) {

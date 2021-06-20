@@ -194,6 +194,7 @@
     <string name="orSignUpvia">Or Sign Up Via</string>
     <string name="or_login_with">Or Login With</string>
     <string name="Delivered">Delivered</string>
+    <string name="NA">N/A</string>
 
     <string-array name="arr_type_discount">
         <item>Percentage</item>

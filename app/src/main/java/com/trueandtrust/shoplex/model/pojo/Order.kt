@@ -1,12 +1,16 @@
 package com.trueandtrust.shoplex.model.pojo
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.firebase.firestore.Exclude
 import com.trueandtrust.shoplex.model.enumurations.DeliveryMethod
 import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.model.enumurations.PaymentMethod
 
+@Entity(tableName = "orders")
 data class Order (
-    var orderID: String? = null,
+    @PrimaryKey
+    var orderID: String = "",
     var productID: String = "",
     var userID: String = "",
     var storeID: String = "",
@@ -29,5 +33,6 @@ data class Order (
     var paymentMethod: String = PaymentMethod.Cash.name,
     var deliveryLoc: Location? = null,
     var deliveryAddress: String = "",
-    val properties: ArrayList<String>? = null
+    val properties: ArrayList<String>? = null,
+
 )

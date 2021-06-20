@@ -6,9 +6,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
-import com.trueandtrust.shoplex.model.pojo.Location
-import com.trueandtrust.shoplex.model.pojo.Premium
-import com.trueandtrust.shoplex.model.pojo.Property
+import com.trueandtrust.shoplex.model.pojo.*
 import java.lang.reflect.Type
 import java.util.*
 
@@ -129,4 +127,25 @@ class Converters {
 //            TypeToken<List<OptionValues?>?>() {}.type
 //        return gson.fromJson(optionValuesString, type)
 //    }
+
+    @TypeConverter
+    fun specialDiscountToString(specialDiscount: SpecialDiscount?): String? {
+        if(specialDiscount != null)
+            return Gson().toJson(specialDiscount)
+        return null
+    }
+
+    @TypeConverter
+    fun stringToSpecialDiscoun(string: String?): SpecialDiscount? = Gson().fromJson(string, SpecialDiscount::class.java)
+
+    @TypeConverter
+    fun productToString(product: Product?): String? {
+        if(product != null)
+            return Gson().toJson(product)
+        return null
+    }
+
+    @TypeConverter
+    fun stringToProduct(string: String?): Product? = Gson().fromJson(string, Product::class.java)
+
 }
