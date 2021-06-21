@@ -33,7 +33,6 @@ interface StoreDao {
     @Query("SELECT * FROM product")
     fun readAllProducts():LiveData<List<Product>>
 
-
     //last order
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addLasOrder(lastOrder: Order)
