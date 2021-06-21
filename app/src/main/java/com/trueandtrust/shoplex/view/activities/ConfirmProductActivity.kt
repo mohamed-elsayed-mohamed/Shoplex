@@ -6,33 +6,27 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
-import com.stripe.android.PaymentConfiguration
-import com.stripe.android.paymentsheet.PaymentSheet
-import com.stripe.android.paymentsheet.PaymentSheetResult
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
 import com.trueandtrust.shoplex.model.enumurations.Plan
 import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
+import com.trueandtrust.shoplex.model.interfaces.PaymentListener
 import com.trueandtrust.shoplex.model.interfaces.ProductsListener
 import com.trueandtrust.shoplex.model.pojo.Premium
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.room.viewModel.ProductViewModel
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import java.io.IOException
+import com.trueandtrust.shoplex.viewmodel.PaymentMethodFactory
+import com.trueandtrust.shoplex.viewmodel.PaymentMethodVM
+import kotlinx.android.synthetic.main.activity_confirm_product.*
 
-class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
+class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentListener {
     private lateinit var binding: ActivityConfirmProductBinding
     private lateinit var product: Product
     private var isUpdate: Boolean = false
     private lateinit var productViewModel: ProductViewModel
-
-    private lateinit var paymentSheet: PaymentSheet
-    private lateinit var paymentIntentClientSecret: String
     private var premiumPlan: Plan? = null
+
+    private lateinit var paymentMethodVM: PaymentMethodVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,39 +37,37 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
         isUpdate = intent.getBooleanExtra(getString(R.string.update_product), false)
         productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
 
+        paymentMethodVM =
+            ViewModelProvider(this, PaymentMethodFactory(this, this)).get(
+                PaymentMethodVM::class.java
+            )
         showAll()
 
         binding.btnBuyBasic.setOnClickListener {
-            product.premium = Premium(Plan.Bronze, 14 + (product.premium?.premiumDays?:0))
+            product.premium = Premium(Plan.Bronze, 14 + (product.premium?.premiumDays ?: 0))
             premiumPlan = Plan.Bronze
             binding.cardStandard.visibility = View.INVISIBLE
             binding.cardPremium.visibility = View.INVISIBLE
         }
 
         binding.btnBuyStandard.setOnClickListener {
-            product.premium = Premium(Plan.Silver, 30 + (product.premium?.premiumDays?:0))
+            product.premium = Premium(Plan.Silver, 30 + (product.premium?.premiumDays ?: 0))
             premiumPlan = Plan.Silver
             binding.cardBasic.visibility = View.INVISIBLE
             binding.cardPremium.visibility = View.INVISIBLE
         }
 
         binding.btnBuyPremium.setOnClickListener {
-            product.premium = Premium(Plan.Gold, 90 + (product.premium?.premiumDays?:0))
+            product.premium = Premium(Plan.Gold, 90 + (product.premium?.premiumDays ?: 0))
             premiumPlan = Plan.Gold
             binding.cardBasic.visibility = View.INVISIBLE
             binding.cardStandard.visibility = View.INVISIBLE
         }
 
-        PaymentConfiguration.init(this, STRIPE_PUBLISHABLE_KEY)
-
-        paymentSheet = PaymentSheet(this) { result ->
-            onPaymentSheetResult(result)
-        }
-
         binding.btnConfirm.setOnClickListener {
             var premiumPrice = 0
-            if(product.premium != null && premiumPlan != null){
-                premiumPrice = when(premiumPlan){
+            if (product.premium != null && premiumPlan != null) {
+                premiumPrice = when (premiumPlan) {
                     Plan.Bronze -> 20
                     Plan.Silver -> 30
                     Plan.Gold -> 75
@@ -83,139 +75,42 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
                 }
             }
 
-            val price = ((product.newPrice * product.quantity) * 0.1) + premiumPrice
-            if(!isUpdate) {
-                if(price > 10) {
-                    fetchInitData(price)
-                }else{
-                    Toast.makeText(this, "Minimum Charge 100 L.E", Toast.LENGTH_SHORT).show()
-                }
-            }else if(premiumPrice > 0){
-                fetchInitData(premiumPrice.toDouble())
-            }else{
+            val price = calcTax(product.newPrice * product.quantity) + premiumPrice
+            btnConfirm.isEnabled = false
+            if (!isUpdate) {
+                paymentMethodVM.pay(price)
+            } else if (premiumPrice > 0) {
+                paymentMethodVM.pay(premiumPrice.toFloat())
+            } else {
                 addUpdateProduct()
             }
         }
     }
 
-    private fun presentPaymentSheet() {
-        paymentSheet.presentWithPaymentIntent(
-            paymentIntentClientSecret
-        )
+    private fun calcTax(price: Float): Float {
+        return when {
+            price <= 50 -> price * 0.1F
+            price <= 100 -> price * 0.085F
+            price <= 500 -> price * 0.075F
+            price <= 1000 -> price * 0.070F
+            price <= 3000 -> price * 0.060F
+            price <= 5000 -> price * 0.050F
+            price <= 10000 -> price * 0.040F
+            price <= 50000 -> price * 0.035F
+            else -> price * 0.030F
+        }
     }
 
-    private fun showAll(){
-        binding.product=product
-     //   binding.tvProductName.text = product.name
+    private fun showAll() {
+        binding.product = product
+        //   binding.tvProductName.text = product.name
         binding.imgSlideConfirm.setImageList(product.getImageSlides())
         binding.imgProductConfirm.setImageURI(product.imagesListURI[0])
-    }
-
-    // Payment
-    private fun fetchInitData(price: Double) {
-        val amount: Double = String.format("%.2f", price).toDouble() * 100
-
-        val payMap: MutableMap<String, Any> = HashMap()
-        val itemMap: MutableMap<String, Any> = HashMap()
-        val itemList: MutableList<Map<String, Any>> = ArrayList()
-        payMap["currency"] = "egp"
-        itemMap["amount"] = amount
-        itemList.add(itemMap)
-        payMap["items"] = itemList
-
-        val mediaType = "application/json; charset=utf-8".toMediaType()
-        val json = Gson().toJson(payMap)
-        val body = json.toRequestBody(mediaType)
-        val request = Request.Builder()
-            .url(BACKEND_URL + "checkout")
-            .post(body)
-            .build()
-
-        OkHttpClient().newCall(request)
-            .enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    runOnUiThread {
-                        Toast.makeText(
-                            applicationContext,
-                            "Failed to load payment method",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    if (!response.isSuccessful) {
-                        runOnUiThread {
-                            Toast.makeText(
-                                applicationContext,
-                                "Failed to load payment method",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    } else {
-                        runOnUiThread {
-                            Toast.makeText(
-                                applicationContext,
-                                "Payment method ready",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        val responseData = response.body?.string()
-                        val responseJson =
-                            responseData?.let { JSONObject(it) } ?: JSONObject()
-
-                        paymentIntentClientSecret = responseJson.getString("clientSecret")
-
-                        runOnUiThread {
-                            // binding.btnConfirm.isEnabled = true
-                            presentPaymentSheet()
-                        }
-                    }
-                }
-            }
-            )
-    }
-
-    private fun onPaymentSheetResult(
-        paymentSheetResult: PaymentSheetResult
-    ) {
-        when(paymentSheetResult) {
-            is PaymentSheetResult.Canceled -> {
-                Toast.makeText(
-                    this,
-                    "Payment Canceled",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            is PaymentSheetResult.Failed -> {
-                Toast.makeText(
-                    this,
-                    "Payment Failed.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            is PaymentSheetResult.Completed -> {
-
-                addUpdateProduct()
-
-                Toast.makeText(
-                    this,
-                    "Payment Complete",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
     }
 
     private fun addUpdateProduct() {
         val dbModel = ProductsDBModel(product, this, isUpdate, this)
         dbModel.addUpdateProduct()
-        /*
-        if (isUpdate)
-            productViewModel.updateProduct(product)
-        else
-            productViewModel.addProduct(product)
-        */
 
         startActivity(
             Intent(
@@ -234,9 +129,25 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
         ).show()
     }
 
-    private companion object {
-        private const val BACKEND_URL = "https://evening-sands-34009.herokuapp.com/"
-        private const val STRIPE_PUBLISHABLE_KEY = "pk_test_51IzX9KFY0dskT72W2vHiMNJU0OGs9DukriXP1pfarCuYGkGPvZ8TaMRxxOK2W3WfQa1zO7JEOpiSqRya9BIn6okK00AZ4bRvHz"
+
+    override fun onPaymentComplete() {
+        addUpdateProduct()
     }
 
+    override fun onPaymentFailedToLoad() {
+        Toast.makeText(
+            this,
+            "Failed to load payment method",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    override fun onMinimumPrice(price: Float) {
+        Toast.makeText(
+            this,
+            "You are going to pay $price L.E. for your product but unfortunately minimum charge is 10 L.E.",
+            Toast.LENGTH_SHORT
+        ).show()
+        btnConfirm.isEnabled = true
+    }
 }
