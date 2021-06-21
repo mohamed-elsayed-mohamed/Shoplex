@@ -1,7 +1,7 @@
 <resources>
     <string name="PRODUCT_KEY">المنتج</string>
 
-    <string name="app_name">Shoplex</string>
+    <string name="app_name">ِِشوبليكس</string>
     <string name="product_name">الاسم</string>
     <string name="old_price_strike"><strike>سعر قديم</strike></string>
     <string name="discount">الخصم</string>
@@ -14,7 +14,6 @@
     <string name="item">عنصر</string>
     <string name="category">الفئات</string>
     <string name="men">رجالى</string>
-    <string name="_90_off_sale">90% خصم</string>
     <string name="sub_category">تصنيف فرعي</string>
     <string name="store_name">اسم المتجر </string>
     <string name="offers">العروض</string>
@@ -28,6 +27,7 @@
     <string name="_3_month_of_ads">3 شهور من الاعلانات</string>
     <string name="premium">غالي</string>
     <string name="confirm">تاكيد</string>
+    <string name="Report">بلاغ</string>
 
     <string-array name="arr_category">
         <item>موضه</item>
@@ -44,23 +44,21 @@
         <item>اطفال</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_product_details">تفاصيل المنتج</string>
     <string name="tab_text_1">علامة التبويب 1</string>
     <string name="tab_text_2">علامة التبويب  2</string>
     <string name="product">منتج</string>
     <string name="reviews">تعليقات</string>
     <string name="_4_5_5">4.5/5</string>
-    <string name="longtext">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,as opposed to using Content here, content here, making it look like readable English.</string>
     <string name="all_properties">جميع الخصائص</string>
     <string name="Plus_Sign">+</string>
 
 
-    <string name="home">الصفخه الرئسيه</string>
+    <string name="home">الصفحة الرئسية</string>
     <string name="products">المنتجات</string>
     <string name="chat">المحادثات</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="LastOrder">اخر طلب</string>
+    <string name="LastOrder">الطلبات السابقة</string>
     <string name="StoreLocation">موقع المتجر</string>
     <string name="Language">اللغه العربيه</string>
     <string name="Notification">الاشعارات</string>
@@ -77,7 +75,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_price">سعر جديد</string>
-    <string name="sold">%s تم البيع</string>
+    <string name="sold">%s مباع</string>
     <string name="Required">مطلوب</string>
     <string name="min_description_err">الحد الأدنى لوصف المنتج 30 حرفًا</string>
     <string name="min_product_name_err">الحد الأدنى للاسم هو 5 أحرف</string>
@@ -97,7 +95,7 @@
     <string name="customer_name">اسم المشترى</string>
     <string name="date">تاريخ</string>
     <string name="comment">تعليق</string>
-    <string name="type_a_message">يكتب رساله</string>
+    <string name="type_a_message">اكتب رسالة</string>
     <string name="Hello">مرحبا</string>
     <string name="monday_12_00">الاثنين 12:00</string>
     <string name="enter_your_product_properties">أدخل خصائص المنتج الخاص بك</string>
@@ -140,8 +138,8 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">الثالى</string>
     <string name="previous">السابق</string>
+    <string name="Delivered">تم التوصيل</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="shoplex">shoplex Store</string>
     <string name="CHAT_TITLE_KEY">CHAT_TITLE_KEY</string>
@@ -168,4 +166,37 @@
     <string name="custom">custom://</string>
     <string name="image">صوره/*</string>
     <string name="Please_wait_until_image_uploaded_then_remove">يرجى الانتظار حتى يتم تحميل الصورة ، ثم إزالتها!</string>
+
+    <string name="logOut">Logout</string>
+    <string name="logoutMessage">هل أنت متاكد من تسجيل الخروج؟</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="logoutSuccess">Logout Success</string>
+    <string name="reportsuccess">Your Report has sent Thank You</string>
+    <string name="max">Max</string>
+    <string name="imageSelected">اختر صورة المنتج</string>
+    <string name="discountType">Type</string>
+    <string name="discount_type">نوع الخصم</string>
+    <string name="addresses">"العنوان"</string>
+    <string name="quantityRange">1 - 100</string>
+    <string name="quantity">الكمية</string>
+
+    <string name="Login">تسجيل الدخول</string>
+    <string name="Signup">تسجيل</string>
+    <string name="Name">الأسم</string>
+    <string name="phone_hint">+201206899532</string>
+    <string name="Confirmpassword">تأكيد كلمة السر</string>
+    <string name="orLoginvia">أو الدخول بواسطة</string>
+    <string name="orSignUpvia">أو تسجيل الدخول بواسطة</string>
+    <string name="or_login_with">أو تسجيل الدخول بواسطة</string>
+
+    <string name="propertyDialog">Property Dialog</string>
+    <string name="alertonImageRemove">بجاء الإنتظار لتحميل الصورة, ثم احذفها</string>
+    <string name="proplem">من فضلك شاركنا مشكلتك !!</string>
+    <string name="your_report">أكتب بلاغك</string>
+    <string name="send_report">إرسال البلاغ</string>
+    <string name="saleOff">%s تخفيض</string>
+    <string name="days">%s يوم</string>
+    <string name="LE">%s جـ.م</string>
+
 </resources>

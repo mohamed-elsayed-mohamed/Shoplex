@@ -17,7 +17,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingBottom="32dp">
+            android:paddingBottom="32dp"
+            style="@style/register_background">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -87,8 +88,7 @@
                 android:id="@+id/start_view"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:background="@color/gray"
-
+                style="@style/WhiteColorText"
                 android:layout_marginLeft="@dimen/margin_8"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNewUser"
                 app:layout_constraintEnd_toStartOf="@+id/tvNewUser"
@@ -100,12 +100,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/cardview_dark_background"
                 app:layout_constraintHorizontal_bias="0.5"
-                android:text="Or Login With"
-
+                android:text="@string/or_login_with"
+                style="@style/WhiteColorText"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvForgetPass" />
 
@@ -113,9 +111,8 @@
                 android:id="@+id/end_view"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-
                 android:layout_marginEnd="8dp"
-                android:background="@color/gray"
+                style="@style/WhiteColorText"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNewUser"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvNewUser"

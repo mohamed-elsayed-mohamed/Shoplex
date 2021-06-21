@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgray"
     android:orientation="vertical"
     tools:context=".view.activities.MessageActivity">
 
@@ -12,10 +11,10 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:paddingBottom="@dimen/margin_8"
         android:paddingEnd="@dimen/margin_8"
         android:paddingTop="@dimen/margin_8"
+        android:background="@color/primaryShoplex"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,8 +23,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarMessage"
             android:layout_width="match_parent"
+            android:background="@color/primaryShoplex"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:elevation="@dimen/padding_4">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,6 +37,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     app:cardCornerRadius="@dimen/height_50"
+                    android:layout_marginRight="@dimen/margin_8"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +100,6 @@
         android:inputType="textMultiLine"
         android:maxLines="3"
         android:padding="@dimen/padding_16"
-        android:textColor="@color/black"
         android:textColorHint="@color/grey_font"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnSendMessage"

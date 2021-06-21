@@ -16,7 +16,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            style="@style/register_background">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -84,11 +85,11 @@
 
             <View
                 android:id="@+id/start_view"
+                style="@style/WhiteColorText"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/margin_8"
 
-                android:background="@color/gray"
+                android:layout_marginLeft="@dimen/margin_8"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNewUser"
                 app:layout_constraintEnd_toStartOf="@+id/tvNewUser"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,22 +100,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Or Login With"
-                android:textColor="@color/cardview_dark_background"
+                android:text="@string/or_login_with"
+                style="@style/WhiteColorText"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintHorizontal_bias="0.5"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvForgetPass" />
 
             <View
                 android:id="@+id/end_view"
+                style="@style/WhiteColorText"
                 android:layout_width="0dp"
-                android:layout_height="1dp"
 
+                android:layout_height="1dp"
                 android:layout_marginEnd="8dp"
-                android:background="@color/gray"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNewUser"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvNewUser"

@@ -6,7 +6,7 @@
         <item
             android:id="@+id/lastOrderFragment"
             android:icon="@drawable/orders"
-            android:title="@string/LastOrder"/>
+            android:title="@string/LastOrder" />
         <item
             android:id="@+id/locationFragment"
             android:icon="@drawable/location_on"
