@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ReveiwItemBinding
 import com.trueandtrust.shoplex.model.pojo.Review
 
@@ -23,12 +24,8 @@ class ReviewsAdapter(val reviews: ArrayList<Review>) : RecyclerView.Adapter<Revi
     inner class ReviewViewHolder(val binding: ReveiwItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(review: Review) {
-            // Your custom view code here
-            Glide.with(binding.root.context).load(review.image).into(binding.imgHead)
-            binding.tvCustomerName.text = review.customerName
-            binding.ratingBar.rating = review.rate
-            binding.tvDate.text = review.date.toString()
-            binding.tvComment.text = review.comment
+            Glide.with(binding.root.context).load(review.image).error(R.drawable.product).into(binding.imgHead)
+            binding.review = review
         }
     }
 }

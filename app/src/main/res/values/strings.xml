@@ -126,6 +126,8 @@
     <string name="forget_password">Forget Password</string>
     <string name="reset">Reset</string>
     <string name="close_dialog">Close</string>
+    <string name="NA">N/A</string>
+    <string name="NoReviews">No Reviews Yet!</string>
     <string name="email_send">Email Send</string>
     <string name="login_success">Login Successfully</string>
     <string name="authentication_fail">Authentication failed.</string>

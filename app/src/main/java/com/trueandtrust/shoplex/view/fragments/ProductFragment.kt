@@ -11,17 +11,20 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.trueandtrust.shoplex.databinding.FragmentProductBinding
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.pojo.Product
+import com.trueandtrust.shoplex.view.activities.DetailsActivity
 
-class ProductFragment(val product: Product) : Fragment() {
+class ProductFragment : Fragment() {
     private lateinit var binding: FragmentProductBinding
+    private lateinit var product: Product
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val imageList = ArrayList<SlideModel>()
         binding = FragmentProductBinding.inflate(inflater, container, false)
 
+        product = (requireActivity() as DetailsActivity).product
+        val imageList = ArrayList<SlideModel>()
         for (imgURL in product.images)
             imageList.add(SlideModel(imgURL))
 

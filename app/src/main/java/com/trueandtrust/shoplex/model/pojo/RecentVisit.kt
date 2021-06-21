@@ -10,5 +10,6 @@ data class RecentVisit(
     val image: String = StoreInfo.image!!,
     var address: String = StoreInfo.addresses[0],
     val phone: String = StoreInfo.phone,
-    val date: Timestamp = Timestamp.now()
+    val date: Timestamp = Timestamp.now(),
+    val type: String = "Store"
 )

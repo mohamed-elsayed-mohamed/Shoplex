@@ -15,11 +15,12 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySplashBinding
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.AddProductListener
+import com.trueandtrust.shoplex.model.pojo.Store
 import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
 import java.util.*
 
 class SplashActivity : AppCompatActivity(), AddProductListener {
-    private val Splash_Screen = 4000
+    private val splashDuration = 4000L
     private lateinit var binding: ActivitySplashBinding
     private lateinit var topAnimation: Animation
     private lateinit var bottomAnimation: Animation
@@ -29,6 +30,9 @@ class SplashActivity : AppCompatActivity(), AddProductListener {
         super.onCreate(savedInstanceState)
 
         StoreInfo.readStoreInfo(applicationContext)
+        if(StoreInfo.lang != "en")
+            setLocale(StoreInfo.lang)
+
         currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
             currentUser!!.reload()
@@ -49,7 +53,6 @@ class SplashActivity : AppCompatActivity(), AddProductListener {
             currentUser = Firebase.auth.currentUser
 
             if (currentUser != null) {
-                setLocale(StoreInfo.lang)
                 if (StoreInfo.storeID != null) {
                     startActivity(Intent(applicationContext, HomeActivity::class.java))
                     StoreInfo.saveToRecentVisits()
@@ -61,7 +64,7 @@ class SplashActivity : AppCompatActivity(), AddProductListener {
             }
             finish()
 
-        }, Splash_Screen.toLong())
+        }, splashDuration)
     }
 
     fun setLocale(lang: String) {

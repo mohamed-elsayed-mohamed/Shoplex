@@ -66,8 +66,6 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
             binding.cardStandard.visibility = View.INVISIBLE
         }
 
-        //binding.btnConfirm.isEnabled = false
-
         PaymentConfiguration.init(this, STRIPE_PUBLISHABLE_KEY)
 
         paymentSheet = PaymentSheet(this) { result ->
@@ -115,7 +113,7 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener {
 
     // Payment
     private fun fetchInitData(price: Double) {
-        val amount: Double = price * 100
+        val amount: Double = String.format("%.2f", price).toDouble() * 100
 
         val payMap: MutableMap<String, Any> = HashMap()
         val itemMap: MutableMap<String, Any> = HashMap()

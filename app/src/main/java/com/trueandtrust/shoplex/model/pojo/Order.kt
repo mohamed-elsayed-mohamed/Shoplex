@@ -6,7 +6,7 @@ import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.model.enumurations.PaymentMethod
 
 data class Order (
-    var orderID: String? = null,
+    var orderID: String = "",
     var productID: String = "",
     var userID: String = "",
     var storeID: String = "",

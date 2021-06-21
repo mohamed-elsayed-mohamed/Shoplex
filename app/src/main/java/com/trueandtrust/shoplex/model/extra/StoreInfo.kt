@@ -11,21 +11,19 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 object StoreInfo {
-    const val SHARED_USER_INFO = "USER_INFO"
+    const val SHARED_STORE_INFO = "STORE_INFO"
     var storeID: String? = null
-    var name : String = ""
-    var email : String = ""
-    var image : String? = null
-    var locations : ArrayList<Location> = arrayListOf()
-    var addresses : ArrayList<String> = arrayListOf()
-    var phone : String = ""
+    var name: String = ""
+    var email: String = ""
+    var image: String? = null
+    var locations: ArrayList<Location> = arrayListOf()
+    var addresses: ArrayList<String> = arrayListOf()
+    var phone: String = ""
     var lang: String = "en"
 
-    fun updateTokenID(){
+    fun updateTokenID() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@OnCompleteListener
-            }
+            if (!task.isSuccessful) return@OnCompleteListener
 
             val token = task.result
             val notificationToken = NotificationToken(this.storeID!!, token.toString())
@@ -33,8 +31,8 @@ object StoreInfo {
         })
     }
 
-    fun saveStoreInfo(context: Context){
-        context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE).edit()
+    fun saveStoreInfo(context: Context) {
+        context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
             .putString("storeID", storeID)
             .putString("name", name)
             .putString("email", email)
@@ -45,10 +43,13 @@ object StoreInfo {
             .apply()
     }
 
-    fun readStoreInfo(context: Context){
-        val sharedPref = context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE)
+    fun readStoreInfo(context: Context) {
+        lang =
+            context.getSharedPreferences("LANG", Context.MODE_PRIVATE).getString("Language", "en")
+                ?: "en"
+        val sharedPref = context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE)
         storeID = sharedPref.getString("storeID", null)
-        if(storeID == null)
+        if (storeID == null)
             return
         name = sharedPref.getString("name", "")!!
         email = sharedPref.getString("email", "")!!
@@ -58,12 +59,10 @@ object StoreInfo {
         val locationsType: Type = object : TypeToken<ArrayList<Location>>() {}.type
         addresses = Gson().fromJson(sharedPref.getString("addresses", null), addressesType)
         locations = Gson().fromJson(sharedPref.getString("locations", null), locationsType)
-
-        lang = context.getSharedPreferences("LANG", Context.MODE_PRIVATE).getString("Language", "en")?: "en"
     }
 
-    fun clearSharedPref(context: Context){
-        context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE).edit()
+    fun clearSharedPref(context: Context) {
+        context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
             .remove("name")
             .remove("email")
             .remove("image")
@@ -73,46 +72,35 @@ object StoreInfo {
             .apply()
     }
 
-    fun addStoreLocation(context: Context, pendingLocation: PendingLocation){
+    fun addStoreLocation(context: Context, pendingLocation: PendingLocation) {
         addresses.add(pendingLocation.address)
         locations.add(pendingLocation.location)
-        context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE).edit()
+        context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
             .putString("locations", Gson().toJson(locations))
             .putString("addresses", Gson().toJson(addresses))
             .apply()
     }
 
-    fun saveNotification(context: Context, value: Boolean){
+    fun saveNotification(context: Context, value: Boolean) {
         FirebaseReferences.notificationTokensRef.document(storeID!!)
             .update("notification", value)
-        context.getSharedPreferences(SHARED_USER_INFO, Context.MODE_PRIVATE).edit().putBoolean("notification", value).apply()
+        context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
+            .putBoolean("notification", value).apply()
     }
 
-    fun readNotification(context: Context) : Boolean{
+    fun readNotification(context: Context): Boolean {
         val shared = context.getSharedPreferences(
-            SHARED_USER_INFO,
+            SHARED_STORE_INFO,
             Context.MODE_PRIVATE
         )
         return shared.getBoolean("notification", true)
     }
 
-    /*
-    fun setNotificationControl(context: Context, value: Boolean){
-        context.getSharedPreferences(NOTIFICATION, Context.MODE_PRIVATE)
-            .edit()
-            .putBoolean("Notification", value).apply()
-    }
-
-    fun getNotificationControl(context: Context): Boolean{
-        return context.getSharedPreferences(NOTIFICATION, Context.MODE_PRIVATE).getBoolean("Notification", true)
-    }
-    */
-
-    fun saveToRecentVisits(){
+    fun saveToRecentVisits() {
         FirebaseReferences.recentVisits.add(RecentVisit())
     }
 
-    fun clear(){
+    fun clear() {
         this.storeID = null
         this.name = ""
         this.email = ""

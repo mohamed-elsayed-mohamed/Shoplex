@@ -67,11 +67,7 @@ class HomeActivity : AppCompatActivity() {
         switch.isChecked = StoreInfo.readNotification(this)
 
         switch.setOnClickListener {
-            if (switch.isChecked) {
-                StoreInfo.saveNotification(this, true)
-            } else {
-                StoreInfo.saveNotification(this, false)
-            }
+            StoreInfo.saveNotification(this, switch.isChecked)
         }
 
         navView.setNavigationItemSelectedListener {
@@ -102,7 +98,6 @@ class HomeActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-
 
         val header: NavHeaderBinding = NavHeaderBinding.inflate(layoutInflater, this.navView, true)
         Glide.with(this).load(StoreInfo.image).error(R.drawable.product).into(header.navHeaderImage)

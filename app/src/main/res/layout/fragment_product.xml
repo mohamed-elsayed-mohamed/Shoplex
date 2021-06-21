@@ -70,7 +70,7 @@
                             android:paddingTop="@dimen/drawable_padding"
                             android:paddingRight="@dimen/margin_8"
                             android:paddingBottom="@dimen/drawable_padding"
-                            android:text="@{product.rate == 0F? `N/A`: `` + product.rate}"
+                            android:text="@{product.rate == 0F? @string/NA: `` + product.rate}"
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             app:drawableStartCompat="@drawable/ic_star"
