@@ -1,7 +1,7 @@
 <resources>
     <string name="PRODUCT_KEY">المنتج</string>
 
-    <string name="app_name">ِِشوبليكس</string>
+    <string name="app_name">متجر شوبليكس</string>
     <string name="product_name">الاسم</string>
     <string name="old_price_strike"><strike>سعر قديم</strike></string>
     <string name="discount">الخصم</string>
@@ -28,7 +28,7 @@
     <string name="premium">غالي</string>
     <string name="confirm">تاكيد</string>
     <string name="Report">بلاغ</string>
-
+    <string name="NA">لا يوجد</string>
     <string-array name="arr_category">
         <item>موضه</item>
         <item>الصحة والعناية</item>

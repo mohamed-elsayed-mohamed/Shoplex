@@ -30,7 +30,7 @@ class ChatHeadDBModel(private val listener: ChatsListener) {
                                             chat.chatID,
                                             product.name,
                                             product.price,
-                                            product.images.first(),
+                                            product.images.firstOrNull(),
                                             chat.userID,
                                             chat.userName,
                                             chat.unreadStoreMessages,

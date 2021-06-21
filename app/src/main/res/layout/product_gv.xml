@@ -103,16 +103,14 @@
 
                 <TextView
                     android:id="@+id/tv_product_name"
+                    style="@style/TitleColor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_8"
-                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
                     android:lines="2"
                     android:text="@{product.name}"
-                    style="@style/TitleColor"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fabEditProduct" />
 
@@ -125,28 +123,29 @@
                     android:layout_marginBottom="@dimen/margin_8"
                     android:background="@drawable/roundrate"
                     android:drawablePadding="2dp"
+                    android:gravity="center_vertical"
                     android:paddingLeft="4dp"
                     android:paddingTop="2dp"
                     android:paddingRight="4dp"
-                    android:text="@{`` + (product.rate == null? `N/A` : product.rate)}"
+                    android:paddingBottom="2dp"
+                    android:text="@{`` + (product.rate == null? @string/NA : product.rate)}"
                     android:textColor="@color/white"
                     android:textStyle="bold"
-                    app:drawableStartCompat="@drawable/star_24"
+                    app:drawableStartCompat="@drawable/ic_star_16"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_old_price" />
 
                 <TextView
                     android:id="@+id/tvSold"
+                    style="@style/light_Blue_Text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_marginEnd="8dp"
                     android:text="@{@string/sold(product.sold)}"
-                    style="@style/light_Blue_Text"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_review"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_product_name"
-                    app:layout_constraintTop_toTopOf="@+id/tv_review" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

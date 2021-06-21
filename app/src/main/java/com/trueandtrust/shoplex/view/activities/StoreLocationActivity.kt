@@ -33,7 +33,7 @@ class StoreLocationActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.title = getString(R.string.StoreLocation)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+       // supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
