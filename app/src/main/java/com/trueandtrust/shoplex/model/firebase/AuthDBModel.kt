@@ -3,17 +3,21 @@ package com.trueandtrust.shoplex.model.firebase
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.AuthListener
 import com.trueandtrust.shoplex.model.pojo.Store
 
 class AuthDBModel(val listener: AuthListener, val context: Context) {
+    private lateinit var imgTask: StorageTask<UploadTask.TaskSnapshot>
     fun login(email: String, password: String) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -26,37 +30,50 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
     }
 
     fun createAccount(store: Store, password: String) {
+        val ref: DocumentReference = FirebaseReferences.pendingSellersRef.document()
+        addImage(Uri.parse(store.image), ref.id)
         Firebase.auth.fetchSignInMethodsForEmail(store.email).addOnCompleteListener {
             if (it.isSuccessful && it.result?.signInMethods?.size == 0) {
                 Firebase.auth.createUserWithEmailAndPassword(store.email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            addNewStore(store)
+                            addNewStore(store, ref)
                         } else {
+                            imgTask.cancel()
+                            FirebaseReferences.imagesStoreRef.child(store.storeID).delete()
                             Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show()
                             listener.onAddStoreFailed()
                         }
                     }
             } else {
+                imgTask.cancel()
+                FirebaseReferences.imagesStoreRef.child(store.storeID).delete()
                 listener.onUserExists(context)
             }
         }
     }
 
-    private fun addNewStore(store: Store) {
-        val image = store.image
+    private fun addNewStore(store: Store, ref: DocumentReference) {
+//        val image = store.image
         store.image = ""
-        val ref: DocumentReference = FirebaseReferences.pendingSellersRef.document()
+
         store.storeID = ref.id
         ref.set(store).addOnSuccessListener {
-            addImage(Uri.parse(image), store.storeID)
+            FirebaseReferences.imagesStoreRef.child(store.storeID).downloadUrl.addOnSuccessListener { uri ->
+                if(uri != null)
+                FirebaseReferences.pendingSellersRef.document(store.storeID)
+                    .update("image", uri.toString())
+            }
+
             StoreInfo.storeID = store.storeID
             StoreInfo.updateTokenID()
-            //listener.onAddNewStore(store)
             Toast.makeText(context, "Success to create your account!", Toast.LENGTH_SHORT).show()
+            (context as AppCompatActivity).finish()
         }.addOnFailureListener {
             //listener.onAddNewStore(null)
             Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show()
+            imgTask.cancel()
+            FirebaseReferences.imagesStoreRef.child(store.storeID).delete()
             listener.onAddStoreFailed()
         }
 
@@ -64,7 +81,7 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
 
     private fun addImage(uri: Uri, storeId: String) {
         val imageRef = FirebaseReferences.imagesStoreRef.child(storeId)
-        imageRef.putFile(uri).addOnSuccessListener { _ ->
+        imgTask = imageRef.putFile(uri).addOnSuccessListener { _ ->
             imageRef.downloadUrl.addOnSuccessListener {
                 FirebaseReferences.pendingSellersRef.document(storeId)
                     .update("image", it.toString())
