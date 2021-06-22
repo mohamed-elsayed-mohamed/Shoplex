@@ -11,11 +11,7 @@ interface AuthListener {
     fun hideIndicator(){}
 
     private fun onStoreInfoReady(context: Context, store: Store){
-        val sharedPref = context.getSharedPreferences(StoreInfo.SHARED_STORE_INFO, Context.MODE_PRIVATE)
-        StoreInfo.storeID = sharedPref.getString("storeID", null)
-        if(StoreInfo.storeID != null && StoreInfo.storeID != store.storeID){
-            ShopLexDatabase.getDatabase(context).clearAllTables()
-        }
+
 
         StoreInfo.storeID = store.storeID
         StoreInfo.name = store.name
