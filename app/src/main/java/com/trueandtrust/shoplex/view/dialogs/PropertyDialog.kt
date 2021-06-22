@@ -18,7 +18,7 @@ class PropertyDialog(val listener: AddProductListener): AppCompatDialogFragment(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         this.binding = PropDialogBinding.inflate(LayoutInflater.from(this.context))
-        val builder = AlertDialog.Builder(activity, R.style.ThemeOverlay_AppCompat_Dialog_Alert)
+        val builder = AlertDialog.Builder(activity, R.style.MyAlertDialogPropertyStyle)
         builder.setView(binding.root).setTitle(getString(R.string.property))
 
         // Add Values in Chips

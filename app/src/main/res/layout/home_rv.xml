@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cardElevation="5dp"
-        app:cardCornerRadius="7dp"
+        style="@style/CustomCardview"
         android:layout_margin="@dimen/margin_4"
         app:layout_constraintVertical_bias="0.0">
 
@@ -38,54 +38,54 @@
 
             <TextView
                 android:id="@+id/tv_product_name"
+                style="@style/TitleColor"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_8"
+                android:paddingRight="8dp"
                 android:text="@{order.product.name}"
-                android:layout_marginTop="@dimen/margin_4"
-                android:layout_marginRight="@dimen/margin_4"
-                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:layout_marginLeft="@dimen/margin_4"
-                app:layout_constraintEnd_toStartOf="@+id/tv_status"
                 app:layout_constraintStart_toEndOf="@+id/img_product"
                 app:layout_constraintTop_toTopOf="@+id/img_product" />
 
 
             <TextView
                 android:id="@+id/tv_category"
+                style="@style/light_Blue_Text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:paddingRight="8dp"
                 android:text="@{order.product.storeName}"
-                android:textColor="@color/gray"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/tv_product_name"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_product_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
 
             <TextView
                 android:id="@+id/tv_price"
+                style="@style/light_Blue_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:paddingRight="8dp"
                 android:text="@{@string/LE(order.totalPrice)}"
-                android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_category"
                 app:layout_constraintTop_toBottomOf="@+id/tv_category" />
 
             <TextView
                 android:id="@+id/tv_location"
+                style="@style/light_Blue_Text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{order.deliveryAddress}"
-                android:textColor="@color/black"
-                android:textSize="10sp"
+                android:layout_marginEnd="8dp"
                 android:maxLines="2"
+                android:paddingRight="8dp"
                 android:scrollHorizontally="false"
-                android:layout_marginRight="@dimen/margin_8"
+                android:text="@{order.deliveryAddress}"
+                android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_price"
                 app:layout_constraintTop_toBottomOf="@+id/tv_price" />

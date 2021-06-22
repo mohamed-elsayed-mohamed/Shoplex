@@ -13,8 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:layout_marginLeft="16dp"
-
-
         android:layout_marginRight="16dp"
 
         app:cardCornerRadius="25dp"
@@ -26,7 +24,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="8dp"
+            style="@style/register_background">
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
@@ -46,7 +45,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/register_background">
 
                 <com.google.android.material.tabs.TabItem
 

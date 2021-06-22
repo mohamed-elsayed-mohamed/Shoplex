@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
 import com.trueandtrust.shoplex.model.enumurations.Plan
+import com.trueandtrust.shoplex.model.extra.ArchLifecycleApp
 import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
 import com.trueandtrust.shoplex.model.interfaces.PaymentListener
 import com.trueandtrust.shoplex.model.interfaces.ProductsListener
@@ -44,45 +45,49 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
         showAll()
 
         binding.btnBuyBasic.setOnClickListener {
-            product.premium = Premium(Plan.Bronze, 14 + (product.premium?.premiumDays ?: 0))
+            product.premium = Premium(Plan.Bronze, 15 + (product.premium?.premiumDays ?: 0))
             premiumPlan = Plan.Bronze
             binding.cardStandard.visibility = View.INVISIBLE
             binding.cardPremium.visibility = View.INVISIBLE
         }
 
         binding.btnBuyStandard.setOnClickListener {
-            product.premium = Premium(Plan.Silver, 30 + (product.premium?.premiumDays ?: 0))
+            product.premium = Premium(Plan.Silver, 31 + (product.premium?.premiumDays ?: 0))
             premiumPlan = Plan.Silver
             binding.cardBasic.visibility = View.INVISIBLE
             binding.cardPremium.visibility = View.INVISIBLE
         }
 
         binding.btnBuyPremium.setOnClickListener {
-            product.premium = Premium(Plan.Gold, 90 + (product.premium?.premiumDays ?: 0))
+            product.premium = Premium(Plan.Gold, 91 + (product.premium?.premiumDays ?: 0))
             premiumPlan = Plan.Gold
             binding.cardBasic.visibility = View.INVISIBLE
             binding.cardStandard.visibility = View.INVISIBLE
         }
 
         binding.btnConfirm.setOnClickListener {
-            var premiumPrice = 0
-            if (product.premium != null && premiumPlan != null) {
-                premiumPrice = when (premiumPlan) {
-                    Plan.Bronze -> 20
-                    Plan.Silver -> 30
-                    Plan.Gold -> 75
-                    else -> 0
+            if(ArchLifecycleApp.isInternetConnected) {
+                var premiumPrice = 0
+                if (product.premium != null && premiumPlan != null) {
+                    premiumPrice = when (premiumPlan) {
+                        Plan.Bronze -> 20
+                        Plan.Silver -> 30
+                        Plan.Gold -> 75
+                        else -> 0
+                    }
                 }
-            }
 
-            val price = calcTax(product.newPrice * product.quantity) + premiumPrice
-            btnConfirm.isEnabled = false
-            if (!isUpdate) {
-                paymentMethodVM.pay(price)
-            } else if (premiumPrice > 0) {
-                paymentMethodVM.pay(premiumPrice.toFloat())
+                val price = calcTax(product.newPrice * product.quantity) + premiumPrice
+                btnConfirm.isEnabled = false
+                if (!isUpdate) {
+                    paymentMethodVM.pay(price)
+                } else if (premiumPrice > 0) {
+                    paymentMethodVM.pay(premiumPrice.toFloat())
+                } else {
+                    addUpdateProduct()
+                }
             } else {
-                addUpdateProduct()
+                Toast.makeText(this,  getString(R.string.NoInternetConnection), Toast.LENGTH_SHORT).show()
             }
         }
     }

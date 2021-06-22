@@ -1,10 +1,13 @@
 package com.trueandtrust.shoplex.view.activities.auth
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAuthBinding
+import com.trueandtrust.shoplex.model.extra.ArchLifecycleApp
 import com.trueandtrust.shoplex.viewmodel.AuthVM
 import com.trueandtrust.shoplex.viewmodel.AuthVMFactory
 import kotlinx.android.synthetic.main.activity_auth.*
@@ -38,18 +41,34 @@ class AuthActivity : AppCompatActivity() {
             if (binding.viewPager.currentItem == 0) {
                 authVM.isLoginBtnPressed.value = true
                 authVM.isLoginValid.observe(this, {
-                    if(it){
-                        authVM.login()
-                        authVM.isLoginValid.value = false
+                    if (ArchLifecycleApp.isInternetConnected) {
+                        if (it) {
+                            authVM.login()
+                            authVM.isLoginValid.value = false
+                        }
+                    } else {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.NoInternetConnection),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
             } else {
                 authVM.isSignupBtnPressed.value = true
                 authVM.isSignupValid.observe(this, {
-                    if(it){
-                        authVM.createAccount()
-                        finish()
-                        authVM.isSignupValid.value = false
+                    if (ArchLifecycleApp.isInternetConnected) {
+                        if (it) {
+                            authVM.createAccount()
+                            finish()
+                            authVM.isSignupValid.value = false
+                        }
+                    } else {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.NoInternetConnection),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
             }

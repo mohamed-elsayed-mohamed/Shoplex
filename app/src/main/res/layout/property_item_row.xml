@@ -21,7 +21,7 @@
         android:layout_marginStart="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_8"
         android:text="@string/textview"
-        android:textColor="@color/black"
+        style="@style/light_Blue_Text"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

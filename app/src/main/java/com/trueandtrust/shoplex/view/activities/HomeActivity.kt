@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -16,6 +17,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.droidnet.DroidListener
+import com.droidnet.DroidNet
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
@@ -31,18 +34,23 @@ import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
 import com.trueandtrust.shoplex.viewmodel.AuthVM
 import java.util.*
 
-class HomeActivity : AppCompatActivity() {
+
+class HomeActivity : AppCompatActivity(), DroidListener {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
+    private lateinit var mDroidNet: DroidNet
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mDroidNet = DroidNet.getInstance()
+        mDroidNet.addInternetConnectivityListener(this)
 
         bottomNavigationView = binding.navigationView
         bottomNavigationView.setupWithNavController(findNavController(R.id.nav_host_fragment))
@@ -169,5 +177,18 @@ class HomeActivity : AppCompatActivity() {
         val refresh = Intent(this, HomeActivity::class.java)
         finish()
         startActivity(refresh)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mDroidNet.removeInternetConnectivityChangeListener(this)
+    }
+
+    override fun onInternetConnectivityChanged(isConnected: Boolean) {
+        if (isConnected) {
+          //  Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
+        } else {
+           // Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show()
+        }
     }
 }

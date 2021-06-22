@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgray"
     tools:context=".view.activities.StoreLocationActivity">
     <include
         android:id="@+id/drawer_toolbar"
@@ -29,8 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_8"
         android:layout_marginBottom="@dimen/margin_8"
-        android:background="@color/dark_blue"
-        android:backgroundTint="@color/dark_blue"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

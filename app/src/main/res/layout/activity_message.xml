@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgray"
     android:orientation="vertical"
     tools:context=".view.activities.MessageActivity">
 
@@ -12,10 +11,10 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="@dimen/margin_8"
-        android:paddingEnd="@dimen/margin_8"
+        android:background="@color/primaryShoplex"
         android:paddingTop="@dimen/margin_8"
+        android:paddingEnd="@dimen/margin_8"
+        android:paddingBottom="@dimen/margin_8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,7 +24,7 @@
             android:id="@+id/toolbarMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/primaryShoplex"
             android:elevation="@dimen/padding_4">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +38,6 @@
                     android:layout_height="50dp"
                     app:cardCornerRadius="@dimen/height_50"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -64,15 +62,19 @@
                     app:cardElevation="@dimen/margin_6"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView"
                     app:layout_constraintEnd_toEndOf="@+id/cardView" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/tvToolbarUserChat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/user_name"
-                android:textColor="@color/purple_700"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvToolbarUserChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/user_name"
+                    android:textColor="@color/purple_700"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cardView"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -82,8 +84,8 @@
         android:id="@+id/rcMessage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_8"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/edSendMesssage"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
@@ -100,7 +102,6 @@
         android:inputType="textMultiLine"
         android:maxLines="3"
         android:padding="@dimen/padding_16"
-        android:textColor="@color/black"
         android:textColorHint="@color/grey_font"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnSendMessage"
@@ -115,8 +116,8 @@
         android:background="@drawable/send_button_style"
         android:contentDescription="@string/todo"
         android:paddingStart="@dimen/margin_18"
-        android:paddingEnd="@dimen/margin_16"
         android:paddingTop="@dimen/margin_16"
+        android:paddingEnd="@dimen/margin_16"
         android:paddingBottom="@dimen/margin_16"
         android:src="@drawable/ic_baseline_send"
         app:layout_constraintBottom_toBottomOf="parent"
