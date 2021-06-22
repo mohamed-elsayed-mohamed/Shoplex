@@ -14,7 +14,7 @@ import com.trueandtrust.shoplex.model.interfaces.AuthListener
 import com.trueandtrust.shoplex.model.pojo.Store
 import com.trueandtrust.shoplex.view.activities.HomeActivity
 
-class AuthVM(val context: Context): ViewModel(), AuthListener {
+class AuthVM(val context: Context) : ViewModel(), AuthListener {
     var store: MutableLiveData<Store> = MutableLiveData()
     var email: MutableLiveData<String> = MutableLiveData()
     var password: MutableLiveData<String> = MutableLiveData()
@@ -41,12 +41,13 @@ class AuthVM(val context: Context): ViewModel(), AuthListener {
     }
 
     fun createAccount() {
-       store.value!!.email=email.value!!
+        store.value!!.email = email.value!!
         userDBModel.createAccount(store.value!!, password.value!!)
     }
 
     override fun onPendingStore() {
-        Toast.makeText(context, "Please wait until your account accepted!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Please wait until your account accepted!", Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onLoginSuccess(context: Context, store: Store) {
@@ -66,9 +67,10 @@ class AuthVM(val context: Context): ViewModel(), AuthListener {
         Toast.makeText(context, "Failed to add store!", Toast.LENGTH_SHORT).show()
     }
 
-    companion object{
-        fun logout(context: Context){
-            StoreInfo.saveNotification(context, false)
+    companion object {
+        fun logout(context: Context) {
+            if (StoreInfo.storeID != null)
+                StoreInfo.saveNotification(context, false)
             Firebase.auth.signOut()
             StoreInfo.clear()
             StoreInfo.clearSharedPref(context)
