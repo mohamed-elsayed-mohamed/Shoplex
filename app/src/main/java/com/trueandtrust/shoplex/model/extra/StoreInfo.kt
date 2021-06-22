@@ -8,7 +8,6 @@ import com.google.gson.reflect.TypeToken
 import com.trueandtrust.shoplex.model.pojo.*
 import java.lang.reflect.Type
 import java.util.*
-import kotlin.collections.ArrayList
 
 object StoreInfo {
     private const val SHARED_STORE_INFO = "STORE_INFO"
@@ -83,10 +82,12 @@ object StoreInfo {
     }
 
     fun saveNotification(context: Context, value: Boolean) {
-        FirebaseReferences.notificationTokensRef.document(storeID!!)
-            .update("notification", value)
-        context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
-            .putBoolean("notification", value).apply()
+        if (storeID != null) {
+            FirebaseReferences.notificationTokensRef.document(storeID!!)
+                .update("notification", value)
+            context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
+                .putBoolean("notification", value).apply()
+        }
     }
 
     fun readNotification(context: Context): Boolean {
