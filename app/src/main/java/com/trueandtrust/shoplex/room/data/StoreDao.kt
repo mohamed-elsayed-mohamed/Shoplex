@@ -2,7 +2,6 @@ package com.trueandtrust.shoplex.room.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.model.pojo.Message
 import com.trueandtrust.shoplex.model.pojo.Order
 import com.trueandtrust.shoplex.model.pojo.Product
@@ -35,8 +34,8 @@ interface StoreDao {
 
     //last order
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addLasOrder(lastOrder: Order)
+    suspend fun addLastOrder(lastOrder: Order)
 
-    @Query("SELECT * FROM orders WHERE orderStatus IN(:orderDelivered,:orderCanceled)")
-    fun readAllLastOrder(orderDelivered :OrderStatus ,orderCanceled: OrderStatus):LiveData<List<Order>>
+    @Query("SELECT * FROM orders")
+    fun readAllLastOrders():LiveData<List<Order>>
 }

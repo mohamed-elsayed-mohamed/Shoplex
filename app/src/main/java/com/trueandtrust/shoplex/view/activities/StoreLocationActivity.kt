@@ -11,6 +11,7 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityStoreLocationBinding
 import com.trueandtrust.shoplex.model.adapter.LocationAdapter
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
+import com.trueandtrust.shoplex.model.extra.ArchLifecycleApp
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.PendingLocation
@@ -28,25 +29,29 @@ class StoreLocationActivity : AppCompatActivity() {
 
         storeVM = ViewModelProvider(this).get(StoreVM::class.java)
 
-        if(storeVM.storeAddresses.value == null)
+        if (storeVM.storeAddresses.value == null)
             storeVM.getAllAddresses()
 
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.title = getString(R.string.StoreLocation)
-       // supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         storeVM.storeAddresses.observe(this, { locations ->
-           binding.rcLocation.adapter = LocationAdapter(locations)
+            binding.rcLocation.adapter = LocationAdapter(locations)
         })
 
         binding.fabAddLocation.setOnClickListener {
-                startActivityForResult(Intent(this, MapsActivity::class.java)
-                    .apply {
-                        putExtra(MapsActivity.LOCATION_ACTION, LocationAction.Add.name)
-                    }, MapsActivity.MAPS_CODE
+            if(ArchLifecycleApp.isInternetConnected) {
+                startActivityForResult(
+                    Intent(this, MapsActivity::class.java)
+                        .apply {
+                            putExtra(MapsActivity.LOCATION_ACTION, LocationAction.Add.name)
+                        }, MapsActivity.MAPS_CODE
                 )
+            } else {
+                Toast.makeText(this, getString(R.string.NoInternetConnection), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

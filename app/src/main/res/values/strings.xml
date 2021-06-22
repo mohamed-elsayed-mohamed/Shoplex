@@ -123,7 +123,6 @@
     <string name="forget_password">Forget Password</string>
     <string name="reset">Reset</string>
     <string name="close_dialog">Close</string>
-    <string name="NA">N/A</string>
     <string name="NoReviews">No Reviews Yet!</string>
     <string name="email_send">Email Send</string>
     <string name="login_success">Login Successfully</string>
@@ -197,6 +196,7 @@
     <string name="or_login_with">Or Login With</string>
     <string name="Delivered">Delivered</string>
     <string name="NA">N/A</string>
+    <string name="NoInternetConnection">Your are currently offline please go online back and try again!</string>
 
     <string-array name="arr_type_discount">
         <item>Percentage</item>

@@ -11,7 +11,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 object StoreInfo {
-    const val SHARED_STORE_INFO = "STORE_INFO"
+    private const val SHARED_STORE_INFO = "STORE_INFO"
     var storeID: String? = null
     var name: String = ""
     var email: String = ""

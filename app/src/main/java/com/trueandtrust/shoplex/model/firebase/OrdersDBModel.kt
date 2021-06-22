@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.model.firebase
 
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.toObject
 import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
@@ -9,15 +10,15 @@ import com.trueandtrust.shoplex.model.interfaces.OrdersListener
 import com.trueandtrust.shoplex.model.pojo.Order
 import com.trueandtrust.shoplex.model.pojo.Product
 
-class OrdersDBModel (val listener: OrdersListener) {
+class OrdersDBModel(val listener: OrdersListener) {
 
     fun getCurrentOrders() {
         FirebaseReferences.ordersRef.whereEqualTo("storeID", StoreInfo.storeID)
             .whereEqualTo("orderStatus", OrderStatus.Current.name)
             .addSnapshotListener { values, _ ->
-                var orders = arrayListOf<Order>()
+                val orders = arrayListOf<Order>()
                 for (document: DocumentSnapshot in values?.documents!!) {
-                    var order: Order? = document.toObject<Order>()
+                    val order: Order? = document.toObject<Order>()
                     if (order != null) {
                         orders.add(order)
                         FirebaseReferences.productsRef.document(order.productID).get()
@@ -33,18 +34,17 @@ class OrdersDBModel (val listener: OrdersListener) {
             }
     }
 
-    fun getLastOrders() {
-        FirebaseReferences.ordersRef.whereEqualTo("storeID", StoreInfo.storeID).whereIn(
-            "orderStatus",
-            listOf(OrderStatus.Delivered.name, OrderStatus.Canceled.name)
-        )
+    fun getLastOrders(lastID: String) {
+        FirebaseReferences.ordersRef.whereEqualTo("storeID", StoreInfo.storeID)
+            .whereGreaterThan("orderID", lastID)
+            .whereIn("orderStatus", listOf(OrderStatus.Delivered.name, OrderStatus.Canceled.name))
             .addSnapshotListener { values, _ ->
-                var orders = arrayListOf<Order>()
+                val orders = arrayListOf<Order>()
                 for (document: DocumentSnapshot in values?.documents!!) {
-                    var order: Order? = document.toObject<Order>()
+                    val order: Order? = document.toObject<Order>()
                     if (order != null) {
                         orders.add(order)
-                        FirebaseReferences.productsRef.document(order.productID).get()
+                        FirebaseReferences.productsRef.document(order.productID).get(Source.SERVER)
                             .addOnSuccessListener {
                                 order.product = it.toObject<Product>()
                                 if (document == values.last()) {
@@ -56,8 +56,8 @@ class OrdersDBModel (val listener: OrdersListener) {
             }
     }
 
-    companion object{
-        fun deliverOrder(orderID: String){
+    companion object {
+        fun deliverOrder(orderID: String) {
             FirebaseReferences.ordersRef.document(orderID)
                 .update("orderStatus", OrderStatus.Delivered)
         }

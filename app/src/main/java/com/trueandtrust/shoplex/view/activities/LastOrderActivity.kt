@@ -1,6 +1,5 @@
 package com.trueandtrust.shoplex.view.activities
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +8,8 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLastOrderBinding
 import com.trueandtrust.shoplex.model.adapter.OrdersAdapter
 import com.trueandtrust.shoplex.room.viewModel.LastOrderViewModel
+import com.trueandtrust.shoplex.viewmodel.OrdersFactory
 import com.trueandtrust.shoplex.viewmodel.OrdersVM
-import java.util.*
-
 
 class LastOrderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLastOrderBinding
@@ -23,18 +21,20 @@ class LastOrderActivity : AppCompatActivity() {
         binding = ActivityLastOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        this.ordersVm = ViewModelProvider(this).get(OrdersVM::class.java)
+        this.ordersVm = ViewModelProvider(this, OrdersFactory(this)).get(OrdersVM::class.java)
         lastOrderVM = ViewModelProvider(this).get(LastOrderViewModel::class.java)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = getString(R.string.LastOrder)
-        //supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
 
 
-        if (ordersVm.lastOrders.value == null)
+
+        if (ordersVm.lastOrders.value.isNullOrEmpty()){
             ordersVm.getLastOrders()
+        }
+
 
         ordersVm.lastOrders.observe(this, { orders ->
             binding.rvLastOrders.adapter = OrdersAdapter(orders)

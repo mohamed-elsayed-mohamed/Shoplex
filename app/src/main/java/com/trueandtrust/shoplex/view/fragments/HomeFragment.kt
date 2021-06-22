@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.FragmentHomeBinding
 import com.trueandtrust.shoplex.model.adapter.OrdersAdapter
+import com.trueandtrust.shoplex.viewmodel.OrdersFactory
 import com.trueandtrust.shoplex.viewmodel.OrdersVM
 
 class HomeFragment : Fragment() {
@@ -20,7 +21,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        ordersVm = ViewModelProvider(requireActivity()).get(OrdersVM::class.java)
+        ordersVm = ViewModelProvider(requireActivity(), OrdersFactory(requireContext())).get(OrdersVM::class.java)
 
         if (ordersVm.order.value == null)
             ordersVm.getCurrentOrders()

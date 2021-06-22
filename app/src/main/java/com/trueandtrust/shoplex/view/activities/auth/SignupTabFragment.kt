@@ -49,6 +49,8 @@ class SignupTabFragment: Fragment() {
                     val address: String? = data.getStringExtra(MapsActivity.ADDRESS)
                     if (location != null && address != null) {
                         binding.tvLocation.text = address
+                        authVM.store.value!!.addresses.clear()
+                        authVM.store.value!!.locations.clear()
                         authVM.store.value!!.addresses.add(address)
                         authVM.store.value!!.locations.add(location)
                         authVM.primaryAddress.value = address
