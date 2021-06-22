@@ -60,7 +60,6 @@ class AuthActivity : AppCompatActivity() {
                     if (ArchLifecycleApp.isInternetConnected) {
                         if (it) {
                             authVM.createAccount()
-                            finish()
                             authVM.isSignupValid.value = false
                         }
                     } else {
