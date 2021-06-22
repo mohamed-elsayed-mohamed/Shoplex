@@ -79,8 +79,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         binding.rvUploadImages.adapter = myAdapter
 
         // Property Adapter
-        val propAdapter = PropertyAdapter(product.properties)
-        binding.rcProperty.adapter = propAdapter
+        binding.rcProperty.adapter = PropertyAdapter(product.properties)
 
         // Category Dropdown
         viewModel.getCategory()
@@ -287,7 +286,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
     override fun onNewPropertyAdded(property: Property) {
         product.properties.add(property)
-        binding.rcProperty.adapter!!.notifyDataSetChanged()
+        binding.rcProperty.adapter!!.notifyItemInserted(product.properties.size - 1)
     }
 
     private fun validateInput(): Boolean {

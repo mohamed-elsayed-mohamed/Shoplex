@@ -3,13 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--    <data>-->
-    <!--        <variable-->
-    <!--            name="userData"-->
-    <!--            type="com.shoplex.shoplex.viewmodel.AuthVM" />-->
-    <!--    </data>-->
-
-
+    <data>
+        <variable
+            name="storeData"
+            type="com.trueandtrust.shoplex.viewmodel.AuthVM" />
+    </data>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -52,7 +50,7 @@
                     android:id="@+id/edName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:text="@={storeData.store.name}"
                     android:hint="@string/Name"
                     android:maxLength="100" />
 
@@ -79,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
-
+                    android:text="@={storeData.email}"
                     android:inputType="textEmailAddress"
                     android:maxLength="100" />
 
@@ -107,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
-
+                    android:text="@={storeData.password}"
                     android:inputType="textPassword"
                     android:maxLength="100" />
 
@@ -160,29 +158,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/phone_hint"
+                    android:text="@={storeData.store.phone}"
                     android:importantForAutofill="noExcludeDescendants"
                     android:inputType="phone"
                     android:maxLength="13" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <!--            <Button-->
-            <!--                android:id="@+id/btnSignup"-->
-            <!--                android:layout_width="@dimen/width_320"-->
-            <!--                android:layout_height="@dimen/height_50"-->
-            <!--                android:layout_marginTop="@dimen/margin_32"-->
-            <!--                android:layout_marginBottom="@dimen/margin_bottom_32"-->
-            <!--                android:fontFamily="sans-serif-black"-->
-            <!--                android:insetTop="0dp"-->
-            <!--                android:insetBottom="0dp"-->
-            <!--                android:text="@string/signup"-->
-            <!--                android:textAlignment="center"-->
-            <!--                android:textAllCaps="false"-->
-            <!--                android:textSize="30sp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/tvLocation" />-->
 
             <TextView
                 android:id="@+id/tvLocation"
@@ -190,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_8"
-                android:text="hhhhhhhhhh"
+                android:text="@{storeData.primaryAddress}"
                 app:layout_constraintEnd_toStartOf="@+id/btnLocation"
                 app:layout_constraintStart_toStartOf="@+id/tiPhone"
                 app:layout_constraintTop_toBottomOf="@+id/tiPhone" />

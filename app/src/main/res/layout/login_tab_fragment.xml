@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="storeData"
             type="com.trueandtrust.shoplex.viewmodel.AuthVM" />
@@ -15,9 +16,9 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/register_background"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            style="@style/register_background">
+            android:layout_height="0dp">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -41,8 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
-                    android:text="@={storeData.email}"
-                    android:maxLength="100" />
+                    android:maxLength="100"
+                    android:text="@={storeData.email}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,8 +70,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
                     android:inputType="textPassword"
-                    android:text="@={storeData.password}"
-                    android:maxLength="100" />
+                    android:maxLength="100"
+                    android:text="@={storeData.password}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +83,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/tiPassword"
                 app:layout_constraintTop_toBottomOf="@+id/tiPassword" />
-            
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
