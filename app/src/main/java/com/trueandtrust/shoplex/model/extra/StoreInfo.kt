@@ -63,6 +63,7 @@ object StoreInfo {
 
     fun clearSharedPref(context: Context) {
         context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
+            .remove("storeID")
             .remove("name")
             .remove("email")
             .remove("image")
