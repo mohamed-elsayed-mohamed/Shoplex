@@ -186,9 +186,9 @@ class HomeActivity : AppCompatActivity(), DroidListener {
 
     override fun onInternetConnectivityChanged(isConnected: Boolean) {
         if (isConnected) {
-            Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show()
+           // Toast.makeText(this, "Disconnected", Toast.LENGTH_SHORT).show()
         }
     }
 }
