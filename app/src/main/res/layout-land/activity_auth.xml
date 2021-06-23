@@ -83,6 +83,7 @@
         android:textAllCaps="true"
 
         android:textSize="16sp"
+
         app:layout_constraintBottom_toBottomOf="@+id/materialCardView2"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
         app:layout_constraintStart_toStartOf="@+id/materialCardView2"

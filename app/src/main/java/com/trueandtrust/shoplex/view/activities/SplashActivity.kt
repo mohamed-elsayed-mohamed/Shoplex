@@ -58,11 +58,11 @@ class SplashActivity : AppCompatActivity(), AddProductListener {
                     startActivity(Intent(applicationContext, HomeActivity::class.java))
                     StoreInfo.saveToRecentVisits()
                 } else {
-                    AuthVM.logout(this)
+                    //AuthVM.logout(this)
                     startActivity(Intent(applicationContext, AuthActivity::class.java))
                 }
             } else {
-                AuthVM.logout(this)
+                //AuthVM.logout(this)
                 startActivity(Intent(applicationContext, AuthActivity::class.java))
             }
             finish()
