@@ -1,6 +1,5 @@
 package com.trueandtrust.shoplex.model.services
 
-
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -15,18 +14,28 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.extra.StoreInfo
+import com.trueandtrust.shoplex.model.pojo.Location
+import com.trueandtrust.shoplex.model.pojo.PendingLocation
 import com.trueandtrust.shoplex.view.activities.HomeActivity
 import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val NOTIFICATION_CHANNEL_ID = "net.larntech.notification"
     val NOTIFICATION_ID = 100
+    private var add: String? = null
+    private var lat: String? = null
+    private var long: String? = null
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         if (remoteMessage.data.isNotEmpty()) {
             val title = remoteMessage.data[this.getString(R.string.title)]
             val body = remoteMessage.data[this.getString(R.string.body)]
+            if (remoteMessage.data.containsKey("add") && remoteMessage.data.containsKey("lat") && remoteMessage.data.containsKey("long")){
+                add = remoteMessage.data["add"]
+                lat = remoteMessage.data["lat"]
+                long = remoteMessage.data["long"]
+            }
             showNotification(applicationContext, title, body)
         } else {
             val title = remoteMessage.notification!!.title
@@ -55,11 +64,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             ii.action = context.getString(R.string.actionstring) + System.currentTimeMillis()
             ii.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             pi =PendingIntent.getActivity(context, 0, ii, PendingIntent.FLAG_UPDATE_CURRENT)
+        } else if (title?.contains("Location Added", true) == true && add != null && lat != null && long != null){
+            val location = PendingLocation(address = add!!, location = Location(lat!!.toDouble(), long!!.toDouble()))
+            StoreInfo.addStoreLocation(this, location)
         }
 
         val notification: Notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //Log.e("Notification", "Created in up to orio OS device");
             notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 //.setOngoing(true)
                 .setSmallIcon(getNotificationIcon())
