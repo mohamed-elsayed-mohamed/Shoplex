@@ -1,5 +1,7 @@
 package com.trueandtrust.shoplex.model.firebase
 
+import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Source
@@ -16,18 +18,20 @@ class OrdersDBModel(val listener: OrdersListener) {
         FirebaseReferences.ordersRef.whereEqualTo("storeID", StoreInfo.storeID)
             .whereEqualTo("orderStatus", OrderStatus.Current.name)
             .addSnapshotListener { values, _ ->
-                val orders = arrayListOf<Order>()
-                for (document: DocumentSnapshot in values?.documents!!) {
-                    val order: Order? = document.toObject<Order>()
-                    if (order != null) {
-                        orders.add(order)
-                        FirebaseReferences.productsRef.document(order.productID).get()
-                            .addOnSuccessListener {
-                                order.product = it.toObject<Product>()
-                                if (document == values.last()) {
-                                    this.listener.onCurrentOrderReady(orders)
+                if (values != null) {
+                    val orders = arrayListOf<Order>()
+                    for (document: DocumentSnapshot in values.documents) {
+                        val order: Order? = document.toObject<Order>()
+                        if (order != null) {
+                            orders.add(order)
+                            FirebaseReferences.productsRef.document(order.productID).get()
+                                .addOnSuccessListener {
+                                    order.product = it.toObject<Product>()
+                                    if (document == values.last()) {
+                                        this.listener.onCurrentOrderReady(orders)
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
 
