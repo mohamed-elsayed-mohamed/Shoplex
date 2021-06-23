@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/activitybg"
+    android:background="@drawable/background_logo"
 
     tools:context=".view.activities.auth.AuthActivity">
 
@@ -18,7 +18,7 @@
         android:layout_marginTop="16dp"
 
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="@dimen/margin_16"
         app:cardCornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,6 @@
         android:textAllCaps="true"
 
         android:textSize="16sp"
-
         app:layout_constraintBottom_toBottomOf="@+id/materialCardView2"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
         app:layout_constraintStart_toStartOf="@+id/materialCardView2"
@@ -112,13 +111,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:layout_margin="@dimen/margin_16"
         android:layout_marginStart="2dp"
         android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/buynow" />
+        app:srcCompat="@drawable/shoplex_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
