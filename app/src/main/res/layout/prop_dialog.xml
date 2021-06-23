@@ -95,7 +95,7 @@
             android:layout_marginTop="@dimen/margin_16"
             android:layout_marginEnd="@dimen/margin_8"
             android:text="@string/confirm"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/primaryShoplex"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cg_values" />
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_8"
             android:text="@android:string/cancel"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/primaryShoplex"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/btnPropertyConfirm"
             app:layout_constraintEnd_toStartOf="@+id/btnPropertyConfirm"
