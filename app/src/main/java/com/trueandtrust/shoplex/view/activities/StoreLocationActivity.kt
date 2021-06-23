@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityStoreLocationBinding
 import com.trueandtrust.shoplex.model.adapter.LocationAdapter
@@ -50,7 +51,7 @@ class StoreLocationActivity : AppCompatActivity() {
                         }, MapsActivity.MAPS_CODE
                 )
             } else {
-                Toast.makeText(this, getString(R.string.NoInternetConnection), Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, getString(R.string.NoInternetConnection), Snackbar.LENGTH_LONG).show()
             }
         }
     }
@@ -84,8 +85,8 @@ class StoreLocationActivity : AppCompatActivity() {
 
                     //storeVM.storeAddresses.value!!.add(PendingLocation(address= address, location = location))
                 } else {
-                    Toast.makeText(this, "Failed please select valid address", Toast.LENGTH_SHORT)
-                        .show()
+                    Snackbar.make(binding.root, "Failed please select valid address", Snackbar.LENGTH_LONG).show()
+
                 }
             }
         }

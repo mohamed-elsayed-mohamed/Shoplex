@@ -177,6 +177,10 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="logoutSuccess">Logout Success</string>
+    <string name="delete">Delete</string>
+    <string name="deleteMessage">Are You Sure You Want To Delete This Item?</string>
+    <string name="deleteSuccess">Delete Success</string>
+
     <string name="reportsuccess">Your Report has sent Thank You</string>
     <string name="max">Max</string>
     <string name="imageSelected">Please Select Your Product Images</string>

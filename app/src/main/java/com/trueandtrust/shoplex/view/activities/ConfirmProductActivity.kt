@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
 import com.trueandtrust.shoplex.model.enumurations.Plan
@@ -87,7 +88,7 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
                     addUpdateProduct()
                 }
             } else {
-                Toast.makeText(this,  getString(R.string.NoInternetConnection), Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, getString(R.string.NoInternetConnection), Snackbar.LENGTH_LONG).show()
             }
         }
     }
@@ -127,11 +128,8 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     }
 
     override fun onProductAdded() {
-        Toast.makeText(
-            this,
-            "Product Added Successfully!",
-            Toast.LENGTH_LONG
-        ).show()
+        Snackbar.make(binding.root, "Product Added Successfully!", Snackbar.LENGTH_LONG).show()
+
     }
 
 
@@ -140,19 +138,12 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     }
 
     override fun onPaymentFailedToLoad() {
-        Toast.makeText(
-            this,
-            "Failed to load payment method",
-            Toast.LENGTH_SHORT
-        ).show()
+        Snackbar.make(binding.root, "Failed to load payment method", Snackbar.LENGTH_LONG).show()
+
     }
 
     override fun onMinimumPrice(price: Float) {
-        Toast.makeText(
-            this,
-            "You are going to pay $price L.E. for your product but unfortunately minimum charge is 10 L.E.",
-            Toast.LENGTH_SHORT
-        ).show()
+        Snackbar.make(binding.root, "You are going to pay $price L.E. for your product but unfortunately minimum charge is 10 L.E.", Snackbar.LENGTH_LONG).show()
         btnConfirm.isEnabled = true
     }
 }

@@ -231,7 +231,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
                         product.imagesListURI.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
                     } else if (product.imagesListURI.count() >= MAX_IMAGES_SIZE) {
-                        Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, getString(R.string.max), Snackbar.LENGTH_LONG).show()
                     }
                 }
             } else if (data?.data != null) {
