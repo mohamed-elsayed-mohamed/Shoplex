@@ -83,10 +83,14 @@ object StoreInfo {
     }
 
     fun saveNotification(context: Context, value: Boolean) {
-        FirebaseReferences.notificationTokensRef.document(storeID!!)
-            .update("notification", value)
-        context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
-            .putBoolean("notification", value).apply()
+        if(storeID !=null) {
+
+
+            FirebaseReferences.notificationTokensRef.document(storeID!!)
+                .update("notification", value)
+            context.getSharedPreferences(SHARED_STORE_INFO, Context.MODE_PRIVATE).edit()
+                .putBoolean("notification", value).apply()
+        }
     }
 
     fun readNotification(context: Context): Boolean {
