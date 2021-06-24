@@ -12,6 +12,7 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
 import com.trueandtrust.shoplex.model.enumurations.Plan
 import com.trueandtrust.shoplex.model.extra.ArchLifecycleApp
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
 import com.trueandtrust.shoplex.model.interfaces.PaymentListener
 import com.trueandtrust.shoplex.model.interfaces.ProductsListener
@@ -32,6 +33,8 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     private lateinit var paymentMethodVM: PaymentMethodVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
         binding = ActivityConfirmProductBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -38,6 +38,8 @@ class MessageActivity : AppCompatActivity() {
     lateinit var salesBtnSheetDialog: BottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
         binding = ActivityMessageBinding.inflate(layoutInflater)
         setContentView(binding.root)
