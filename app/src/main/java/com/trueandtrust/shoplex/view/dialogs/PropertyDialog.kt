@@ -13,8 +13,9 @@ import com.trueandtrust.shoplex.databinding.PropDialogBinding
 import com.trueandtrust.shoplex.model.interfaces.AddProductListener
 import com.trueandtrust.shoplex.model.pojo.Property
 
-class PropertyDialog(val listener: AddProductListener): AppCompatDialogFragment() {
+class PropertyDialog: AppCompatDialogFragment() {
     private lateinit var binding: PropDialogBinding
+    lateinit var listener: AddProductListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         this.binding = PropDialogBinding.inflate(LayoutInflater.from(this.context))

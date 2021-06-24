@@ -36,7 +36,7 @@ class ChatHeadAdapter(private val chatHeads: ArrayList<ChatHead>):
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(chatHead: ChatHead) {
-            Glide.with(itemView.context).load(chatHead.productImageURL).error(R.drawable.product).into(binding.imgChatHead)
+            Glide.with(itemView.context).load(chatHead.productImageURL).error(R.drawable.init_img).into(binding.imgChatHead)
 
             binding.chatHead = chatHead
 

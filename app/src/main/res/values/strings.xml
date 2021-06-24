@@ -20,11 +20,15 @@
     <string name="premium_card">Premium Card</string>
     <string name="basic">Bronze</string>
     <string name="price">Price</string>
-    <string name="_2_weeks_of_ads">2 Weeks of Ads</string>
+    <string name="_2_weeks_of_ads">2 Weeks</string>
+    <string name="price1">20 L.E.</string>
+
     <string name="buy_now">Buy Now</string>
     <string name="standard">Silver</string>
-    <string name="_1_month_of_ads">1 Month of Ads</string>
-    <string name="_3_month_of_ads">3 Month of Ads</string>
+    <string name="_1_month_of_ads">1 Month</string>
+    <string name="price2">35 L.E.</string>
+    <string name="_3_month_of_ads">3 Months</string>
+    <string name="price3">75 L.E.</string>
     <string name="premium">Gold</string>
     <string name="confirm">Confirm</string>
 
@@ -138,7 +142,7 @@
     <string name="propertyDialog">Property Dialog</string>
     <string name="alertonImageRemove">Please wait until image uploaded, then remove</string>
     <string name="Report">Report</string>
-    <string name="proplem">Please Share Us What Is Your Proplem!!</string>
+    <string name="proplem">Please share us what is your problem!!</string>
     <string name="your_report">Your Report</string>
     <string name="send_report">Send Report</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -187,6 +191,7 @@
     <string name="payment_complete">Payment Complete!</string>
     <string name="payment_failed">Payment Failed!</string>
     <string name="valid_phone">Please Enter Valid Mobile(+2)</string>
+    <string name="choose">Choose</string>
     <string name="choose_image">Please Choose Image</string>
     <string name="product_added">Product Added Successfully!</string>
     <string name="failed_payment">Failed to load payment method!</string>
@@ -198,14 +203,14 @@
     <string name="imageSelected">Please Select Your Product Images</string>
     <string name="discountType">Type</string>
     <string name="discount_type">Discount Type</string>
-    <string name="addresses">"addresses "</string>
+    <string name="addresses">"addresses"</string>
     <string name="quantityRange">1 - 100</string>
     <string name="quantity">Quantity</string>
 
     <string name="Login">Login</string>
     <string name="Signup">Signup</string>
     <string name="Name">Name</string>
-    <string name="phone_hint">+201206899532</string>
+    <string name="phone_hint">+201101234567</string>
     <string name="Confirmpassword">Confirm password</string>
     <string name="orLoginvia">Or Login Via</string>
     <string name="orSignUpvia">Or Sign Up Via</string>
@@ -215,10 +220,23 @@
     <string name="NoInternetConnection">Your are currently offline please go online back and try again!</string>
     <string name="success_create_account">Success to create your account!</string>
     <string name="failed">Failed</string>
+    <string name="ProductAddedSuccessfully">Product Added Successfully!</string>
+    <string name="Failed_load_payment_method">Failed to load payment method</string>
+    <string name="minimunPayment">You are going to pay %s  L.E. for your product but unfortunately minimum charge is 10 L.E.</string>
+    <string name="welcome_to_shoplex">Welcome to ShopLex</string>
 
     <string-array name="arr_type_discount">
         <item>Percentage</item>
         <item>Fixed</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Fashion</item>
+        <item>Health Care</item>
+        <item>Phone and Tablets</item>
+        <item>Electronics</item>
+        <item>Accessories</item>
+        <item>Books</item>
     </string-array>
 
     <string-array name="arr_subFashion">
@@ -265,13 +283,4 @@
         <item>Education</item>
     </string-array>
 
-
-    <string-array name="categories">
-        <item>Fashion</item>
-        <item>Health Care</item>
-        <item>Phone and Tablets</item>
-        <item>Electronics</item>
-        <item>Accessories</item>
-        <item>Books</item>
-    </string-array>
 </resources>

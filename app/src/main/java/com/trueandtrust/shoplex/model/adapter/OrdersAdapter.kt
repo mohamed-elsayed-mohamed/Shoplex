@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -39,7 +38,7 @@ class OrdersAdapter(val orders: ArrayList<Order>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(order: Order) {
 
-            Glide.with(itemView.context).load(order.product!!.images.firstOrNull()).error(R.drawable.product).into(binding.imgProduct)
+            Glide.with(itemView.context).load(order.product!!.images.firstOrNull()).error(R.drawable.init_img).into(binding.imgProduct)
             binding.order = order
 
             if (order.orderStatus == OrderStatus.Current) {

@@ -20,6 +20,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
+import com.trueandtrust.shoplex.model.adapter.LocationAdapter
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.enumurations.*
@@ -31,6 +32,7 @@ import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+import kotlinx.android.synthetic.main.product_gv.*
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
@@ -63,18 +65,16 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         viewModel.arrSubCategory.observe(this, {
             // SubCategory Dropdown
-            val arraySubcategoryAdapter =
-                ArrayAdapter(applicationContext, R.layout.dropdown_item, it)
+            val arraySubcategoryAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, it)
             binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
         })
 
-        if (intent.hasExtra(getString(R.string.PRODUCT_KEY))) {
+        if(intent.hasExtra(getString(R.string.PRODUCT_KEY))){
             // User need to update data
-            this.viewModel.product.value =
-                intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))
+            this.viewModel.product.value = intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))
             this.product = this.viewModel.product.value!!
             onUpdate(product)
-        } else {
+        }else{
             // Define product from view model
             product = viewModel.product.value!!
         }
@@ -118,7 +118,8 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         //Open Dialog Button
         binding.btnAddProperty.setOnClickListener {
-            val propertyDialog = PropertyDialog(this)
+            val propertyDialog = PropertyDialog()
+            propertyDialog.listener = this
             propertyDialog.show(supportFragmentManager, getString(R.string.propertyDialog))
         }
 
@@ -127,8 +128,10 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
             if (!validateInput())
                 return@setOnClickListener
 
-            product.category = binding.actTVCategory.text.toString()
-            product.subCategory = binding.actTVSubCategory.text.toString()
+            val catIndex = viewModel.arrCategory.value!!.indexOf(binding.actTVCategory.text.toString())
+            product.category = Category.values()[catIndex].name
+            val subIndex = viewModel.arrSubCategory.value!!.indexOf(binding.actTVSubCategory.text.toString())
+            product.subCategory = viewModel.arrSubCats[subIndex] //binding.actTVSubCategory.text.toString()
 
             startActivity(Intent(this, ConfirmProductActivity::class.java).apply {
                 this.putExtra(getString(R.string.PRODUCT_KEY), product)
@@ -215,14 +218,25 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         this.isUpdate = true
         product.imageSlideList.clear()
         product.imagesListURI.clear()
-        for (imgURL in product.images) {
+        for(imgURL in product.images){
             product.imageSlideList.add(SlideModel(imgURL))
             product.imagesListURI.add(Uri.parse(imgURL))
         }
 
-        binding.actTVCategory.setText(product.category)
-        viewModel.getSubCategory(Category.valueOf(product.category.replace(" ", "_")))
-        binding.actTVSubCategory.setText(product.subCategory)
+        val catIndex = Category.values().map { it.name }.indexOf(product.category)
+        val category = resources.getStringArray(R.array.categories)[catIndex]// viewModel.arrCategory.value!![catIndex]
+        binding.actTVCategory.setText(category)
+        viewModel.getSubCategory(Category.values()[catIndex])
+
+        viewModel.arrSubCategory.observe(this, {
+            val subIndex = viewModel.arrSubCats.indexOf(product.subCategory)
+            val subCat = viewModel.arrSubCategory.value!![subIndex]
+            binding.actTVSubCategory.setText(subCat)
+            viewModel.arrSubCategory.removeObservers(this)
+            val arraySubcategoryAdapter =
+                ArrayAdapter(applicationContext, R.layout.dropdown_item, it)
+            binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
+        })
 
         binding.btnAddProduct.text = getString(R.string.update_product)
     }

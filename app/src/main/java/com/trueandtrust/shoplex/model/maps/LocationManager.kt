@@ -13,6 +13,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
+import java.io.IOException
 import java.util.*
 
 class LocationManager: RoutingListener {
@@ -115,12 +116,15 @@ class LocationManager: RoutingListener {
         routing.execute()
     }
 
-    fun getAddress(location: com.trueandtrust.shoplex.model.pojo.Location): String {
-
-        val geocoder = Geocoder(context, Locale.getDefault())
-        val addresses: List<Address>? =
-            geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        return addresses?.get(0)?.getAddressLine(0)?: ""
+    fun getAddress(location: com.trueandtrust.shoplex.model.pojo.Location): String? {
+        return try {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val addresses: List<Address>? =
+                geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            addresses?.get(0)?.getAddressLine(0)
+        } catch (ex: IOException){
+            null
+        }
     }
 
     override fun onRoutingFailure(p0: RouteException?) {

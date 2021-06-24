@@ -5,9 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
 import com.trueandtrust.shoplex.R
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -37,7 +35,7 @@ class SalesAdapter(private val salesProduct: ArrayList<Product>, val userID: Str
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             Glide.with(itemView.context).load(product.images.firstOrNull())
-                .error(R.drawable.product).into(binding.imgSaleProduct)
+                .error(R.drawable.init_img).into(binding.imgSaleProduct)
             binding.tvSalesProductName.text = product.name
             binding.tvProductCategory.text = product.category
             binding.tvSalesPrice.text = product.price.toString()

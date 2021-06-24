@@ -2,7 +2,6 @@ package com.trueandtrust.shoplex.model.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +17,6 @@ import com.trueandtrust.shoplex.model.interfaces.ProductsListener
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.view.activities.AddProductActivity
 import com.trueandtrust.shoplex.view.activities.DetailsActivity
-import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
-import com.trueandtrust.shoplex.viewmodel.AuthVM
 
 class ProductsAdapter(var products: ArrayList<Product>) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
 
@@ -42,7 +39,7 @@ class ProductsAdapter(var products: ArrayList<Product>) : RecyclerView.Adapter<P
         fun bind(product: Product) {
 
             Glide.with(itemView.context).load(product.images.firstOrNull())
-                .error(R.drawable.product).into(binding.imgProduct)
+                .error(R.drawable.init_img).into(binding.imgProduct)
             binding.product = product
 
             binding.fabEditProduct.setOnClickListener {

@@ -29,7 +29,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/avatar_person" />
+                app:srcCompat="@drawable/agent"
+                android:scaleType="centerCrop"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiName"
@@ -52,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={storeData.store.name}"
-                    android:hint="@string/Name"
+                    android:hint="@string/store_name"
                     android:maxLength="100" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -172,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_8"
-                android:text="@{storeData.primaryAddress}"
+                android:text="@{(storeData.primaryAddress == ``? @string/choose_location : storeData.primaryAddress)}"
                 app:layout_constraintEnd_toStartOf="@+id/btnLocation"
                 app:layout_constraintStart_toStartOf="@+id/tiPhone"
                 app:layout_constraintTop_toBottomOf="@+id/tiPhone" />

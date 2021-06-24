@@ -73,7 +73,7 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
                 if (product.premium != null && premiumPlan != null) {
                     premiumPrice = when (premiumPlan) {
                         Plan.Bronze -> 20
-                        Plan.Silver -> 30
+                        Plan.Silver -> 35
                         Plan.Gold -> 75
                         else -> 0
                     }

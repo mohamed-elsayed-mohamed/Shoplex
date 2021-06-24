@@ -13,7 +13,7 @@
     <color name="primaryShoplex">#FFD600</color>
     <color name="secondaryShoplex">#002C56</color>
     <color name="light_blue">#F4F6FF</color>
-    <color name="dark_blue">#1C2D7A</color>
+    <color name="dark_blue">#084f93</color>
     <color name="red">#C5372D</color>
     <color name="yellow">#FFC107</color>
     <color name="redShopex">#ff5757</color>
@@ -24,12 +24,18 @@
     <color name="blueShopex">#38b6ff</color>
     <color name="grayShopex">#a6a6a6</color>
     <color name="dkblue">#0278ae</color>
+    <color name="yellowDark">#FDC10A</color>
+    <color name="yellowLight">#FAD134</color>
 
     <color name="blueshop">#65AFE4</color>
     <!--    <color name="google">#DB4437</color>-->
     <color name="facebook">#3b5998 </color>
     <color name="google">#db4a39</color>
     <color name="quantum_googblue900">#1c3aa9</color>
-    <color name="logo_text">#ff8d00</color>
+    <color name="logo_text">#E67F00</color>
+
+    <color name="orangeDark">#FF8533</color>
+    <color name="orangeLight">#FF9E44</color>
+    <color name="orangeButtons">#FF9E44</color>
 
 </resources>

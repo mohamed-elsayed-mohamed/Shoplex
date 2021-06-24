@@ -102,7 +102,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         val header: NavHeaderBinding = NavHeaderBinding.inflate(layoutInflater, this.navView, true)
-        Glide.with(this).load(StoreInfo.image).error(R.drawable.product).into(header.navHeaderImage)
+        Glide.with(this).load(StoreInfo.image).error(R.drawable.init_img).into(header.navHeaderImage)
         header.tvStoreName.text = StoreInfo.name
         header.tvStoreEmail.text = StoreInfo.email
     }
