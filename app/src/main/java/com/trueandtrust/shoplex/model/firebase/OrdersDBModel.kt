@@ -1,13 +1,11 @@
 package com.trueandtrust.shoplex.model.firebase
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
-import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.toObject
 import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.OrdersListener
 import com.trueandtrust.shoplex.model.pojo.Order
 import com.trueandtrust.shoplex.model.pojo.Product

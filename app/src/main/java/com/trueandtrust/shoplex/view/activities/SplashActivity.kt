@@ -15,9 +15,7 @@ import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivitySplashBinding
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.AddProductListener
-import com.trueandtrust.shoplex.model.pojo.Store
 import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
-import com.trueandtrust.shoplex.viewmodel.AuthVM
 import java.util.*
 
 class SplashActivity : AppCompatActivity(), AddProductListener {
