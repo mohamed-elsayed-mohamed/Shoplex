@@ -1,6 +1,5 @@
 <resources>
     <string name="PRODUCT_KEY">المنتج</string>
-
     <string name="app_name">متجر شوبليكس</string>
     <string name="product_name">الاسم</string>
     <string name="old_price_strike"><strike>سعر قديم</strike></string>
@@ -38,11 +37,6 @@
         <item>كتب</item>
     </string-array>
 
-    <string-array name="arr_subcategory">
-        <item>رجالى</item>
-        <item>نسائى</item>
-        <item>اطفال</item>
-    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_product_details">تفاصيل المنتج</string>
     <string name="tab_text_1">علامة التبويب 1</string>
@@ -246,7 +240,6 @@
         <item>كاميرات</item>
         <item>أخري</item>
     </string-array>
-
     <string-array name="arr_subAccessories">
         <item>مجوهرات</item>
         <item>ساعات</item>
@@ -256,7 +249,6 @@
         <item>شواحن</item>
         <item>عصي سيلفي</item>
     </string-array>
-
     <string-array name="arr_subBook">
         <item>آداب</item>
         <item>خيال علمي</item>
@@ -264,5 +256,4 @@
         <item>علوم وتكنولوجيا</item>
         <item>تعليمي</item>
     </string-array>
-
 </resources>

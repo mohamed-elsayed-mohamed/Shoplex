@@ -36,6 +36,7 @@ class MessageActivity : AppCompatActivity() {
     private var productsIDs: ArrayList<String>? = null
     private var position: Int = -1
     private lateinit var messageVM: MessageViewModel
+    lateinit var salesBtnSheetDialog: BottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -191,7 +192,7 @@ class MessageActivity : AppCompatActivity() {
 
     private fun openSnackBar(products: ArrayList<Product>) {
         val binding = DialogAddSaleBinding.inflate(layoutInflater)
-        val salesBtnSheetDialog = BottomSheetDialog(binding.root.context)
+        salesBtnSheetDialog = BottomSheetDialog(binding.root.context)
 
         val salesProductAdapter = SalesAdapter(products, userID)
         binding.rcSalesProduct.adapter = salesProductAdapter

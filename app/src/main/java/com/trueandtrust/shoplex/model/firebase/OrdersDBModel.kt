@@ -41,18 +41,21 @@ class OrdersDBModel(val listener: OrdersListener) {
             .whereGreaterThan("orderID", lastID)
             .whereIn("orderStatus", listOf(OrderStatus.Delivered.name, OrderStatus.Canceled.name))
             .addSnapshotListener { values, _ ->
-                val orders = arrayListOf<Order>()
-                for (document: DocumentSnapshot in values?.documents!!) {
-                    val order: Order? = document.toObject<Order>()
-                    if (order != null) {
-                        orders.add(order)
-                        FirebaseReferences.productsRef.document(order.productID).get(Source.SERVER)
-                            .addOnSuccessListener {
-                                order.product = it.toObject<Product>()
-                                if (document == values.last()) {
-                                    this.listener.onLastOrderReady(orders)
+                if (values != null) {
+                    val orders = arrayListOf<Order>()
+                    for (document: DocumentSnapshot in values.documents) {
+                        val order: Order? = document.toObject<Order>()
+                        if (order != null) {
+                            orders.add(order)
+                            FirebaseReferences.productsRef.document(order.productID)
+                                .get(Source.SERVER)
+                                .addOnSuccessListener {
+                                    order.product = it.toObject<Product>()
+                                    if (document == values.last()) {
+                                        this.listener.onLastOrderReady(orders)
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
             }
