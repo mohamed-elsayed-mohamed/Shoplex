@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.Shoplex" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryShoplex</item>
-        <item name="colorPrimaryVariant">@color/primaryShoplex</item>
+        <item name="colorPrimary">@color/orangeShopex</item>
+        <item name="colorPrimaryVariant">@color/orangeDark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/primaryShoplex</item>
-        <item name="colorSecondaryVariant">@color/secondaryShoplex</item>
+        <item name="colorSecondary">@color/orangeButtons</item>
+        <item name="colorSecondaryVariant">@color/dark_blue</item>
         <item name="colorOnSecondary">@color/gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -15,12 +15,12 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="titleTextColor">@color/dark_blue</item>
         <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
-        <item name="iconTint">@color/secondaryShoplex</item>
+        <item name="iconTint">@color/white</item>
     </style>
 
     <style name="MyAlertDialogPropertyStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/secondaryShoplex</item>
+        <item name="colorAccent">@color/dark_blue</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/black</item>
         <!-- Used for the background -->
@@ -40,6 +40,10 @@
     <!--    </style>-->
 
 
+    <style name="ToolbarTheme">
+        <item name="android:background">@color/orangeLight</item>
+    </style>
+
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/white</item>
@@ -57,7 +61,7 @@
 
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/secondaryShoplex</item>
+        <item name="color">@color/black</item>
     </style>
 
     <style name="TabStyleCustom" parent="TextAppearance.Design.Tab">

@@ -118,7 +118,8 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         //Open Dialog Button
         binding.btnAddProperty.setOnClickListener {
-            val propertyDialog = PropertyDialog(this)
+            val propertyDialog = PropertyDialog()
+            propertyDialog.listener = this
             propertyDialog.show(supportFragmentManager, getString(R.string.propertyDialog))
         }
 

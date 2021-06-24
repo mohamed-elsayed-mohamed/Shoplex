@@ -11,7 +11,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryShoplex"
+        style="@style/ToolbarTheme"
         android:paddingTop="@dimen/margin_8"
         android:paddingEnd="@dimen/margin_8"
         android:paddingBottom="@dimen/margin_8"
@@ -24,7 +24,7 @@
             android:id="@+id/toolbarMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primaryShoplex"
+            style="@style/ToolbarTheme"
             android:elevation="@dimen/padding_4">
 
             <androidx.constraintlayout.widget.ConstraintLayout

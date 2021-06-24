@@ -20,7 +20,7 @@
     android:id="@+id/navHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/primaryShoplex"
+    style="@style/ToolbarTheme"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -42,7 +42,7 @@
         android:layout_marginStart="@dimen/margin_8"
         android:layout_marginTop="8dp"
         android:text="@string/store_name"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/navHeaderImage"
@@ -52,6 +52,7 @@
         android:id="@+id/tvStoreEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_marginEnd="@dimen/margin_16"
         android:text="@string/email"
         app:layout_constraintEnd_toEndOf="parent"

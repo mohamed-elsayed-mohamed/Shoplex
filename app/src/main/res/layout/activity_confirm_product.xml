@@ -18,9 +18,10 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnConfirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -40,8 +41,8 @@
                     android:id="@+id/divider1"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginTop="@dimen/width_1"
                     android:layout_marginStart="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/width_1"
                     android:layout_marginEnd="16dp"
                     android:background="?android:attr/listDivider"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -55,12 +56,12 @@
                     android:layout_height="wrap_content"
                     android:background="#BFAAAAAA"
                     android:padding="8dp"
-                    android:visibility="@{(product.discount > 0? View.VISIBLE : View.INVISIBLE)}"
                     android:text="@{@string/saleOff(`` + product.discount)}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="30sp"
                     android:textStyle="bold"
+                    android:visibility="@{(product.discount > 0? View.VISIBLE : View.INVISIBLE)}"
                     app:layout_constraintBottom_toBottomOf="@+id/imgSlideConfirm"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -76,16 +77,16 @@
                     android:scaleType="fitCenter"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imgSlideConfirm"
-                    app:srcCompat="@drawable/product_two" />
+                    app:srcCompat="@drawable/logo" />
 
                 <TextView
                     android:id="@+id/tvProductName"
+                    style="@style/TitleColor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8"
                     android:layout_marginTop="4dp"
                     android:text="@{product.name}"
-                    style="@style/TitleColor"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/imgProductConfirm"
@@ -93,11 +94,11 @@
 
                 <TextView
                     android:id="@+id/tvNewPriceConfirm"
+                    style="@style/WhiteColorText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_8"
                     android:text="@{@string/LE(product.newPrice)}"
-                    style="@style/WhiteColorText"
                     app:layout_constraintStart_toStartOf="@+id/tvProductName"
                     app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
 
@@ -106,9 +107,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_8"
-                    android:visibility="@{(product.discount==0?View.INVISIBLE:View.VISIBLE)}"
                     android:text="@{@string/LE(product.price)}"
                     android:textSize="12sp"
+                    android:visibility="@{(product.discount==0?View.INVISIBLE:View.VISIBLE)}"
                     app:layout_constraintStart_toStartOf="@+id/tvProductName"
                     app:layout_constraintTop_toBottomOf="@+id/tvNewPriceConfirm" />
 
@@ -117,10 +118,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:visibility="@{(product.discount==0?View.INVISIBLE:View.VISIBLE)}"
                     android:text="@{product.discount+` %`}"
-                    android:textSize="12sp"
                     android:textColor="@android:color/holo_red_dark"
+                    android:textSize="12sp"
+                    android:visibility="@{(product.discount==0?View.INVISIBLE:View.VISIBLE)}"
                     app:layout_constraintBottom_toBottomOf="@+id/tvOldPriceConfirm"
                     app:layout_constraintStart_toEndOf="@+id/tvOldPriceConfirm"
                     app:layout_constraintTop_toTopOf="@+id/tvOldPriceConfirm"
@@ -140,12 +141,12 @@
 
                 <TextView
                     android:id="@+id/textView9"
+                    style="@style/TitleColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_16"
                     android:layout_marginTop="@dimen/margin_16"
                     android:text="@string/offers"
-                    style="@style/TitleColor"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -153,7 +154,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardPremium"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_4"
                     android:layout_marginTop="@dimen/margin_16"
@@ -170,13 +171,13 @@
 
                         <TextView
                             android:id="@+id/tvPremium"
+                            style="@style/TitleColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/premium"
-                            style="@style/TitleColor"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -190,7 +191,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:text="@string/price"
+                            android:text="@string/price3"
                             android:textColor="@color/redShopex"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -198,13 +199,13 @@
 
                         <TextView
                             android:id="@+id/tvOfferPremium"
+                            style="@style/TitleColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="4dp"
                             android:text="@string/_3_month_of_ads"
-                            style="@style/TitleColor"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -216,7 +217,7 @@
                             android:layout_height="@dimen/height_40"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"
-                            android:text="@string/buy_now"
+                            android:text="@string/choose"
                             android:textAllCaps="false"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -229,7 +230,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardStandard"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_4"
                     app:cardCornerRadius="10dp"
@@ -245,13 +246,13 @@
 
                         <TextView
                             android:id="@+id/tvStandard"
+                            style="@style/TitleColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/standard"
-                            style="@style/TitleColor"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -265,7 +266,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:text="@string/price"
+                            android:text="@string/price2"
                             android:textColor="@color/redShopex"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -273,13 +274,13 @@
 
                         <TextView
                             android:id="@+id/tvOfferStandard"
+                            style="@style/TitleColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="4dp"
                             android:text="@string/_1_month_of_ads"
-                            style="@style/TitleColor"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -291,7 +292,7 @@
                             android:layout_height="@dimen/height_40"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"
-                            android:text="@string/buy_now"
+                            android:text="@string/choose"
                             android:textAllCaps="false"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -304,7 +305,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardBasic"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_4"
@@ -324,13 +325,13 @@
 
                         <TextView
                             android:id="@+id/tvBasic"
+                            style="@style/TitleColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/basic"
-                            style="@style/TitleColor"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -344,7 +345,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:text="@string/price"
+                            android:text="@string/price1"
                             android:textColor="@color/redShopex"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -352,13 +353,13 @@
 
                         <TextView
                             android:id="@+id/tvOfferBasic"
+                            style="@style/TitleColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="4dp"
                             android:text="@string/_2_weeks_of_ads"
-                            style="@style/TitleColor"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -370,7 +371,7 @@
                             android:layout_height="@dimen/height_40"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="8dp"
-                            android:text="@string/buy_now"
+                            android:text="@string/choose"
                             android:textAllCaps="false"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -389,13 +390,12 @@
             android:id="@+id/btnConfirm"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_45"
-            android:layout_marginTop="@dimen/margin_32"
-            android:layout_marginBottom="@dimen/margin_32"
-            android:layout_marginStart="@dimen/margin_16"
-            android:layout_marginEnd="@dimen/margin_16"
-            android:text="@string/confirm"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/buy_now"
             android:textAllCaps="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
