@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +14,8 @@ import com.trueandtrust.shoplex.databinding.FragmentProductsBinding
 import com.trueandtrust.shoplex.model.adapter.ProductsAdapter
 import com.trueandtrust.shoplex.view.activities.AddProductActivity
 import com.trueandtrust.shoplex.viewmodel.ProductsVM
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 
 class ProductsFragment : Fragment() {
     private lateinit var binding: FragmentProductsBinding
@@ -33,7 +36,12 @@ class ProductsFragment : Fragment() {
         requireActivity().title = getString(R.string.products)
 
         productsVM.products.observe(this.viewLifecycleOwner) { products ->
-            binding.rvProducts.adapter = ProductsAdapter(products)
+            //binding.rvProducts.adapter = ProductsAdapter(products)
+            binding.rvProducts.adapter =  ScaleInAnimationAdapter(SlideInBottomAnimationAdapter(ProductsAdapter(products))).apply {
+                setDuration(1000)
+                setInterpolator(OvershootInterpolator(2f))
+                setFirstOnly(false)
+            }
         }
 
         binding.fabAddProduct.setOnClickListener {

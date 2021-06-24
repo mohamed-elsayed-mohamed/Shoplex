@@ -106,4 +106,7 @@ dependencies {
 
     // Internet Connection
     implementation 'com.github.JobGetabu:DroidNet:v2.0.0'
+
+    //animation recyclerview
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.2'
 }

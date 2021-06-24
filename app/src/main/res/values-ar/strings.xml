@@ -1,6 +1,5 @@
 <resources>
     <string name="PRODUCT_KEY">المنتج</string>
-
     <string name="app_name">متجر شوبليكس</string>
     <string name="product_name">الاسم</string>
     <string name="old_price_strike"><strike>سعر قديم</strike></string>
@@ -38,11 +37,6 @@
         <item>كتب</item>
     </string-array>
 
-    <string-array name="arr_subcategory">
-        <item>رجالى</item>
-        <item>نسائى</item>
-        <item>اطفال</item>
-    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_product_details">تفاصيل المنتج</string>
     <string name="tab_text_1">علامة التبويب 1</string>
@@ -198,5 +192,49 @@
     <string name="saleOff">%s تخفيض</string>
     <string name="days">%s يوم</string>
     <string name="LE">%s جـ.م</string>
+    <string name="NoReviews">لا توجد تقييمات</string>
+    <string name="NoInternetConnection">انت غير متصل بالشبكة من فضلك حاول مرة اخري!</string>
 
+
+    <string-array name="arr_subFashion">
+        <item>رجالى</item>
+        <item>نسائى</item>
+        <item>اطفال</item>
+    </string-array>
+
+    <string-array name="arr_subHealthCare">
+        <item>العناية بالشعر</item>
+        <item>عطور</item>
+        <item>ميكاب</item>
+    </string-array>
+
+    <string-array name="arr_subPhoneAndTablet">
+        <item>هواتف</item>
+        <item>تابلت</item>
+        <item>آى باد</item>
+    </string-array>
+
+    <string-array name="arr_subElectronic">
+        <item>تلفزيونات</item>
+        <item>سماعات</item>
+        <item>ساعات ذكيه</item>
+        <item>كاميرات</item>
+        <item>أخري</item>
+    </string-array>
+    <string-array name="arr_subAccessories">
+        <item>مجوهرات</item>
+        <item>ساعات</item>
+        <item>احزمة</item>
+        <item>جرابات هواتف</item>
+        <item>كابلات</item>
+        <item>شواحن</item>
+        <item>عصي سيلفي</item>
+    </string-array>
+    <string-array name="arr_subBook">
+        <item>آداب</item>
+        <item>خيال علمي</item>
+        <item>ترفيه</item>
+        <item>علوم وتكنولوجيا</item>
+        <item>تعليمي</item>
+    </string-array>
 </resources>
