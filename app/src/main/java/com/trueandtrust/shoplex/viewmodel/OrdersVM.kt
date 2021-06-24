@@ -21,6 +21,7 @@ class OrdersVM(val context: Context) : ViewModel(), OrdersListener {
 
     private val lastOrderRepo: LastOrderRepo =
         LastOrderRepo(ShopLexDatabase.getDatabase(context).storeDao())
+    private var roomLastOrders = arrayListOf<Order>()
 
     fun getCurrentOrders() {
         ordersDBModel.getCurrentOrders()
@@ -29,13 +30,12 @@ class OrdersVM(val context: Context) : ViewModel(), OrdersListener {
     fun getLastOrders() {
         lastOrderRepo.readAllLastOrder.observe(context as AppCompatActivity, { orders ->
             var lastID = "1"
-            lastOrders.value = arrayListOf()
-            for (order in orders) {
-                lastOrders.value!!.add(order)
-                if (order == orders.last()) {
-                    lastID = order.orderID
-                }
+            if (orders != null && orders.count() > 0) {
+                roomLastOrders = orders as ArrayList<Order>
+                lastID = orders.last().orderID
+                lastOrders.value = roomLastOrders
             }
+
             lastOrderRepo.readAllLastOrder.removeObservers(context)
             ordersDBModel.getLastOrders(lastID)
         })
@@ -52,7 +52,6 @@ class OrdersVM(val context: Context) : ViewModel(), OrdersListener {
             }
         }
 
-
-        this.lastOrders.value!!.addAll(lastOrders)
+        this.lastOrders.value = (roomLastOrders + lastOrders) as ArrayList<Order>
     }
 }

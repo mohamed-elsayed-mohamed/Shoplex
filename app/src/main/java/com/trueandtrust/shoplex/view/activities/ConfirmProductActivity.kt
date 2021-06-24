@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityConfirmProductBinding
 import com.trueandtrust.shoplex.model.enumurations.Plan
@@ -87,7 +89,10 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
                     addUpdateProduct()
                 }
             } else {
-                Toast.makeText(this,  getString(R.string.NoInternetConnection), Toast.LENGTH_SHORT).show()
+                val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.NoInternetConnection), Snackbar.LENGTH_LONG)
+                val sbView: View = snackbar.view
+                sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                snackbar.show()
             }
         }
     }
@@ -127,11 +132,11 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     }
 
     override fun onProductAdded() {
-        Toast.makeText(
-            this,
-            "Product Added Successfully!",
-            Toast.LENGTH_LONG
-        ).show()
+        val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.product_added), Snackbar.LENGTH_LONG)
+        val sbView: View = snackbar.view
+        sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+        snackbar.show()
+
     }
 
 
@@ -140,19 +145,18 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     }
 
     override fun onPaymentFailedToLoad() {
-        Toast.makeText(
-            this,
-            "Failed to load payment method",
-            Toast.LENGTH_SHORT
-        ).show()
+        val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.failed_payment), Snackbar.LENGTH_LONG)
+        val sbView: View = snackbar.view
+        sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+        snackbar.show()
+
     }
 
     override fun onMinimumPrice(price: Float) {
-        Toast.makeText(
-            this,
-            "You are going to pay $price L.E. for your product but unfortunately minimum charge is 10 L.E.",
-            Toast.LENGTH_SHORT
-        ).show()
+        val snackbar = Snackbar.make(binding.root, "You are going to pay $price L.E. for your product but unfortunately minimum charge is 10 L.E.", Snackbar.LENGTH_LONG)
+        val sbView: View = snackbar.view
+        sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+        snackbar.show()
         btnConfirm.isEnabled = true
     }
 }

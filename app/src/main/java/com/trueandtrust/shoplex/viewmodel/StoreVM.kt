@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.StoreDBModel
 import com.trueandtrust.shoplex.model.interfaces.StoreListener
+import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.PendingLocation
 
 class StoreVM: ViewModel(), StoreListener {
@@ -31,7 +32,13 @@ class StoreVM: ViewModel(), StoreListener {
         storeDBModel.removeLocationAddress(address = location.address, location = location.location)
     }
 
-    override fun onRemoveLocationSuccess() {
+    override fun onRemoveLocationSuccess(address: String, location: Location) {
+        StoreInfo.addresses.remove(address)
+        val loc = StoreInfo.locations.find {
+            it.latitude == location.latitude && it.longitude == location.longitude
+        }
+
+        StoreInfo.locations.remove(loc)
         isLocationRemoved.value = true
     }
 }

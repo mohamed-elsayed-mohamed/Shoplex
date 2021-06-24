@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.model.enumurations.OrderStatus
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.HomeRvBinding
@@ -55,7 +57,10 @@ class OrdersAdapter(val orders: ArrayList<Order>) :
                 if(order.deliveryLoc != null) {
                     LocationManager.getInstance(context).launchGoogleMaps(order.deliveryLoc!!)
                 }else{
-                    Toast.makeText(context, "Can't Identify Customer Location", Toast.LENGTH_SHORT).show()
+                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.customerlocation), Snackbar.LENGTH_LONG)
+                    val sbView: View = snackbar.view
+                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                    snackbar.show()
                 }
             }
 

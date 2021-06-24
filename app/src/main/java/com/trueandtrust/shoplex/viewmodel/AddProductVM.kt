@@ -24,16 +24,18 @@ class AddProductVM(val context: Context) : ViewModel() {
     fun getSubCategory(selectedCategory: Category){
          val listSubCat =
             when(selectedCategory) {
-                Category.Fashion -> context.resources.getStringArray(R.array.categories)
-                Category.Health_Care -> SubHealth.values()
-                Category.Phone_and_Tablets -> SubPhone.values()
-                Category.Electronics -> SubElectronic.values()
-                Category.Accessories -> SubAccessors.values()
-                Category.Books -> SubBook.values()
+                Category.Fashion -> context.resources.getStringArray(R.array.arr_subFashion)
+                Category.Health_Care -> context.resources.getStringArray(R.array.arr_subHealthCare)
+                Category.Phone_and_Tablets -> context.resources.getStringArray(R.array.arr_subPhoneAndTablet)
+                Category.Electronics -> context.resources.getStringArray(R.array.arr_subElectronic)
+                Category.Accessories -> context.resources.getStringArray(R.array.arr_subAccessories)
+                Category.Books -> context.resources.getStringArray(R.array.arr_subBook)
             }
 
         this.arrSubCategory.value = (listSubCat as Array<*>).map {
             it.toString().replace("_", " ")
         }.toTypedArray()
     }
+
+
 }

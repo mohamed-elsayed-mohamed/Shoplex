@@ -4,10 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityStoreLocationBinding
 import com.trueandtrust.shoplex.model.adapter.LocationAdapter
@@ -57,7 +60,10 @@ class StoreLocationActivity : AppCompatActivity() {
                         }, MapsActivity.MAPS_CODE
                 )
             } else {
-                Toast.makeText(this, getString(R.string.NoInternetConnection), Toast.LENGTH_SHORT).show()
+                val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.NoInternetConnection), Snackbar.LENGTH_LONG)
+                val sbView: View = snackbar.view
+                sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                snackbar.show()
             }
         }
     }
@@ -91,8 +97,11 @@ class StoreLocationActivity : AppCompatActivity() {
 
                     //storeVM.storeAddresses.value!!.add(PendingLocation(address= address, location = location))
                 } else {
-                    Toast.makeText(this, "Failed please select valid address", Toast.LENGTH_SHORT)
-                        .show()
+                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.valid_address), Snackbar.LENGTH_LONG)
+                    val sbView: View = snackbar.view
+                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                    snackbar.show()
+
                 }
             }
         }
