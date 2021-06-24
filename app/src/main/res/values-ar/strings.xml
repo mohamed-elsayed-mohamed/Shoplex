@@ -183,7 +183,6 @@
     <string name="orLoginvia">أو الدخول بواسطة</string>
     <string name="orSignUpvia">أو تسجيل الدخول بواسطة</string>
     <string name="or_login_with">أو تسجيل الدخول بواسطة</string>
-
     <string name="propertyDialog">Property Dialog</string>
     <string name="alertonImageRemove">بجاء الإنتظار لتحميل الصورة, ثم احذفها</string>
     <string name="proplem">من فضلك شاركنا مشكلتك !!</string>
@@ -194,7 +193,11 @@
     <string name="LE">%s جـ.م</string>
     <string name="NoReviews">لا توجد تقييمات</string>
     <string name="NoInternetConnection">انت غير متصل بالشبكة من فضلك حاول مرة اخري!</string>
-
+    <string name="success_create_account">تم إنشاء حساب بنجاح!</string>
+    <string name="failed">فشل</string>
+    <string name="ProductAddedSuccessfully">تم إضافة المنتج بنجاح!</string>
+    <string name="Failed_load_payment_method">فشل في تحميل طريقة الدفع</string>
+    <string name="minimunPayment">سوف تدفع %s لذلك المنتج لكن لسوء الحظ أقل شحن عشرة جنيهات</string>
 
     <string-array name="arr_subFashion">
         <item>رجالى</item>

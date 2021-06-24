@@ -129,7 +129,7 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     override fun onProductAdded() {
         Toast.makeText(
             this,
-            "Product Added Successfully!",
+            R.string.ProductAddedSuccessfully,
             Toast.LENGTH_LONG
         ).show()
     }
@@ -142,7 +142,7 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     override fun onPaymentFailedToLoad() {
         Toast.makeText(
             this,
-            "Failed to load payment method",
+            R.string.Failed_load_payment_method,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -150,7 +150,7 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     override fun onMinimumPrice(price: Float) {
         Toast.makeText(
             this,
-            "You are going to pay $price L.E. for your product but unfortunately minimum charge is 10 L.E.",
+            getString(R.string.minimunPayment, price.toString()),
             Toast.LENGTH_SHORT
         ).show()
         btnConfirm.isEnabled = true
