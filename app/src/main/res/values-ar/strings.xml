@@ -28,7 +28,7 @@
     <string name="confirm">تاكيد</string>
     <string name="Report">بلاغ</string>
     <string name="NA">لا يوجد</string>
-    <string-array name="arr_category">
+    <string-array name="categories">
         <item>موضه</item>
         <item>الصحة والعناية</item>
         <item>هواتف</item>

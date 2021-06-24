@@ -203,6 +203,15 @@
         <item>Fixed</item>
     </string-array>
 
+    <string-array name="categories">
+        <item>Fashion</item>
+        <item>Health Care</item>
+        <item>Phone and Tablets</item>
+        <item>Electronics</item>
+        <item>Accessories</item>
+        <item>Books</item>
+    </string-array>
+
     <string-array name="arr_subFashion">
         <item>Men</item>
         <item>Women</item>

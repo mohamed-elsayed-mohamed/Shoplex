@@ -30,6 +30,7 @@ import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
@@ -45,7 +46,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         setContentView(binding.root)
 
         // Define View Model
-        viewModel = ViewModelProvider(this).get(AddProductVM::class.java)
+        viewModel = ViewModelProvider(this, AddProductFactory(this)).get(AddProductVM::class.java)
 
         viewModel.product.observe(this, {
             updateSliderUI()
@@ -209,7 +210,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         this.isUpdate = true
         product.imageSlideList.clear()
         product.imagesListURI.clear()
-        for (imgURL in product.images) {
+        for(imgURL in product.images){
             product.imageSlideList.add(SlideModel(imgURL))
             product.imagesListURI.add(Uri.parse(imgURL))
         }
@@ -336,8 +337,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         }
 
         if (product.imagesListURI.isNullOrEmpty()) {
-            Snackbar.make(binding.root, getString(R.string.imageSelected), Snackbar.LENGTH_LONG)
-                .show()
+            Snackbar.make(binding.root, getString(R.string.imageSelected), Snackbar.LENGTH_LONG).show()
 
             return false
         }
