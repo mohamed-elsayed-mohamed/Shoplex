@@ -198,7 +198,7 @@
     <string name="imageSelected">Please Select Your Product Images</string>
     <string name="discountType">Type</string>
     <string name="discount_type">Discount Type</string>
-    <string name="addresses">"addresses "</string>
+    <string name="addresses">"addresses"</string>
     <string name="quantityRange">1 - 100</string>
     <string name="quantity">Quantity</string>
 
@@ -277,13 +277,4 @@
         <item>Education</item>
     </string-array>
 
-
-    <string-array name="categories">
-        <item>Fashion</item>
-        <item>Health Care</item>
-        <item>Phone and Tablets</item>
-        <item>Electronics</item>
-        <item>Accessories</item>
-        <item>Books</item>
-    </string-array>
 </resources>
