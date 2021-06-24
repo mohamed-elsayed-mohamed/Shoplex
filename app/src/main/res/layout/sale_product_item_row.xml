@@ -22,11 +22,11 @@
             android:layout_height="@dimen/height_75"
             android:layout_marginStart="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_8"
+            android:contentDescription="@string/todo"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/product_two"
-            android:contentDescription="@string/todo" />
+            tools:srcCompat="@drawable/init_img" />
 
         <TextView
             android:id="@+id/tvSalesProductName"
