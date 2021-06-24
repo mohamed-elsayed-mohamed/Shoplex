@@ -198,7 +198,7 @@
     <string name="imageSelected">Please Select Your Product Images</string>
     <string name="discountType">Type</string>
     <string name="discount_type">Discount Type</string>
-    <string name="addresses">"addresses "</string>
+    <string name="addresses">"addresses"</string>
     <string name="quantityRange">1 - 100</string>
     <string name="quantity">Quantity</string>
 
@@ -215,10 +215,22 @@
     <string name="NoInternetConnection">Your are currently offline please go online back and try again!</string>
     <string name="success_create_account">Success to create your account!</string>
     <string name="failed">Failed</string>
+    <string name="ProductAddedSuccessfully">Product Added Successfully!</string>
+    <string name="Failed_load_payment_method">Failed to load payment method</string>
+    <string name="minimunPayment">You are going to pay %s  L.E. for your product but unfortunately minimum charge is 10 L.E.</string>
 
     <string-array name="arr_type_discount">
         <item>Percentage</item>
         <item>Fixed</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Fashion</item>
+        <item>Health Care</item>
+        <item>Phone and Tablets</item>
+        <item>Electronics</item>
+        <item>Accessories</item>
+        <item>Books</item>
     </string-array>
 
     <string-array name="arr_subFashion">
@@ -265,13 +277,4 @@
         <item>Education</item>
     </string-array>
 
-
-    <string-array name="categories">
-        <item>Fashion</item>
-        <item>Health Care</item>
-        <item>Phone and Tablets</item>
-        <item>Electronics</item>
-        <item>Accessories</item>
-        <item>Books</item>
-    </string-array>
 </resources>

@@ -194,6 +194,12 @@
     <string name="LE">%s جـ.م</string>
     <string name="NoReviews">لا توجد تقييمات</string>
     <string name="NoInternetConnection">انت غير متصل بالشبكة من فضلك حاول مرة اخري!</string>
+    <string name="success_create_account">تم إنشاء حساب بنجاح!</string>
+    <string name="failed">فشل</string>
+    <string name="ProductAddedSuccessfully">تم إضافة المنتج بنجاح!</string>
+    <string name="Failed_load_payment_method">فشل في تحميل طريقة الدفع</string>
+    <string name="minimunPayment">سوف تدفع %s لذلك المنتج لكن لسوء الحظ أقل شحن عشرة جنيهات</string>
+
 
     <string name="delete">حذف العنصر</string>
     <string name="deleteMessage">هل أنت متأكد من حذف هذا العنصر؟</string>

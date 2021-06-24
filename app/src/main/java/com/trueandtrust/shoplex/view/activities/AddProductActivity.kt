@@ -65,18 +65,16 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         viewModel.arrSubCategory.observe(this, {
             // SubCategory Dropdown
-            val arraySubcategoryAdapter =
-                ArrayAdapter(applicationContext, R.layout.dropdown_item, it)
+            val arraySubcategoryAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, it)
             binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
         })
 
-        if (intent.hasExtra(getString(R.string.PRODUCT_KEY))) {
+        if(intent.hasExtra(getString(R.string.PRODUCT_KEY))){
             // User need to update data
-            this.viewModel.product.value =
-                intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))
+            this.viewModel.product.value = intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))
             this.product = this.viewModel.product.value!!
             onUpdate(product)
-        } else {
+        }else{
             // Define product from view model
             product = viewModel.product.value!!
         }
@@ -219,7 +217,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         this.isUpdate = true
         product.imageSlideList.clear()
         product.imagesListURI.clear()
-        for (imgURL in product.images) {
+        for(imgURL in product.images){
             product.imageSlideList.add(SlideModel(imgURL))
             product.imagesListURI.add(Uri.parse(imgURL))
         }
