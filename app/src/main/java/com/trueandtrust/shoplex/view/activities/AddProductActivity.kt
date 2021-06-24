@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -25,13 +26,14 @@ import com.trueandtrust.shoplex.model.enumurations.*
 import com.trueandtrust.shoplex.model.interfaces.AddProductListener
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.enumurations.*
-import com.trueandtrust.shoplex.viewmodel.AddProductVM
+
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
-import com.trueandtrust.shoplex.viewmodel.AddProductVM
+
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import com.trueandtrust.shoplex.viewmodel.AddProductFactory
+import com.trueandtrust.shoplex.viewmodel.AddProductVM
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
