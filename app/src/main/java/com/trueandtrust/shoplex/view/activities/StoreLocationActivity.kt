@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.MenuItem
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,8 @@ import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Location
 import com.trueandtrust.shoplex.model.pojo.PendingLocation
 import com.trueandtrust.shoplex.viewmodel.StoreVM
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 
 class StoreLocationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStoreLocationBinding
@@ -39,7 +42,11 @@ class StoreLocationActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         storeVM.storeAddresses.observe(this, { locations ->
-            binding.rcLocation.adapter = LocationAdapter(locations)
+           // binding.rcLocation.adapter = LocationAdapter(locations)
+            binding.rcLocation.adapter = ScaleInAnimationAdapter(SlideInBottomAnimationAdapter(LocationAdapter(locations))).apply {
+                setDuration(700)
+                setInterpolator(OvershootInterpolator(2f))
+            }
         })
 
         binding.fabAddLocation.setOnClickListener {
