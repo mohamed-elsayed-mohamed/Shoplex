@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import com.trueandtrust.shoplex.R
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,6 +17,7 @@ import com.trueandtrust.shoplex.databinding.SaleProductItemRowBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.SpecialDiscount
+import com.trueandtrust.shoplex.view.activities.MessageActivity
 
 class SalesAdapter(private val salesProduct: ArrayList<Product>, val userID: String) :
     RecyclerView.Adapter<SalesAdapter.SalesViewHolder>() {
@@ -34,46 +36,85 @@ class SalesAdapter(private val salesProduct: ArrayList<Product>, val userID: Str
     inner class SalesViewHolder(val binding: SaleProductItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
-            Glide.with(itemView.context).load(product.images.firstOrNull()).error(R.drawable.product).into(binding.imgSaleProduct)
+            Glide.with(itemView.context).load(product.images.firstOrNull())
+                .error(R.drawable.product).into(binding.imgSaleProduct)
             binding.tvSalesProductName.text = product.name
             binding.tvProductCategory.text = product.category
             binding.tvSalesPrice.text = product.price.toString()
             binding.tvProductPrice.text = product.price.toString()
-            val arrayDiscountTypeAdapter = ArrayAdapter(binding.root.context, R.layout.dropdown_discount_type_item,
-                DiscountType.values())
+            val arrayDiscountTypeAdapter = ArrayAdapter(
+                binding.root.context, R.layout.dropdown_discount_type_item,
+                DiscountType.values()
+            )
             binding.actDiscountType.setText(DiscountType.Percentage.name)
             binding.actDiscountType.setAdapter(arrayDiscountTypeAdapter)
-            binding.actDiscountType.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                if(position==0){
-                    binding.tiSaleDiscount.helperText = "0-90%"
-                }else {
-                    binding.tiSaleDiscount.helperText = "0-100"
+            binding.actDiscountType.onItemClickListener =
+                AdapterView.OnItemClickListener { _, _, position, _ ->
+                    if (position == 0) {
+                        binding.tiSaleDiscount.helperText = "0-90%"
+                    } else {
+                        binding.tiSaleDiscount.helperText = "0-100"
+
+                    }
+                }
+
+            binding.btnConfirmSales.setOnClickListener {
+                if(binding.edSaleDiscount.text.toString().isNotEmpty()) {
+                    addDiscount(product)
+                } else {
 
                 }
             }
 
-            binding.btnConfirmSales.setOnClickListener {
-                addDiscount(product)
+            binding.edSaleDiscount.doOnTextChanged { text, _, _, _ ->
+                if(!text.isNullOrEmpty()){
+                    val price = if(binding.actDiscountType.text.toString() == DiscountType.Percentage.name){
+                        product.price - (product.price * (text.toString().toFloat()/100F))
+                    } else {
+                        product.price - text.toString().toInt()
+                    }
+                    binding.tvSalesPrice.text = price.toString()
+                }
             }
         }
 
-        private fun addDiscount(product: Product){
+        private fun addDiscount(product: Product) {
             val discount = binding.edSaleDiscount.text.toString().toFloat()
             val discountType = DiscountType.valueOf(binding.actDiscountType.text.toString())
             val specialDiscount = SpecialDiscount(discount, discountType)
             FirebaseReferences.productsRef.document(product.productID)
                 .collection("Special Discounts")
                 .document(userID)
-                .set(specialDiscount).addOnCompleteListener {
-                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.discountAdded), Snackbar.LENGTH_LONG)
+                .set(specialDiscount).addOnSuccessListener {
+                    val snackbar = Snackbar.make(
+                        binding.root,
+                        binding.root.context.getString(R.string.discountAdded),
+                        Snackbar.LENGTH_LONG
+                    )
                     val sbView: View = snackbar.view
-                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                    sbView.setBackgroundColor(
+                        ContextCompat.getColor(
+                            binding.root.context,
+                            R.color.blueshop
+                        )
+                    )
                     snackbar.show()
-            }.addOnFailureListener {
-                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.discountFailed), Snackbar.LENGTH_LONG)
+                    (binding.root.context as MessageActivity).salesBtnSheetDialog.dismiss()
+                }.addOnFailureListener {
+                    val snackbar = Snackbar.make(
+                        binding.root,
+                        binding.root.context.getString(R.string.discountFailed),
+                        Snackbar.LENGTH_LONG
+                    )
                     val sbView: View = snackbar.view
-                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
-                    snackbar.show()            }
+                    sbView.setBackgroundColor(
+                        ContextCompat.getColor(
+                            binding.root.context,
+                            R.color.blueshop
+                        )
+                    )
+                    snackbar.show()
+                }
         }
     }
 }

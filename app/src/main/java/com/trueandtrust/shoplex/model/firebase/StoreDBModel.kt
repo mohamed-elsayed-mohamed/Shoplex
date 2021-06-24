@@ -18,7 +18,7 @@ class StoreDBModel(val listener: StoreListener) {
     fun  removeLocationAddress(address: String, location: Location){
         FirebaseReferences.storeRef.document(StoreInfo.storeID.toString()).update("addresses", FieldValue.arrayRemove(address))
         FirebaseReferences.storeRef.document(StoreInfo.storeID.toString()).update("locations", FieldValue.arrayRemove(location)).addOnSuccessListener {
-            listener.onRemoveLocationSuccess()
+            listener.onRemoveLocationSuccess(address, location)
         }
     }
 }

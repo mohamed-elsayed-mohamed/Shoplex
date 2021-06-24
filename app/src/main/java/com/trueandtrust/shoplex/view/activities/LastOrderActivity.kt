@@ -44,7 +44,7 @@ class LastOrderActivity : AppCompatActivity() {
             else{
                 binding.noItem.visibility= View.VISIBLE
             }
-            binding.rvLastOrders.adapter = ScaleInAnimationAdapter(SlideInBottomAnimationAdapter( OrdersAdapter(orders))).apply {
+            binding.rvLastOrders.adapter = ScaleInAnimationAdapter(SlideInBottomAnimationAdapter(OrdersAdapter(orders))).apply {
                 setDuration(700)
                 setInterpolator(OvershootInterpolator(2f))
             }
