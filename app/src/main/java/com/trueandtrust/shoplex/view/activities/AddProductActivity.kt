@@ -6,12 +6,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -30,6 +32,7 @@ import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
@@ -107,7 +110,10 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
             if (product.imagesListURI.count() < MAX_IMAGES_SIZE) {
                 openGalleryForImages()
             } else {
-                Snackbar.make(binding.root, getString(R.string.max), Snackbar.LENGTH_LONG).show()
+                val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.Max), Snackbar.LENGTH_LONG)
+                val sbView: View = snackbar.view
+                sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                snackbar.show()
 
             }
         }
@@ -246,7 +252,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
                         product.imagesListURI.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
                     } else if (product.imagesListURI.count() >= MAX_IMAGES_SIZE) {
-                        Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, getString(R.string.max), Snackbar.LENGTH_LONG).show()
                     }
                 }
             } else if (data?.data != null) {
@@ -338,8 +344,10 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         }
 
         if (product.imagesListURI.isNullOrEmpty()) {
-            Snackbar.make(binding.root, getString(R.string.imageSelected), Snackbar.LENGTH_LONG)
-                .show()
+            val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.imageSelected), Snackbar.LENGTH_LONG)
+            val sbView: View = snackbar.view
+            sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+            snackbar.show()
 
             return false
         }

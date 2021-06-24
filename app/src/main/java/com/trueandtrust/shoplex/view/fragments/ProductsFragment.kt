@@ -36,6 +36,12 @@ class ProductsFragment : Fragment() {
         requireActivity().title = getString(R.string.products)
 
         productsVM.products.observe(this.viewLifecycleOwner) { products ->
+            if (products.count()>0) {
+                binding.noItem.visibility=View.INVISIBLE
+            }
+            else{
+                binding.noItem.visibility=View.VISIBLE
+            }
             //binding.rvProducts.adapter = ProductsAdapter(products)
             binding.rvProducts.adapter =  ScaleInAnimationAdapter(SlideInBottomAnimationAdapter(ProductsAdapter(products))).apply {
                 setDuration(1000)

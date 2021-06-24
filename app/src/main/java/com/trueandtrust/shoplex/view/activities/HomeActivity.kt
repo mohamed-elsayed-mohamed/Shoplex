@@ -4,12 +4,14 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -129,8 +131,10 @@ class HomeActivity : AppCompatActivity() {
             val reportMsg = dialogBinding.edReport.text.toString()
             FirebaseReferences.ReportRef.add(Report(reportMsg))
             reportBtnSheetDialog.dismiss()
-            Snackbar.make(binding.root, getString(R.string.reportsuccess), Snackbar.LENGTH_LONG)
-                .show()
+            val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.reportsuccess), Snackbar.LENGTH_LONG)
+            val sbView: View = snackbar.view
+            sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+            snackbar.show()
         }
         reportBtnSheetDialog.setContentView(dialogBinding.root)
         reportBtnSheetDialog.show()
@@ -144,9 +148,11 @@ class HomeActivity : AppCompatActivity() {
         builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             startActivity(Intent(this, AuthActivity::class.java))
             AuthVM.logout(this)
-            //finish()
-            Snackbar.make(binding.root, getString(R.string.logoutSuccess), Snackbar.LENGTH_LONG)
-                .show()
+            val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.logoutSuccess), Snackbar.LENGTH_LONG)
+            val sbView: View = snackbar.view
+            sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+            snackbar.show()
+
         }
 
         builder.setNegativeButton(getString(R.string.no)) { dialog, _ ->

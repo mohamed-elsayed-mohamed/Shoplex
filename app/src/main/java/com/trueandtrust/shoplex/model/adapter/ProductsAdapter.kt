@@ -2,10 +2,15 @@ package com.trueandtrust.shoplex.model.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ProductGvBinding
 import com.trueandtrust.shoplex.model.firebase.ProductsDBModel
@@ -13,6 +18,8 @@ import com.trueandtrust.shoplex.model.interfaces.ProductsListener
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.view.activities.AddProductActivity
 import com.trueandtrust.shoplex.view.activities.DetailsActivity
+import com.trueandtrust.shoplex.view.activities.auth.AuthActivity
+import com.trueandtrust.shoplex.viewmodel.AuthVM
 
 class ProductsAdapter(var products: ArrayList<Product>) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
 
@@ -45,7 +52,27 @@ class ProductsAdapter(var products: ArrayList<Product>) : RecyclerView.Adapter<P
             }
 
             binding.fabDeleteProduct.setOnClickListener {
-                ProductsDBModel(this).deleteProduct(product.productID)
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle(context.getString(R.string.delete))
+                builder.setMessage(context.getString(R.string.deleteMessage))
+
+                builder.setPositiveButton(context.getString(R.string.yes)) { _, _ ->
+                    ProductsDBModel(this).deleteProduct(product.productID)
+                    if (products.count() == 1) {
+                        products.removeAt(bindingAdapterPosition)
+                        notifyItemRemoved(bindingAdapterPosition)
+                    }
+                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.deleteSuccess), Snackbar.LENGTH_LONG)
+                    val sbView: View = snackbar.view
+                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                    snackbar.show()
+                }
+
+                builder.setNegativeButton(context.getString(R.string.no)) { dialog, _ ->
+                    dialog.cancel()
+                }
+
+                builder.show()
             }
 
             itemView.setOnClickListener {
@@ -56,8 +83,8 @@ class ProductsAdapter(var products: ArrayList<Product>) : RecyclerView.Adapter<P
         }
 
         override fun onProductRemoved() {
-            products.removeAt(bindingAdapterPosition)
-            notifyItemRemoved(bindingAdapterPosition)
+//            products.removeAt(bindingAdapterPosition)
+  //          notifyItemRemoved(bindingAdapterPosition)
         }
     }
 }

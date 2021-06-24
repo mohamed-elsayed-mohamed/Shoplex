@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -100,12 +101,18 @@ class LoginTabFragment :Fragment() {
     private fun forgetPassword(email: String) {
         Firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Snackbar.make(binding.root, getString(R.string.email_send), Snackbar.LENGTH_LONG)
-                    .show()
+                val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.email_send), Snackbar.LENGTH_LONG)
+                val sbView: View = snackbar.view
+                sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                snackbar.show()
+
 
             } else {
-                Snackbar.make(binding.root, getString(R.string.require_email), Snackbar.LENGTH_LONG)
-                    .show()
+                val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.require_email), Snackbar.LENGTH_LONG)
+                val sbView: View = snackbar.view
+                sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                snackbar.show()
+
 
             }
         }

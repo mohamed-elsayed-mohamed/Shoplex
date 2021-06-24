@@ -172,6 +172,27 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="logoutSuccess">Logout Success</string>
+    <string name="delete">Delete Item</string>
+    <string name="deleteMessage">Are You Sure You Want To Delete This Item?</string>
+    <string name="deleteSuccess">Delete Success</string>
+    <string name="onelocation">You must have at least one location</string>
+    <string name="customerlocation">Can"'"t Identify Customer Location</string>
+    <string name="discountAdded">Discount Added Successfully</string>
+    <string name="discountFailed">Failed to add Discount</string>
+    <string name="create_success">Success to create your account!</string>
+    <string name="wait">Please wait until your account accepted!</string>
+    <string name="failed_store">Failed to add store!</string>
+    <string name="login_failed">Login Failed!</string>
+    <string name="payment_cancelled">Payment Canceled!</string>
+    <string name="payment_complete">Payment Complete!</string>
+    <string name="payment_failed">Payment Failed!</string>
+    <string name="valid_phone">Please Enter Valid Mobile(+2)</string>
+    <string name="choose_image">Please Choose Image</string>
+    <string name="product_added">Product Added Successfully!</string>
+    <string name="failed_payment">Failed to load payment method!</string>
+    <string name="valid_address">Failed please select valid address!</string>
+    <string name="noitem">There Is No Item Yet!!!</string>
+
     <string name="reportsuccess">Your Report has sent Thank You</string>
     <string name="max">Max</string>
     <string name="imageSelected">Please Select Your Product Images</string>
