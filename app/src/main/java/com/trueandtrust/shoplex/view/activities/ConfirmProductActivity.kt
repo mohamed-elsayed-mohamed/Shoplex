@@ -148,6 +148,7 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
     }
 
     override fun onMinimumPrice(price: Float) {
+
         Toast.makeText(
             this,
             "You are going to pay $price L.E. for your product but unfortunately minimum charge is 10 L.E.",
