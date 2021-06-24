@@ -190,7 +190,6 @@ class MessageActivity : AppCompatActivity() {
     }
 
     private fun openSnackBar(products: ArrayList<Product>) {
-        Snackbar.make(binding.root, getString(R.string.sale), Snackbar.LENGTH_LONG).show()
         val binding = DialogAddSaleBinding.inflate(layoutInflater)
         val salesBtnSheetDialog = BottomSheetDialog(binding.root.context)
 

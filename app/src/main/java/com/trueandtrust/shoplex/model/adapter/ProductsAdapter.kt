@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -60,8 +62,10 @@ class ProductsAdapter(var products: ArrayList<Product>) : RecyclerView.Adapter<P
                         products.removeAt(bindingAdapterPosition)
                         notifyItemRemoved(bindingAdapterPosition)
                     }
-                    Snackbar.make(binding.root, context.getString(R.string.deleteSuccess), Snackbar.LENGTH_LONG)
-                        .show()
+                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.deleteSuccess), Snackbar.LENGTH_LONG)
+                    val sbView: View = snackbar.view
+                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                    snackbar.show()
                 }
 
                 builder.setNegativeButton(context.getString(R.string.no)) { dialog, _ ->

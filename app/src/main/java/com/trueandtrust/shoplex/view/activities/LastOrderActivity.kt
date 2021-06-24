@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.view.activities
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.OvershootInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +19,7 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter
 class LastOrderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLastOrderBinding
     private lateinit var ordersVm: OrdersVM
-    private lateinit var lastOrderVM : LastOrderViewModel
+  //  private lateinit var lastOrderVM : LastOrderViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class LastOrderActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         this.ordersVm = ViewModelProvider(this, OrdersFactory(this)).get(OrdersVM::class.java)
-        lastOrderVM = ViewModelProvider(this).get(LastOrderViewModel::class.java)
+       // lastOrderVM = ViewModelProvider(this).get(LastOrderViewModel::class.java)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -41,7 +42,12 @@ class LastOrderActivity : AppCompatActivity() {
 
 
         ordersVm.lastOrders.observe(this, { orders ->
-          //  binding.rvLastOrders.adapter = OrdersAdapter(orders)
+            if (orders.count()>0) {
+                binding.noItem.visibility= View.INVISIBLE
+            }
+            else{
+                binding.noItem.visibility= View.VISIBLE
+            }
             binding.rvLastOrders.adapter = ScaleInAnimationAdapter(SlideInBottomAnimationAdapter( OrdersAdapter(orders))).apply {
                 setDuration(700)
                 setInterpolator(OvershootInterpolator(2f))

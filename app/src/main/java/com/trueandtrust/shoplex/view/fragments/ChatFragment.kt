@@ -29,6 +29,12 @@ class ChatFragment : Fragment() {
         requireActivity().title = getString(R.string.chat)
 
         chatsVm.chatHeads.observe(viewLifecycleOwner, { chatHeads ->
+            if (chatHeads.count()>0) {
+                binding.noItem.visibility=View.INVISIBLE
+            }
+            else{
+                binding.noItem.visibility=View.VISIBLE
+            }
             binding.rvChat.adapter = ChatHeadAdapter(chatHeads)
         })
 

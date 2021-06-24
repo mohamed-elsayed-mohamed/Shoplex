@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.SignupTabFragmentBinding
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
@@ -141,17 +143,28 @@ class SignupTabFragment: Fragment() {
                 getString(R.string.Required)
 
             !isValidMobile(binding.edPhone.text.toString()) -> binding.tiPhone.error =
-                "Please Enter Valid Mobile"
+               getString(R.string.valid_phone)
 
 
 //            binding.edPhone.length() == 0 -> binding.edPhone.error = getString(R.string.Required)
             authVM.store.value?.addresses?.size == 0 || authVM.store.value?.locations?.size == 0 -> Toast.makeText(requireContext(),"Choose Your Location",Toast.LENGTH_LONG).show()
 
-            authVM.store.value?.image.isNullOrEmpty() -> Toast.makeText(
-                requireContext(),
-                "Please, Choose Image",
-                Toast.LENGTH_SHORT
-            ).show()
+            authVM.store.value?.image.isNullOrEmpty() -> {
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    binding.root.context.getString(R.string.choose_image),
+                    Snackbar.LENGTH_LONG
+                )
+                val sbView: View = snackbar.view
+                sbView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.blueshop
+                    )
+                )
+                snackbar.show()
+            }
+
             else -> return true
         }
         return false

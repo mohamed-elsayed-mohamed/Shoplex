@@ -11,6 +11,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.AuthListener
@@ -41,7 +42,7 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
                         } else {
                             imgTask.cancel()
                             FirebaseReferences.imagesStoreRef.child(store.storeID).delete()
-                            Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.authentication_fail), Toast.LENGTH_SHORT).show()
                             listener.onAddStoreFailed()
                         }
                     }
@@ -67,7 +68,7 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
 
             StoreInfo.storeID = store.storeID
             StoreInfo.updateTokenID()
-            Toast.makeText(context, "Success to create your account!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.create_success), Toast.LENGTH_SHORT).show()
             (context as AppCompatActivity).finish()
         }.addOnFailureListener {
             //listener.onAddNewStore(null)

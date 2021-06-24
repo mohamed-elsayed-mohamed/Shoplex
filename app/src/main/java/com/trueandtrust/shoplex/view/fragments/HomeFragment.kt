@@ -33,6 +33,12 @@ class HomeFragment : Fragment() {
         requireActivity().title = getString(R.string.home)
 
         ordersVm.order.observe(viewLifecycleOwner, { orders ->
+            if (orders.count()>0) {
+                binding.noItem.visibility=View.INVISIBLE
+            }
+            else{
+                binding.noItem.visibility=View.VISIBLE
+            }
             //binding.rvHome.adapter = OrdersAdapter(orders)
             binding.rvHome.adapter = ScaleInAnimationAdapter(SlideInBottomAnimationAdapter( OrdersAdapter(orders))).apply {
                 setDuration(700)

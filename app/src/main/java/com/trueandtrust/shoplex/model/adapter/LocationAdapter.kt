@@ -2,10 +2,12 @@ package com.trueandtrust.shoplex.model.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -52,10 +54,13 @@ class LocationAdapter(val locationsList: ArrayList<PendingLocation>) :
                                 builder.setMessage(context.getString(R.string.deleteMessage))
 
                                 builder.setPositiveButton(context.getString(R.string.yes)) { _, _ ->
+
+                                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.deleteSuccess), Snackbar.LENGTH_LONG)
+                                    val sbView: View = snackbar.view
+                                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                                    snackbar.show()
                                     locationsList.remove(location.address)
                                     notifyItemRemoved(bindingAdapterPosition)
-                                    Snackbar.make(binding.root, context.getString(R.string.deleteSuccess), Snackbar.LENGTH_LONG)
-                                        .show()
                                 }
 
                                 builder.setNegativeButton(context.getString(R.string.no)) { dialog, _ ->
@@ -67,12 +72,11 @@ class LocationAdapter(val locationsList: ArrayList<PendingLocation>) :
                             }
                         })
                 } else {
-                    Toast.makeText(
-                        binding.root.context,
-                        "You must have at least one location",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.onelocation), Snackbar.LENGTH_LONG)
+                    val sbView: View = snackbar.view
+                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                    snackbar.show()
+
                 }
             }
         }

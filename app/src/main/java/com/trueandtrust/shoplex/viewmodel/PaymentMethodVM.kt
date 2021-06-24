@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.interfaces.PaymentListener
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
@@ -99,17 +100,14 @@ class PaymentMethodVM(val context: Context, val listener: PaymentListener) :
     ) {
         when (paymentSheetResult) {
             is PaymentSheetResult.Canceled -> {
-                Toast.makeText(context, "Payment Canceled", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getText(R.string.payment_cancelled), Toast.LENGTH_SHORT).show()
             }
             is PaymentSheetResult.Failed -> {
-                Toast.makeText(
-                    context,
-                    "Payment Failed.",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(context, context.getText(R.string.payment_failed), Toast.LENGTH_SHORT).show()
+
             }
             is PaymentSheetResult.Completed -> {
-                Toast.makeText(context, "Payment Complete", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getText(R.string.payment_complete), Toast.LENGTH_SHORT).show()
                 listener.onPaymentComplete()
             }
         }
