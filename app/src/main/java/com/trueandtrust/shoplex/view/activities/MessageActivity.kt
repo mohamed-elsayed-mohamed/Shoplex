@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.ktx.toObject
 import com.trueandtrust.shoplex.R
@@ -73,7 +72,7 @@ class MessageActivity : AppCompatActivity() {
             }
         })
 
-        binding.imgToolbarChat.setImageResource(R.drawable.product)
+        binding.imgToolbarChat.setImageResource(R.drawable.init_img)
         binding.tvToolbarUserChat.text = userName
         Glide.with(this).load(productImg).into(binding.imgToolbarChat)
 

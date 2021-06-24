@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.Shoplex" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryShoplex</item>
-        <item name="colorPrimaryVariant">@color/primaryShoplex</item>
+        <item name="colorPrimary">@color/yellow</item>
+        <item name="colorPrimaryVariant">@color/yellowDark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/primaryShoplex</item>
-        <item name="colorSecondaryVariant">@color/secondaryShoplex</item>
+        <item name="colorSecondaryVariant">@color/dark_blue</item>
         <item name="colorOnSecondary">@color/gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -15,19 +15,22 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="titleTextColor">@color/dark_blue</item>
         <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
-
         <item name="iconTint">@color/white</item>
     </style>
 
     <style name="MyAlertDialogPropertyStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/secondaryShoplex</item>
+        <item name="colorAccent">@color/dark_blue</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Used for the background -->
         <item name="android:background">@color/black</item>
     </style>
 
+
+    <style name="ToolbarTheme">
+        <item name="android:background">@color/yellowLight</item>
+    </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">
         <item name="android:statusBarColor">@android:color/transparent</item>

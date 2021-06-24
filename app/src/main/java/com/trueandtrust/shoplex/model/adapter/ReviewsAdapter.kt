@@ -24,7 +24,7 @@ class ReviewsAdapter(val reviews: ArrayList<Review>) : RecyclerView.Adapter<Revi
     inner class ReviewViewHolder(val binding: ReveiwItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(review: Review) {
-            Glide.with(binding.root.context).load(review.image).error(R.drawable.product).into(binding.imgHead)
+            Glide.with(binding.root.context).load(review.image).error(R.drawable.init_img).into(binding.imgHead)
             binding.review = review
         }
     }
