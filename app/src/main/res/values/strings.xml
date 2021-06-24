@@ -192,6 +192,8 @@
     <string name="Delivered">Delivered</string>
     <string name="NA">N/A</string>
     <string name="NoInternetConnection">Your are currently offline please go online back and try again!</string>
+    <string name="success_create_account">Success to create your account!</string>
+    <string name="failed">Failed</string>
 
     <string-array name="arr_type_discount">
         <item>Percentage</item>
