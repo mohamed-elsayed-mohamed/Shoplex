@@ -19,7 +19,6 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
-import com.trueandtrust.shoplex.model.adapter.LocationAdapter
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.enumurations.*
@@ -27,10 +26,10 @@ import com.trueandtrust.shoplex.model.interfaces.AddProductListener
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
+import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
-import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
@@ -63,16 +62,18 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         viewModel.arrSubCategory.observe(this, {
             // SubCategory Dropdown
-            val arraySubcategoryAdapter = ArrayAdapter(applicationContext, R.layout.dropdown_item, it)
+            val arraySubcategoryAdapter =
+                ArrayAdapter(applicationContext, R.layout.dropdown_item, it)
             binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
         })
 
-        if(intent.hasExtra(getString(R.string.PRODUCT_KEY))){
+        if (intent.hasExtra(getString(R.string.PRODUCT_KEY))) {
             // User need to update data
-            this.viewModel.product.value = intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))
+            this.viewModel.product.value =
+                intent.getParcelableExtra(getString(R.string.PRODUCT_KEY))
             this.product = this.viewModel.product.value!!
             onUpdate(product)
-        }else{
+        } else {
             // Define product from view model
             product = viewModel.product.value!!
         }
@@ -85,8 +86,9 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         // Property Adapter
         //binding.rcProperty.adapter = PropertyAdapter(product.properties)
-        binding.rcProperty.adapter  = ScaleInAnimationAdapter(
-            SlideInBottomAnimationAdapter(PropertyAdapter(product.properties))).apply {
+        binding.rcProperty.adapter = ScaleInAnimationAdapter(
+            SlideInBottomAnimationAdapter(PropertyAdapter(product.properties))
+        ).apply {
             setDuration(700)
             setInterpolator(OvershootInterpolator(1f))
         }
@@ -118,7 +120,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         // AddProduct Button
         binding.btnAddProduct.setOnClickListener {
-            if(!validateInput())
+            if (!validateInput())
                 return@setOnClickListener
 
             product.category = binding.actTVCategory.text.toString()
@@ -126,7 +128,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
             startActivity(Intent(this, ConfirmProductActivity::class.java).apply {
                 this.putExtra(getString(R.string.PRODUCT_KEY), product)
-                if(isUpdate)
+                if (isUpdate)
                     this.putExtra(getString(R.string.update_product), isUpdate)
             })
         }
@@ -158,7 +160,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         binding.edDiscountNum.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if(binding.edDiscountNum.text.isNullOrEmpty())
+                if (binding.edDiscountNum.text.isNullOrEmpty())
                     binding.edDiscountNum.setText(getString(R.string.zero))
                 if (binding.edDiscountNum.text.toString().toFloat() > 90) {
                     binding.edDiscountNum.setText(getString(R.string.maxDiscount))
@@ -172,7 +174,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
                 binding.edNewPrice.text = product.calculateNewPrice()
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
@@ -180,7 +182,9 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         binding.edOldPrice.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if (binding.edOldPrice.text.isNullOrEmpty() || binding.edOldPrice.text.toString().toFloat() < 10) {
+                if (binding.edOldPrice.text.isNullOrEmpty() || binding.edOldPrice.text.toString()
+                        .toFloat() < 10
+                ) {
                     binding.edOldPrice.setText(getString(R.string.minPrice))
                 }
             }
@@ -191,7 +195,8 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
             OnItemClickListener { _, _, position, _ ->
                 binding.tiCategory.error = null
                 binding.actTVSubCategory.text = null
-                val selectedCategory = Category.values()[position]// parent.getItemAtPosition(position).toString()
+                val selectedCategory =
+                    Category.values()[position]// parent.getItemAtPosition(position).toString()
 
                 viewModel.getSubCategory(selectedCategory)
 
@@ -206,7 +211,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         this.isUpdate = true
         product.imageSlideList.clear()
         product.imagesListURI.clear()
-        for(imgURL in product.images){
+        for (imgURL in product.images) {
             product.imageSlideList.add(SlideModel(imgURL))
             product.imagesListURI.add(Uri.parse(imgURL))
         }
@@ -333,7 +338,8 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         }
 
         if (product.imagesListURI.isNullOrEmpty()) {
-            Snackbar.make(binding.root, getString(R.string.imageSelected), Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.root, getString(R.string.imageSelected), Snackbar.LENGTH_LONG)
+                .show()
 
             return false
         }

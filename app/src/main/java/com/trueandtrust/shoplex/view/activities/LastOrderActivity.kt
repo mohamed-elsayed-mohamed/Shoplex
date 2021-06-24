@@ -33,12 +33,8 @@ class LastOrderActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = getString(R.string.LastOrder)
 
-
-
-        if (ordersVm.lastOrders.value.isNullOrEmpty()){
+        if (ordersVm.lastOrders.value.isNullOrEmpty())
             ordersVm.getLastOrders()
-        }
-
 
         ordersVm.lastOrders.observe(this, { orders ->
           //  binding.rvLastOrders.adapter = OrdersAdapter(orders)
