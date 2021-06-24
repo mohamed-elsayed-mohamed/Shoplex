@@ -1,16 +1,13 @@
 package com.trueandtrust.shoplex.model.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.trueandtrust.shoplex.R
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.model.enumurations.DiscountType
 import com.trueandtrust.shoplex.databinding.SaleProductItemRowBinding
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
@@ -65,15 +62,10 @@ class SalesAdapter(private val salesProduct: ArrayList<Product>, val userID: Str
                 .collection("Special Discounts")
                 .document(userID)
                 .set(specialDiscount).addOnCompleteListener {
-                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.discountAdded), Snackbar.LENGTH_LONG)
-                    val sbView: View = snackbar.view
-                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
-                    snackbar.show()
+                Toast.makeText(binding.root.context, "Discount Added Successfully", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
-                    val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.discountFailed), Snackbar.LENGTH_LONG)
-                    val sbView: View = snackbar.view
-                    sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
-                    snackbar.show()            }
+                Toast.makeText(binding.root.context, "Failed to add Discount", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

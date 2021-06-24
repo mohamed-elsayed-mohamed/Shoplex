@@ -33,21 +33,7 @@
         >
 
     </androidx.recyclerview.widget.RecyclerView>
-        <TextView
-            android:id="@+id/noItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/noitem"
-            android:textStyle="bold"
-            android:textSize="@dimen/margin_16"
-            android:visibility="invisible"
-            >
 
-        </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
