@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.view.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -24,6 +25,7 @@ import com.trueandtrust.shoplex.model.adapter.LocationAdapter
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.enumurations.*
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.AddProductListener
 import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.Property
@@ -33,6 +35,7 @@ import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import kotlinx.android.synthetic.main.product_gv.*
+import java.util.*
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
@@ -43,6 +46,8 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
     private var isUpdate: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
         binding = ActivityAddProductBinding.inflate(layoutInflater)
         setContentView(binding.root)

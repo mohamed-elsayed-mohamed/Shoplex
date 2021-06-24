@@ -57,7 +57,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="LastOrder">Last Orders</string>
     <string name="StoreLocation">Store Location</string>
-    <string name="Language">Arabic</string>
+    <string name="Language">اللغه العربيه</string>
     <string name="Notification">Notification</string>
     <string name="Logout">Logout</string>
     <string name="drawer_open">open</string>

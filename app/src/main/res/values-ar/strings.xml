@@ -54,7 +54,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="LastOrder">الطلبات السابقة</string>
     <string name="StoreLocation">موقع المتجر</string>
-    <string name="Language">اللغه العربيه</string>
+    <string name="Language">English</string>
     <string name="Notification">الاشعارات</string>
     <string name="Logout">تسجيل الخروج</string>
     <string name="drawer_open">مفتوح</string>

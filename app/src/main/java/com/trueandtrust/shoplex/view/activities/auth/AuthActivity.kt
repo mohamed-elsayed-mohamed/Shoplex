@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAuthBinding
 import com.trueandtrust.shoplex.model.extra.ArchLifecycleApp
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.viewmodel.AuthVM
 import com.trueandtrust.shoplex.viewmodel.AuthVMFactory
 import kotlinx.android.synthetic.main.activity_auth.*
@@ -20,6 +21,8 @@ class AuthActivity : AppCompatActivity() {
     lateinit var authVM: AuthVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)

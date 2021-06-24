@@ -29,6 +29,8 @@ class StoreLocationActivity : AppCompatActivity() {
     private lateinit var storeVM: StoreVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
         binding = ActivityStoreLocationBinding.inflate(layoutInflater)
         setContentView(binding.root)

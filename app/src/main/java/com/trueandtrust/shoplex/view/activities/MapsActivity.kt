@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityMapsBinding
 import com.trueandtrust.shoplex.model.enumurations.LocationAction
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.maps.LocationManager
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -36,6 +37,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationAction: LocationAction
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
