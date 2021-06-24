@@ -78,7 +78,11 @@ class StoreLocationActivity : AppCompatActivity() {
                         loc
                     )
                     storeVM.addStoreLocation(pendingLocation)
-                    StoreInfo.addStoreLocation(this, pendingLocation)
+                    // Add after accept
+                    // StoreInfo.addStoreLocation(this, pendingLocation)
+
+
+                    //storeVM.storeAddresses.value!!.add(PendingLocation(address= address, location = location))
                 } else {
                     Toast.makeText(this, "Failed please select valid address", Toast.LENGTH_SHORT)
                         .show()

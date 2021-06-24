@@ -11,6 +11,8 @@ interface AuthListener {
     fun hideIndicator(){}
 
     private fun onStoreInfoReady(context: Context, store: Store){
+
+
         StoreInfo.storeID = store.storeID
         StoreInfo.name = store.name
         StoreInfo.email = store.email

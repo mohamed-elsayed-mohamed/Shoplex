@@ -26,6 +26,7 @@ import com.trueandtrust.shoplex.model.enumurations.*
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
+import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
@@ -41,7 +42,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         setContentView(binding.root)
 
         // Define View Model
-        viewModel = ViewModelProvider(this).get(AddProductVM::class.java)
+        viewModel = ViewModelProvider(this, AddProductFactory(this)).get(AddProductVM::class.java)
 
         viewModel.product.observe(this, {
             updateSliderUI()
@@ -79,8 +80,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         binding.rvUploadImages.adapter = myAdapter
 
         // Property Adapter
-        val propAdapter = PropertyAdapter(product.properties)
-        binding.rcProperty.adapter = propAdapter
+        binding.rcProperty.adapter = PropertyAdapter(product.properties)
 
         // Category Dropdown
         viewModel.getCategory()
@@ -179,12 +179,12 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         // Category dropdown
         binding.actTVCategory.onItemClickListener =
-            OnItemClickListener { parent, _, position, _ ->
+            OnItemClickListener { _, _, position, _ ->
                 binding.tiCategory.error = null
                 binding.actTVSubCategory.text = null
-                val selectedItem = parent.getItemAtPosition(position).toString()
+                val selectedCategory = Category.values()[position]// parent.getItemAtPosition(position).toString()
 
-                viewModel.getSubCategory(selectedItem)
+                viewModel.getSubCategory(selectedCategory)
 
                 binding.actTVSubCategory.onItemClickListener =
                     OnItemClickListener { _, _, _, _ ->
@@ -203,7 +203,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         }
 
         binding.actTVCategory.setText(product.category)
-        viewModel.getSubCategory(product.category)
+        viewModel.getSubCategory(Category.valueOf(product.category.replace(" ", "_")))
         binding.actTVSubCategory.setText(product.subCategory)
 
         binding.btnAddProduct.text = getString(R.string.update_product)
@@ -287,7 +287,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
     override fun onNewPropertyAdded(property: Property) {
         product.properties.add(property)
-        binding.rcProperty.adapter!!.notifyDataSetChanged()
+        binding.rcProperty.adapter!!.notifyItemInserted(product.properties.size - 1)
     }
 
     private fun validateInput(): Boolean {

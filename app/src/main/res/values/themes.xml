@@ -98,4 +98,5 @@
     <style name="light_Blue_Text" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/gray</item>
     </style>
+
 </resources>

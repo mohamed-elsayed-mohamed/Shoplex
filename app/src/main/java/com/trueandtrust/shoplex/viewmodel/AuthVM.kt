@@ -69,6 +69,7 @@ class AuthVM(val context: Context) : ViewModel(), AuthListener {
 
     companion object {
         fun logout(context: Context) {
+            (context as AppCompatActivity).finish()
             if (StoreInfo.storeID != null)
                 StoreInfo.saveNotification(context, false)
             Firebase.auth.signOut()
