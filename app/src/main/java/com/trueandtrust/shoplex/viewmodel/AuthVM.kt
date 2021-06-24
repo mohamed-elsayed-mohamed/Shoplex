@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.AuthDBModel
 import com.trueandtrust.shoplex.model.interfaces.AuthListener
@@ -46,25 +47,25 @@ class AuthVM(val context: Context) : ViewModel(), AuthListener {
     }
 
     override fun onPendingStore() {
-        Toast.makeText(context, "Please wait until your account accepted!", Toast.LENGTH_SHORT)
+        Toast.makeText(context, context.getText(R.string.wait), Toast.LENGTH_SHORT)
             .show()
     }
 
     override fun onLoginSuccess(context: Context, store: Store) {
         super.onLoginSuccess(context, store)
-        Toast.makeText(context, "Login Success!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getText(R.string.login_success), Toast.LENGTH_SHORT).show()
         context.startActivity(Intent(context, HomeActivity::class.java))
         (context as AppCompatActivity).finish()
     }
 
     override fun onLoginFailed() {
         super.onLoginFailed()
-        Toast.makeText(context, "Login Failed!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getText(R.string.login_failed), Toast.LENGTH_SHORT).show()
     }
 
     override fun onAddStoreFailed() {
         super.onAddStoreFailed()
-        Toast.makeText(context, "Failed to add store!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getText(R.string.failed_store), Toast.LENGTH_SHORT).show()
     }
 
     companion object {

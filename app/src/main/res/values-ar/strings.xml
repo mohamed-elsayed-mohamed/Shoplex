@@ -161,12 +161,12 @@
     <string name="image">صوره/*</string>
     <string name="Please_wait_until_image_uploaded_then_remove">يرجى الانتظار حتى يتم تحميل الصورة ، ثم إزالتها!</string>
 
-    <string name="logOut">Logout</string>
+    <string name="logOut">تسجيل خروج</string>
     <string name="logoutMessage">هل أنت متاكد من تسجيل الخروج؟</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
-    <string name="logoutSuccess">Logout Success</string>
-    <string name="reportsuccess">Your Report has sent Thank You</string>
+    <string name="logoutSuccess">تم تسجيل الخروج</string>
+    <string name="reportsuccess">تم ارسال التقرير بنجاح شكرا لك</string>
     <string name="max">Max</string>
     <string name="imageSelected">اختر صورة المنتج</string>
     <string name="discountType">Type</string>
@@ -183,6 +183,7 @@
     <string name="orLoginvia">أو الدخول بواسطة</string>
     <string name="orSignUpvia">أو تسجيل الدخول بواسطة</string>
     <string name="or_login_with">أو تسجيل الدخول بواسطة</string>
+
     <string name="propertyDialog">Property Dialog</string>
     <string name="alertonImageRemove">بجاء الإنتظار لتحميل الصورة, ثم احذفها</string>
     <string name="proplem">من فضلك شاركنا مشكلتك !!</string>
@@ -199,6 +200,27 @@
     <string name="Failed_load_payment_method">فشل في تحميل طريقة الدفع</string>
     <string name="minimunPayment">سوف تدفع %s لذلك المنتج لكن لسوء الحظ أقل شحن عشرة جنيهات</string>
 
+
+    <string name="delete">حذف العنصر</string>
+    <string name="deleteMessage">هل أنت متأكد من حذف هذا العنصر؟</string>
+    <string name="deleteSuccess">تم الحذف بنجاح</string>
+    <string name="onelocation">يجب أن يكون لديك ع الأقل عنوان رئيسى</string>
+    <string name="customerlocation">لا يمكن التعرف على عنوان العميل</string>
+    <string name="discountAdded">تم اضافة الخصم بنجاح</string>
+    <string name="discountFailed">للأسف لم يتم اضافة الخصم</string>
+    <string name="create_success">تم اضافة حسابك بنجاح</string>
+    <string name="wait">من فضلك انتظر حتى يتم قبول حسابك!</string>
+    <string name="failed_store">فشل اضافة المتجر!</string>
+    <string name="login_failed">فشل تسجيل الدخول!</string>
+    <string name="payment_cancelled">تم الغاء عملية الدفع!</string>
+    <string name="payment_complete">تم اكتمال عملية الدفع</string>
+    <string name="payment_failed">فشلت عملية الدفع!</string>
+    <string name="valid_phone">(+2)من فضلك ادخل رقم هاتف صحيح</string>
+    <string name="choose_image">من فضلك اختر الصوره</string>
+    <string name="product_added">تم اضافة المنتج بنجاح!</string>
+    <string name="failed_payment">فشل تحميل عملية الدفع!</string>
+    <string name="valid_address">من فضلك اختر عنوان صحيح!</string>
+    <string name="noitem">ليس هناك عناصر!!!</string>
     <string-array name="arr_subFashion">
         <item>رجالى</item>
         <item>نسائى</item>

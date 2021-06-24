@@ -6,12 +6,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -30,6 +31,7 @@ import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+import kotlinx.android.synthetic.main.product_gv.*
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
     private val OPEN_GALLERY_CODE = 200
@@ -84,8 +86,9 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         // Property Adapter
         //binding.rcProperty.adapter = PropertyAdapter(product.properties)
-        binding.rcProperty.adapter  = ScaleInAnimationAdapter(
-            SlideInBottomAnimationAdapter(PropertyAdapter(product.properties))).apply {
+        binding.rcProperty.adapter = ScaleInAnimationAdapter(
+            SlideInBottomAnimationAdapter(PropertyAdapter(product.properties))
+        ).apply {
             setDuration(700)
             setInterpolator(OvershootInterpolator(1f))
         }
@@ -104,7 +107,10 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
             if (product.imagesListURI.count() < MAX_IMAGES_SIZE) {
                 openGalleryForImages()
             } else {
-                Snackbar.make(binding.root, getString(R.string.max), Snackbar.LENGTH_LONG).show()
+                val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.Max), Snackbar.LENGTH_LONG)
+                val sbView: View = snackbar.view
+                sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+                snackbar.show()
 
             }
         }
@@ -120,14 +126,17 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
             if (!validateInput())
                 return@setOnClickListener
 
-            product.category = binding.actTVCategory.text.toString()
-            product.subCategory = binding.actTVSubCategory.text.toString()
+            val catIndex = viewModel.arrCategory.value!!.indexOf(binding.actTVCategory.text.toString())
+            product.category = Category.values()[catIndex].name
+            val subIndex = viewModel.arrSubCategory.value!!.indexOf(binding.actTVSubCategory.text.toString())
+            product.subCategory = viewModel.arrSubCats[subIndex] //binding.actTVSubCategory.text.toString()
 
             startActivity(Intent(this, ConfirmProductActivity::class.java).apply {
                 this.putExtra(getString(R.string.PRODUCT_KEY), product)
                 if (isUpdate)
                     this.putExtra(getString(R.string.update_product), isUpdate)
             })
+//            Toast.makeText(this, viewModel.arrSubCategory.value!!.indexOf(binding.actTVSubCategory.text.toString()).toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -192,7 +201,8 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
             OnItemClickListener { _, _, position, _ ->
                 binding.tiCategory.error = null
                 binding.actTVSubCategory.text = null
-                val selectedCategory = Category.values()[position]// parent.getItemAtPosition(position).toString()
+                val selectedCategory =
+                    Category.values()[position]// parent.getItemAtPosition(position).toString()
 
                 viewModel.getSubCategory(selectedCategory)
 
@@ -212,9 +222,20 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
             product.imagesListURI.add(Uri.parse(imgURL))
         }
 
-        binding.actTVCategory.setText(product.category)
-        viewModel.getSubCategory(Category.valueOf(product.category.replace(" ", "_")))
-        binding.actTVSubCategory.setText(product.subCategory)
+        val catIndex = Category.values().map { it.name }.indexOf(product.category)
+        val category = resources.getStringArray(R.array.categories)[catIndex]// viewModel.arrCategory.value!![catIndex]
+        binding.actTVCategory.setText(category)
+        viewModel.getSubCategory(Category.values()[catIndex])
+
+        viewModel.arrSubCategory.observe(this, {
+            val subIndex = viewModel.arrSubCats.indexOf(product.subCategory)
+            val subCat = viewModel.arrSubCategory.value!![subIndex]
+            binding.actTVSubCategory.setText(subCat)
+            viewModel.arrSubCategory.removeObservers(this)
+            val arraySubcategoryAdapter =
+                ArrayAdapter(applicationContext, R.layout.dropdown_item, it)
+            binding.actTVSubCategory.setAdapter(arraySubcategoryAdapter)
+        })
 
         binding.btnAddProduct.text = getString(R.string.update_product)
     }
@@ -242,7 +263,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
                         product.imagesListURI.add(imageUri)
                         product.imageSlideList.add(SlideModel(imageUri.toString()))
                     } else if (product.imagesListURI.count() >= MAX_IMAGES_SIZE) {
-                        Toast.makeText(this, "Max", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, getString(R.string.max), Snackbar.LENGTH_LONG).show()
                     }
                 }
             } else if (data?.data != null) {
@@ -334,7 +355,10 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         }
 
         if (product.imagesListURI.isNullOrEmpty()) {
-            Snackbar.make(binding.root, getString(R.string.imageSelected), Snackbar.LENGTH_LONG).show()
+            val snackbar = Snackbar.make(binding.root, binding.root.context.getString(R.string.imageSelected), Snackbar.LENGTH_LONG)
+            val sbView: View = snackbar.view
+            sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
+            snackbar.show()
 
             return false
         }
