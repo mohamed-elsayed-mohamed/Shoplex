@@ -6,6 +6,7 @@ import com.google.android.material.tabs.TabLayout
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityDetailsBinding
 import com.trueandtrust.shoplex.model.adapter.PagerAdapter
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.pojo.Product
 
 class DetailsActivity : AppCompatActivity() {
@@ -14,6 +15,8 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var product: Product
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)

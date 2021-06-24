@@ -2,6 +2,7 @@ package com.trueandtrust.shoplex.view.activities
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -42,9 +43,12 @@ class HomeActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         bottomNavigationView = binding.navigationView
         bottomNavigationView.setupWithNavController(findNavController(R.id.nav_host_fragment))
@@ -84,12 +88,14 @@ class HomeActivity : AppCompatActivity() {
                 )
 
                 R.id.Language -> {
-                    if(it.title.toString().contains("Ar", true)){
-                        getSharedPreferences("LANG", MODE_PRIVATE).edit().putString("Language", "ar").apply()
-                        setLocale("ar")
-                    }else{
+                    if(it.title.toString().contains("En", true)){
                         getSharedPreferences("LANG", MODE_PRIVATE).edit().putString("Language", "en").apply()
-                        setLocale("en")
+                        StoreInfo.lang = "en"
+                        StoreInfo.setLocale("en", this)
+                    }else{
+                        getSharedPreferences("LANG", MODE_PRIVATE).edit().putString("Language", "ar").apply()
+                        StoreInfo.lang = "ar"
+                        StoreInfo.setLocale("ar", this)
                     }
                 }
 
@@ -160,20 +166,5 @@ class HomeActivity : AppCompatActivity() {
         }
 
         builder.show()
-    }
-
-    fun setLocale(lang: String) {
-        val locale = Locale(lang)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.setLocale(locale)
-        baseContext.createConfigurationContext(config)
-        baseContext.resources.updateConfiguration(
-            config,
-            baseContext.resources.displayMetrics
-        )
-        val refresh = Intent(this, HomeActivity::class.java)
-        finish()
-        startActivity(refresh)
     }
 }
