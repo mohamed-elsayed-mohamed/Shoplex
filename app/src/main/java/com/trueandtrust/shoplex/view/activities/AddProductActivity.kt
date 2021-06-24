@@ -20,6 +20,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
+import com.trueandtrust.shoplex.model.adapter.LocationAdapter
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.enumurations.*
@@ -138,7 +139,6 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
                 if (isUpdate)
                     this.putExtra(getString(R.string.update_product), isUpdate)
             })
-//            Toast.makeText(this, viewModel.arrSubCategory.value!!.indexOf(binding.actTVSubCategory.text.toString()).toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
