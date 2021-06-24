@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -18,14 +19,17 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
+import com.trueandtrust.shoplex.model.adapter.LocationAdapter
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
+import com.trueandtrust.shoplex.model.enumurations.*
 import com.trueandtrust.shoplex.model.interfaces.AddProductListener
 import com.trueandtrust.shoplex.model.pojo.Product
-import com.trueandtrust.shoplex.model.enumurations.*
-import com.trueandtrust.shoplex.viewmodel.AddProductVM
 import com.trueandtrust.shoplex.model.pojo.Property
 import com.trueandtrust.shoplex.view.dialogs.PropertyDialog
+import com.trueandtrust.shoplex.viewmodel.AddProductVM
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
 import com.trueandtrust.shoplex.viewmodel.AddProductFactory
 
 class AddProductActivity : AppCompatActivity(), AddProductListener {
@@ -80,7 +84,12 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
         binding.rvUploadImages.adapter = myAdapter
 
         // Property Adapter
-        binding.rcProperty.adapter = PropertyAdapter(product.properties)
+        //binding.rcProperty.adapter = PropertyAdapter(product.properties)
+        binding.rcProperty.adapter  = ScaleInAnimationAdapter(
+            SlideInBottomAnimationAdapter(PropertyAdapter(product.properties))).apply {
+            setDuration(700)
+            setInterpolator(OvershootInterpolator(1f))
+        }
 
         // Category Dropdown
         viewModel.getCategory()

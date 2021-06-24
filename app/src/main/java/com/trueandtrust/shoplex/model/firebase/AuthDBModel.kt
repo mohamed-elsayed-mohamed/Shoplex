@@ -11,6 +11,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.AuthListener
@@ -41,7 +42,7 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
                         } else {
                             imgTask.cancel()
                             FirebaseReferences.imagesStoreRef.child(store.storeID).delete()
-                            Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, R.string.authentication_fail, Toast.LENGTH_SHORT).show()
                             listener.onAddStoreFailed()
                         }
                     }
@@ -56,7 +57,6 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
     private fun addNewStore(store: Store, ref: DocumentReference) {
 //        val image = store.image
         store.image = ""
-
         store.storeID = ref.id
         ref.set(store).addOnSuccessListener {
             FirebaseReferences.imagesStoreRef.child(store.storeID).downloadUrl.addOnSuccessListener { uri ->
@@ -67,11 +67,11 @@ class AuthDBModel(val listener: AuthListener, val context: Context) {
 
             StoreInfo.storeID = store.storeID
             StoreInfo.updateTokenID()
-            Toast.makeText(context, "Success to create your account!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.success_create_account, Toast.LENGTH_SHORT).show()
             (context as AppCompatActivity).finish()
         }.addOnFailureListener {
             //listener.onAddNewStore(null)
-            Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.failed, Toast.LENGTH_SHORT).show()
             imgTask.cancel()
             FirebaseReferences.imagesStoreRef.child(store.storeID).delete()
             listener.onAddStoreFailed()

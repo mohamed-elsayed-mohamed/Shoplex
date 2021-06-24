@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.trueandtrust.shoplex.R
@@ -11,6 +12,9 @@ import com.trueandtrust.shoplex.databinding.FragmentHomeBinding
 import com.trueandtrust.shoplex.model.adapter.OrdersAdapter
 import com.trueandtrust.shoplex.viewmodel.OrdersFactory
 import com.trueandtrust.shoplex.viewmodel.OrdersVM
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -29,7 +33,11 @@ class HomeFragment : Fragment() {
         requireActivity().title = getString(R.string.home)
 
         ordersVm.order.observe(viewLifecycleOwner, { orders ->
-            binding.rvHome.adapter = OrdersAdapter(orders)
+            //binding.rvHome.adapter = OrdersAdapter(orders)
+            binding.rvHome.adapter = ScaleInAnimationAdapter(SlideInBottomAnimationAdapter( OrdersAdapter(orders))).apply {
+                setDuration(700)
+                setInterpolator(OvershootInterpolator(2f))
+            }
         })
 
         return binding.root
