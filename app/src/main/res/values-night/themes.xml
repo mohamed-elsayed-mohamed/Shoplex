@@ -16,7 +16,6 @@
         <item name="titleTextColor">@color/secondaryShoplex</item>
         <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
         <item name="iconTint">@color/white</item>
-        <item name="icon">@color/secondaryShoplex</item>
     </style>
 
     <style name="MyAlertDialogPropertyStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
@@ -27,7 +26,6 @@
         <!-- Used for the background -->
         <item name="android:background">@color/gray</item>
     </style>
-
 
     <style name="ToolbarTheme">
         <item name="android:background">@color/yellowLight</item>
