@@ -221,6 +221,10 @@
     <string name="failed_payment">فشل تحميل عملية الدفع!</string>
     <string name="valid_address">من فضلك اختر عنوان صحيح!</string>
     <string name="noitem">ليس هناك عناصر!!!</string>
+    <string name="choose">اختار</string>
+    <string name="price3">75 جـ.م.</string>
+    <string name="price2">35 جـ.م.</string>
+    <string name="price1">20 جـ.م.</string>
     <string-array name="arr_subFashion">
         <item>رجالى</item>
         <item>نسائى</item>

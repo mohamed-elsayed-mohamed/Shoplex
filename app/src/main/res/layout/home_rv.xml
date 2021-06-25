@@ -2,8 +2,13 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <import type="com.trueandtrust.shoplex.model.enumurations.OrderStatus"/>
+
+        <import type="com.trueandtrust.shoplex.model.enumurations.OrderStatus" />
+
+        <import type="java.util.ArrayList" />
+
         <variable
             name="order"
             type="com.trueandtrust.shoplex.model.pojo.Order" />
@@ -51,28 +56,17 @@
 
 
             <TextView
-                android:id="@+id/tv_category"
-                style="@style/light_Blue_Text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:paddingRight="8dp"
-                android:text="@{order.product.storeName}"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/tv_product_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
-
-            <TextView
                 android:id="@+id/tv_price"
-                style="@style/light_Blue_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:paddingRight="8dp"
                 android:text="@{@string/LE(order.totalPrice)}"
+                android:textColor="@color/redShopex"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/tv_category"
-                app:layout_constraintTop_toBottomOf="@+id/tv_category" />
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_product_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
             <TextView
                 android:id="@+id/tv_location"
@@ -89,6 +83,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_price"
                 app:layout_constraintTop_toBottomOf="@+id/tv_price" />
+
+            <TextView
+                android:id="@+id/tv_prop"
+                style="@style/light_Blue_Text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:paddingRight="8dp"
+                android:text=""
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_location"
+                app:layout_constraintTop_toBottomOf="@id/tv_location" />
 
             <TextView
                 android:id="@+id/tv_status"
@@ -125,9 +131,10 @@
                 android:id="@+id/btnShowRoute"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:background="@android:color/transparent"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/btnDeliveryOrder"
-                app:layout_constraintStart_toStartOf="@+id/tv_location"
+                app:layout_constraintStart_toEndOf="@+id/img_product"
                 app:layout_constraintTop_toTopOf="@+id/btnDeliveryOrder"
                 app:srcCompat="@drawable/ic_location" />
 
