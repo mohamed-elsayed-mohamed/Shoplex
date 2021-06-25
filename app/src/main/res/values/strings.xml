@@ -108,7 +108,6 @@
     <string name="phone">Phone</string>
     <string name="or">________________________ OR ________________________</string>
     <string name="new_user">New User ? </string>
-    <string name="create_an_account"><u>Create an Account</u></string>
     <string name="min_store_name_err">Minimum Name is 5 characters</string>
     <string name="min_password_err">Minimum Password is 8 characters</string>
     <string name="not_match">Not Match</string>

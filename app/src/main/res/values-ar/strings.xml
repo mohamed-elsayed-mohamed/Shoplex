@@ -105,7 +105,6 @@
     <string name="phone">رقم الهاتف</string>
     <string name="or">________________________ او ________________________</string>
     <string name="new_user">مستخدم جديد ؟ </string>
-    <string name="create_an_account"><u>انشاء ملف شخصى</u></string>
     <string name="min_store_name_err">الحد الأدنى للاسم هو 5 أحرف</string>
     <string name="min_password_err">الحد الأدنى لكلمة المرور 8 أحرف</string>
     <string name="not_match">غير مطابق</string>
