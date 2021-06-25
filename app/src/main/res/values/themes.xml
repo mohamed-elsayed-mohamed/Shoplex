@@ -16,7 +16,7 @@
         <item name="titleTextColor">@color/secondaryShoplex</item>
         <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
         <item name="iconTint">@color/secondaryShoplex</item>
-        <item name="icon">@color/gray</item>
+<!--        <item name="icon">@color/gray</item>-->
     </style>
 
     <style name="MyAlertDialogPropertyStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
