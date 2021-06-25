@@ -40,7 +40,13 @@ class OrdersAdapter(val orders: ArrayList<Order>) :
 
             Glide.with(itemView.context).load(order.product!!.images.firstOrNull()).error(R.drawable.init_img).into(binding.imgProduct)
             binding.order = order
-
+            val properites = arrayListOf<String>()
+            if (order.orderProperties != null){
+                for (prop in order.orderProperties){
+                   properites.add(prop)
+                }
+                binding.tvProp.text = properites.joinToString()
+            }
             if (order.orderStatus == OrderStatus.Current) {
                 binding.btnDeliveryOrder.setOnClickListener {
                     OrdersDBModel.deliverOrder(order.orderID.toString())
