@@ -2,7 +2,6 @@ package com.trueandtrust.shoplex.view.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -21,7 +20,6 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.snackbar.Snackbar
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityAddProductBinding
-import com.trueandtrust.shoplex.model.adapter.LocationAdapter
 import com.trueandtrust.shoplex.model.adapter.MyImagesAdapter
 import com.trueandtrust.shoplex.model.adapter.PropertyAdapter
 import com.trueandtrust.shoplex.model.enumurations.*
