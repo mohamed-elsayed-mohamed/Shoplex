@@ -3,7 +3,7 @@
     <string name="app_name">متجر شوبليكس</string>
     <string name="product_name">الاسم</string>
     <string name="old_price_strike"><strike>سعر قديم</strike></string>
-    <string name="discount">الخصم</string>
+    <string name="discount">خصم</string>
     <string name="newPrice">سعر جديد</string>
     <string name="zero">0</string>
     <string name="todo">TODO</string>
@@ -16,15 +16,14 @@
     <string name="sub_category">تصنيف فرعي</string>
     <string name="store_name">اسم المتجر </string>
     <string name="offers">العروض</string>
-    <string name="premium_card">البطاقة المميزة</string>
-    <string name="basic">اساسى</string>
-    <string name="price">ابسعر</string>
-    <string name="_2_weeks_of_ads">اسبوعان من الإعلانات</string>
+    <string name="basic">برونز</string>
+    <string name="price">السعر</string>
+    <string name="_2_weeks_of_ads">اسبوعين</string>
     <string name="buy_now">اشترى الان</string>
-    <string name="standard">اساسي</string>
-    <string name="_1_month_of_ads">شهر من الاعلانات</string>
-    <string name="_3_month_of_ads">3 شهور من الاعلانات</string>
-    <string name="premium">غالي</string>
+    <string name="standard">فضي</string>
+    <string name="_1_month_of_ads">شهر</string>
+    <string name="_3_month_of_ads">3 شهور</string>
+    <string name="premium">ذهبي</string>
     <string name="confirm">تاكيد</string>
     <string name="Report">بلاغ</string>
     <string name="NA">لا يوجد</string>
@@ -39,11 +38,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_product_details">تفاصيل المنتج</string>
-    <string name="tab_text_1">علامة التبويب 1</string>
-    <string name="tab_text_2">علامة التبويب  2</string>
+
     <string name="product">منتج</string>
     <string name="reviews">تعليقات</string>
-    <string name="_4_5_5">4.5/5</string>
+
     <string name="all_properties">جميع الخصائص</string>
     <string name="Plus_Sign">+</string>
 
@@ -65,7 +63,6 @@
     <string name="location">الموقع</string>
     <string name="currentProduct">المنتج الحالى</string>
     <string name="old_price"><strike>سعر قديم</strike></string>
-    <string name="rating_value">4.5/5</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="new_price">سعر جديد</string>
@@ -91,13 +88,12 @@
     <string name="comment">تعليق</string>
     <string name="type_a_message">اكتب رسالة</string>
     <string name="Hello">مرحبا</string>
-    <string name="monday_12_00">الاثنين 12:00</string>
     <string name="enter_your_product_properties">أدخل خصائص المنتج الخاص بك</string>
     <string name="prop">خصائص</string>
     <string name="value">قيمه</string>
     <string name="property">خصائص</string>
-    <string name="textview">عرض النص</string>
     <string name="Like_color_Size_options_etc">مثل الحجم واللون و الخصائص وما إلى ذلك</string>
+    <string name="welcome_to_shoplex">مرحبا بك في شوبلكس</string>
 
     <string name="email">البريد الالكترونى</string>
     <string name="forgotPassword">نسيت كلمه المرور</string>
@@ -109,7 +105,6 @@
     <string name="phone">رقم الهاتف</string>
     <string name="or">________________________ او ________________________</string>
     <string name="new_user">مستخدم جديد ؟ </string>
-    <string name="create_an_account"><u>انشاء ملف شخصى</u></string>
     <string name="min_store_name_err">الحد الأدنى للاسم هو 5 أحرف</string>
     <string name="min_password_err">الحد الأدنى لكلمة المرور 8 أحرف</string>
     <string name="not_match">غير مطابق</string>
@@ -123,8 +118,7 @@
     <string name="title_activity_maps">الخريطه</string>
     <string name="currentOrders">الطلب الحالى</string>
     <string name="update_product">تحديث المنتج</string>
-    <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
-    <string name="fcm_message">FCM رساله</string>
+
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="title_activity_splash">SplashActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -135,7 +129,6 @@
     <string name="Delivered">تم التوصيل</string>
 
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="shoplex">shoplex Store</string>
     <string name="CHAT_TITLE_KEY">CHAT_TITLE_KEY</string>
     <string name="Products">المنتج</string>
     <string name="Reviews">تعليقات</string>
@@ -172,7 +165,6 @@
     <string name="discountType">Type</string>
     <string name="discount_type">نوع الخصم</string>
     <string name="addresses">"العنوان"</string>
-    <string name="quantityRange">1 - 100</string>
     <string name="quantity">الكمية</string>
 
     <string name="Login">تسجيل الدخول</string>
@@ -184,7 +176,7 @@
     <string name="orSignUpvia">أو تسجيل الدخول بواسطة</string>
     <string name="or_login_with">أو تسجيل الدخول بواسطة</string>
 
-    <string name="propertyDialog">Property Dialog</string>
+    <string name="propertyDialog">خصائص المنتج</string>
     <string name="alertonImageRemove">بجاء الإنتظار لتحميل الصورة, ثم احذفها</string>
     <string name="proplem">من فضلك شاركنا مشكلتك !!</string>
     <string name="your_report">أكتب بلاغك</string>
@@ -227,14 +219,14 @@
     <string name="price1">20 جـ.م.</string>
     <string-array name="arr_subFashion">
         <item>رجالى</item>
-        <item>نسائى</item>
+        <item>حريمي</item>
         <item>اطفال</item>
     </string-array>
 
     <string-array name="arr_subHealthCare">
         <item>العناية بالشعر</item>
         <item>عطور</item>
-        <item>ميكاب</item>
+        <item>ميك اب</item>
     </string-array>
 
     <string-array name="arr_subPhoneAndTablet">
