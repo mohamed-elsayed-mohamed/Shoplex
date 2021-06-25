@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.trueandtrust.shoplex.R
 import com.trueandtrust.shoplex.databinding.ActivityLastOrderBinding
 import com.trueandtrust.shoplex.model.adapter.OrdersAdapter
+import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.room.viewModel.LastOrderViewModel
 import com.trueandtrust.shoplex.viewmodel.OrdersFactory
 import com.trueandtrust.shoplex.viewmodel.OrdersVM
@@ -22,6 +23,8 @@ class LastOrderActivity : AppCompatActivity() {
   //  private lateinit var lastOrderVM : LastOrderViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
+            StoreInfo.setLocale(StoreInfo.lang, this)
         super.onCreate(savedInstanceState)
         binding = ActivityLastOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)

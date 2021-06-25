@@ -29,7 +29,8 @@ class SplashActivity : AppCompatActivity(), AddProductListener {
         super.onCreate(savedInstanceState)
 
         StoreInfo.readStoreInfo(applicationContext)
-        if(StoreInfo.lang != "en")
+
+        if(StoreInfo.lang != this.resources.configuration.locale.language)
             setLocale(StoreInfo.lang)
 
         currentUser = Firebase.auth.currentUser

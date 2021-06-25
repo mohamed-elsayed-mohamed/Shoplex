@@ -33,6 +33,6 @@ data class Order (
     var paymentMethod: String = PaymentMethod.Cash.name,
     var deliveryLoc: Location? = null,
     var deliveryAddress: String = "",
-    val properties: ArrayList<String>? = null,
+    val orderProperties: ArrayList<String>? = null,
 
 )
