@@ -88,7 +88,8 @@ class MessageActivity : AppCompatActivity() {
     private fun performSendMessage() {
         //send Message to Firebase
         val messageText = binding.edSendMesssage.text
-
+        if(messageText.trim().isEmpty())
+            return
         val message = Message(toId = userID, message = messageText.toString())
         message.chatID = chatID
         FirebaseReferences.chatRef.document(chatID).collection("messages")
