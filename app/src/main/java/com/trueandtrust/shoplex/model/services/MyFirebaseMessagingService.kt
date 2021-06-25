@@ -72,11 +72,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val notification: Notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                //.setOngoing(true)
-                .setSmallIcon(getNotificationIcon())
-                .setContentText(message)
+                .setSmallIcon(R.drawable.shoplex_logo)
                 .setAutoCancel(true)
-                //.setContentIntent(pi)
+                .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .setWhen(System.currentTimeMillis())
@@ -97,10 +95,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.notify(NOTIFICATION_ID, notification)
         } else {
             notification = NotificationCompat.Builder(context)
-                .setSmallIcon(getNotificationIcon())
+                .setSmallIcon(R.drawable.shoplex_logo)
                 .setAutoCancel(true)
                 .setContentText(message)
-                //.setContentIntent(pi)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .setWhen(System.currentTimeMillis())
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentTitle(title).apply {
                     if(pi != null)
@@ -112,11 +112,4 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.notify(NOTIFICATION_ID, notification)
         }
     }
-
-    private fun getNotificationIcon(): Int {
-        val useWhiteIcon =
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-        return if (useWhiteIcon) R.mipmap.ic_launcher else R.mipmap.ic_launcher
-    }
-
 }
