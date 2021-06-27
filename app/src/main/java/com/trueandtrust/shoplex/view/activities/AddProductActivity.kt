@@ -132,7 +132,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
                 return@setOnClickListener
 
             val catIndex = viewModel.arrCategory.value!!.indexOf(binding.actTVCategory.text.toString())
-            product.category = Category.values()[catIndex].name
+            product.category = Category.values()[catIndex].name.replace("_", " ")
             val subIndex = viewModel.arrSubCategory.value!!.indexOf(binding.actTVSubCategory.text.toString())
             product.subCategory = viewModel.arrSubCats[subIndex] //binding.actTVSubCategory.text.toString()
 

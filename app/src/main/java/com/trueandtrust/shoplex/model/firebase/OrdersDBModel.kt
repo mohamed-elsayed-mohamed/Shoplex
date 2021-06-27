@@ -46,11 +46,11 @@ class OrdersDBModel(val listener: OrdersListener) {
                     for (document: DocumentSnapshot in values.documents) {
                         val order: Order? = document.toObject<Order>()
                         if (order != null) {
-                            orders.add(order)
                             FirebaseReferences.productsRef.document(order.productID)
-                                .get(Source.SERVER)
+                                .get()
                                 .addOnSuccessListener {
                                     order.product = it.toObject<Product>()
+                                    orders.add(order)
                                     if (document == values.last()) {
                                         this.listener.onLastOrderReady(orders)
                                     }

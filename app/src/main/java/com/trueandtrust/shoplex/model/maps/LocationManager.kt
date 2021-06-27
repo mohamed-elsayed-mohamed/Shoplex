@@ -23,7 +23,7 @@ class LocationManager: RoutingListener {
     lateinit var selectedLocation: LatLng
 
     private lateinit var mMap: GoogleMap
-    private val API_KEY = "AIzaSyCowKJyiI_8mfosUsl7xF0Ev5kGOkv2Y6I"
+    private val API_KEY = "AIzaSyDfZut7jafopZptZp5qwxTaWPD3EJIcbJs"
 
     private constructor(googleMap: GoogleMap) {
         mMap = googleMap
