@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_8"
-                android:text="@{storeData.primaryAddress}"
+                android:text="@{(storeData.primaryAddress == ``? @string/choose_location : storeData.primaryAddress)}"
                 app:layout_constraintEnd_toStartOf="@+id/btnLocation"
                 app:layout_constraintStart_toStartOf="@+id/tiPhone"
                 app:layout_constraintTop_toBottomOf="@+id/tiPhone" />
