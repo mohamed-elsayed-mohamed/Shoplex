@@ -1,7 +1,6 @@
 package com.trueandtrust.shoplex.model.firebase
 
 import com.google.firebase.firestore.ktx.toObject
-import com.trueandtrust.shoplex.model.adapter.ChatHeadAdapter
 import com.trueandtrust.shoplex.model.extra.FirebaseReferences
 import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.interfaces.ChatsListener
@@ -13,11 +12,12 @@ class ChatHeadDBModel(private val listener: ChatsListener) {
 
     fun getChatHeads() {
         val chatHeads = arrayListOf<ChatHead>()
-        FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
+        FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).addSnapshotListener { result, error ->
+        if(result == null || error != null)
+            return@addSnapshotListener
+                for (document in result.documents) {
                     if (document != null) {
-                        val chat: Chat = document.toObject()
+                        val chat: Chat = document.toObject()!!
                         FirebaseReferences.productsRef
                             .document(chat.productIDs.last()).get()
                             .addOnSuccessListener { productDocument ->

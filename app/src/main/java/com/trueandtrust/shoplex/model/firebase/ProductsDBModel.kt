@@ -16,14 +16,21 @@ import com.trueandtrust.shoplex.model.pojo.Product
 import com.trueandtrust.shoplex.model.pojo.Review
 import com.trueandtrust.shoplex.model.pojo.ReviewStatistics
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ProductsDBModel(val listener: ProductsListener) {
     private lateinit var product: Product
     private lateinit var context: Context
 
     private lateinit var reference: CollectionReference
+    private var imagesURLs: ArrayList<String> = arrayListOf()
 
-    constructor(product: Product, context: Context, isUpdate: Boolean, listener: ProductsListener) : this(listener) {
+    constructor(
+        product: Product,
+        context: Context,
+        isUpdate: Boolean,
+        listener: ProductsListener
+    ) : this(listener) {
         this.product = product
         this.context = context
 
@@ -54,8 +61,12 @@ class ProductsDBModel(val listener: ProductsListener) {
 
         imgRef.putFile(uri).addOnSuccessListener { _ ->
             imgRef.downloadUrl.addOnSuccessListener {
-                reference.document(product.productID)
-                    .update("images", FieldValue.arrayUnion(it.toString()))
+                imagesURLs.add(it.toString())
+                if (product.imagesListURI.last() == uri) {
+                    for (imgURL in imagesURLs) {
+                        reference.document(product.productID).update("images", FieldValue.arrayUnion(imgURL))
+                    }
+                }
             }
         }
     }
@@ -110,11 +121,11 @@ class ProductsDBModel(val listener: ProductsListener) {
     fun getReviewsStatistics(productId: String) {
         FirebaseReferences.productsRef.document(productId).collection("Statistics")
             .document("Reviews").get().addOnSuccessListener {
-            if (it.exists()) {
-                val statistic: ReviewStatistics = it.toObject()!!
-                this.listener.onReviewStatisticsReady(statistic)
-            }
+                if (it.exists()) {
+                    val statistic: ReviewStatistics = it.toObject()!!
+                    this.listener.onReviewStatisticsReady(statistic)
+                }
 
-        }
+            }
     }
 }

@@ -101,10 +101,11 @@ class PaymentMethodVM(val context: Context, val listener: PaymentListener) :
         when (paymentSheetResult) {
             is PaymentSheetResult.Canceled -> {
                 Toast.makeText(context, context.getText(R.string.payment_cancelled), Toast.LENGTH_SHORT).show()
+                listener.onPaymentCanceledOrFailed()
             }
             is PaymentSheetResult.Failed -> {
                 Toast.makeText(context, context.getText(R.string.payment_failed), Toast.LENGTH_SHORT).show()
-
+                listener.onPaymentCanceledOrFailed()
             }
             is PaymentSheetResult.Completed -> {
                 Toast.makeText(context, context.getText(R.string.payment_complete), Toast.LENGTH_SHORT).show()

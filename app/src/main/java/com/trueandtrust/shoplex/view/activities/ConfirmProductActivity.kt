@@ -3,7 +3,6 @@ package com.trueandtrust.shoplex.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -116,7 +115,6 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
 
     private fun showAll() {
         binding.product = product
-        //   binding.tvProductName.text = product.name
         binding.imgSlideConfirm.setImageList(product.getImageSlides())
         binding.imgProductConfirm.setImageURI(product.imagesListURI[0])
     }
@@ -152,11 +150,15 @@ class ConfirmProductActivity : AppCompatActivity(), ProductsListener, PaymentLis
         val sbView: View = snackbar.view
         sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
         snackbar.show()
+        btnConfirm.isEnabled = true
+    }
 
+    override fun onPaymentCanceledOrFailed() {
+        btnConfirm.isEnabled = true
     }
 
     override fun onMinimumPrice(price: Float) {
-        val snackbar = Snackbar.make(binding.root, "You are going to pay $price L.E. for your product but unfortunately minimum charge is 10 L.E.", Snackbar.LENGTH_LONG)
+        val snackbar = Snackbar.make(binding.root, getString(R.string.minimunPayment, price.toString()), Snackbar.LENGTH_LONG)
         val sbView: View = snackbar.view
         sbView.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.blueshop))
         snackbar.show()

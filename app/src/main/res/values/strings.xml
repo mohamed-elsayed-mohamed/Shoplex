@@ -22,7 +22,7 @@
     <string name="_2_weeks_of_ads">2 Weeks</string>
     <string name="price1">20 L.E.</string>
 
-    <string name="buy_now">Buy Now</string>
+    <string name="buy_now">Sale Now</string>
     <string name="standard">Silver</string>
     <string name="_1_month_of_ads">1 Month</string>
     <string name="price2">35 L.E.</string>
@@ -213,7 +213,7 @@
     <string name="failed">Failed</string>
     <string name="ProductAddedSuccessfully">Product Added Successfully!</string>
     <string name="Failed_load_payment_method">Failed to load payment method</string>
-    <string name="minimunPayment">You are going to pay %s  L.E. for your product but unfortunately minimum charge is 10 L.E.</string>
+    <string name="minimunPayment">You are going to pay %s L.E. for your product but unfortunately minimum charge is 10 L.E.</string>
     <string name="welcome_to_shoplex">Welcome to ShopLex</string>
 
     <string-array name="arr_type_discount">
