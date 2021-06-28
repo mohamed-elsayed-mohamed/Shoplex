@@ -41,7 +41,6 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         if(StoreInfo.lang != this.resources.configuration.locale.language)
             StoreInfo.setLocale(StoreInfo.lang, this)
