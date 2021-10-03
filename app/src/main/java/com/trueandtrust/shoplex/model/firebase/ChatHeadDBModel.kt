@@ -12,9 +12,11 @@ class ChatHeadDBModel(private val listener: ChatsListener) {
 
     fun getChatHeads() {
         val chatHeads = arrayListOf<ChatHead>()
-        FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).addSnapshotListener { result, error ->
-        if(result == null || error != null)
-            return@addSnapshotListener
+        FirebaseReferences.chatRef.whereEqualTo("storeID", StoreInfo.storeID).get().addOnSuccessListener { result ->
+//        if(result == null || error != null)
+//            return@addSnapshotListener
+            //chatHeads.clear()
+
                 for (document in result.documents) {
                     if (document != null) {
                         val chat: Chat = document.toObject()!!

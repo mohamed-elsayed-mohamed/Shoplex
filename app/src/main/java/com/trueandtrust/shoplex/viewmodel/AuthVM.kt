@@ -13,7 +13,10 @@ import com.trueandtrust.shoplex.model.extra.StoreInfo
 import com.trueandtrust.shoplex.model.firebase.AuthDBModel
 import com.trueandtrust.shoplex.model.interfaces.AuthListener
 import com.trueandtrust.shoplex.model.pojo.Store
+import com.trueandtrust.shoplex.room.data.ShopLexDatabase
 import com.trueandtrust.shoplex.view.activities.HomeActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AuthVM(val context: Context) : ViewModel(), AuthListener {
     var store: MutableLiveData<Store> = MutableLiveData()
@@ -76,6 +79,9 @@ class AuthVM(val context: Context) : ViewModel(), AuthListener {
             Firebase.auth.signOut()
             StoreInfo.clear()
             StoreInfo.clearSharedPref(context)
+            GlobalScope.launch {
+                ShopLexDatabase.getDatabase(context).clearAllTables()
+            }
         }
     }
 }

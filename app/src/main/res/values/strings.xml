@@ -187,7 +187,7 @@
     <string name="product_added">Product Added Successfully!</string>
     <string name="failed_payment">Failed to load payment method!</string>
     <string name="valid_address">Failed please select valid address!</string>
-    <string name="noitem">There Is No Item Yet!!!</string>
+    <string name="noitem">There Is No Items Yet!!!</string>
 
     <string name="reportsuccess">Your Report has sent Thank You</string>
     <string name="max">Max</string>

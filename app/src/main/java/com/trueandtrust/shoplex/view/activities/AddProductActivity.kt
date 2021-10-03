@@ -84,6 +84,8 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
 
         binding.product = product
 
+//        product.name = binding.edProductName.text.toString()
+
         // Images Adapter
         val myAdapter = MyImagesAdapter(viewModel.product.value!!.imagesListURI, this)
         binding.rvUploadImages.adapter = myAdapter
@@ -226,7 +228,7 @@ class AddProductActivity : AppCompatActivity(), AddProductListener {
             product.imagesListURI.add(Uri.parse(imgURL))
         }
 
-        val catIndex = Category.values().map { it.name }.indexOf(product.category)
+        val catIndex = Category.values().map { it.name.replace("_", " ") }.indexOf(product.category)
         val category = resources.getStringArray(R.array.categories)[catIndex]// viewModel.arrCategory.value!![catIndex]
         binding.actTVCategory.setText(category)
         viewModel.getSubCategory(Category.values()[catIndex])

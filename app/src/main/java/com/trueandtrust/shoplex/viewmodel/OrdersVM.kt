@@ -28,6 +28,7 @@ class OrdersVM(val context: Context) : ViewModel(), OrdersListener {
     }
 
     fun getLastOrders() {
+        /*
         lastOrderRepo.readAllLastOrder.observe(context as AppCompatActivity, { orders ->
             var lastID = "1"
             if (orders != null && orders.count() > 0) {
@@ -39,6 +40,9 @@ class OrdersVM(val context: Context) : ViewModel(), OrdersListener {
             lastOrderRepo.readAllLastOrder.removeObservers(context)
             ordersDBModel.getLastOrders(lastID)
         })
+        */
+
+        ordersDBModel.getLastOrders("1")
     }
 
     override fun onCurrentOrderReady(orders: ArrayList<Order>) {
@@ -46,12 +50,13 @@ class OrdersVM(val context: Context) : ViewModel(), OrdersListener {
     }
 
     override fun onLastOrderReady(lastOrders: ArrayList<Order>) {
+        /*
         for (order in lastOrders) {
             viewModelScope.launch(Dispatchers.IO) {
                 lastOrderRepo.addLastOrder(order)
             }
-        }
+        }*/
 
-        this.lastOrders.value = (roomLastOrders + lastOrders) as ArrayList<Order>
+        this.lastOrders.value = lastOrders //(roomLastOrders + lastOrders) as ArrayList<Order>
     }
 }
